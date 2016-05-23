@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_150"
+    android:background="@color/color_ff"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ds_20"
+            android:layout_marginTop="@dimen/ds_20"
+            android:textSize="@dimen/fs_85"
+            android:textColor="@color/color_00"
+            android:text="@string/tab_home"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:id="@+id/top_share_tv" />
+
+
+
+        <ImageView
+            android:layout_width="@dimen/ds_90"
+            android:layout_height="@dimen/ds_90"
+            android:background="@drawable/home_left_arrow_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:id="@+id/top_img" />
+
+        <ImageView
+            android:layout_width="@dimen/ds_90"
+            android:layout_height="@dimen/ds_90"
+            android:background="@drawable/detaile_share"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_30"
+            android:id="@+id/top_img_share" />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_3"
+        android:background="@color/color_cc" />
+</LinearLayout>

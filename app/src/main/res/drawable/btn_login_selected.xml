@@ -1,0 +1,16 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <solid android:color="@color/color_00" />
+    <corners android:radius="@dimen/ds_50" />
+
+    <stroke
+        android:width="@dimen/ds_3"
+        android:color="@color/color_00" />
+
+    <padding
+        android:bottom="@dimen/fs_15"
+        android:left="@dimen/fs_60"
+        android:right="@dimen/fs_60"
+        android:top="@dimen/fs_15" />
+
+</shape>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <include layout="@layout/view_home_viewflow"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:text="第11期 Apple SE 16g"
+                android:textColor="@color/color_00"
+                android:textSize="@dimen/fs_55"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:text="@string/issue_random"
+                android:textColor="@color/color_c0"
+                android:textSize="@dimen/fs_55"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:layout_marginRight="@dimen/ds_30"
+                android:background="@drawable/work_bottom"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_100">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_marginTop="@dimen/ds_30"
+                    android:text="总需要人数3288人次"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_55"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/ds_30"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:text="距离揭晓还需288人次"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_55"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_30"
+            android:layout_marginTop="@dimen/ds_30"
+            android:background="@color/color_cc"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_65"
+            android:textColor="@color/color_00"
+            android:text="@string/issue_no_activity"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_30"
+            android:layout_marginTop="@dimen/ds_30"
+            android:background="@color/color_cc"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_150"
+            android:id="@+id/issue_product_ll01"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="@dimen/ds_90"
+                    android:layout_height="@dimen/ds_90"
+                    android:background="@drawable/home_right_arrow_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/issue_product__img" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text="@string/issue_imagetext"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/issue_product__img"
+                    android:gravity="center"
+                    android:text="@string/issue_wifi"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_3"
+            android:background="@color/color_cc"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_150"
+            android:id="@+id/issue_product_ll02"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="@dimen/ds_90"
+                    android:layout_height="@dimen/ds_90"
+                    android:background="@drawable/home_right_arrow_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:id="@+id/top_img" />
+                <TextView
+                    android:id="@+id/placord_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text="@string/issue_announce"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_30"
+            android:background="@color/color_cc"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_150"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_50"
+                    android:gravity="center"
+                    android:text="2016-05-12 18：25:24 开始"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_50"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text="@string/issue_record"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+</LinearLayout>

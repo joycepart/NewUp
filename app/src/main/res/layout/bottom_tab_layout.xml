@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f5f5f5"
+    android:paddingBottom="@dimen/ds_5"
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:layout_marginBottom="@dimen/ds_1"
+        android:layout_marginTop="@dimen/ds_1"
+        android:background="@color/color_cc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/ds_15"
+        android:orientation="horizontal">
+
+        <LinearLayout style="@style/BottomTabItemLayout">
+
+            <TextView
+                android:id="@+id/tv_tab_home"
+                style="@style/BottomTabItemText"
+                android:text="@string/tab_main" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/BottomTabItemLayout">
+
+            <TextView
+                android:id="@+id/tv_tab_unused"
+                style="@style/BottomTabItemText"
+                android:text="@string/tab_unused" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/BottomTabItemLayout"
+            android:clickable="false" />
+
+        <LinearLayout style="@style/BottomTabItemLayout">
+
+            <TextView
+                android:id="@+id/tv_tab_information"
+                style="@style/BottomTabItemText"
+                android:text="@string/tab_information" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/BottomTabItemLayout">
+
+            <TextView
+                android:id="@+id/tv_tab_mine"
+                style="@style/BottomTabItemText"
+                android:text="@string/tab_mine" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tab_issue"
+        style="@style/BottomTabItemText"
+        android:layout_centerHorizontal="true"
+        android:text="@string/tab_issue" />
+</RelativeLayout>

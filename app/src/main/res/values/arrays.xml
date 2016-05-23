@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="curing_order_tab">
+        <item>全部</item>
+        <item>未付款</item>
+        <item>已付款</item>
+        <item>已完成</item>
+    </string-array>
+    <string-array name="curing_major_tab">
+        <item>基础清洗</item>
+        <item>补色修复</item>
+        <item>专业维修</item>
+    </string-array>
+</resources>

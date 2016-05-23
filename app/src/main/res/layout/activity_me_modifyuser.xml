@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_200"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/modf_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/me_name"
+                android:textSize="@dimen/fs_70"
+                android:textColor="@color/color_00"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/ds_40"
+                />
+
+            <EditText
+                android:id="@+id/modify_et"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/ds_50"
+                android:layout_toRightOf="@+id/modf_tv"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:hint="用户名"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/ds_20"
+                android:textColor="@color/color_00"
+                android:textColorHint="@color/color_00"
+                android:textSize="@dimen/fs_70" />
+                />
+                <ImageView
+                    android:layout_width="@dimen/ds_80"
+                    android:layout_height="@dimen/ds_80"
+                    android:layout_marginTop="@dimen/ds_50"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_70"
+                    android:background="@drawable/search_clear_icon"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/color_cc"/>
+    <Button
+        android:id="@+id/modify_Btn"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/ds_150"
+        android:layout_marginLeft="@dimen/ds_250"
+        android:layout_marginRight="@dimen/ds_250"
+        android:layout_marginTop="@dimen/ds_100"
+        android:background="@drawable/btn_login_selector"
+        android:text="@string/me_determine"
+        android:textColor="@color/color_ff"
+        android:textSize="@dimen/fs_70" />
+
+
+
+</LinearLayout>

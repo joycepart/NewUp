@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_frame_issue_toannounce"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        cube_ptr:ptr_resistance="2.7"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_duration_to_close="300"
+        cube_ptr:ptr_duration_to_close_header="2000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false" >
+
+        <ListView
+            android:id="@+id/issue_toannounce_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="?attr/lineColor"
+            android:listSelector="@color/color_cc"
+            android:dividerHeight="@dimen/ds_1"
+            />
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+</LinearLayout>

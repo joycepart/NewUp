@@ -1,0 +1,113 @@
+<resources>
+    <string name="tab1_name">tab1</string>
+    <string name="common_loading">加载中&#8230;</string>
+    <string name="tab_main">首页</string>
+    <string name="app_name">清奢</string>
+    <string name="demo_simple_title">简单list测试</string>
+    <string name="tab_home">首页</string>
+    <string name="app_day">每日推荐</string>
+    <string name="hot_special">热门专题</string>
+    <string name="tab_home_door">线下门店</string>
+    <string name="tab_unused">闲置</string>
+    <string name="tab_issue">夺宝岛</string>
+    <string name="tab_information">消息</string>
+    <string name="tab_mine">我的</string>
+    <string name="tab_me_a">您还没有登录哦</string>
+    <string name="tab_me_b">点击登录</string>
+    <string name="tab_me_c">闲置订单</string>
+    <string name="tab_me_d">养护订单</string>
+    <string name="tab_me_e">我的发布</string>
+    <string name="tab_me_f">我的优惠劵</string>
+    <string name="tab_me_g">我的收入</string>
+    <string name="tab_me_close">退出登录</string>
+    <string name="tab_me_h">关于我们</string>
+    <string name="tab_me_i">关于退货</string>
+    <string name="tab_me_j">超级客服在线（9:00—18:00）</string>
+    <string name="tab_me_n">夺宝记录</string>
+    <string name="common_service_phone">4004156156</string>
+
+    <string name="tab_me_kefu">客服电话：400—630—8055</string>
+    <string name="tab_me_l">官方QQ群：498262127</string>
+    <string name="tab_me_m">版本信息： 1.0.0</string>
+    <string name="issue_a">人品大爆发：</string>
+    <string name="login_top">旧爱如新</string>
+    <string name="login_et_ip">请输入手机号</string>
+    <string name="login_et">获取验证码</string>
+    <string name="login_et_pwd">验证码</string>
+    <string name="login_tv"> 我已阅读并同意</string>
+    <string name="login_tv_pro"> 用户注册协议</string>
+    <string name="login_lg">登录</string>
+    <string name="curing_clean">基础清洗</string>
+    <string name="curing_repair">补色修复</string>
+    <string name="curing_maintain">专业维护</string>
+    <string name="curing_order_whole">全部</string>
+    <string name="curing_order_paymentno">未付款</string>
+    <string name="curing_order_payment">已付款</string>
+    <string name="curing_order_complete">已完成</string>
+
+    <string name="me_exchange">兑换</string>
+    <string name="me_code">兑换码</string>
+    <string name="me_free">免费</string>
+    <string name="me_coupon">优惠劵</string>
+    <string name="me_registered">新手注册劵</string>
+    <string name="me_data">2016-05-29</string>
+    <string name="me_overdue">过期</string>
+
+    <string name="me_income_detail"> 交易明细</string>
+    <string name="me_income_balance">可提现余额:</string>
+    <string name="me_income_accumulated">累计收入</string>
+    <string name="me_income_meney">¥</string>
+    <string name="me_income_withdrawals">提现</string>
+    <string name="me_name">用户名</string>
+    <string name="me_phone_number">绑定手机号</string>
+    <string name="me_determine">确定</string>
+
+    <string name="order_submit">提交订单</string>
+    <string name="order_take_method">取送方式：</string>
+    <string name="order_receipt_address">收货地址：</string>
+    <string name="order_mail">请将物品寄到：北京市通州区宋庄镇南堡南街141号心上（收），010—60572565.服务完成后，将寄还到您填写的地址。</string>
+    <string name="order_service">上门服务费：</string>
+    <string name="order_coupon">优惠劵：</string>
+    <string name="order_total">合计：</string>
+    <string name="order_payment_method">请选择支付方式：</string>
+    <string name="order_payment">去支付</string>
+    <string name="order_weixin">微信支付</string>
+    <string name="order_zhifubao">支付宝...</string>
+    <string name="order_member">会员余额支付 0</string>
+    <string name="order_contact">联系客服</string>
+    <string name="order_immediate">立即下单</string>
+
+    <string name="order_new_address">添加新地址</string>
+
+    <string name="issue_indiana">夺宝进度</string>
+    <string name="issue_progress">-</string>
+    <string name="address_consignee">* 收货人</string>
+    <string name="address_ipone">* 手机号码</string>
+    <string name="address_cities">* 填写省市</string>
+    <string name="address_consignee_in">请填写收货人姓名</string>
+    <string name="address_ipone_in">请填写收货人手机号</string>
+    <string name="address_cities_in">请填写省、市</string>
+    <string name="address_detail_in">请填写收货人详细地址</string>
+    <string name="address_detail">* 详细地址</string>
+    <string name="address_preservation">保存</string>
+    <string name="vouchers_cancel">取消</string>
+    <string name="vouchers">代金劵</string>
+    <string name="vouchers_no">暂无优惠劵</string>
+    <string name="vouchers_no_no">暂无可用的优惠劵哦</string>
+    <string name="issue_in">立即参与</string>
+    <string name="issue_random">颜色随机</string>
+    <string name="issue_no_activity">您未参与本次夺宝活动</string>
+    <string name="issue_imagetext">图文详情</string>
+    <string name="issue_wifi">建议在wifi环境打开</string>
+    <string name="issue_announce">往期揭晓</string>
+    <string name="issue_record">用户参与记录</string>
+    <string name="issue_time">揭晓时间:</string>
+    <string name="issue_luckyuser">幸运用户:</string>
+    <string name="issue_luckynumber">幸运号码:</string>
+    <string name="issue_participation">参与人次:</string>
+    <string name="issue_stage">第十九期</string>
+    <string name="transaction_no">暂无明细</string>
+    <string name="transaction_no_operation">您还没有进行过交易操作哦</string>
+
+
+</resources>
