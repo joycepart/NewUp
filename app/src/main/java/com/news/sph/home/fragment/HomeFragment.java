@@ -1,8 +1,8 @@
 package com.news.sph.home.fragment;
 
-import android.graphics.Bitmap;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +30,9 @@ import com.news.sph.home.entity.HomeSpecialEntity;
 import com.news.sph.home.entity.HomeSpecialResult;
 import com.news.sph.home.utils.HomeUiGoto;
 import com.news.sph.unused.fragment.UnusedFragment;
+import com.news.sph.utils.ImageLoaderUtils;
 import com.news.sph.utils.LogUtils;
 import com.news.sph.widget.ViewFlowLayout;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,20 +81,20 @@ public class HomeFragment extends BaseFragment {
 
     private String mSpecSrc;
 
-
+    View header;
     @Override
     public void initView(View view) {
 //        mTopLl = (LinearLayout) view.findViewById(R.id.top_ll);
 //        mTopLl.setVisibility(View.GONE);
         mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
-
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mVfLayout = new ViewFlowLayout(getActivity());
-        View header = LayoutInflater.from(getActivity()).inflate(
-                R.layout.view_home_view, null);
+        ViewFlowLayout.LayoutParams lp = new ViewFlowLayout.LayoutParams(ViewFlowLayout.LayoutParams.MATCH_PARENT, ViewFlowLayout.LayoutParams.WRAP_CONTENT);
+        mVfLayout.setLayoutParams(lp);
+         header = LayoutInflater.from(getActivity()).inflate(
+                R.layout.view_home_view, mRecyclerview,false);
         initHeader(header);
         mRecyclerview.setAdapter(mAdapter);
-        mRecyclerview.addHeaderView(mVfLayout);
-        mRecyclerview.addHeaderView(header);
 
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
@@ -120,6 +119,29 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    private void homeAdver() {
+        BaseDTO dto = new BaseDTO();
+        CommonApiClient.homeAdcer(getActivity(), dto, new CallBack<HomeAdcerResult>() {
+            @Override
+            public void onSuccess(HomeAdcerResult result) {
+                if (AppConfig.SUCCESS.equals(result.getStatus())) {
+                    LogUtils.e("首页广告成功");
+                    mAdData = result.getData();
+                    if (mAdData != null && mAdData.size() != 0) {
+                        ArrayList<ViewFlowBean> list = new ArrayList<>();
+                        for (int i = 0; i < mAdData.size(); i++) {
+                            ViewFlowBean bean = new ViewFlowBean();
+                            bean.setImgUrl(AppConfig.BASE_URL + mAdData.get(i).getSpec_pic());
+                            list.add(bean);
+                        }
+                        mVfLayout.updateView(list);
+                        mRecyclerview.addHeaderView(mVfLayout);
+                        mRecyclerview.addHeaderView(header);
+                    }
+                }
+            }
+        });
+    }
 
     private void initHeader(View view) {
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
@@ -163,73 +185,42 @@ public class HomeFragment extends BaseFragment {
         mVpagerTvt3 = (TextView) mView.findViewById(R.id.home_vpager_tv03);
         if (result != null && result.size() != 0) {
 
-            for(int i = 0; i<result.size();i++) {
+            for (int i = 0; i < result.size(); i++) {
 
-        switch (i % 3) {
-            case 0: {
-                mVpagerTv1.setText(result.get(i).getSna_remark());
-                mVpagerTvt1.setText(result.get(i).getSna_term());
-                String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
-                ImageLoader.getInstance().displayImage(mPicUrl, mVpagerImg1, getImageOptions());
-                break;
-            }
-            case 1: {
-                mVpagerTv2.setText(result.get(i).getSna_remark());
-                mVpagerTvt2.setText(result.get(i).getSna_term());
-                String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
-                ImageLoader.getInstance().displayImage(mPicUrl, mVpagerImg2, getImageOptions());
-                break;
-            }
-            case 2: {
-                mVpagerTv3.setText(result.get(i).getSna_remark());
-                mVpagerTvt3.setText(result.get(i).getSna_term());
-                String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
-                ImageLoader.getInstance().displayImage(mPicUrl, mVpagerImg3, getImageOptions());
-                views.add(mView);
-                break;
+                switch (i % 3) {
+                    case 0: {
+                        mVpagerTv1.setText(result.get(i).getSna_remark());
+                        mVpagerTvt1.setText(result.get(i).getSna_term());
+                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                        ImageLoaderUtils.displayImage(mPicUrl, mVpagerImg1);
+                        break;
+                    }
+                    case 1: {
+                        mVpagerTv2.setText(result.get(i).getSna_remark());
+                        mVpagerTvt2.setText(result.get(i).getSna_term());
+                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                        ImageLoaderUtils.displayImage(mPicUrl, mVpagerImg2);
+                        break;
+                    }
+                    case 2: {
+                        mVpagerTv3.setText(result.get(i).getSna_remark());
+                        mVpagerTvt3.setText(result.get(i).getSna_term());
+                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                        ImageLoaderUtils.displayImage(mPicUrl, mVpagerImg3);
+                        views.add(mView);
+                        break;
+                    }
+                }
+                if (i == mRecomendData.size() - 1 && (i + 1) % 3 != 0) {
+                    views.add(mView);
+                }
             }
         }
-        if (i == mRecomendData.size() - 1 && (i + 1) % 3 != 0) {
-            views.add(mView);
-        }
-    }
-}
 
         mViewPager.setAdapter(new MyViewPagerAdapter(views));
         mViewPager.setCurrentItem(0);
         mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
 
-    }
-
-    public DisplayImageOptions getImageOptions() {
-        return new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-    }
-
-
-    private void homeAdver() {
-        BaseDTO dto = new BaseDTO();
-        CommonApiClient.homeAdcer(getActivity(), dto, new CallBack<HomeAdcerResult>() {
-            @Override
-            public void onSuccess(HomeAdcerResult result) {
-                if (AppConfig.SUCCESS.equals(result.getStatus())) {
-                    LogUtils.e("首页广告成功");
-                    mAdData = result.getData();
-                    if (mAdData != null && mAdData.size() != 0) {
-                        ArrayList<ViewFlowBean> list = new ArrayList<>();
-                        for (int i = 0; i < mAdData.size(); i++) {
-                            ViewFlowBean bean = new ViewFlowBean();
-                            bean.setImgUrl(mAdData.get(i).getSpec_pic());
-                            list.add(bean);
-                        }
-                        mVfLayout.updateView(list);
-                    }
-                }
-            }
-        });
     }
 
 
@@ -264,79 +255,78 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-        public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
 
-            public void onPageScrollStateChanged(int arg0) {
+        public void onPageScrollStateChanged(int arg0) {
 
-
-            }
-
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-
-            }
-
-            public void onPageSelected(int arg0) {
-
-            }
 
         }
 
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
 
 
-        @Override
-        public void onClick (View v){
-            switch (v.getId()) {
-                case R.id.top_home_xianxia:
-                    mUrlOffline = AppConfig.URL_OFFLINE;
-                    mOfflineTitle = "线下门店 - 倾奢";
-                    HomeUiGoto.OfflineStore(getActivity(), mUrlOffline, mOfflineTitle);
-                    break;
-                case R.id.home_img1:
-                    HomeUiGoto.curing(getActivity());
-                    break;
-                case R.id.home_img3:
-                    mUrlHelp = AppConfig.URL_TRANSACTION;
-                    mHelpTitle = "交易帮助 - 倾奢";
-                    HomeUiGoto.help(getActivity(), mUrlSpecial, mSpecialTitle);
-                    break;
+        }
+
+        public void onPageSelected(int arg0) {
+
+        }
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.top_home_xianxia:
+                mUrlOffline = AppConfig.URL_OFFLINE;
+                mOfflineTitle = "线下门店 - 倾奢";
+                HomeUiGoto.OfflineStore(getActivity(), mUrlOffline, mOfflineTitle);
+                break;
+            case R.id.home_img1:
+                HomeUiGoto.curing(getActivity());
+                break;
+            case R.id.home_img3:
+                mUrlHelp = AppConfig.URL_TRANSACTION;
+                mHelpTitle = "交易帮助 - 倾奢";
+                HomeUiGoto.help(getActivity(), mUrlSpecial, mSpecialTitle);
+                break;
 //            case R.id.view_home_frame:
 //                mUrlSpecial = AppConfig.URL_SPECIAL;
 //                mSpecialTitle= "专题/广告详情";
 //                HomeUiGoto.special(getActivity(),mUrlSpecial,mSpecialTitle);
 //                break;
-                case R.id.home_img_lf:
-                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+            case R.id.home_img_lf:
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
 
-                    break;
-                case R.id.home_img_rg:
-                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-                    break;
-                case R.id.home_img_dian:
-                    UnusedFragment unusedFragment = new UnusedFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.realtabcontent, unusedFragment);
-                    transaction.commit();
-                    break;
-                default:
-                    break;
+                break;
+            case R.id.home_img_rg:
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                break;
+            case R.id.home_img_dian:
+                UnusedFragment unusedFragment = new UnusedFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.realtabcontent, unusedFragment);
+                transaction.commit();
+                break;
+            default:
+                break;
 
-            }
-            super.onClick(v);
         }
-
-        @Override
-        protected int getLayoutResId () {
-            return R.layout.fragment_home;
-        }
-        @Override
-        public void initData () {
-            homeAdver();//首页广告
-            homeSpecial();//首页专题列表
-            homeRecommend();//首页推荐
-        }
-
-
-
+        super.onClick(v);
     }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    public void initData() {
+        homeAdver();//首页广告
+//            homeSpecial();//首页专题列表
+//            homeRecommend();//首页推荐
+    }
+
+
+}
