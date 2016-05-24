@@ -5,24 +5,23 @@ package com.news.sph.home.entity;
  */
 public class HomeAdcerEntity {
     /* 编号，主键*/
-    private String ID  ;
+    private String mID  ;
     /* 广告图片*/
-    private String spec_pic;
-
-    public String getID() {
-        return ID;
+    private String mSpecPic;
+    public String getmID() {
+        return mID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setmID(String mID) {
+        this.mID = mID;
     }
 
-    public String getSpec_pic() {
-        return spec_pic;
+    public String getmSpecPic() {
+        return mSpecPic;
     }
 
-    public void setSpec_pic(String spec_pic) {
-        this.spec_pic = spec_pic;
+    public void setmSpecPic(String mSpecPic) {
+        this.mSpecPic = mSpecPic;
     }
 
 

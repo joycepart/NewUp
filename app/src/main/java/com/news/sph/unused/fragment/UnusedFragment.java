@@ -25,8 +25,8 @@ import java.util.List;
 public class UnusedFragment extends BaseListFragment<HotTopEntity> {
     TextView mTopTv;
 
-    private String mSpecName;
-    private String mSpecSrc;
+    private String mName;
+    private String mUrl;
 
     @Override
     public void initView(View view) {
@@ -77,9 +77,9 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
 
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
-        mSpecSrc = AppConfig.URL_SPECIAL;
-        mSpecName = "专题/广告详情";
-        UnusedUiGoto.special(getActivity(),mSpecSrc,mSpecName);//   专题/广告详情页面
+        mUrl = AppConfig.URL_SPECIAL;
+        mName = "专题/广告详情";
+        UnusedUiGoto.special(getActivity(),mUrl,mName);//   专题/广告详情页面
         super.onItemClick(itemView, itemBean, position);
     }
 }

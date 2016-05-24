@@ -42,14 +42,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     public void initView() {
         setTitleText("提交订单");
         mBaseTitlebarEnsure.setVisibility(View.VISIBLE);
-        mPlaceTake.setOnClickListener(this);
-        mPlaceAddress.setOnClickListener(this);
-        mPlaceCoupon.setOnClickListener(this);
-        mPlacePayWx.setOnClickListener(this);
-        mPlacePayAli.setOnClickListener(this);
-        mPlacePyaBan.setOnClickListener(this);
-        mPayBtn.setOnClickListener(this);
-
     }
 
     @Override

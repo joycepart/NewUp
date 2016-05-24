@@ -14,7 +14,6 @@ import com.news.sph.common.base.BrowserActivity;
 public class InformationUiGoto {
     /**
      * 跳转到新闻详情页（加载h5页面）
-     *
      * @param context
      * @param mNewsBigTitle
      * @param mUrl

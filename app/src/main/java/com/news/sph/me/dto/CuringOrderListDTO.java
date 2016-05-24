@@ -6,16 +6,15 @@ import com.news.sph.common.dto.BaseDTO;
  * Created by lenovo on 2016/5/20.
  */
 public class CuringOrderListDTO extends BaseDTO {
-    public String getAppreqtype() {
-        return appreqtype;
+    /*请求状态(不填是请求全部)
+                 */
+    private String mAppreqtype;
+    public String getmAppreqtype() {
+        return mAppreqtype;
     }
 
-    public void setAppreqtype(String appreqtype) {
-        this.appreqtype = appreqtype;
+    public void setmAppreqtype(String mAppreqtype) {
+        this.mAppreqtype = mAppreqtype;
     }
 
-    /*
-            请求状态(不填是请求全部)
-             */
-    private String appreqtype;
 }

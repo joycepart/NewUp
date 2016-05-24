@@ -9,11 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.news.sph.R;
-import com.news.sph.common.base.BaseListAdapter;
-import com.news.sph.me.entity.CuringOrder;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by lenovo on 2016/5/17.

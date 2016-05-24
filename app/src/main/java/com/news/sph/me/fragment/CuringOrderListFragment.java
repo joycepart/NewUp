@@ -9,19 +9,15 @@ import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseFragment;
-import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.me.activity.CuringOrderActivity;
 import com.news.sph.me.adapter.CuringOrderAdapter;
 import com.news.sph.me.dto.CuringOrderListDTO;
-import com.news.sph.me.entity.CuringOrder;
 import com.news.sph.me.entity.CuringOrderListEntity;
 import com.news.sph.me.entity.CuringOrderListResult;
-import com.news.sph.me.entity.MyIncomeResult;
 import com.news.sph.utils.LogUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,8 +27,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Created by lenovo on 2016/5/17.
  */
 public class CuringOrderListFragment extends BaseFragment {
-    @Bind(R.id.ptr_frame_curingorder)
-    PtrFrameLayout mPtrFrameCuringorder;
     @Bind(R.id.curingorder_list)
     ListView mCuringorderList;
     private static final String TYPE = "type";
@@ -50,8 +44,6 @@ public class CuringOrderListFragment extends BaseFragment {
             "1%","2%","3%","4%","5%","6%","7%","8%",
     };
 
-    private ImageView img;
-
     public static CuringOrderListFragment newInstance(int type) {
         CuringOrderListFragment fragment = new CuringOrderListFragment();
         Bundle bundle = new Bundle();
@@ -66,13 +58,8 @@ public class CuringOrderListFragment extends BaseFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             type = bundle.getInt(TYPE, CuringOrderActivity.TAB_D);
-//            if(type =1){
-//
-//            }
         }
     }
-
-
 
     @Override
     protected int getLayoutResId() {
@@ -81,35 +68,31 @@ public class CuringOrderListFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        strPhoneNum = AppContext.getInstance().getUser().getUserMobile();
+        strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
         appreqtype = "";
-        curingOrder();
-        mCuringorderList.setAdapter(new CuringOrderAdapter(getActivity(),mImgpic,mStr1,mStr2));
     }
 
     private void curingOrder() {
         CuringOrderListDTO cdto=new CuringOrderListDTO();
         cdto.setMembermob(strPhoneNum);
-        cdto.setAppreqtype(appreqtype);
+        cdto.setmAppreqtype(appreqtype);
         cdto.setSign(AppConfig.SIGN_1);
         CommonApiClient.CuringOrderList(getActivity(), cdto, new CallBack<CuringOrderListResult>() {
             @Override
             public void onSuccess(CuringOrderListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("我的收入请求成功");
-                    curingOrderList(result.getData());
                 }
-
 
             }
         });
     }
 
-    private void curingOrderList(List<CuringOrderListEntity> data) {
-    }
 
     @Override
     public void initData() {
+        curingOrder();
+        mCuringorderList.setAdapter(new CuringOrderAdapter(getActivity(),mImgpic,mStr1,mStr2));
 
     }
 }

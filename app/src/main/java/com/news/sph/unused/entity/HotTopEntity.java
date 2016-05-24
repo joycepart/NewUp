@@ -5,24 +5,24 @@ package com.news.sph.unused.entity;
  */
 public class HotTopEntity {
     /* 专题图片 */
-    private String spec_pic;
+    private String mSpecPic;
     /*点击专题要跳转的url*/
-    private String spec_src;
+    private String mSpecSrc;
 
-    public String getSpec_pic() {
-        return spec_pic;
+    public String getmSpecPic() {
+        return mSpecPic;
     }
 
-    public void setSpec_pic(String spec_pic) {
-        this.spec_pic = spec_pic;
+    public void setmSpecPic(String mSpecPic) {
+        this.mSpecPic = mSpecPic;
     }
 
-    public String getSpec_src() {
-        return spec_src;
+    public String getmSpecSrc() {
+        return mSpecSrc;
     }
 
-    public void setSpec_src(String spec_src) {
-        this.spec_src = spec_src;
+    public void setmSpecSrc(String mSpecSrc) {
+        this.mSpecSrc = mSpecSrc;
     }
 
 

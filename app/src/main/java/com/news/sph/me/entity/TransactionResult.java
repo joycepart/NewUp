@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class TransactionResult extends BaseEntity {
+    List<TransactionEntity> data;
     public List<TransactionEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class TransactionResult extends BaseEntity {
         this.data = data;
     }
 
-    List<TransactionEntity> data;
+
 }

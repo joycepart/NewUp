@@ -20,6 +20,7 @@ import com.news.sph.common.bean.ViewFlowBean;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
+import com.news.sph.home.adapter.HomeRecyclerAdapter;
 import com.news.sph.home.adapter.HomeSpecialAdapter;
 import com.news.sph.home.adapter.MyViewPagerAdapter;
 import com.news.sph.home.entity.HomeAdcerEntity;
@@ -44,21 +45,8 @@ public class HomeFragment extends BaseFragment {
 
     PtrRecyclerView mRecyclerview;
     ViewFlowLayout mVfLayout;
-    private BaseRecyclerAdapter mAdapter = new BaseRecyclerAdapter() {
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        }
-
-        @Override
-        public void bindData(BaseRecyclerViewHolder holder, Object itemBean, int position, int viewType) {
-
-        }
-    };
-
-
-    LinearLayout mTopLl;
-
+    private HomeRecyclerAdapter mHomeRecycler;
 
     ViewPager mViewPager;
     ImageView mImgLeft, mImgRight, mVpagerImg1, mVpagerImg2, mVpagerImg3;
@@ -66,10 +54,9 @@ public class HomeFragment extends BaseFragment {
     private HomeSpecialAdapter specialAdapter;
     List<HomeAdcerEntity> mAdData;
     List<HomeRecommendEntity> mRecomendData;
+    List<HomeSpecialEntity> mHomeSpecial;
     private List<View> views;
     private View mView;
-    LinearLayout mTopHomeXianXia, mViewHomeFrame;
-    ImageView mHomeImg1, mHomeImg3, mHomeImgDian;
 
     private String mUrlSpecial;
     private String mSpecialTitle;
@@ -82,10 +69,20 @@ public class HomeFragment extends BaseFragment {
     private String mSpecSrc;
 
     View header;
+
+    private BaseRecyclerAdapter mBaseRecycler = new BaseRecyclerAdapter() {
+        @Override
+        public void bindData(BaseRecyclerViewHolder holder, Object itemBean, int position, int viewType) {
+
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        }
+    };
     @Override
     public void initView(View view) {
-//        mTopLl = (LinearLayout) view.findViewById(R.id.top_ll);
-//        mTopLl.setVisibility(View.GONE);
         mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mVfLayout = new ViewFlowLayout(getActivity());
@@ -94,8 +91,8 @@ public class HomeFragment extends BaseFragment {
          header = LayoutInflater.from(getActivity()).inflate(
                 R.layout.view_home_view, mRecyclerview,false);
         initHeader(header);
-        mRecyclerview.setAdapter(mAdapter);
-
+        homeSpecial();
+        mRecyclerview.setAdapter(mBaseRecycler);
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -106,16 +103,6 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-
-//        mHomeImg1 = (ImageView) view.findViewById(R.id.home_img1);
-//        mHomeImg3 = (ImageView) view.findViewById(R.id.home_img3);
-//        mHomeImgDian = (ImageView) view.findViewById(R.id.home_img_dian);
-//        mTopHomeXianXia = (LinearLayout) view.findViewById(R.id.top_home_xianxia);
-//
-//        mHomeImg1.setOnClickListener(this);
-//        mHomeImg3.setOnClickListener(this);
-//        mHomeImgDian.setOnClickListener(this);
-//        mTopHomeXianXia.setOnClickListener(this);
 
     }
 
@@ -131,7 +118,7 @@ public class HomeFragment extends BaseFragment {
                         ArrayList<ViewFlowBean> list = new ArrayList<>();
                         for (int i = 0; i < mAdData.size(); i++) {
                             ViewFlowBean bean = new ViewFlowBean();
-                            bean.setImgUrl(AppConfig.BASE_URL + mAdData.get(i).getSpec_pic());
+                            bean.setImgUrl(AppConfig.BASE_URL + mAdData.get(i).getmSpecPic());
                             list.add(bean);
                         }
                         mVfLayout.updateView(list);
@@ -161,7 +148,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(HomeRecomendResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页推荐成功");
-                    setRecomendResult(result.getData());
+//                    setRecomendResult(result.getData());
 
                 }
 
@@ -189,23 +176,23 @@ public class HomeFragment extends BaseFragment {
 
                 switch (i % 3) {
                     case 0: {
-                        mVpagerTv1.setText(result.get(i).getSna_remark());
-                        mVpagerTvt1.setText(result.get(i).getSna_term());
-                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                        mVpagerTv1.setText(result.get(i).getmSnaRemark());
+                        mVpagerTvt1.setText(result.get(i).getmSnaTerm());
+                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getmPicUrl();
                         ImageLoaderUtils.displayImage(mPicUrl, mVpagerImg1);
                         break;
                     }
                     case 1: {
-                        mVpagerTv2.setText(result.get(i).getSna_remark());
-                        mVpagerTvt2.setText(result.get(i).getSna_term());
-                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                        mVpagerTv2.setText(result.get(i).getmSnaRemark());
+                        mVpagerTvt2.setText(result.get(i).getmSnaTerm());
+                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getmPicUrl();
                         ImageLoaderUtils.displayImage(mPicUrl, mVpagerImg2);
                         break;
                     }
                     case 2: {
-                        mVpagerTv3.setText(result.get(i).getSna_remark());
-                        mVpagerTvt3.setText(result.get(i).getSna_term());
-                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                        mVpagerTv3.setText(result.get(i).getmSnaRemark());
+                        mVpagerTvt3.setText(result.get(i).getmSnaTerm());
+                        String mPicUrl = AppConfig.BASE_URL + result.get(i).getmPicUrl();
                         ImageLoaderUtils.displayImage(mPicUrl, mVpagerImg3);
                         views.add(mView);
                         break;
@@ -231,7 +218,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(HomeSpecialResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页专题成功");
-                    homeSpecialResult(result.getData());
+//                    homeSpecialResult(result.getData());
 
                 }
 
@@ -244,12 +231,12 @@ public class HomeFragment extends BaseFragment {
             ArrayList<HomeSpecialEntity> list = new ArrayList<>();
             for (int i = 0; i < mAdData.size(); i++) {
                 HomeSpecialEntity special = new HomeSpecialEntity();
-                special.setSpec_pic(mAdData.get(i).getSpec_pic());
+                special.setmSpecPic(mAdData.get(i).getmSpecPic());
                 list.add(special);
             }
 //            mRecyclerview.setAdapter(new HomeSpecialAdapter(getActivity(),list));//这里是走mRecyclerview的adapter走自己定义的？
-            specialAdapter.addContent(list);
-            specialAdapter.notifyDataSetChanged();
+//            specialAdapter.addContent(list);
+//            specialAdapter.notifyDataSetChanged();
 
         }
     }
@@ -325,7 +312,7 @@ public class HomeFragment extends BaseFragment {
     public void initData() {
         homeAdver();//首页广告
 //            homeSpecial();//首页专题列表
-//            homeRecommend();//首页推荐
+            homeRecommend();//首页推荐
     }
 
 

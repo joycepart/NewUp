@@ -4,64 +4,66 @@ package com.news.sph.issue.entity;
  * Created by lenovo on 2016/5/20.
  */
 public class WinningEntity {
-    public String getBat_code() {
-        return bat_code;
-    }
-
-    public void setBat_code(String bat_code) {
-        this.bat_code = bat_code;
-    }
-
-    public String getSna_code() {
-        return sna_code;
-    }
-
-    public void setSna_code(String sna_code) {
-        this.sna_code = sna_code;
-    }
-
-    public String getSna_lucky_people() {
-        return sna_lucky_people;
-    }
-
-    public void setSna_lucky_people(String sna_lucky_people) {
-        this.sna_lucky_people = sna_lucky_people;
-    }
-
-    public String getSna_term() {
-        return sna_term;
-    }
-
-    public void setSna_term(String sna_term) {
-        this.sna_term = sna_term;
-    }
-
-    public String getSna_title() {
-        return sna_title;
-    }
-
-    public void setSna_title(String sna_title) {
-        this.sna_title = sna_title;
-    }
-
     /*
-                        批次号
-                           */
-    private String bat_code  ;
+                     批次号
+                          */
+    private String mBatCode  ;
     /*
                     夺宝商品号
                        */
-    private String sna_code  ;
+    private String mSnaCode  ;
     /*
                   标题
                        */
-    private String sna_title  ;
+    private String mSnaTitle  ;
     /*
                    期数
                        */
-    private String sna_term  ;
+    private String mSnaTerm  ;
     /*
-                    幸运用户
-                       */
-    private String sna_lucky_people  ;
+                        幸运用户
+                           */
+    private String mSnaLuckyPeople  ;
+
+    public String getmBatCode() {
+        return mBatCode;
+    }
+
+    public void setmBatCode(String mBatCode) {
+        this.mBatCode = mBatCode;
+    }
+
+    public String getmSnaCode() {
+        return mSnaCode;
+    }
+
+    public void setmSnaCode(String mSnaCode) {
+        this.mSnaCode = mSnaCode;
+    }
+
+    public String getmSnaLuckyPeople() {
+        return mSnaLuckyPeople;
+    }
+
+    public void setmSnaLuckyPeople(String mSnaLuckyPeople) {
+        this.mSnaLuckyPeople = mSnaLuckyPeople;
+    }
+
+    public String getmSnaTerm() {
+        return mSnaTerm;
+    }
+
+    public void setmSnaTerm(String mSnaTerm) {
+        this.mSnaTerm = mSnaTerm;
+    }
+
+    public String getmSnaTitle() {
+        return mSnaTitle;
+    }
+
+    public void setmSnaTitle(String mSnaTitle) {
+        this.mSnaTitle = mSnaTitle;
+    }
+
+
 }

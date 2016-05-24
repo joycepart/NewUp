@@ -12,6 +12,8 @@ public class BaseDTO implements Serializable{
     private String membermob;
     private String timestamp;
     private String sign;
+    private int pageSize ;
+    private int pageIndex  ;
 
     public String getMembermob() {
         return membermob;
@@ -54,6 +56,4 @@ public class BaseDTO implements Serializable{
         this.pageSize = pageSize;
     }
 
-    private int pageSize ;
-    private int pageIndex  ;
 }

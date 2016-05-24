@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class IndianaListResult extends BaseEntity{
+    List<IndianaListEntity> data;
     public List<IndianaListEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class IndianaListResult extends BaseEntity{
         this.data = data;
     }
 
-    List<IndianaListEntity> data;
+
 }

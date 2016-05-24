@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class AdvertisingResult extends BaseEntity {
+    List<AdvertisingEntity> data;
     public List<AdvertisingEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class AdvertisingResult extends BaseEntity {
         this.data = data;
     }
 
-    List<AdvertisingEntity> data;
+
 }

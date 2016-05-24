@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class CuringOrderListResult extends BaseEntity {
+    List<CuringOrderListEntity> data;
     public List<CuringOrderListEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class CuringOrderListResult extends BaseEntity {
         this.data = data;
     }
 
-    List<CuringOrderListEntity> data;
+
 }

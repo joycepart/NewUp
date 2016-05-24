@@ -30,18 +30,18 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     LinearLayout mPrldLin;
     @Bind(R.id.place_btn)
     Button mPlace;
-    protected String strUrl;
-    protected String title;
+    protected String mStrUrl;
+    protected String mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent mIntent = getIntent();
         if (mIntent != null) {
-            strUrl = mIntent.getStringExtra("url");
-            title = mIntent.getStringExtra("title");
+            mStrUrl = mIntent.getStringExtra("url");
+            mTitle = mIntent.getStringExtra("title");
         }
         super.onCreate(savedInstanceState);
-        if (!TextUtils.isEmpty(title)) {
-            setTitleText(title);
+        if (!TextUtils.isEmpty(mTitle)) {
+            setTitleText(mTitle);
         }
     }
 
@@ -78,7 +78,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     @Override
     public void initData() {
 
-        mWebView.loadUrl(strUrl);
+        mWebView.loadUrl(mStrUrl);
 
 
 

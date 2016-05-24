@@ -16,6 +16,7 @@ import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.issue.entity.IndianaListEntity;
 import com.news.sph.issue.entity.IndianaListResult;
+import com.news.sph.utils.ImageLoaderUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -37,23 +38,12 @@ public class IssueAdapter extends BaseSimpleRecyclerAdapter<IndianaListEntity> {
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, IndianaListEntity indianaListEntity, int position) {
-        holder.setText(R.id.issue_tv1,indianaListEntity.getSna_term());
-        holder.setText(R.id.issue_tv2,indianaListEntity.getSna_title());
-        holder.setText(R.id.issue_tv3,indianaListEntity.getSna_term());
-        mPicUrl = indianaListEntity.getPic_url();
-        loadImg();
-    }
-
-
-    private void loadImg() {
-        //显示图片的配置
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
+        holder.setText(R.id.issue_tv1,indianaListEntity.getmSnaRemark());
+        holder.setText(R.id.issue_tv2,indianaListEntity.getmSnaTitle());
+        holder.setText(R.id.issue_tv3,indianaListEntity.getmSnaTerm());
+        mPicUrl = indianaListEntity.getmPicUrl();
         mUrl = AppConfig.BASE_URL+mPicUrl;
-        ImageLoader.getInstance().displayImage(mUrl, mIssueImg, options);
+        ImageLoaderUtils.displayImage(mUrl,mIssueImg);
     }
 
 

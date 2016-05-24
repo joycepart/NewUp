@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * 支持多布局item的adapter
- * Created by bixinwei on 16/3/9.
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
 

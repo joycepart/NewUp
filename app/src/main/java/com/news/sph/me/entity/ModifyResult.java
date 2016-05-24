@@ -1,7 +1,6 @@
 package com.news.sph.me.entity;
 
 import com.news.sph.common.entity.BaseEntity;
-import com.news.sph.home.entity.LoginEntity;
 
 import java.util.List;
 

@@ -26,14 +26,12 @@ public class CuringOrderActivity extends BaseTitleActivity {
     public static final int TAB_D = 4;
     @Bind(R.id.base_titlebar_ensure)
     TextView mBaseTitlebarEnsure;
-    private TabListAdapter mAdapter;
-    private List<Fragment> fragmentList;
     @Bind(R.id.curing_tab)
     SlidingTabLayout mCuringTab;
     @Bind(R.id.curing_content)
     ViewPager mCuringContent;
-
-
+    private TabListAdapter mAdapter;
+    private List<Fragment> fragmentList;
 
     @Override
     public void initView() {
@@ -41,11 +39,11 @@ public class CuringOrderActivity extends BaseTitleActivity {
         mBaseTitlebarEnsure.setVisibility(View.GONE);
 
         fragmentList = new ArrayList<Fragment>();
-//        fragmentList.add(CuringOrderListFragment.newInstance(TAB_B));
+        fragmentList.add(CuringOrderListFragment.newInstance(TAB_A));
+        fragmentList.add(CuringOrderListFragment.newInstance(TAB_B));
+        fragmentList.add(CuringOrderListFragment.newInstance(TAB_C));
         fragmentList.add(CuringOrderListFragment.newInstance(TAB_D));
-        fragmentList.add(CuringOrderListFragment.newInstance(TAB_D));
-        fragmentList.add(CuringOrderListFragment.newInstance(TAB_D));
-        String titles[] = getResources().getStringArray(R.array.curing_major_tab);
+        String titles[] = getResources().getStringArray(R.array.curing_order_tab);
         mAdapter = new TabListAdapter(getSupportFragmentManager(),this,titles,fragmentList);
         mCuringContent.setAdapter(mAdapter);
         mCuringContent.setOffscreenPageLimit(fragmentList.size());

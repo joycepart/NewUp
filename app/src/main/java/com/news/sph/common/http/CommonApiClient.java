@@ -8,7 +8,7 @@ import com.news.sph.home.dto.LoginDTO;
 import com.news.sph.home.entity.HomeAdcerResult;
 import com.news.sph.home.entity.HomeRecomendResult;
 import com.news.sph.home.entity.HomeSpecialResult;
-import com.news.sph.home.entity.LoginResult;
+import com.news.sph.me.entity.LoginResult;
 import com.news.sph.information.entity.InformationResult;
 import com.news.sph.issue.entity.AdvertisingResult;
 import com.news.sph.issue.entity.IndianaListResult;
@@ -80,7 +80,7 @@ public class CommonApiClient extends BaseApiClient {
                 asyncCallBack);
     }
     /**
-            * 获取新闻
+     * 获取新闻
     * @param context
     * @param dto
     * @param callback

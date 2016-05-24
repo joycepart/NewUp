@@ -12,12 +12,6 @@ import com.news.sph.common.base.BaseFragment;
 import com.news.sph.home.activity.CuringActivity;
 import com.news.sph.home.adapter.CuringAdapter;
 import com.news.sph.home.utils.HomeUiGoto;
-import com.news.sph.me.activity.CuringOrderActivity;
-import com.news.sph.me.adapter.CuringOrderAdapter;
-import com.news.sph.me.entity.CuringOrder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import in.srain.cube.views.ptr.PtrFrameLayout;

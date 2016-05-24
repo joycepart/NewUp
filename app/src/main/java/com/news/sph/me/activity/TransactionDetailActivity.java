@@ -42,8 +42,8 @@ public class TransactionDetailActivity extends BaseTitleActivity {
     public void initView() {
         setTitleText("交易明细");
         mBaseTitlebarEnsure.setVisibility(View.GONE);
-        strPhoneNum = AppContext.getInstance().getUser().getUserMobile();
-        Transaction();
+        strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
+
     }
 
     private void Transaction() {
@@ -68,7 +68,7 @@ public class TransactionDetailActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
+        Transaction();
     }
     @Override
     public void onClick(View v) {

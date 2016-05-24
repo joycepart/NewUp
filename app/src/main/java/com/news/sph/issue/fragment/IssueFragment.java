@@ -30,22 +30,15 @@ import java.util.List;
 
 
 public class IssueFragment extends BaseListFragment<IndianaListEntity> {
-
     PtrRecyclerView mRecyclerview;
-    private String mPicUrl ;
-    private String mUrl ;
-    ImageView mIssueTopImg;
     List<IndianaListEntity> mIndianaData;
 
     @Override
     public void initView(View view) {
-
         mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
         View header = LayoutInflater.from(getActivity()).inflate(
                 R.layout.view_issue_top, null);
         mRecyclerview.addHeaderView(header);
-
-//        mIssueTopImg = (ImageView) view.findViewById(R.id.issue_top_img);
 
     }
 
@@ -66,28 +59,20 @@ public class IssueFragment extends BaseListFragment<IndianaListEntity> {
 
     @Override
     protected void sendRequestData() {
-        if(!TDevice.hasInternet(getContext())){
-            return;
-        }
-        new Handler().postDelayed(new Runnable() {
+        BaseDTO dto=new BaseDTO();
+        CommonApiClient.indianaList(getActivity(), dto, new CallBack<IndianaListResult>() {
             @Override
-            public void run() {
-                IndianaListResult result=new IndianaListResult();
-                result.setData(mIndianaData);
-                requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
-                setDataResult(mIndianaData);//设置数据
+            public void onSuccess(IndianaListResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("夺宝列表成功");
+                    indianaListResult(result);
 
-
+                }
             }
-        }, 1500);
+        });
 
     }
 
-    private void getQequest() {
-        advertisingPicture();//夺宝顶部图片
-        winning();//中奖轮播
-        indianaList();//夺宝列表
-    }
 
     private void winning() {
         BaseDTO dto=new BaseDTO();
@@ -110,35 +95,13 @@ public class IssueFragment extends BaseListFragment<IndianaListEntity> {
     }
 
     private void advertisingResult(AdvertisingResult result) {
-//        mPicUrl = result.getData().get(0).getSpec_pic();
-//        loadAdverImg();
 
     }
 
-    private void loadAdverImg() {
-        //显示图片的配置
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-        mUrl = AppConfig.BASE_URL+mPicUrl;
-        ImageLoader.getInstance().displayImage(mUrl, mIssueTopImg, options);
-    }
+
 
     private void indianaList() {
-        BaseDTO dto=new BaseDTO();
-        CommonApiClient.indianaList(getActivity(), dto, new CallBack<IndianaListResult>() {
-            @Override
-            public void onSuccess(IndianaListResult result) {
-                if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.e("夺宝列表成功");
-                    indianaListResult(result);
 
-                }
-
-            }
-        });
 
     }
 
@@ -164,7 +127,9 @@ public class IssueFragment extends BaseListFragment<IndianaListEntity> {
 
     @Override
     public void initData() {
-        getQequest();
+        advertisingPicture();//夺宝顶部图片
+        winning();//中奖轮播
+        indianaList();//夺宝列表
     }
 
     @Override

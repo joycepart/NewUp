@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/18.
  */
 public class MyIncomeResult extends BaseEntity {
+    List<MyIncomeEntity> data;
     public List<MyIncomeEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class MyIncomeResult extends BaseEntity {
         this.data = data;
     }
 
-    List<MyIncomeEntity> data;
+
 }

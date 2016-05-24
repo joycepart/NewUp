@@ -3,7 +3,10 @@ package com.news.sph.me.fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,19 +20,54 @@ import com.news.sph.common.base.BaseFragment;
 import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.me.entity.User;
 import com.news.sph.me.utils.MeUiGoto;
+import com.news.sph.utils.ImageLoaderUtils;
 import com.news.sph.utils.LogUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MeFragment extends BaseFragment{
 
-    Button mUserBtn,mUserBtnClose,mClose;
-    RelativeLayout mLoginUc;
-    TextView mLoginTvName;
+public class MeFragment extends BaseFragment {
+
+    @Bind(R.id.user_btn)
+    Button mUserBtn;
+    @Bind(R.id.login_ll)
+    LinearLayout mLoginLl;
+    @Bind(R.id.loing_suc)
+    RelativeLayout mLoingSuc;
+    @Bind(R.id.login_tv_name)
+    TextView mLoingTvName;
+    @Bind(R.id.login_img_pic)
     ImageView mLoginImgPic;
-    LinearLayout mUserCuring,mUserIndiana,mUserCoupon,mUserIncome,mUserAbout,
-            mUserReturn,mUserService,mUserIpone,mUserQq,mUserInf,mLoginLl,mMeClose;
+    @Bind(R.id.user_ll_curing)
+    LinearLayout mUserLlCuring;
+    @Bind(R.id.user_ll_indiana)
+    LinearLayout mUserLlIndiana;
+    @Bind(R.id.user_ll_coupon)
+    LinearLayout mUserLlCoupon;
+    @Bind(R.id.user_ll_income)
+    LinearLayout mUserLlIncome;
+    @Bind(R.id.user_ll_about)
+    LinearLayout mUserLlAbout;
+    @Bind(R.id.user_ll_return)
+    LinearLayout mUserLlReturn;
+    @Bind(R.id.user_ll_service)
+    LinearLayout mUserLlService;
+    @Bind(R.id.user_ll_ipone)
+    LinearLayout mUserLlIpone;
+    @Bind(R.id.user_ll_qq)
+    LinearLayout mUserLlQq;
+    @Bind(R.id.user_ll_inf)
+    LinearLayout mUserLlInf;
+    @Bind(R.id.user_btn_close)
+    Button mUserBtnClose;
+    @Bind(R.id.me_ll_close)
+    LinearLayout mMeLlClose;
+
+
     private String mUrlUs;
     private String mUsTitle;
     private String mUrlReturn;
@@ -42,6 +80,7 @@ public class MeFragment extends BaseFragment{
     private String userName;
     private String pictruePath;
     private String pictrueUrl;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_me;
@@ -49,96 +88,58 @@ public class MeFragment extends BaseFragment{
 
     @Override
     public void initView(View view) {
-
-        mLoginLl = (LinearLayout) view.findViewById(R.id.login_ll);
-        mUserBtn = (Button) view.findViewById(R.id.user_btn);
-
-        mLoginUc = (RelativeLayout) view.findViewById(R.id.loing_suc);
-
-        mMeClose = (LinearLayout) view.findViewById(R.id.me_ll_close);
-        mClose = (Button) view.findViewById(R.id.user_btn_close);
-
-        mUserCuring = (LinearLayout) view.findViewById(R.id.user_ll_curing);
-        mUserIndiana = (LinearLayout) view.findViewById(R.id.user_ll_indiana);
-        mUserCoupon = (LinearLayout) view.findViewById(R.id.user_ll_coupon);
-        mUserIncome = (LinearLayout) view.findViewById(R.id.user_ll_income);
-        mUserAbout = (LinearLayout) view.findViewById(R.id.user_ll_about);
-        mUserReturn = (LinearLayout) view.findViewById(R.id.user_ll_return);
-        mUserService = (LinearLayout) view.findViewById(R.id.user_ll_service);
-        mUserIpone = (LinearLayout) view.findViewById(R.id.user_ll_ipone);
-        mUserQq = (LinearLayout) view.findViewById(R.id.user_ll_qq);
-        mUserInf = (LinearLayout) view.findViewById(R.id.user_ll_inf);
-
-        flag = AppContext.getInstance().getUser().getFlag();
-        LogUtils.e("flag: "+flag);
-        userName = AppContext.getInstance().getUser().getUserName();
-        LogUtils.e("userName: "+userName);
-        pictruePath = AppContext.getInstance().getUser().getPictruePath();
-        pictrueUrl = AppConfig.BASE_URL+pictruePath;
-
-        if(!flag){
-            LogUtils.e("if flag: "+"true");
+        User user =AppContext.getInstance().getUser();
+        if(user!=null && user.getFlag()==true){
             mLoginLl.setVisibility(View.GONE);
-            mLoginUc.setVisibility(View.VISIBLE);
-            mMeClose.setVisibility(View.VISIBLE);
-
-            mLoginImgPic = (ImageView) view.findViewById(R.id.login_img_pic);
-            mLoginTvName = (TextView) view.findViewById(R.id.login_tv_name);
-            mLoginTvName.setText(userName);
-            LoadImage();
-
-            mLoginUc.setOnClickListener(this);
-            mClose.setOnClickListener(this);
-
+            mLoingSuc.setVisibility(View.VISIBLE);
+            mMeLlClose.setVisibility(View.VISIBLE);
+            flag = user.getFlag();
+            userName = AppContext.getInstance().getUser().getmUserName();
+            pictruePath = AppContext.getInstance().getUser().getmPictruePath();
+            pictrueUrl = AppConfig.BASE_URL + pictruePath;
+            mLoingTvName.setText(userName);
+            ImageLoaderUtils.displayImage(pictrueUrl,mLoginImgPic);
 
         }else {
-            LogUtils.e("else flag: "+"false");
-            mLoginUc.setVisibility(View.GONE);
             mLoginLl.setVisibility(View.VISIBLE);
-            mMeClose.setVisibility(View.GONE);
-
-            mUserBtn.setOnClickListener(this);
-
+            mLoingSuc.setVisibility(View.GONE);
+            mMeLlClose.setVisibility(View.GONE);
         }
-
-
-
-        mUserCuring.setOnClickListener(this);
-        mUserIndiana.setOnClickListener(this);
-        mUserCoupon.setOnClickListener(this);
-        mUserIncome.setOnClickListener(this);
-        mUserAbout.setOnClickListener(this);
-        mUserReturn.setOnClickListener(this);
-        mUserService.setOnClickListener(this);
-        mUserIpone.setOnClickListener(this);
-        mUserQq.setOnClickListener(this);
-        mUserInf.setOnClickListener(this);
-
-
     }
 
-    private void LoadImage() {
-        //显示图片的配置
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-        ImageLoader.getInstance().displayImage(pictrueUrl, mLoginImgPic, options);
+
+    @Override
+    public void initData() {
+
     }
 
     @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        switch (v.getId()){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @OnClick({R.id.user_btn, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone, R.id.user_ll_qq,R.id.user_ll_inf, R.id.user_btn_close})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.user_btn:
                 MeUiGoto.login(getActivity());//登录
+                break;
+            case R.id.loing_suc:
+                MeUiGoto.userInformation(getActivity());//用户信息
                 break;
             case R.id.user_ll_curing:
                 MeUiGoto.maintenanceOrder(getActivity());//养护订单
                 break;
             case R.id.user_ll_indiana:
-//                MeUiGoto.maintenanceOrder(getActivity());//夺宝记录
                 break;
             case R.id.user_ll_coupon:
                 MeUiGoto.myCoupon(getActivity());//优惠劵
@@ -148,17 +149,15 @@ public class MeFragment extends BaseFragment{
                 break;
             case R.id.user_ll_about:
                 mUrlUs = AppConfig.URL_ABOUT_US;
-                mUsTitle= "关于我们 - 倾奢介绍";
-                MeUiGoto.aboutUs(getActivity(),mUrlUs,mUsTitle);//关于我们
+                mUsTitle = "关于我们 - 倾奢介绍";
+                MeUiGoto.aboutUs(getActivity(), mUrlUs, mUsTitle);//关于我们
                 break;
             case R.id.user_ll_return:
-                Intent intent6 = new Intent(getActivity(),BrowserActivity.class);
                 mUrlReturn = AppConfig.URL_ABOUT_RETURN;
-                mReturnTitle= "关于退货 - 倾奢";
-                MeUiGoto.rturn(getActivity(),mUrlReturn,mReturnTitle);//关于退货
+                mReturnTitle = "关于退货 - 倾奢";
+                MeUiGoto.rturn(getActivity(), mUrlReturn, mReturnTitle);//关于退货
                 break;
             case R.id.user_ll_service:
-                MeUiGoto.myIncome(getActivity());//超级客服在线
                 break;
             case R.id.user_ll_ipone:
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
@@ -168,32 +167,20 @@ public class MeFragment extends BaseFragment{
                 break;
             case R.id.user_ll_qq:
                 mUrlQq = AppConfig.URL_QQ;
-                mQqTitle= "官方QQ群 - 倾奢";
-                MeUiGoto.qq(getActivity(),mUrlQq,mQqTitle);//官方QQ群
+                mQqTitle = "官方QQ群 - 倾奢";
+                MeUiGoto.qq(getActivity(), mUrlQq, mQqTitle);//官方QQ群
                 break;
             case R.id.user_ll_inf:
                 mUrlInformation = AppConfig.URL_INFORMATION;
-                mInformationTitle= "版本信息 - 倾奢";
-                MeUiGoto.sinformation(getActivity(),mUrlInformation,mInformationTitle);//版本信息
-                break;
-            case R.id.loing_suc:
-                MeUiGoto.userInformation(getActivity());//用户信息
+                mInformationTitle = "版本信息";
+                MeUiGoto.sinformation(getActivity(), mUrlQq, mQqTitle);//版本信息
                 break;
             case R.id.user_btn_close:
-                mLoginUc.setVisibility(View.GONE);
                 mLoginLl.setVisibility(View.VISIBLE);
-                mMeClose.setVisibility(View.GONE);
+                mLoingSuc.setVisibility(View.GONE);
+                mMeLlClose.setVisibility(View.GONE);
                 flag = false;
                 break;
-            default:
-                break;
-
         }
-
-    }
-
-    @Override
-    public void initData() {
-
     }
 }

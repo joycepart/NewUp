@@ -15,59 +15,63 @@ public class User {
      */
     public static final int FS_NO_COMPLETED = 0;
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserMobile() {
-        return userMobile;
-    }
-
-    public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
-    }
-
     /**
      * 用户ID
      */
     @SerializedName("user_id")
-    private int userId;
+    private int mUserId;
     /**
      * 用户手机号
      */
     @SerializedName("user_mobile")
-    private String userMobile;
+    private String mUserMobile;
     /**
      * 用户名
      */
     @SerializedName("user_name")
-    private String userName;
-
-    public String getPictruePath() {
-        return pictruePath;
-    }
-
-    public void setPictruePath(String pictruePath) {
-        this.pictruePath = pictruePath;
-    }
+    private String mUserName;
 
     /**
      * 头像
      */
     @SerializedName("picture_path")
-    private String pictruePath;
+    private String mPictruePath;
+    /**
+     * 判断是否登录；
+     */
+    private Boolean flag = false;
+
+    public String getmPictruePath() {
+        return mPictruePath;
+    }
+
+    public void setmPictruePath(String mPictruePath) {
+        this.mPictruePath = mPictruePath;
+    }
+
+    public int getmUserId() {
+        return mUserId;
+    }
+
+    public void setmUserId(int mUserId) {
+        this.mUserId = mUserId;
+    }
+
+    public String getmUserMobile() {
+        return mUserMobile;
+    }
+
+    public void setmUserMobile(String mUserMobile) {
+        this.mUserMobile = mUserMobile;
+    }
+
+    public String getmUserName() {
+        return mUserName;
+    }
+
+    public void setmUserName(String mUserName) {
+        this.mUserName = mUserName;
+    }
 
     public Boolean getFlag() {
         return flag;
@@ -77,9 +81,6 @@ public class User {
         this.flag = flag;
     }
 
-    /**
-     * 判断是否登录；
-     */
-    private Boolean flag = false;
+
 
 }

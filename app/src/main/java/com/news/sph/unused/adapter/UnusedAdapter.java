@@ -9,6 +9,7 @@ import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.unused.entity.HotTopEntity;
 import com.news.sph.unused.entity.HotTopResult;
+import com.news.sph.utils.ImageLoaderUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,18 +27,11 @@ public class UnusedAdapter extends BaseSimpleRecyclerAdapter<HotTopEntity>{
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, HotTopEntity hotTopEntity, int position) {
-        ImageView mInformationImg=holder.getView( R.id.unused_list_img);
-        String mPicUrl = AppConfig.BASE_URL+hotTopEntity.getSpec_pic();
-        ImageLoader.getInstance().displayImage(mPicUrl, mInformationImg, getImageOptions());
+        ImageView mUnusedImg=holder.getView( R.id.unused_list_img);
+        String mPicUrl = AppConfig.BASE_URL+hotTopEntity.getmSpecPic();
+        ImageLoaderUtils.displayImage(mPicUrl,mUnusedImg);
     }
 
-    public DisplayImageOptions  getImageOptions(){
-        return  new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-    }
 
 
 }

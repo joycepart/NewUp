@@ -1,7 +1,6 @@
 package com.news.sph.common.bean;
 
 /**
- * Created by bixinwei on 16/5/22.
  */
 public class ViewFlowBean {
     private String imgUrl; //图片下载地址

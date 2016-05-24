@@ -1,4 +1,4 @@
-package com.news.sph.information.adapter;
+package com.news.sph.home.adapter;
 
 import android.graphics.Bitmap;
 import android.widget.ImageView;
@@ -7,31 +7,27 @@ import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
-import com.news.sph.information.entity.InformationEntity;
+import com.news.sph.home.entity.HomeSpecialEntity;
+import com.news.sph.home.entity.HomeSpecialResult;
 import com.news.sph.utils.ImageLoaderUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
- * Created by lenovo on 2016/5/14.
+ * Created by lenovo on 2016/5/24.
  */
-public class InformationAdapter extends BaseSimpleRecyclerAdapter<InformationEntity> {
-
-
+public class HomeRecyclerAdapter extends BaseSimpleRecyclerAdapter<HomeSpecialEntity> {
     @Override
     public int getItemViewLayoutId() {
-        return R.layout.item_information_fragment;
+        return R.layout.item_home_list;
     }
 
     @Override
-    public void bindData(BaseRecyclerViewHolder holder, InformationEntity informationEntity, int position) {
-        holder.setText(R.id.information_tv1,informationEntity.getmNewsBigTitle());
-        holder.setText(R.id.information_tv2,informationEntity.getmNewsSmallTitle());
+    public void bindData(BaseRecyclerViewHolder holder, HomeSpecialEntity homeSpecialEntity, int position) {
         ImageView mInformationImg=holder.getView( R.id.information_img);
-        String mPicUrl = AppConfig.BASE_URL+informationEntity.getmNewsPicUrl();
+        String mPicUrl = AppConfig.BASE_URL+homeSpecialEntity.getmSpecPic();
         ImageLoaderUtils.displayImage(mPicUrl, mInformationImg);
     }
-
 
 
 }

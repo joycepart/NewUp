@@ -4,160 +4,162 @@ package com.news.sph.me.entity;
  * Created by lenovo on 2016/5/20.
  */
 public class TransactionEntity {
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public String getComName() {
-        return comName;
-    }
-
-    public void setComName(String comName) {
-        this.comName = comName;
-    }
-
-    public String getComPrice() {
-        return comPrice;
-    }
-
-    public void setComPrice(String comPrice) {
-        this.comPrice = comPrice;
-    }
-
-    public String getComCommission() {
-        return comCommission;
-    }
-
-    public void setComCommission(String comCommission) {
-        this.comCommission = comCommission;
-    }
-
-    public String getComIncomeAmount() {
-        return comIncomeAmount;
-    }
-
-    public void setComIncomeAmount(String comIncomeAmount) {
-        this.comIncomeAmount = comIncomeAmount;
-    }
-
-    public String getComTradingTime() {
-        return comTradingTime;
-    }
-
-    public void setComTradingTime(String comTradingTime) {
-        this.comTradingTime = comTradingTime;
-    }
-
-    public String getComTradingData() {
-        return comTradingData;
-    }
-
-    public void setComTradingData(String comTradingData) {
-        this.comTradingData = comTradingData;
-    }
-
-    public String getComEarOrCon() {
-        return comEarOrCon;
-    }
-
-    public void setComEarOrCon(String comEarOrCon) {
-        this.comEarOrCon = comEarOrCon;
-    }
-
-    public String getComDataSources() {
-        return comDataSources;
-    }
-
-    public void setComDataSources(String comDataSources) {
-        this.comDataSources = comDataSources;
-    }
-
-    public String getComDetailProParty() {
-        return comDetailProParty;
-    }
-
-    public void setComDetailProParty(String comDetailProParty) {
-        this.comDetailProParty = comDetailProParty;
-    }
-
-    public String getCouponMoney() {
-        return CouponMoney;
-    }
-
-    public void setCouponMoney(String couponMoney) {
-        CouponMoney = couponMoney;
-    }
-
-    public String getTransactionType() {
-        return TransactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        TransactionType = transactionType;
-    }
-
-    public String getServiceMoney() {
-        return ServiceMoney;
-    }
-
-    public void setServiceMoney(String serviceMoney) {
-        ServiceMoney = serviceMoney;
-    }
-
     /*
                交易ID，转到详情
                 */
-    private String ID;
+    private String mID;
     /*
            商品名称
             */
-    private String comName;
+    private String mComName;
     /*
            商品金额
             */
-    private String comPrice;
+    private String mComPrice;
     /*
            佣金
             */
-    private String comCommission;
+    private String mComCommission;
     /*
            收益金额
             */
-    private String comIncomeAmount;
+    private String mComIncomeAmount;
     /*
           交易完成时间(HH:mm:ss)
             */
-    private String comTradingTime;
+    private String mComTradingTime;
     /*
           交易完成时间(yyyy-MM-dd)
             */
-    private String comTradingData;
+    private String mComTradingData;
     /*
            盈利[+]（1）,消费[-](0)
             */
-    private String comEarOrCon;
+    private String mComEarOrCon;
     /*
          数据来源（轻奢生活、京东、天猫…）
             */
-    private String comDataSources;
+    private String mComDataSources;
     /*
           明细处理方(轻奢生活、京东、天猫…)
             */
-    private String comDetailProParty;
+    private String mComDetailProParty;
     /*
            新用户名
             */
-    private String CouponMoney;
+    private String mCouponMoney;
     /*
            代金券金额
             */
-    private String TransactionType;
+    private String mTransactionType;
     /*
-          上门服务费
-            */
-    private String ServiceMoney;
+              上门服务费
+                */
+    private String mServiceMoney;
+
+    public String getmComCommission() {
+        return mComCommission;
+    }
+
+    public void setmComCommission(String mComCommission) {
+        this.mComCommission = mComCommission;
+    }
+
+    public String getmComDataSources() {
+        return mComDataSources;
+    }
+
+    public void setmComDataSources(String mComDataSources) {
+        this.mComDataSources = mComDataSources;
+    }
+
+    public String getmComDetailProParty() {
+        return mComDetailProParty;
+    }
+
+    public void setmComDetailProParty(String mComDetailProParty) {
+        this.mComDetailProParty = mComDetailProParty;
+    }
+
+    public String getmComEarOrCon() {
+        return mComEarOrCon;
+    }
+
+    public void setmComEarOrCon(String mComEarOrCon) {
+        this.mComEarOrCon = mComEarOrCon;
+    }
+
+    public String getmComIncomeAmount() {
+        return mComIncomeAmount;
+    }
+
+    public void setmComIncomeAmount(String mComIncomeAmount) {
+        this.mComIncomeAmount = mComIncomeAmount;
+    }
+
+    public String getmComName() {
+        return mComName;
+    }
+
+    public void setmComName(String mComName) {
+        this.mComName = mComName;
+    }
+
+    public String getmComPrice() {
+        return mComPrice;
+    }
+
+    public void setmComPrice(String mComPrice) {
+        this.mComPrice = mComPrice;
+    }
+
+    public String getmComTradingData() {
+        return mComTradingData;
+    }
+
+    public void setmComTradingData(String mComTradingData) {
+        this.mComTradingData = mComTradingData;
+    }
+
+    public String getmComTradingTime() {
+        return mComTradingTime;
+    }
+
+    public void setmComTradingTime(String mComTradingTime) {
+        this.mComTradingTime = mComTradingTime;
+    }
+
+    public String getmCouponMoney() {
+        return mCouponMoney;
+    }
+
+    public void setmCouponMoney(String mCouponMoney) {
+        this.mCouponMoney = mCouponMoney;
+    }
+
+    public String getmID() {
+        return mID;
+    }
+
+    public void setmID(String mID) {
+        this.mID = mID;
+    }
+
+    public String getmServiceMoney() {
+        return mServiceMoney;
+    }
+
+    public void setmServiceMoney(String mServiceMoney) {
+        this.mServiceMoney = mServiceMoney;
+    }
+
+    public String getmTransactionType() {
+        return mTransactionType;
+    }
+
+    public void setmTransactionType(String mTransactionType) {
+        this.mTransactionType = mTransactionType;
+    }
+
+
 }

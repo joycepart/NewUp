@@ -50,9 +50,6 @@
         <activity
             android:name=".me.activity.ModifyUserActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.activity.SpecialDetailsActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".me.activity.TransactionDetailActivity">
 
         </activity>

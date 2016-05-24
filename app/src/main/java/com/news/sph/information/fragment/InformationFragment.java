@@ -17,6 +17,7 @@ import com.news.sph.information.utils.InformationUiGoto;
 import com.news.sph.utils.LogUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class InformationFragment extends BaseListFragment<InformationEntity> {
     TextView mTopTv;
+    List<InformationEntity> mInforData;
     private String mNewsBigTitle;
     private String mNewsCode;
     private String mUrl;
@@ -63,9 +65,9 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
             public void onSuccess(InformationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("获取新闻成功");
+                    mInforData = result.getData();
                     requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
-                    setDataResult(result.getData());//设置数据
-                    getResult(result.getData());
+                    setDataResult(mInforData);//设置数据
                 }
 
             }
@@ -74,10 +76,6 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     }
 
-    private void getResult(List<InformationEntity> result) {
-        mNewsBigTitle = result.get(0).getNews_big_title();
-        mNewsCode = result.get(0).getNews_code();
-    }
 
     public boolean autoRefreshIn(){
         return true;
@@ -90,6 +88,8 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
+        mNewsBigTitle =mInforData.get(position).getmNewsBigTitle();
+        mNewsCode = mInforData.get(position).getmNewsCode();
         mUrl= AppConfig.News_Html+mNewsCode;
         InformationUiGoto.newsDetail(getActivity(),mNewsBigTitle,mUrl);//新闻详情页，h5页面
         super.onItemClick(itemView, itemBean, position);

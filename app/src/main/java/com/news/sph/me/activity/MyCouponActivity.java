@@ -51,9 +51,7 @@ public class MyCouponActivity extends BaseTitleActivity {
     public void initView() {
         setTitleText("我的优惠劵");
         mBaseTitlebarEnsure.setVisibility(View.GONE);
-        strPhoneNum = AppContext.getInstance().getUser().getUserMobile();
-        Coupon();
-        mMycouponList.setAdapter(new MyCouponAdapter(this,mNoviceTv,mCouponTv,mItemTv,mTimeTv,mDataTv,mCouponImg));
+        strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
         mMycoupon.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -97,6 +95,8 @@ public class MyCouponActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
+        Coupon();
+        mMycouponList.setAdapter(new MyCouponAdapter(this,mNoviceTv,mCouponTv,mItemTv,mTimeTv,mDataTv,mCouponImg));
 
 
     }

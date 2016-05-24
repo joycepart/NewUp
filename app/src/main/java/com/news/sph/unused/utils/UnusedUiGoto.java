@@ -13,14 +13,14 @@ public class UnusedUiGoto {
     /**
      * 跳转到专题/广告详情页（加载h5页面）
      *  @param context
-     * @param mSpecName
-     * @param mSpecSrc
+     * @param mUrl
+     * @param mName
      */
 
-    public static void special(Context context, String mSpecName, String mSpecSrc){
+    public static void special(Context context, String mUrl, String mName){
         Intent intent = new Intent(context, BrowserActivity.class);
-        intent.putExtra("url", mSpecSrc);
-        intent.putExtra("title", mSpecName);
+        intent.putExtra("url", mUrl);
+        intent.putExtra("title", mName);
         context.startActivity(intent);
     }
 }

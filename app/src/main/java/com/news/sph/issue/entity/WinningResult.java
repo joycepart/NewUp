@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class WinningResult extends BaseEntity{
+    List<WinningEntity> data;
     public List<WinningEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class WinningResult extends BaseEntity{
         this.data = data;
     }
 
-    List<WinningEntity> data;
+
 }

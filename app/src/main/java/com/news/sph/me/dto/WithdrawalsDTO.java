@@ -9,63 +9,64 @@ public class WithdrawalsDTO extends BaseDTO {
     /**
      * 提现金额
      */
-    private String presentmoney;
+    private String mPresentmoney;
     /**
      * 支付宝、银行卡、微信等账号
      */
-    private String accountnumber;
+    private String mAccountnumber;
     /**
      * 类型 支付宝、银行卡、微信等
      */
-    private String accounttype;
+    private String mAccounttype;
     /**
      * 预留手机号码 银行需要【没有值时传’’】
      */
-    private String reservemobile;
-
-    public String getPresentmoney() {
-        return presentmoney;
-    }
-
-    public void setPresentmoney(String presentmoney) {
-        this.presentmoney = presentmoney;
-    }
-
-    public String getAccountnumber() {
-        return accountnumber;
-    }
-
-    public void setAccountnumber(String accountnumber) {
-        this.accountnumber = accountnumber;
-    }
-
-    public String getAccounttype() {
-        return accounttype;
-    }
-
-    public void setAccounttype(String accounttype) {
-        this.accounttype = accounttype;
-    }
-
-    public String getReservemobile() {
-        return reservemobile;
-    }
-
-    public void setReservemobile(String reservemobile) {
-        this.reservemobile = reservemobile;
-    }
-
-    public String getReservename() {
-        return reservename;
-    }
-
-    public void setReservename(String reservename) {
-        this.reservename = reservename;
-    }
-
+    private String mReservemobile;
     /**
      * 持卡人姓名 银行需要【没有值时传’’】
      */
-    private String reservename;
+    private String mReservename;
+
+    public String getmAccountnumber() {
+        return mAccountnumber;
+    }
+
+    public void setmAccountnumber(String mAccountnumber) {
+        this.mAccountnumber = mAccountnumber;
+    }
+
+    public String getmAccounttype() {
+        return mAccounttype;
+    }
+
+    public void setmAccounttype(String mAccounttype) {
+        this.mAccounttype = mAccounttype;
+    }
+
+    public String getmPresentmoney() {
+        return mPresentmoney;
+    }
+
+    public void setmPresentmoney(String mPresentmoney) {
+        this.mPresentmoney = mPresentmoney;
+    }
+
+    public String getmReservemobile() {
+        return mReservemobile;
+    }
+
+    public void setmReservemobile(String mReservemobile) {
+        this.mReservemobile = mReservemobile;
+    }
+
+    public String getmReservename() {
+        return mReservename;
+    }
+
+    public void setmReservename(String mReservename) {
+        this.mReservename = mReservename;
+    }
+
+
 
 }

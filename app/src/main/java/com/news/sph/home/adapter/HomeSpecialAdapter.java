@@ -69,7 +69,7 @@ public class HomeSpecialAdapter extends BaseAdapter {
     }
 
     private void bindData(HomeSpecialEntity item, Holder holder) {
-        String mPicUrl = AppConfig.BASE_URL + item.getSpec_pic();
+        String mPicUrl = AppConfig.BASE_URL + item.getmSpecPic();
         ImageLoader.getInstance().displayImage(mPicUrl, holder.mHomeListImg, getImageOptions());
     }
 

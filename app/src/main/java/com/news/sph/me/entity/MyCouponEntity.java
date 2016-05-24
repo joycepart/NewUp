@@ -4,149 +4,152 @@ package com.news.sph.me.entity;
  * Created by lenovo on 2016/5/20.
  */
 public class MyCouponEntity {
-    public String getCouponRedeemCode() {
-        return couponRedeemCode;
-    }
-
-    public void setCouponRedeemCode(String couponRedeemCode) {
-        this.couponRedeemCode = couponRedeemCode;
-    }
-
-    public String getCouponmoney() {
-        return couponmoney;
-    }
-
-    public void setCouponmoney(String couponmoney) {
-        this.couponmoney = couponmoney;
-    }
-
-    public String getCouponMoneyEqual() {
-        return CouponMoneyEqual;
-    }
-
-    public void setCouponMoneyEqual(String couponMoneyEqual) {
-        CouponMoneyEqual = couponMoneyEqual;
-    }
-
-    public String getCouponRangeOfUse() {
-        return couponRangeOfUse;
-    }
-
-    public void setCouponRangeOfUse(String couponRangeOfUse) {
-        this.couponRangeOfUse = couponRangeOfUse;
-    }
-
-    public String getCouponType() {
-        return couponType;
-    }
-
-    public void setCouponType(String couponType) {
-        this.couponType = couponType;
-    }
-
-    public String getDiscountNumber() {
-        return DiscountNumber;
-    }
-
-    public void setDiscountNumber(String discountNumber) {
-        DiscountNumber = discountNumber;
-    }
-
-    public String getCouponExpirationTime() {
-        return couponExpirationTime;
-    }
-
-    public void setCouponExpirationTime(String couponExpirationTime) {
-        this.couponExpirationTime = couponExpirationTime;
-    }
-
-    public String getIstouse() {
-        return istouse;
-    }
-
-    public void setIstouse(String istouse) {
-        this.istouse = istouse;
-    }
-
-    public String getIsoverdue() {
-        return isoverdue;
-    }
-
-    public void setIsoverdue(String isoverdue) {
-        this.isoverdue = isoverdue;
-    }
-
-    public String getCouponRegister() {
-        return CouponRegister;
-    }
-
-    public void setCouponRegister(String couponRegister) {
-        CouponRegister = couponRegister;
-    }
-
-    public String getCouponRedeemName() {
-        return CouponRedeemName;
-    }
-
-    public void setCouponRedeemName(String couponRedeemName) {
-        CouponRedeemName = couponRedeemName;
-    }
-
-    public String getH5Url() {
-        return H5Url;
-    }
-
-    public void setH5Url(String h5Url) {
-        H5Url = h5Url;
-    }
-
     /**
      * 优惠券兑换码
      */
-    private String couponRedeemCode;
+    private String mCouponRedeemCode;
     /**
      * 满减【满金额】
      */
-    private String couponmoney;
+    private String mCouponmoney;
     /**
      * 满减【减金额】、直减金额、免费金额
      */
-    private String CouponMoneyEqual;
+    private String mCouponMoneyEqual;
     /**
      * 属性 服务券，优惠券
      */
-    private String couponRangeOfUse;
+    private String mCouponRangeOfUse;
     /**
      * 优惠券种类 打折、满减、免费、直减
      */
-    private String couponType;
+    private String mCouponType;
     /**
      * 打折数(7折、7.5折) 种类是打折时使用
      */
-    private String DiscountNumber;
+    private String mDiscountNumber;
     /**
      * 过期时间
      */
-    private String couponExpirationTime;
+    private String mCouponExpirationTime;
     /**
      * 是否使用  0未使用/1已使用
      */
-    private String istouse;
+    private String mIstouse;
     /**
      * 是否过期‘’DataOn’’未过期/’DataOff’提示已过期
      */
-    private String isoverdue;
+    private String mIsoverdue;
 
     /**
      * 是否注册券
      */
-    private String CouponRegister;
+    private String mCouponRegister;
     /**
      * 优惠券名称
      */
-    private String CouponRedeemName;
+    private String mCouponRedeemName;
     /**
      * H5显示路径(只有服务券有url)
      */
-    private String H5Url;
+    private String mH5Url;
+
+    public String getmCouponExpirationTime() {
+        return mCouponExpirationTime;
+    }
+
+    public void setmCouponExpirationTime(String mCouponExpirationTime) {
+        this.mCouponExpirationTime = mCouponExpirationTime;
+    }
+
+    public String getmCouponmoney() {
+        return mCouponmoney;
+    }
+
+    public void setmCouponmoney(String mCouponmoney) {
+        this.mCouponmoney = mCouponmoney;
+    }
+
+    public String getmCouponMoneyEqual() {
+        return mCouponMoneyEqual;
+    }
+
+    public void setmCouponMoneyEqual(String mCouponMoneyEqual) {
+        this.mCouponMoneyEqual = mCouponMoneyEqual;
+    }
+
+    public String getmCouponRangeOfUse() {
+        return mCouponRangeOfUse;
+    }
+
+    public void setmCouponRangeOfUse(String mCouponRangeOfUse) {
+        this.mCouponRangeOfUse = mCouponRangeOfUse;
+    }
+
+    public String getmCouponRedeemCode() {
+        return mCouponRedeemCode;
+    }
+
+    public void setmCouponRedeemCode(String mCouponRedeemCode) {
+        this.mCouponRedeemCode = mCouponRedeemCode;
+    }
+
+    public String getmCouponRedeemName() {
+        return mCouponRedeemName;
+    }
+
+    public void setmCouponRedeemName(String mCouponRedeemName) {
+        this.mCouponRedeemName = mCouponRedeemName;
+    }
+
+    public String getmCouponRegister() {
+        return mCouponRegister;
+    }
+
+    public void setmCouponRegister(String mCouponRegister) {
+        this.mCouponRegister = mCouponRegister;
+    }
+
+    public String getmCouponType() {
+        return mCouponType;
+    }
+
+    public void setmCouponType(String mCouponType) {
+        this.mCouponType = mCouponType;
+    }
+
+    public String getmDiscountNumber() {
+        return mDiscountNumber;
+    }
+
+    public void setmDiscountNumber(String mDiscountNumber) {
+        this.mDiscountNumber = mDiscountNumber;
+    }
+
+    public String getmH5Url() {
+        return mH5Url;
+    }
+
+    public void setmH5Url(String mH5Url) {
+        this.mH5Url = mH5Url;
+    }
+
+    public String getmIsoverdue() {
+        return mIsoverdue;
+    }
+
+    public void setmIsoverdue(String mIsoverdue) {
+        this.mIsoverdue = mIsoverdue;
+    }
+
+    public String getmIstouse() {
+        return mIstouse;
+    }
+
+    public void setmIstouse(String mIstouse) {
+        this.mIstouse = mIstouse;
+    }
+
+
+
 }

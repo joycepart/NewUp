@@ -8,6 +8,7 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class MyCouponResult extends BaseEntity {
+    List<MyCouponEntity> data;
     public List<MyCouponEntity> getData() {
         return data;
     }
@@ -16,5 +17,5 @@ public class MyCouponResult extends BaseEntity {
         this.data = data;
     }
 
-    List<MyCouponEntity> data;
+
 }

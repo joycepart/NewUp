@@ -1,4 +1,4 @@
-package com.news.sph.home.entity;
+package com.news.sph.me.entity;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
  */
 public class LoginEntity {
-    /**
+    /***
      * 用户手机号码
      */
     private String membermobile;

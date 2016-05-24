@@ -5,94 +5,94 @@ package com.news.sph.home.entity;
  */
 public class HomeRecommendEntity {
     /* 夺宝商品编号 */
-    private String sna_code  ;
+    private String mSnaCode  ;
     /*夺宝批次编号*/
-    private String bat_code  ;
+    private String mBatCode  ;
     /*夺宝商品备注*/
-    private String sna_remark  ;
+    private String mSnaRemark  ;
     /*夺宝期数*/
-    private String sna_term   ;
+    private String mSnaTerm   ;
     /*夺宝商品标题*/
-    private String sna_title  ;
+    private String mSnaTitle  ;
     /*开奖所需人次*/
-    private String sna_total_count  ;
+    private String mSnaTotalCount  ;
     /*已售出人次 */
-    private String sna_sell_out  ;
+    private String mSnaSellOut  ;
     /*封面图片地址*/
-    private String pic_url  ;
+    private String mPicUrl  ;
     /* 推荐*/
-    private String isRecommend   ;
+    private String mIsRecommend   ;
 
-    public String getBat_code() {
-        return bat_code;
+    public String getmBatCode() {
+        return mBatCode;
     }
 
-    public void setBat_code(String bat_code) {
-        this.bat_code = bat_code;
+    public void setmBatCode(String mBatCode) {
+        this.mBatCode = mBatCode;
     }
 
-    public String getIsRecommend() {
-        return isRecommend;
+    public String getmIsRecommend() {
+        return mIsRecommend;
     }
 
-    public void setIsRecommend(String isRecommend) {
-        this.isRecommend = isRecommend;
+    public void setmIsRecommend(String mIsRecommend) {
+        this.mIsRecommend = mIsRecommend;
     }
 
-    public String getPic_url() {
-        return pic_url;
+    public String getmPicUrl() {
+        return mPicUrl;
     }
 
-    public void setPic_url(String pic_url) {
-        this.pic_url = pic_url;
+    public void setmPicUrl(String mPicUrl) {
+        this.mPicUrl = mPicUrl;
     }
 
-    public String getSna_code() {
-        return sna_code;
+    public String getmSnaCode() {
+        return mSnaCode;
     }
 
-    public void setSna_code(String sna_code) {
-        this.sna_code = sna_code;
+    public void setmSnaCode(String mSnaCode) {
+        this.mSnaCode = mSnaCode;
     }
 
-    public String getSna_remark() {
-        return sna_remark;
+    public String getmSnaRemark() {
+        return mSnaRemark;
     }
 
-    public void setSna_remark(String sna_remark) {
-        this.sna_remark = sna_remark;
+    public void setmSnaRemark(String mSnaRemark) {
+        this.mSnaRemark = mSnaRemark;
     }
 
-    public String getSna_sell_out() {
-        return sna_sell_out;
+    public String getmSnaSellOut() {
+        return mSnaSellOut;
     }
 
-    public void setSna_sell_out(String sna_sell_out) {
-        this.sna_sell_out = sna_sell_out;
+    public void setmSnaSellOut(String mSnaSellOut) {
+        this.mSnaSellOut = mSnaSellOut;
     }
 
-    public String getSna_term() {
-        return sna_term;
+    public String getmSnaTerm() {
+        return mSnaTerm;
     }
 
-    public void setSna_term(String sna_term) {
-        this.sna_term = sna_term;
+    public void setmSnaTerm(String mSnaTerm) {
+        this.mSnaTerm = mSnaTerm;
     }
 
-    public String getSna_title() {
-        return sna_title;
+    public String getmSnaTitle() {
+        return mSnaTitle;
     }
 
-    public void setSna_title(String sna_title) {
-        this.sna_title = sna_title;
+    public void setmSnaTitle(String mSnaTitle) {
+        this.mSnaTitle = mSnaTitle;
     }
 
-    public String getSna_total_count() {
-        return sna_total_count;
+    public String getmSnaTotalCount() {
+        return mSnaTotalCount;
     }
 
-    public void setSna_total_count(String sna_total_count) {
-        this.sna_total_count = sna_total_count;
+    public void setmSnaTotalCount(String mSnaTotalCount) {
+        this.mSnaTotalCount = mSnaTotalCount;
     }
 
 
