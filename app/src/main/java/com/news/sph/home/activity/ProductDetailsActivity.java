@@ -6,22 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.news.sph.R;
-import com.news.sph.common.base.BaseActivity;
 import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.viewflow.CircleFlowIndicator;
 import com.news.sph.common.viewflow.ViewFlow;
-import com.news.sph.home.adapter.HomeSpecialAdapter;
 import com.news.sph.issue.activity.ToAnnounceActivity;
-import com.news.sph.issue.adapter.IssueAdapter;
 import com.news.sph.issue.adapter.ProductDetailsAdapter;
 import com.news.sph.utils.LayoutUtil;
 import com.news.sph.utils.TDevice;
@@ -159,7 +154,7 @@ public class ProductDetailsActivity extends BaseTitleActivity {
                 ViewHolder vh;
                 if(convertView==null){
                     vh=new ViewHolder();
-                    convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_flow,null);
+                   // convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_flow,null);
                     vh.iv= (ImageView) convertView.findViewById(R.id.iv);
                     convertView.setTag(vh);
                 }else{

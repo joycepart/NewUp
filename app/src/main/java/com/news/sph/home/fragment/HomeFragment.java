@@ -1,36 +1,21 @@
 package com.news.sph.home.fragment;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.ptrrecyclerview.PtrRecyclerView;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
-import com.news.sph.common.base.BaseFragment;
 import com.news.sph.common.base.BaseListFragment;
+import com.news.sph.common.bean.ViewFlowBean;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
-import com.news.sph.common.viewflow.CircleFlowIndicator;
-import com.news.sph.common.viewflow.ViewFlow;
 import com.news.sph.home.adapter.HomeSpecialAdapter;
 import com.news.sph.home.adapter.MyViewPagerAdapter;
 import com.news.sph.home.entity.HomeAdcerEntity;
@@ -40,22 +25,13 @@ import com.news.sph.home.entity.HomeRecommendEntity;
 import com.news.sph.home.entity.HomeSpecialEntity;
 import com.news.sph.home.entity.HomeSpecialResult;
 import com.news.sph.home.utils.HomeUiGoto;
-import com.news.sph.issue.entity.WinningResult;
 import com.news.sph.unused.fragment.UnusedFragment;
-import com.news.sph.utils.LayoutUtil;
 import com.news.sph.utils.LogUtils;
-import com.news.sph.utils.TDevice;
-import com.news.sph.utils.ToastUtils;
-import com.news.sph.utils.ViewScrollConflictUtil;
+import com.news.sph.widget.ViewFlowLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * 首页的fragment
@@ -63,17 +39,6 @@ import in.srain.cube.views.ptr.PtrHandler;
 public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
 
     LinearLayout mTopLl;
-    PtrFrameLayout mPtrFrameHome;
-    ViewFlow vf;
-    /***
-     * 顶部轮播控件
-     **/
-    CircleFlowIndicator indic;
-    /***
-     * 顶部轮播控件指针
-     **/
-    @Bind(R.id.home_list)
-    ListView mHomeList;
 
     ViewPager mViewPager;
     ImageView mImgLeft, mImgRight;
@@ -92,43 +57,43 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
     private String mOfflineTitle;
     private String mUrlHelp;
     private String mHelpTitle;
-
+    ViewFlowLayout mVfLayout;
     private String mSpecSrc;
     List<HomeSpecialEntity> mSpecilaData;
     List<HomeRecommendEntity> mRecomData;
     PtrRecyclerView mRecyclerview;
 
-
-//    int[] mImgList = new int[]{R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
-
-
     @Override
     public void initView(View view) {
-        mTopLl = (LinearLayout) view.findViewById(R.id.top_ll);
-        mTopLl.setVisibility(View.GONE);
+//        mTopLl = (LinearLayout) view.findViewById(R.id.top_ll);
+//        mTopLl.setVisibility(View.GONE);
         mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
 
-        View header = LayoutInflater.from(getActivity()).inflate(
-                R.layout.view_home_viewflow, null);
-        initTopView(header);
+        mVfLayout=new ViewFlowLayout(getActivity());
+        mRecyclerview.addHeaderView(mVfLayout);
 
-        mRecyclerview.addHeaderView(header);
+        mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
 
-        getQequest();
-
-        mViewHomeFrame = (LinearLayout) view.findViewById(R.id.top_carousel);
-        mHomeImg1 = (ImageView) view.findViewById(R.id.home_img1);
-        mHomeImg3 = (ImageView) view.findViewById(R.id.home_img3);
-        mHomeImgDian = (ImageView) view.findViewById(R.id.home_img_dian);
-        mTopHomeXianXia = (LinearLayout) view.findViewById(R.id.top_home_xianxia);
-
-        mHomeImg1.setOnClickListener(this);
-        mHomeImg3.setOnClickListener(this);
-        mHomeImgDian.setOnClickListener(this);
-        mViewHomeFrame.setOnClickListener(this);
-        mTopHomeXianXia.setOnClickListener(this);
+            }
+        });
 
 
+
+//        mViewHomeFrame = (LinearLayout) view.findViewById(R.id.top_carousel);
+//        mHomeImg1 = (ImageView) view.findViewById(R.id.home_img1);
+//        mHomeImg3 = (ImageView) view.findViewById(R.id.home_img3);
+//        mHomeImgDian = (ImageView) view.findViewById(R.id.home_img_dian);
+//        mTopHomeXianXia = (LinearLayout) view.findViewById(R.id.top_home_xianxia);
+//
+//        mHomeImg1.setOnClickListener(this);
+//        mHomeImg3.setOnClickListener(this);
+//        mHomeImgDian.setOnClickListener(this);
+//        mViewHomeFrame.setOnClickListener(this);
+//        mTopHomeXianXia.setOnClickListener(this);
+
+       // initPagerView(view);
     }
 
     @Override
@@ -182,18 +147,21 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
             public void onSuccess(HomeAdcerResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页广告成功");
-                    homeAdcerResult(result);
-
+                    mAdData = result.getData();
+                    if(mAdData!=null&&mAdData.size()!=0) {
+                        ArrayList<ViewFlowBean> list = new ArrayList<>();
+                        for (int i = 0; i < mAdData.size(); i++) {
+                            ViewFlowBean bean = new ViewFlowBean();
+                            bean.setImgUrl(mAdData.get(i).getSpec_pic());
+                            list.add(bean);
+                        }
+                        mVfLayout.updateView(list);
+                    }
                 }
-
             }
         });
     }
 
-    private void homeAdcerResult(HomeAdcerResult data) {
-        mAdData = data.getData();
-
-    }
 
     private void homeSpecial() {
         BaseDTO dto = new BaseDTO();
@@ -219,68 +187,9 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
 
     @Override
     public void initData() {
-
+        getQequest();
     }
 
-
-    public void initTopView(View view) {
-        vf = (ViewFlow) view.findViewById(R.id.vf_top);
-        indic = (CircleFlowIndicator) view.findViewById(R.id.vfi_top);
-        LayoutUtil.reMesureHeight(getActivity(), vf,
-                TDevice.getDisplayMetrics(getActivity()).widthPixels,
-                280, 540);
-        vf.setOnTouchListener(new ViewScrollConflictUtil(vf));
-
-        Adapter topAdapter = new BaseAdapter() {
-
-            @Override
-            public int getCount() {
-                return Integer.MAX_VALUE;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return mAdList[position % mAdList.length];
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                ViewHolder vh;
-                if (convertView == null) {
-                    vh = new ViewHolder();
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.view_flow, null);
-                    vh.iv = (ImageView) convertView.findViewById(R.id.iv);
-                    convertView.setTag(vh);
-                } else {
-                    vh = (ViewHolder) convertView.getTag();
-                }
-                vh.iv.setImageDrawable(ContextCompat.getDrawable(getContext(), (int) getItem(position)));
-                return convertView;
-            }
-
-            class ViewHolder {
-                ImageView iv;
-            }
-        };
-        vf.setAdapter(topAdapter);
-        vf.setmSideBuffer(mAdList.length);//实际图片张数
-        vf.setFlowIndicator(indic);
-        indic.requestLayout();
-        indic.invalidate();
-        vf.setTimeSpan(4000);//设置轮播时间间隔
-        vf.setSelection(5 * 1000); // 设置初始位置,这里让viewflow的item位置放到5000,可以循环滑动
-        vf.startAutoFlowTimer(); // 启动自动播放
-
-        initPagerView(view);
-
-
-
-    }
 
     private void initPagerView(View view) {
 
@@ -380,8 +289,8 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
 
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
-        mSpecSrc = mSpecilaData.get(position).getSpec_src();
-        HomeUiGoto.special(getActivity(),mSpecSrc);
-        super.onItemClick(itemView, itemBean, position);
+//        mSpecSrc = mSpecilaData.get(position).getSpec_src();
+//        HomeUiGoto.special(getActivity(),mSpecSrc);
+//        super.onItemClick(itemView, itemBean, position);
     }
 }

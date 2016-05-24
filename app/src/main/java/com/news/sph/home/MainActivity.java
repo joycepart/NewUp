@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseActivity;
 import com.news.sph.common.base.BaseFragment;
+import com.news.sph.home.fragment.HomeFragment;
 import com.news.sph.information.fragment.InformationFragment;
 import com.news.sph.utils.TextViewUtils;
 
@@ -107,8 +108,7 @@ public class MainActivity extends BaseActivity {
         BaseFragment fragment = null;
         switch (index) {
             case 0:
-                fragment = new InformationFragment();
-               // fragment = new HomeFragment();
+                fragment = new HomeFragment();
                 break;
             case 1:
                 fragment = new InformationFragment();
