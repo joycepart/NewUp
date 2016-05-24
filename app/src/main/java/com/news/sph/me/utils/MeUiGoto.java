@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.news.sph.R;
+import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.common.base.SimpleActivity;
 import com.news.sph.me.activity.CuringOrderActivity;
 import com.news.sph.me.activity.ModifyUserActivity;
@@ -13,7 +14,6 @@ import com.news.sph.me.activity.MyCouponActivity;
 import com.news.sph.me.activity.MyIncomeActivity;
 import com.news.sph.me.activity.TransactionDetailActivity;
 import com.news.sph.me.activity.UserInformationActivity;
-import com.news.sph.ui.BrowserActivity;
 import com.news.sph.me.LoginActivity;
 
 /**

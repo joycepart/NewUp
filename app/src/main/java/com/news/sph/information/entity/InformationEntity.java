@@ -6,6 +6,18 @@ import java.io.Serializable;
  * Created by lenovo on 2016/5/20.
  */
 public class InformationEntity implements Serializable{
+    /* 编号 */
+    private String news_code;
+    /* 新闻大标题 */
+    private String news_big_title;
+    /* 新闻小标题 */
+    private String news_small_title;
+    /*新闻图片地址*/
+    private String news_pic_url;
+    /*新闻html地址*/
+    private String news_html_url;
+    /*添加时间*/
+    private String news_add_time;
 
     public String getNews_add_time() {
         return news_add_time;
@@ -55,28 +67,5 @@ public class InformationEntity implements Serializable{
         this.news_small_title = news_small_title;
     }
 
-    /*
-                  编号
-                    */
-    private String news_code;
-    /*
-             新闻大标题
-               */
-    private String news_big_title;
-    /*
-             新闻小标题
-               */
-    private String news_small_title;
-    /*
-             新闻图片地址
-               */
-    private String news_pic_url;
-    /*
-             新闻html地址
-               */
-    private String news_html_url;
-    /*
-             添加时间
-               */
-    private String news_add_time;
+
 }

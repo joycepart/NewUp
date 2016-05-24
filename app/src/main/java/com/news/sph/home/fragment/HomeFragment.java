@@ -1,17 +1,21 @@
 package com.news.sph.home.fragment;
 
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
+import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.PtrRecyclerView;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
-import com.news.sph.common.base.BaseListFragment;
+import com.news.sph.common.base.BaseFragment;
 import com.news.sph.common.bean.ViewFlowBean;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
@@ -28,28 +32,46 @@ import com.news.sph.home.utils.HomeUiGoto;
 import com.news.sph.unused.fragment.UnusedFragment;
 import com.news.sph.utils.LogUtils;
 import com.news.sph.widget.ViewFlowLayout;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 首页的fragment
  */
-public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
+public class HomeFragment extends BaseFragment {
+
+    PtrRecyclerView mRecyclerview;
+    ViewFlowLayout mVfLayout;
+    private BaseRecyclerAdapter mAdapter = new BaseRecyclerAdapter() {
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public void bindData(BaseRecyclerViewHolder holder, Object itemBean, int position, int viewType) {
+
+        }
+    };
+
 
     LinearLayout mTopLl;
 
-    ViewPager mViewPager;
-    ImageView mImgLeft, mImgRight;
 
+    ViewPager mViewPager;
+    ImageView mImgLeft, mImgRight, mVpagerImg1, mVpagerImg2, mVpagerImg3;
+    TextView mVpagerTv1, mVpagerTv2, mVpagerTv3, mVpagerTvt1, mVpagerTvt2, mVpagerTvt3;
+    private HomeSpecialAdapter specialAdapter;
     List<HomeAdcerEntity> mAdData;
     List<HomeRecommendEntity> mRecomendData;
-    int[] mAdList = new int[]{};
     private List<View> views;
     private View mView;
-    LinearLayout mTopHomeXianXia,mViewHomeFrame;
+    LinearLayout mTopHomeXianXia, mViewHomeFrame;
     ImageView mHomeImg1, mHomeImg3, mHomeImgDian;
+
     private String mUrlSpecial;
     private String mSpecialTitle;
 
@@ -57,11 +79,9 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
     private String mOfflineTitle;
     private String mUrlHelp;
     private String mHelpTitle;
-    ViewFlowLayout mVfLayout;
+
     private String mSpecSrc;
-    List<HomeSpecialEntity> mSpecilaData;
-    List<HomeRecommendEntity> mRecomData;
-    PtrRecyclerView mRecyclerview;
+
 
     @Override
     public void initView(View view) {
@@ -69,19 +89,25 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
 //        mTopLl.setVisibility(View.GONE);
         mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
 
-        mVfLayout=new ViewFlowLayout(getActivity());
+        mVfLayout = new ViewFlowLayout(getActivity());
+        View header = LayoutInflater.from(getActivity()).inflate(
+                R.layout.view_home_view, null);
+        initHeader(header);
+        mRecyclerview.setAdapter(mAdapter);
         mRecyclerview.addHeaderView(mVfLayout);
+        mRecyclerview.addHeaderView(header);
 
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                mUrlSpecial = AppConfig.URL_TEMPLATE;
+                mSpecialTitle = "暂无标题";
+                HomeUiGoto.productDetails(getActivity(), mUrlSpecial, mSpecialTitle);
 
             }
         });
 
 
-
-//        mViewHomeFrame = (LinearLayout) view.findViewById(R.id.top_carousel);
 //        mHomeImg1 = (ImageView) view.findViewById(R.id.home_img1);
 //        mHomeImg3 = (ImageView) view.findViewById(R.id.home_img3);
 //        mHomeImgDian = (ImageView) view.findViewById(R.id.home_img_dian);
@@ -90,36 +116,21 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
 //        mHomeImg1.setOnClickListener(this);
 //        mHomeImg3.setOnClickListener(this);
 //        mHomeImgDian.setOnClickListener(this);
-//        mViewHomeFrame.setOnClickListener(this);
 //        mTopHomeXianXia.setOnClickListener(this);
 
-       // initPagerView(view);
     }
 
-    @Override
-    public BaseRecyclerAdapter<HomeSpecialResult> createAdapter() {
-        return new HomeSpecialAdapter();
-    }
 
-    @Override
-    protected String getCacheKeyPrefix() {
-        return "HomeFragment";
-    }
+    private void initHeader(View view) {
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        mImgLeft = (ImageView) view.findViewById(R.id.home_img_lf);
+        mImgRight = (ImageView) view.findViewById(R.id.home_img_rg);
+        mImgLeft.setOnClickListener(this);
+        mImgRight.setOnClickListener(this);
 
-    @Override
-    public List<HomeSpecialResult> readList(Serializable seri) {
-        return null;
-    }
-
-    @Override
-    protected void sendRequestData() {
 
     }
 
-    private void getQequest() {
-        homeAdver();//首页广告
-        homeSpecial();//首页专题列表
-    }
 
     private void homeRecommend() {
         BaseDTO dto = new BaseDTO();
@@ -128,7 +139,7 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
             public void onSuccess(HomeRecomendResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页推荐成功");
-                    homeRecomendResult(result);
+                    setRecomendResult(result.getData());
 
                 }
 
@@ -136,9 +147,68 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
         });
     }
 
-    private void homeRecomendResult(HomeRecomendResult result) {
-        mRecomendData = result.getData();
+    private void setRecomendResult(List<HomeRecommendEntity> result) {
+
+        views = new ArrayList<View>();
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        mView = inflater.inflate(R.layout.item_home_viewpager, null);
+        mVpagerImg1 = (ImageView) mView.findViewById(R.id.home_vpager_img1);
+        mVpagerImg2 = (ImageView) mView.findViewById(R.id.home_vpager_img2);
+        mVpagerImg3 = (ImageView) mView.findViewById(R.id.home_vpager_img3);
+        mVpagerTv1 = (TextView) mView.findViewById(R.id.home_vpager_tv1);
+        mVpagerTvt1 = (TextView) mView.findViewById(R.id.home_vpager_tv01);
+        mVpagerTv2 = (TextView) mView.findViewById(R.id.home_vpager_tv2);
+        mVpagerTvt2 = (TextView) mView.findViewById(R.id.home_vpager_tv02);
+        mVpagerTv3 = (TextView) mView.findViewById(R.id.home_vpager_tv3);
+        mVpagerTvt3 = (TextView) mView.findViewById(R.id.home_vpager_tv03);
+        if (result != null && result.size() != 0) {
+
+            for(int i = 0; i<result.size();i++) {
+
+        switch (i % 3) {
+            case 0: {
+                mVpagerTv1.setText(result.get(i).getSna_remark());
+                mVpagerTvt1.setText(result.get(i).getSna_term());
+                String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                ImageLoader.getInstance().displayImage(mPicUrl, mVpagerImg1, getImageOptions());
+                break;
+            }
+            case 1: {
+                mVpagerTv2.setText(result.get(i).getSna_remark());
+                mVpagerTvt2.setText(result.get(i).getSna_term());
+                String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                ImageLoader.getInstance().displayImage(mPicUrl, mVpagerImg2, getImageOptions());
+                break;
+            }
+            case 2: {
+                mVpagerTv3.setText(result.get(i).getSna_remark());
+                mVpagerTvt3.setText(result.get(i).getSna_term());
+                String mPicUrl = AppConfig.BASE_URL + result.get(i).getPic_url();
+                ImageLoader.getInstance().displayImage(mPicUrl, mVpagerImg3, getImageOptions());
+                views.add(mView);
+                break;
+            }
+        }
+        if (i == mRecomendData.size() - 1 && (i + 1) % 3 != 0) {
+            views.add(mView);
+        }
     }
+}
+
+        mViewPager.setAdapter(new MyViewPagerAdapter(views));
+        mViewPager.setCurrentItem(0);
+        mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+
+    }
+
+    public DisplayImageOptions getImageOptions() {
+        return new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+    }
+
 
     private void homeAdver() {
         BaseDTO dto = new BaseDTO();
@@ -148,7 +218,7 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页广告成功");
                     mAdData = result.getData();
-                    if(mAdData!=null&&mAdData.size()!=0) {
+                    if (mAdData != null && mAdData.size() != 0) {
                         ArrayList<ViewFlowBean> list = new ArrayList<>();
                         for (int i = 0; i < mAdData.size(); i++) {
                             ViewFlowBean bean = new ViewFlowBean();
@@ -170,7 +240,7 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
             public void onSuccess(HomeSpecialResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页专题成功");
-                    homeSpecialResult(result);
+                    homeSpecialResult(result.getData());
 
                 }
 
@@ -178,119 +248,95 @@ public class HomeFragment extends BaseListFragment<HomeSpecialResult> {
         });
     }
 
-    private void homeSpecialResult(HomeSpecialResult result) {
-        mSpecilaData = result.getData();
-        result.setData(mSpecilaData);
-        mAdapter.append(result);
-
-    }
-
-    @Override
-    public void initData() {
-        getQequest();
-    }
-
-
-    private void initPagerView(View view) {
-
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mImgLeft = (ImageView) view.findViewById(R.id.home_img_lf);
-        mImgRight = (ImageView) view.findViewById(R.id.home_img_rg);
-        mImgLeft.setOnClickListener(this);
-        mImgRight.setOnClickListener(this);
-        views = new ArrayList<View>();
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        mView = inflater.inflate(R.layout.item_home_viewpager, null);
-        homeRecommend();
-        for (int i = 0; i < mRecomendData.size(); i++) {
-            switch (i % 3) {
-                case 0: {
-                    break;
-                }
-                case 1: {
-                    //第二小块
-                    break;
-                }
-                case 2: {
-                    //第三小块
-                    views.add(mView);
-                    break;
-                }
+    private void homeSpecialResult(List<HomeSpecialEntity> result) {
+        if (result != null && result.size() != 0) {
+            ArrayList<HomeSpecialEntity> list = new ArrayList<>();
+            for (int i = 0; i < mAdData.size(); i++) {
+                HomeSpecialEntity special = new HomeSpecialEntity();
+                special.setSpec_pic(mAdData.get(i).getSpec_pic());
+                list.add(special);
             }
-            if (i == mRecomendData.size() - 1&&(i+1)%3!=0) {
-                views.add(mView);
+//            mRecyclerview.setAdapter(new HomeSpecialAdapter(getActivity(),list));//这里是走mRecyclerview的adapter走自己定义的？
+            specialAdapter.addContent(list);
+            specialAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+
+        public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+
+            public void onPageScrollStateChanged(int arg0) {
+
+
             }
-        }
-        mViewPager.setAdapter(new MyViewPagerAdapter(views));
-        mViewPager.setCurrentItem(0);
-        mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
-    }
 
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
 
 
-        public void onPageScrollStateChanged(int arg0) {
+            }
 
+            public void onPageSelected(int arg0) {
+
+            }
 
         }
 
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
 
 
-        }
-
-        public void onPageSelected(int arg0) {
-
-        }
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.top_home_xianxia:
-                mUrlOffline = AppConfig.URL_OFFLINE;
-                mOfflineTitle = "线下门店 - 倾奢";
-                HomeUiGoto.OfflineStore(getActivity(), mUrlOffline, mOfflineTitle);
-                break;
-            case R.id.home_img1:
-                HomeUiGoto.curing(getActivity());
-                break;
-            case R.id.home_img3:
-                mUrlHelp = AppConfig.URL_TRANSACTION;
-                mHelpTitle = "交易帮助 - 倾奢";
-                HomeUiGoto.help(getActivity(), mUrlSpecial, mSpecialTitle);
-                break;
+        @Override
+        public void onClick (View v){
+            switch (v.getId()) {
+                case R.id.top_home_xianxia:
+                    mUrlOffline = AppConfig.URL_OFFLINE;
+                    mOfflineTitle = "线下门店 - 倾奢";
+                    HomeUiGoto.OfflineStore(getActivity(), mUrlOffline, mOfflineTitle);
+                    break;
+                case R.id.home_img1:
+                    HomeUiGoto.curing(getActivity());
+                    break;
+                case R.id.home_img3:
+                    mUrlHelp = AppConfig.URL_TRANSACTION;
+                    mHelpTitle = "交易帮助 - 倾奢";
+                    HomeUiGoto.help(getActivity(), mUrlSpecial, mSpecialTitle);
+                    break;
 //            case R.id.view_home_frame:
 //                mUrlSpecial = AppConfig.URL_SPECIAL;
 //                mSpecialTitle= "专题/广告详情";
 //                HomeUiGoto.special(getActivity(),mUrlSpecial,mSpecialTitle);
 //                break;
-            case R.id.home_img_lf:
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
+                case R.id.home_img_lf:
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
 
-                break;
-            case R.id.home_img_rg:
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
-                break;
-            case R.id.home_img_dian:
-                UnusedFragment unusedFragment = new UnusedFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.realtabcontent, unusedFragment);
-                transaction.commit();
-                break;
-            default:
-                break;
+                    break;
+                case R.id.home_img_rg:
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                    break;
+                case R.id.home_img_dian:
+                    UnusedFragment unusedFragment = new UnusedFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.realtabcontent, unusedFragment);
+                    transaction.commit();
+                    break;
+                default:
+                    break;
 
+            }
+            super.onClick(v);
         }
-        super.onClick(v);
-    }
 
-    @Override
-    public void onItemClick(View itemView, Object itemBean, int position) {
-//        mSpecSrc = mSpecilaData.get(position).getSpec_src();
-//        HomeUiGoto.special(getActivity(),mSpecSrc);
-//        super.onItemClick(itemView, itemBean, position);
+        @Override
+        protected int getLayoutResId () {
+            return R.layout.fragment_home;
+        }
+        @Override
+        public void initData () {
+            homeAdver();//首页广告
+            homeSpecial();//首页专题列表
+            homeRecommend();//首页推荐
+        }
+
+
+
     }
-}

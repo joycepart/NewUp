@@ -4,6 +4,11 @@ package com.news.sph.unused.entity;
  * Created by lenovo on 2016/5/20.
  */
 public class HotTopEntity {
+    /* 专题图片 */
+    private String spec_pic;
+    /*点击专题要跳转的url*/
+    private String spec_src;
+
     public String getSpec_pic() {
         return spec_pic;
     }
@@ -20,13 +25,5 @@ public class HotTopEntity {
         this.spec_src = spec_src;
     }
 
-    /*
-                  专题图片
-                    */
-    private String spec_pic;
 
-    /*
-           点击专题要跳转的url
-            */
-    private String spec_src;
 }

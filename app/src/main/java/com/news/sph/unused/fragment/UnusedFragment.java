@@ -1,9 +1,11 @@
 package com.news.sph.unused.fragment;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.sph.AppConfig;
+import com.news.sph.R;
 import com.news.sph.common.base.BaseListFragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
@@ -20,21 +22,22 @@ import java.util.List;
 闲置的fragment
         */
 
-public class UnusedFragment extends BaseListFragment<HotTopResult> {
+public class UnusedFragment extends BaseListFragment<HotTopEntity> {
+    TextView mTopTv;
 
-    private String mSpecPic;
+    private String mSpecName;
     private String mSpecSrc;
-    List<HotTopEntity> data;
 
     @Override
     public void initView(View view) {
-       // setTitleText("热门专题");
+        mTopTv = (TextView) view.findViewById(R.id.top_tv);
+        mTopTv.setText("热门专题");
         super.initView(view);
 
     }
 
     @Override
-    public BaseRecyclerAdapter<HotTopResult> createAdapter() {
+    public BaseRecyclerAdapter<HotTopEntity> createAdapter() {
         return new UnusedAdapter();
     }
 
@@ -44,48 +47,39 @@ public class UnusedFragment extends BaseListFragment<HotTopResult> {
     }
 
     @Override
-    public List<HotTopResult> readList(Serializable seri) {
-        return null;
+    public List<HotTopEntity> readList(Serializable seri) {
+        return ((HotTopResult)seri).getData();
     }
 
     @Override
     protected void sendRequestData() {
-
-    }
-
-    private void unused() {
         BaseDTO udto=new BaseDTO();
-        udto.setSign("fcc4620476bcd8b90e73bc80c2cac40b");
-        udto.setPageSize(4);
-        udto.setPageIndex(1);
+        udto.setPageSize(PAGE_SIZE);
+        udto.setPageIndex(mCurrentPage);
         CommonApiClient.hotTopics(getActivity(), udto, new CallBack<HotTopResult>() {
             @Override
             public void onSuccess(HotTopResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("热门专题成功");
-                    unusedResult(result);
                 }
 
             }
         });
+
     }
 
-    private void unusedResult(HotTopResult result) {
-        data = result.getData();
-        result.setData(data);
-        mAdapter.append(result);
-    }
 
 
     @Override
     public void initData() {
-        unused();
+        sendRequestData();
     }
 
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
-        mSpecSrc = data.get(position).getSpec_src();
-        UnusedUiGoto.special(getActivity(),mSpecSrc);//专题页面
+        mSpecSrc = AppConfig.URL_SPECIAL;
+        mSpecName = "专题/广告详情";
+        UnusedUiGoto.special(getActivity(),mSpecSrc,mSpecName);//   专题/广告详情页面
         super.onItemClick(itemView, itemBean, position);
     }
 }

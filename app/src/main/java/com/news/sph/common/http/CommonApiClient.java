@@ -93,7 +93,7 @@ public class CommonApiClient extends BaseApiClient {
                 asyncCallBack);
     }
     /**
-     * 获取新闻
+     * 热门专题
      * @param context
      * @param dto
      * @param callback
@@ -119,7 +119,7 @@ public class CommonApiClient extends BaseApiClient {
                 asyncCallBack);
     }
     /**
-     * 首页推荐
+     * 首页推荐图片
      * @param context
      * @param dto
      * @param callback

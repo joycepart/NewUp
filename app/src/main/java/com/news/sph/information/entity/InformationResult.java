@@ -9,6 +9,8 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class InformationResult extends BaseEntity {
+    List<InformationEntity> data;
+
     public List<InformationEntity> getData() {
         return data;
     }
@@ -17,5 +19,4 @@ public class InformationResult extends BaseEntity {
         this.data = data;
     }
 
-    List<InformationEntity> data;
 }

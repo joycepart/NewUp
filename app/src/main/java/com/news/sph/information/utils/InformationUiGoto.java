@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.news.sph.ui.BrowserActivity;
+import com.news.sph.common.base.BrowserActivity;
+
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -16,12 +17,12 @@ public class InformationUiGoto {
      *
      * @param context
      * @param mNewsBigTitle
-     * @param mNewsHtmlUrl
+     * @param mUrl
      */
-    public static void newsDetail(Context context, String mNewsBigTitle, String mNewsHtmlUrl) {
+    public static void newsDetail(Context context, String mNewsBigTitle, String mUrl) {
         Intent intent = new Intent(context, BrowserActivity.class);
-        intent.putExtra("url", mNewsBigTitle);
-        intent.putExtra("title", mNewsHtmlUrl);
+        intent.putExtra("url", mUrl);
+        intent.putExtra("title", mNewsBigTitle);
         context.startActivity(intent);
     }
 

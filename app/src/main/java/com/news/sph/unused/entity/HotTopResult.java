@@ -8,6 +8,8 @@ import java.util.List;
  * Created by lenovo on 2016/5/20.
  */
 public class HotTopResult extends BaseEntity {
+    List<HotTopEntity> data;
+
     public List<HotTopEntity> getData() {
         return data;
     }
@@ -16,5 +18,5 @@ public class HotTopResult extends BaseEntity {
         this.data = data;
     }
 
-    List<HotTopEntity> data;
+
 }

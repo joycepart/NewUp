@@ -34,5 +34,6 @@ public class AppConfig {
 
 
 	public static final String BASE_URL="http://103.10.84.186:8099";
+	public static final String News_Html="SMSBase/ReturnApp/NewsHtml.aspx?id=";
 
 }

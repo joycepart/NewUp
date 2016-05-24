@@ -23,7 +23,6 @@ import com.news.sph.home.entity.LoginEntity;
 import com.news.sph.home.entity.LoginResult;
 import com.news.sph.me.entity.User;
 import com.news.sph.me.utils.MeUiGoto;
-import com.news.sph.ui.BrowserActivity;
 import com.news.sph.utils.LogUtils;
 
 import java.util.List;

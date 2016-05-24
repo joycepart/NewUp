@@ -13,6 +13,9 @@ import com.news.sph.common.base.BaseActivity;
 import com.news.sph.common.base.BaseFragment;
 import com.news.sph.home.fragment.HomeFragment;
 import com.news.sph.information.fragment.InformationFragment;
+import com.news.sph.issue.fragment.IssueFragment;
+import com.news.sph.me.fragment.MeFragment;
+import com.news.sph.unused.fragment.UnusedFragment;
 import com.news.sph.utils.TextViewUtils;
 
 import java.util.ArrayList;
@@ -111,19 +114,19 @@ public class MainActivity extends BaseActivity {
                 fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new InformationFragment();
-              //  fragment = new UnusedFragment();
+//                fragment = new InformationFragment();
+                fragment = new UnusedFragment();
                 break;
             case 2:
-                fragment = new InformationFragment();
-               // fragment = new IssueFragment();
+//                fragment = new InformationFragment();
+                fragment = new IssueFragment();
                 break;
             case 3:
                 fragment = new InformationFragment();
                 break;
             case 4:
-                fragment = new InformationFragment();
-               // fragment = new MeFragment();
+//                fragment = new InformationFragment();
+                fragment = new MeFragment();
                 break;
         }
         fragmentList.add(index,fragment);

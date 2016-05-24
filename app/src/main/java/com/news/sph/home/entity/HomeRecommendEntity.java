@@ -4,38 +4,24 @@ package com.news.sph.home.entity;
  * Created by lenovo on 2016/5/20.
  */
 public class HomeRecommendEntity {
-    /*
-                       夺宝商品编号
-                          */
+    /* 夺宝商品编号 */
     private String sna_code  ;
-    /*
-                       夺宝批次编号
-                          */
+    /*夺宝批次编号*/
     private String bat_code  ;
-    /*
-                       夺宝商品备注
-                          */
+    /*夺宝商品备注*/
     private String sna_remark  ;
-    /*
-                       夺宝期数
-                          */
+    /*夺宝期数*/
     private String sna_term   ;
-    /*
-                      夺宝商品标题
-                          */
+    /*夺宝商品标题*/
     private String sna_title  ;
-    /*
-                     开奖所需人次
-                          */
+    /*开奖所需人次*/
     private String sna_total_count  ;
-    /*
-                       已售出人次
-                          */
+    /*已售出人次 */
     private String sna_sell_out  ;
-    /*
-                        封面图片地址
-                           */
+    /*封面图片地址*/
     private String pic_url  ;
+    /* 推荐*/
+    private String isRecommend   ;
 
     public String getBat_code() {
         return bat_code;
@@ -109,9 +95,6 @@ public class HomeRecommendEntity {
         this.sna_total_count = sna_total_count;
     }
 
-    /*
-                            推荐
-                               */
-    private String isRecommend   ;
+
 
 }

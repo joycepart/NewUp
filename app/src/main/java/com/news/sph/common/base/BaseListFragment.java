@@ -62,7 +62,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.base_recyclerview;
+        return R.layout.base_listfragment;
     }
 
     @Override

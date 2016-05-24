@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 /**
  * 轮播图
- * @author bixw
  */
 public class ViewFlowLayout extends RelativeLayout {
     private Context context_;

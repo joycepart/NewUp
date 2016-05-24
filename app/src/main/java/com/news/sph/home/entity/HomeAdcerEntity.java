@@ -4,6 +4,11 @@ package com.news.sph.home.entity;
  * Created by lenovo on 2016/5/20.
  */
 public class HomeAdcerEntity {
+    /* 编号，主键*/
+    private String ID  ;
+    /* 广告图片*/
+    private String spec_pic;
+
     public String getID() {
         return ID;
     }
@@ -20,13 +25,5 @@ public class HomeAdcerEntity {
         this.spec_pic = spec_pic;
     }
 
-    /*
-                        编号，主键
-                           */
-    private String ID  ;
 
-    /*
-                 广告图片
-                    */
-    private String spec_pic;
 }

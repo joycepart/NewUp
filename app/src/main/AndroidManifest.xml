@@ -36,7 +36,7 @@
             android:name=".me.activity.MyIncomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.BrowserActivity"
+            android:name=".common.base.BrowserActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".home.activity.ProductDetailsActivity"

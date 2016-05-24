@@ -3,12 +3,12 @@ package com.news.sph.home.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.home.activity.AddAddressActivity;
 import com.news.sph.home.activity.CuringActivity;
 import com.news.sph.home.activity.PlaceOrderActivity;
 import com.news.sph.home.activity.SelectAddressActivity;
 import com.news.sph.me.activity.VouchersActivity;
-import com.news.sph.ui.BrowserActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -75,14 +75,14 @@ public class HomeUiGoto {
      * 跳转到商品详情详情页（加载h5页面）
      *
      * @param context
-     * @param mUrlFocus
-     * @param mFocusTitle
+     * @param mUrlSpecial
+     * @param mSpecialTitle
      */
 
-    public static void productDetails(Context context, String mUrlFocus, String mFocusTitle){
+    public static void productDetails(Context context, String mUrlSpecial, String mSpecialTitle){
         Intent intent = new Intent(context, BrowserActivity.class);
-        intent.putExtra("url", mUrlFocus);
-        intent.putExtra("title", mFocusTitle);
+        intent.putExtra("url", mUrlSpecial);
+        intent.putExtra("title", mSpecialTitle);
         context.startActivity(intent);
     }
     /**

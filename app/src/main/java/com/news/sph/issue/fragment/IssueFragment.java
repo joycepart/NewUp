@@ -2,12 +2,14 @@ package com.news.sph.issue.fragment;
 
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.ptrrecyclerview.PtrRecyclerView;
 import com.news.sph.AppConfig;
+import com.news.sph.R;
 import com.news.sph.common.base.BaseListFragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
@@ -29,11 +31,6 @@ import java.util.List;
 
 public class IssueFragment extends BaseListFragment<IndianaListEntity> {
 
-//    @Bind(R.id.ptr_frame_issue_product)
-//    PtrFrameLayout ptr_frame_issue_product;
-//    @Bind(R.id.issue_product_list)
-//    ListView issue_product_list;
-
     PtrRecyclerView mRecyclerview;
     private String mPicUrl ;
     private String mUrl ;
@@ -42,16 +39,12 @@ public class IssueFragment extends BaseListFragment<IndianaListEntity> {
 
     @Override
     public void initView(View view) {
-//        setTitleText("夺宝岛");
 
-//        mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
-//        View header = LayoutInflater.from(getActivity()).inflate(
-//                R.layout.view_issue_top, null);
+        mRecyclerview = (PtrRecyclerView) view.findViewById(R.id.base_recyclerview);
+        View header = LayoutInflater.from(getActivity()).inflate(
+                R.layout.view_issue_top, null);
+        mRecyclerview.addHeaderView(header);
 
-//        issue_product_list.addHeaderView(header);
-
-
-//        mRecyclerview.addHeaderView(header);
 //        mIssueTopImg = (ImageView) view.findViewById(R.id.issue_top_img);
 
     }

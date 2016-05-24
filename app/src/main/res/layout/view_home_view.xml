@@ -4,8 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <include layout="@layout/top_home"/>
-    <include layout="@layout/top_carousel"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

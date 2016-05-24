@@ -38,15 +38,26 @@
                 android:text="@string/issue_a"
                 android:textSize="@dimen/fs_50"
                 />
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/fs_45"
-                android:gravity="center"
+                android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:id="@+id/textView1"
                 android:text="wwwwwwwwwww"
                 android:textSize="@dimen/fs_50"
                 />
+                <ViewFlipper
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/view_flipper"
+                    android:background="@color/color_ff">
+                </ViewFlipper>
+            </LinearLayout>
         </LinearLayout>
 
         <View

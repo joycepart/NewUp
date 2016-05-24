@@ -10,7 +10,8 @@ import java.util.List;
  * Created by lenovo on 2016/5/22.
  */
 public class MyViewPagerAdapter extends PagerAdapter {
-    private List<View> mListViews;
+
+    private final List<View> mListViews;
 
     public MyViewPagerAdapter(List<View> mListViews) {
         this.mListViews = mListViews;
