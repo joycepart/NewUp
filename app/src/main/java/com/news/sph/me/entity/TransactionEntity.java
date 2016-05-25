@@ -9,158 +9,158 @@ public class TransactionEntity extends BaseEntity{
     /*
                交易ID，转到详情
                 */
-    private String mID;
+    private String ID;
     /*
            商品名称
             */
-    private String mComName;
+    private String comName;
     /*
            商品金额
             */
-    private String mComPrice;
+    private String comPrice;
     /*
            佣金
             */
-    private String mComCommission;
+    private String comCommission;
     /*
            收益金额
             */
-    private String mComIncomeAmount;
+    private String comIncomeAmount;
     /*
           交易完成时间(HH:mm:ss)
             */
-    private String mComTradingTime;
+    private String comTradingTime;
     /*
           交易完成时间(yyyy-MM-dd)
             */
-    private String mComTradingData;
+    private String comTradingData;
     /*
            盈利[+]（1）,消费[-](0)
             */
-    private String mComEarOrCon;
+    private String comEarOrCon;
     /*
          数据来源（轻奢生活、京东、天猫…）
             */
-    private String mComDataSources;
+    private String comDataSources;
     /*
           明细处理方(轻奢生活、京东、天猫…)
             */
-    private String mComDetailProParty;
-    /*
-           新用户名
-            */
-    private String mCouponMoney;
+    private String comDetailProParty;
     /*
            代金券金额
             */
-    private String mTransactionType;
+    private String CouponMoney;
+    /*
+           交易类型
+            */
+    private String TransactionType;
     /*
               上门服务费
                 */
-    private String mServiceMoney;
+    private String ServiceMoney;
 
-    public String getmComCommission() {
-        return mComCommission;
+    public String getComCommission() {
+        return comCommission;
     }
 
-    public void setmComCommission(String mComCommission) {
-        this.mComCommission = mComCommission;
+    public void setComCommission(String comCommission) {
+        this.comCommission = comCommission;
     }
 
-    public String getmComDataSources() {
-        return mComDataSources;
+    public String getComDataSources() {
+        return comDataSources;
     }
 
-    public void setmComDataSources(String mComDataSources) {
-        this.mComDataSources = mComDataSources;
+    public void setComDataSources(String comDataSources) {
+        this.comDataSources = comDataSources;
     }
 
-    public String getmComDetailProParty() {
-        return mComDetailProParty;
+    public String getComDetailProParty() {
+        return comDetailProParty;
     }
 
-    public void setmComDetailProParty(String mComDetailProParty) {
-        this.mComDetailProParty = mComDetailProParty;
+    public void setComDetailProParty(String comDetailProParty) {
+        this.comDetailProParty = comDetailProParty;
     }
 
-    public String getmComEarOrCon() {
-        return mComEarOrCon;
+    public String getComEarOrCon() {
+        return comEarOrCon;
     }
 
-    public void setmComEarOrCon(String mComEarOrCon) {
-        this.mComEarOrCon = mComEarOrCon;
+    public void setComEarOrCon(String comEarOrCon) {
+        this.comEarOrCon = comEarOrCon;
     }
 
-    public String getmComIncomeAmount() {
-        return mComIncomeAmount;
+    public String getComIncomeAmount() {
+        return comIncomeAmount;
     }
 
-    public void setmComIncomeAmount(String mComIncomeAmount) {
-        this.mComIncomeAmount = mComIncomeAmount;
+    public void setComIncomeAmount(String comIncomeAmount) {
+        this.comIncomeAmount = comIncomeAmount;
     }
 
-    public String getmComName() {
-        return mComName;
+    public String getComName() {
+        return comName;
     }
 
-    public void setmComName(String mComName) {
-        this.mComName = mComName;
+    public void setComName(String comName) {
+        this.comName = comName;
     }
 
-    public String getmComPrice() {
-        return mComPrice;
+    public String getComPrice() {
+        return comPrice;
     }
 
-    public void setmComPrice(String mComPrice) {
-        this.mComPrice = mComPrice;
+    public void setComPrice(String comPrice) {
+        this.comPrice = comPrice;
     }
 
-    public String getmComTradingData() {
-        return mComTradingData;
+    public String getComTradingData() {
+        return comTradingData;
     }
 
-    public void setmComTradingData(String mComTradingData) {
-        this.mComTradingData = mComTradingData;
+    public void setComTradingData(String comTradingData) {
+        this.comTradingData = comTradingData;
     }
 
-    public String getmComTradingTime() {
-        return mComTradingTime;
+    public String getComTradingTime() {
+        return comTradingTime;
     }
 
-    public void setmComTradingTime(String mComTradingTime) {
-        this.mComTradingTime = mComTradingTime;
+    public void setComTradingTime(String comTradingTime) {
+        this.comTradingTime = comTradingTime;
     }
 
-    public String getmCouponMoney() {
-        return mCouponMoney;
+    public String getCouponMoney() {
+        return CouponMoney;
     }
 
-    public void setmCouponMoney(String mCouponMoney) {
-        this.mCouponMoney = mCouponMoney;
+    public void setCouponMoney(String couponMoney) {
+        this.CouponMoney = couponMoney;
     }
 
-    public String getmID() {
-        return mID;
+    public String getID() {
+        return ID;
     }
 
-    public void setmID(String mID) {
-        this.mID = mID;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public String getmServiceMoney() {
-        return mServiceMoney;
+    public String getServiceMoney() {
+        return ServiceMoney;
     }
 
-    public void setmServiceMoney(String mServiceMoney) {
-        this.mServiceMoney = mServiceMoney;
+    public void setServiceMoney(String serviceMoney) {
+        this.ServiceMoney = serviceMoney;
     }
 
-    public String getmTransactionType() {
-        return mTransactionType;
+    public String getTransactionType() {
+        return TransactionType;
     }
 
-    public void setmTransactionType(String mTransactionType) {
-        this.mTransactionType = mTransactionType;
+    public void setTransactionType(String transactionType) {
+        this.TransactionType = transactionType;
     }
 
 

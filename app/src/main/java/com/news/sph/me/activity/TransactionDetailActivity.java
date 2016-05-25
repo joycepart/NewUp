@@ -25,14 +25,11 @@ public class TransactionDetailActivity extends BaseTitleActivity {
     @Bind(R.id.base_titlebar_ensure)
     TextView mBaseTitlebarEnsure;
     private String strPhoneNum;
-
-
+    private String mComPrice;
     @Override
     protected int getContentResId() {
         return R.layout.activity_transaction_detail;
     }
-
-
 
     @Override
     public void initView() {
@@ -52,6 +49,7 @@ public class TransactionDetailActivity extends BaseTitleActivity {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("获取验证码请求成功");
                     transactionResult(result.getData());
+
                 }
             }
         });

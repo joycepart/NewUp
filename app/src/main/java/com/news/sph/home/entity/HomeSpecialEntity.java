@@ -7,25 +7,25 @@ import com.news.sph.common.entity.BaseEntity;
  */
 public class HomeSpecialEntity extends BaseEntity{
     /*点击专题跳转的url地址*/
-    private String mSpecSrc  ;
+    private String spec_src;
     /*广告图片*/
-    private String mSpecPic;
+    private String spec_pic;
 
 
-    public String getmSpecPic() {
-        return mSpecPic;
+    public String getSpec_pic() {
+        return spec_pic;
     }
 
-    public void setmSpecPic(String mSpecPic) {
-        this.mSpecPic = mSpecPic;
+    public void setSpec_pic(String spec_pic) {
+        this.spec_pic = spec_pic;
     }
 
-    public String getmSpecSrc() {
-        return mSpecSrc;
+    public String getSpec_src() {
+        return spec_src;
     }
 
-    public void setmSpecSrc(String mSpecSrc) {
-        this.mSpecSrc = mSpecSrc;
+    public void setSpec_src(String spec_src) {
+        this.spec_src = spec_src;
     }
 
 

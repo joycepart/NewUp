@@ -8,13 +8,13 @@ import com.news.sph.common.dto.BaseDTO;
 public class CuringOrderListDTO extends BaseDTO {
     /*请求状态(不填是请求全部)
                  */
-    private String mAppreqtype;
-    public String getmAppreqtype() {
-        return mAppreqtype;
+    private String appreqtype;
+    public String getAppreqtype() {
+        return appreqtype;
     }
 
-    public void setmAppreqtype(String mAppreqtype) {
-        this.mAppreqtype = mAppreqtype;
+    public void setAppreqtype(String appreqtype) {
+        this.appreqtype = appreqtype;
     }
 
 }

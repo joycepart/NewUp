@@ -47,6 +47,7 @@ public class MeUiGoto {
         Intent intent = new Intent(context, MyCouponActivity.class);
         context.startActivity(intent);
     }
+
     /**
      * 跳转到我的收入页
      * @param context
@@ -56,9 +57,6 @@ public class MeUiGoto {
         Intent intent = new Intent(context, MyIncomeActivity.class);
         context.startActivity(intent);
     }
-
-
-
 
 
     /**

@@ -8,26 +8,26 @@ import com.news.sph.common.entity.BaseEntity;
 public class AdvertisingEntity extends BaseEntity{
     /* 编号，主键
                             */
-    private String mID  ;
+    private String ID;
 
     /*  广告图片
                     */
-    private String mSpecPic;
+    private String spec_pic;
 
-    public String getmID() {
-        return mID;
+    public String getID() {
+        return ID;
     }
 
-    public void setmID(String mID) {
-        this.mID = mID;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public String getmSpecPic() {
-        return mSpecPic;
+    public String getSpec_pic() {
+        return spec_pic;
     }
 
-    public void setmSpecPic(String mSpecPic) {
-        this.mSpecPic = mSpecPic;
+    public void setSpec_pic(String spec_pic) {
+        this.spec_pic = spec_pic;
     }
 
 

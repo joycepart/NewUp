@@ -11,51 +11,40 @@ public class MyIncomeEntity extends BaseEntity{
     /**
      * 可提现余额
      */
-    private String mCashamountmoney;
+    private String cashamountmoney;
     /**
      * 累计收入
      */
-    private String mAccumulatedmoney;
+    private String accumulatedmoney;
     /**
      * 状态
      */
-    private String mPresentState;
-    @SerializedName("RongyunToken")
-    private String mToken;
+    private String presentState;
 
-    public String getmAccumulatedmoney() {
-        return mAccumulatedmoney;
+
+    public String getAccumulatedmoney() {
+        return accumulatedmoney;
     }
 
-    public void setmAccumulatedmoney(String mAccumulatedmoney) {
-        this.mAccumulatedmoney = mAccumulatedmoney;
+    public void setAccumulatedmoney(String accumulatedmoney) {
+        this.accumulatedmoney = accumulatedmoney;
     }
 
-    public String getmCashamountmoney() {
-        return mCashamountmoney;
+    public String getCashamountmoney() {
+        return cashamountmoney;
     }
 
-    public void setmCashamountmoney(String mCashamountmoney) {
-        this.mCashamountmoney = mCashamountmoney;
+    public void setCashamountmoney(String cashamountmoney) {
+        this.cashamountmoney = cashamountmoney;
     }
 
-    public String getmPresentState() {
-        return mPresentState;
+    public String getPresentState() {
+        return presentState;
     }
 
-    public void setmPresentState(String mPresentState) {
-        this.mPresentState = mPresentState;
+    public void setPresentState(String presentState) {
+        this.presentState = presentState;
     }
-
-    public String getmToken() {
-        return mToken;
-    }
-
-    public void setmToken(String mToken) {
-        this.mToken = mToken;
-    }
-
-
 
 
 }

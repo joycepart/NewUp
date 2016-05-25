@@ -61,8 +61,6 @@ public class MeFragment extends BaseFragment {
     Button mUserBtnClose;
     @Bind(R.id.me_ll_close)
     LinearLayout mMeLlClose;
-
-
     private String mUrlUs;
     private String mUsTitle;
     private String mUrlReturn;
@@ -102,24 +100,8 @@ public class MeFragment extends BaseFragment {
         }
     }
 
-
     @Override
     public void initData() {
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @OnClick({R.id.user_btn, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone, R.id.user_ll_qq,R.id.user_ll_inf, R.id.user_btn_close})

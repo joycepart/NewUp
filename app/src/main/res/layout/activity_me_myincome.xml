@@ -4,13 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/color_cc"
     android:orientation="vertical">
-<include layout="@layout/top_myincome"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_300"
+        android:layout_height="@dimen/ds_400"
         android:background="@color/color_ff"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,17 +20,16 @@
             android:textColor="@color/color_00"/>
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/ds_230"
-            android:layout_marginTop="@dimen/ds_15"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/ds_330"
+            android:layout_marginTop="@dimen/ds_5"
             android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/me_income_meney"
-            android:layout_gravity="center"
-            android:textSize="@dimen/fs_120"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/fs_100"
             android:textColor="@color/color_c0"/>
             <TextView
                 android:id="@+id/myincome_withdrawals"
@@ -40,7 +38,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/me_income_meney"
                 android:layout_gravity="center"
-                android:textSize="@dimen/fs_120"
+                android:textSize="@dimen/fs_100"
                 android:textColor="@color/color_c0"/>
     </LinearLayout>
     </LinearLayout>

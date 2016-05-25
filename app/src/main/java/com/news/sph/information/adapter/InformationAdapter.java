@@ -22,10 +22,10 @@ public class InformationAdapter extends BaseSimpleRecyclerAdapter<InformationEnt
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, InformationEntity informationEntity, int position) {
-        holder.setText(R.id.information_tv1,informationEntity.getmNewsBigTitle());
-        holder.setText(R.id.information_tv2,informationEntity.getmNewsSmallTitle());
+        holder.setText(R.id.information_tv1,informationEntity.getNews_big_title());
+        holder.setText(R.id.information_tv2,informationEntity.getNews_small_title());
         ImageView mInformationImg=holder.getView( R.id.information_img);
-        String mPicUrl = AppConfig.BASE_URL+informationEntity.getmNewsPicUrl();
+        String mPicUrl = AppConfig.BASE_URL+informationEntity.getNews_pic_url();
         ImageLoaderUtils.displayImage(mPicUrl, mInformationImg);
 
     }

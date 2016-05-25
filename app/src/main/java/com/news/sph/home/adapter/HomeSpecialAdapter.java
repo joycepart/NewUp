@@ -8,18 +8,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
-import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.home.entity.HomeSpecialEntity;
-import com.news.sph.home.entity.HomeSpecialResult;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
-
-import butterknife.Bind;
 
 
 public class HomeSpecialAdapter extends BaseAdapter {
@@ -69,7 +64,7 @@ public class HomeSpecialAdapter extends BaseAdapter {
     }
 
     private void bindData(HomeSpecialEntity item, Holder holder) {
-        String mPicUrl = AppConfig.BASE_URL + item.getmSpecPic();
+        String mPicUrl = AppConfig.BASE_URL + item.getSpec_pic();
         ImageLoader.getInstance().displayImage(mPicUrl, holder.mHomeListImg, getImageOptions());
     }
 

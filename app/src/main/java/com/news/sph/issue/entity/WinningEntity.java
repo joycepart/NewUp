@@ -9,62 +9,62 @@ public class WinningEntity extends BaseEntity{
     /*
                      批次号
                           */
-    private String mBatCode  ;
+    private String bat_code;
     /*
                     夺宝商品号
                        */
-    private String mSnaCode  ;
+    private String sna_code;
     /*
                   标题
                        */
-    private String mSnaTitle  ;
+    private String sna_title;
     /*
                    期数
                        */
-    private String mSnaTerm  ;
+    private String sna_term;
     /*
                         幸运用户
                            */
-    private String mSnaLuckyPeople  ;
+    private String sna_lucky_people;
 
-    public String getmBatCode() {
-        return mBatCode;
+    public String getBat_code() {
+        return bat_code;
     }
 
-    public void setmBatCode(String mBatCode) {
-        this.mBatCode = mBatCode;
+    public void setBat_code(String bat_code) {
+        this.bat_code = bat_code;
     }
 
-    public String getmSnaCode() {
-        return mSnaCode;
+    public String getSna_code() {
+        return sna_code;
     }
 
-    public void setmSnaCode(String mSnaCode) {
-        this.mSnaCode = mSnaCode;
+    public void setSna_code(String sna_code) {
+        this.sna_code = sna_code;
     }
 
-    public String getmSnaLuckyPeople() {
-        return mSnaLuckyPeople;
+    public String getSna_lucky_people() {
+        return sna_lucky_people;
     }
 
-    public void setmSnaLuckyPeople(String mSnaLuckyPeople) {
-        this.mSnaLuckyPeople = mSnaLuckyPeople;
+    public void setSna_lucky_people(String sna_lucky_people) {
+        this.sna_lucky_people = sna_lucky_people;
     }
 
-    public String getmSnaTerm() {
-        return mSnaTerm;
+    public String getSna_term() {
+        return sna_term;
     }
 
-    public void setmSnaTerm(String mSnaTerm) {
-        this.mSnaTerm = mSnaTerm;
+    public void setSna_term(String sna_term) {
+        this.sna_term = sna_term;
     }
 
-    public String getmSnaTitle() {
-        return mSnaTitle;
+    public String getSna_title() {
+        return sna_title;
     }
 
-    public void setmSnaTitle(String mSnaTitle) {
-        this.mSnaTitle = mSnaTitle;
+    public void setSna_title(String sna_title) {
+        this.sna_title = sna_title;
     }
 
 

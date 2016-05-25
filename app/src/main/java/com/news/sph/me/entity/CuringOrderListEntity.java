@@ -7,123 +7,123 @@ public class CuringOrderListEntity {
     /*
               订单编号
                 */
-    private String mOrderNum;
+    private String OrderNum;
 
     /*
            商品编号
             */
-    private String mComOnlyCode;
+    private String ComOnlyCode;
     /*
           商品名称
             */
-    private String mComName;
+    private String ComName;
     /*
           单价
             */
-    private String mComPrice;
+    private String ComPrice;
     /*
            总金额
             */
-    private String mOrderMoney;
+    private String OrderMoney;
     /*
            封面图片
             */
-    private String mComShowPic;
+    private String com_show_pic;
     /*
            数量
             */
-    private String mComCount;
+    private String ComCount;
     /*
           状态
             */
-    private String mOrderState;
+    private String OrderState;
     /*
           下单时间(yyyy-MM-dd HH:mm:ss)
             */
-    private String mOrderSingleTime;
+    private String OrderSingleTime;
     /*
                是否过期 【状态=0时显示已过期,不等于0，当没有这个状态】(1过期0未过期)
                 */
-    private String mIsovertime;
+    private String isovertime;
 
-    public String getmComCount() {
-        return mComCount;
+    public String getComCount() {
+        return ComCount;
     }
 
-    public void setmComCount(String mComCount) {
-        this.mComCount = mComCount;
+    public void setComCount(String comCount) {
+        this.ComCount = comCount;
     }
 
-    public String getmComName() {
-        return mComName;
+    public String getComName() {
+        return ComName;
     }
 
-    public void setmComName(String mComName) {
-        this.mComName = mComName;
+    public void setComName(String comName) {
+        this.ComName = comName;
     }
 
-    public String getmComOnlyCode() {
-        return mComOnlyCode;
+    public String getComOnlyCode() {
+        return ComOnlyCode;
     }
 
-    public void setmComOnlyCode(String mComOnlyCode) {
-        this.mComOnlyCode = mComOnlyCode;
+    public void setComOnlyCode(String comOnlyCode) {
+        this.ComOnlyCode = comOnlyCode;
     }
 
-    public String getmComPrice() {
-        return mComPrice;
+    public String getComPrice() {
+        return ComPrice;
     }
 
-    public void setmComPrice(String mComPrice) {
-        this.mComPrice = mComPrice;
+    public void setComPrice(String comPrice) {
+        this.ComPrice = comPrice;
     }
 
-    public String getmComShowPic() {
-        return mComShowPic;
+    public String getCom_show_pic() {
+        return com_show_pic;
     }
 
-    public void setmComShowPic(String mComShowPic) {
-        this.mComShowPic = mComShowPic;
+    public void setCom_show_pic(String com_show_pic) {
+        this.com_show_pic = com_show_pic;
     }
 
-    public String getmIsovertime() {
-        return mIsovertime;
+    public String getIsovertime() {
+        return isovertime;
     }
 
-    public void setmIsovertime(String mIsovertime) {
-        this.mIsovertime = mIsovertime;
+    public void setIsovertime(String isovertime) {
+        this.isovertime = isovertime;
     }
 
-    public String getmOrderMoney() {
-        return mOrderMoney;
+    public String getOrderMoney() {
+        return OrderMoney;
     }
 
-    public void setmOrderMoney(String mOrderMoney) {
-        this.mOrderMoney = mOrderMoney;
+    public void setOrderMoney(String orderMoney) {
+        this.OrderMoney = orderMoney;
     }
 
-    public String getmOrderNum() {
-        return mOrderNum;
+    public String getOrderNum() {
+        return OrderNum;
     }
 
-    public void setmOrderNum(String mOrderNum) {
-        this.mOrderNum = mOrderNum;
+    public void setOrderNum(String orderNum) {
+        this.OrderNum = orderNum;
     }
 
-    public String getmOrderSingleTime() {
-        return mOrderSingleTime;
+    public String getOrderSingleTime() {
+        return OrderSingleTime;
     }
 
-    public void setmOrderSingleTime(String mOrderSingleTime) {
-        this.mOrderSingleTime = mOrderSingleTime;
+    public void setOrderSingleTime(String orderSingleTime) {
+        this.OrderSingleTime = orderSingleTime;
     }
 
-    public String getmOrderState() {
-        return mOrderState;
+    public String getOrderState() {
+        return OrderState;
     }
 
-    public void setmOrderState(String mOrderState) {
-        this.mOrderState = mOrderState;
+    public void setOrderState(String orderState) {
+        this.OrderState = orderState;
     }
 
 

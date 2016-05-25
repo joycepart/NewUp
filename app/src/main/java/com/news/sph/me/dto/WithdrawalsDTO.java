@@ -9,62 +9,62 @@ public class WithdrawalsDTO extends BaseDTO {
     /**
      * 提现金额
      */
-    private String mPresentmoney;
+    private String presentmoney;
     /**
      * 支付宝、银行卡、微信等账号
      */
-    private String mAccountnumber;
+    private String accountnumber;
     /**
      * 类型 支付宝、银行卡、微信等
      */
-    private String mAccounttype;
+    private String accounttype;
     /**
      * 预留手机号码 银行需要【没有值时传’’】
      */
-    private String mReservemobile;
+    private String reservemobile;
     /**
      * 持卡人姓名 银行需要【没有值时传’’】
      */
-    private String mReservename;
+    private String reservename;
 
-    public String getmAccountnumber() {
-        return mAccountnumber;
+    public String getAccountnumber() {
+        return accountnumber;
     }
 
-    public void setmAccountnumber(String mAccountnumber) {
-        this.mAccountnumber = mAccountnumber;
+    public void setAccountnumber(String accountnumber) {
+        this.accountnumber = accountnumber;
     }
 
-    public String getmAccounttype() {
-        return mAccounttype;
+    public String getAccounttype() {
+        return accounttype;
     }
 
-    public void setmAccounttype(String mAccounttype) {
-        this.mAccounttype = mAccounttype;
+    public void setAccounttype(String accounttype) {
+        this.accounttype = accounttype;
     }
 
-    public String getmPresentmoney() {
-        return mPresentmoney;
+    public String getPresentmoney() {
+        return presentmoney;
     }
 
-    public void setmPresentmoney(String mPresentmoney) {
-        this.mPresentmoney = mPresentmoney;
+    public void setPresentmoney(String presentmoney) {
+        this.presentmoney = presentmoney;
     }
 
-    public String getmReservemobile() {
-        return mReservemobile;
+    public String getReservemobile() {
+        return reservemobile;
     }
 
-    public void setmReservemobile(String mReservemobile) {
-        this.mReservemobile = mReservemobile;
+    public void setReservemobile(String reservemobile) {
+        this.reservemobile = reservemobile;
     }
 
-    public String getmReservename() {
-        return mReservename;
+    public String getReservename() {
+        return reservename;
     }
 
-    public void setmReservename(String mReservename) {
-        this.mReservename = mReservename;
+    public void setReservename(String reservename) {
+        this.reservename = reservename;
     }
 
 

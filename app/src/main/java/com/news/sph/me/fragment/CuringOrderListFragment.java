@@ -70,7 +70,7 @@ public class CuringOrderListFragment extends BaseFragment {
     private void curingOrder() {
         CuringOrderListDTO cdto=new CuringOrderListDTO();
         cdto.setMembermob(strPhoneNum);
-        cdto.setmAppreqtype(appreqtype);
+        cdto.setAppreqtype(appreqtype);
         cdto.setSign(AppConfig.SIGN_1);
         CommonApiClient.CuringOrderList(getActivity(), cdto, new CallBack<CuringOrderListResult>() {
             @Override

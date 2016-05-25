@@ -48,12 +48,6 @@ public class AddAddressActivity extends BaseTitleActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick(R.id.add_Btn)
     public void onClick(View v) {

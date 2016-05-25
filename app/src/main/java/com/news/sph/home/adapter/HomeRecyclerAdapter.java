@@ -21,7 +21,7 @@ public class HomeRecyclerAdapter extends BaseSimpleRecyclerAdapter<HomeSpecialEn
     @Override
     public void bindData(BaseRecyclerViewHolder holder, HomeSpecialEntity homeSpecialEntity, int position) {
         ImageView mInformationImg=holder.getView( R.id.information_img);
-        String mPicUrl = AppConfig.BASE_URL+homeSpecialEntity.getmSpecPic();
+        String mPicUrl = AppConfig.BASE_URL+homeSpecialEntity.getSpec_pic();
         ImageLoaderUtils.displayImage(mPicUrl, mInformationImg);
     }
 

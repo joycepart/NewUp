@@ -64,9 +64,9 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
             public void onSuccess(InformationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("获取新闻成功");
-                    mInforData = result.getData();
+//                    mInforData = result.getData();
                     requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
-                    setDataResult(mInforData);//设置数据
+                    setDataResult(result.getData());//设置数据
                 }
 
             }
@@ -87,8 +87,8 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
-        mNewsBigTitle =mInforData.get(position).getmNewsBigTitle();
-        mNewsCode = mInforData.get(position).getmNewsCode();
+        mNewsBigTitle =mInforData.get(position).getNews_big_title();
+        mNewsCode = mInforData.get(position).getNews_code();
         mUrl= AppConfig.News_Html+mNewsCode;
         InformationUiGoto.newsDetail(getActivity(),mNewsBigTitle,mUrl);//新闻详情页，h5页面
         super.onItemClick(itemView, itemBean, position);

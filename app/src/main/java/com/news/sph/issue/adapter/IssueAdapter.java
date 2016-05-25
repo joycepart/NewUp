@@ -27,10 +27,10 @@ public class IssueAdapter extends BaseSimpleRecyclerAdapter<IndianaListEntity> {
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, IndianaListEntity indianaListEntity, int position) {
-        holder.setText(R.id.issue_tv1,indianaListEntity.getmSnaRemark());
-        holder.setText(R.id.issue_tv2,indianaListEntity.getmSnaTitle());
-        holder.setText(R.id.issue_tv3,indianaListEntity.getmSnaTerm());
-        mPicUrl = indianaListEntity.getmPicUrl();
+        holder.setText(R.id.issue_tv1,indianaListEntity.getSna_remark());
+        holder.setText(R.id.issue_tv2,indianaListEntity.getSna_title());
+        holder.setText(R.id.issue_tv3,indianaListEntity.getSna_term());
+        mPicUrl = indianaListEntity.getPic_url();
         mUrl = AppConfig.BASE_URL+mPicUrl;
         ImageLoaderUtils.displayImage(mUrl,mIssueImg);
     }

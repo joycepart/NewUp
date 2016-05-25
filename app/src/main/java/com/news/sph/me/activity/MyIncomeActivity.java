@@ -1,6 +1,5 @@
 package com.news.sph.me.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,7 +22,6 @@ import com.news.sph.common.utils.LogUtils;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -51,6 +49,7 @@ public class MyIncomeActivity extends BaseActivity {
      * 累计收入
      */
     private String mAccumuLatedMoney;
+    Boolean flag = false;//判断是否登录，false为没有登录
 
 
     @Override
@@ -60,23 +59,27 @@ public class MyIncomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        if(flag=AppContext.getInstance().getUser().getFlag()){
+            MeUiGoto.login(this);//登录
+        }
         strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
     }
 
     @Override
     public void initData() {
-        MyIncome();
+        MyIncome();//我的收入请求
     }
 
     private void Withdrawals() {
         WithdrawalsDTO mDto = new WithdrawalsDTO();
         mDto.setMembermob(strPhoneNum);
         mDto.setSign(AppConfig.SIGN_1);
-        mDto.setmAccountnumber("");
-        mDto.setmAccounttype("");
-        mDto.setmPresentmoney("");
-        mDto.setmReservemobile("");
-        mDto.setmReservename("");
+        mDto.setAccountnumber("");
+        mDto.setAccounttype("");
+        mDto.setPresentmoney("");
+        mDto.setReservemobile("");
+        mDto.setReservename("");
         CommonApiClient.IncomeWith(this, mDto, new CallBack<BaseEntity>() {
             @Override
             public void onSuccess(BaseEntity result) {
@@ -97,27 +100,20 @@ public class MyIncomeActivity extends BaseActivity {
             public void onSuccess(MyIncomeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.d("我的收入请求成功");
-                    myIncomeResult(result.getData());
+//                    myIncomeResult(result.getData());
                 }
-
 
             }
         });
     }
 
     private void myIncomeResult(List<MyIncomeEntity> data) {
-        mCashaMountMoney = data.get(0).getmCashamountmoney();
-        mAccumuLatedMoney = data.get(0).getmAccumulatedmoney();
+        mCashaMountMoney = data.get(0).getCashamountmoney();
+        mAccumuLatedMoney = data.get(0).getAccumulatedmoney();
         mWithdrawals.setText(mCashaMountMoney);
         mAccumulate.setText(mAccumuLatedMoney);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.top_myincome_img, R.id.top_myincome_tv_detailed, R.id.income_Btn})
     public void onClick(View view) {

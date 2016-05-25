@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/ds_150"
+    android:layout_marginTop="@dimen/ds_20"
+    android:layout_marginBottom="@dimen/ds_20"
     android:background="@color/color_ff"
     android:orientation="vertical">
     <RelativeLayout
@@ -12,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ds_20"
             android:layout_marginTop="@dimen/ds_20"
-            android:textSize="@dimen/fs_75"
+            android:textSize="@dimen/fs_65"
             android:textColor="@color/color_00"
             android:text="@string/tab_me_g"
             android:layout_centerInParent="true"
@@ -35,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ds_20"
             android:layout_marginTop="@dimen/ds_30"
-            android:layout_marginRight="@dimen/ds_15"
-            android:textSize="@dimen/fs_60"
+            android:layout_marginRight="@dimen/ds_25"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"
             android:text="@string/me_income_detail"
             android:gravity="center"
