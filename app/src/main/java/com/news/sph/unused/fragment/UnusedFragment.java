@@ -24,7 +24,7 @@ import java.util.List;
 
 public class UnusedFragment extends BaseListFragment<HotTopEntity> {
     TextView mTopTv;
-
+    List<HotTopEntity> mTopData;
     private String mName;
     private String mUrl;
 
@@ -61,6 +61,9 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
             public void onSuccess(HotTopResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("热门专题成功");
+                    mTopData = result.getData();
+                    requestDataSuccess(result);
+                    setDataResult(mTopData);
                 }
 
             }

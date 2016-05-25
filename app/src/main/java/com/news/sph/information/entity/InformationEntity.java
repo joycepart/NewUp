@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by lenovo on 2016/5/20.
  */
-public class InformationEntity{
+public class InformationEntity extends  BaseEntity{
     /* 编号 */
     private String mNewsCode;
     /* 新闻大标题 */

@@ -1,9 +1,11 @@
 package com.news.sph.issue.entity;
 
+import com.news.sph.common.entity.BaseEntity;
+
 /**
  * Created by lenovo on 2016/5/20.
  */
-public class IndianaListEntity {
+public class IndianaListEntity extends BaseEntity{
 
 
     /*

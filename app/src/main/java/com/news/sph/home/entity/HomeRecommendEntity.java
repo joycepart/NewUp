@@ -1,9 +1,11 @@
 package com.news.sph.home.entity;
 
+import com.news.sph.common.entity.BaseEntity;
+
 /**
  * Created by lenovo on 2016/5/20.
  */
-public class HomeRecommendEntity {
+public class HomeRecommendEntity extends BaseEntity{
     /* 夺宝商品编号 */
     private String mSnaCode  ;
     /*夺宝批次编号*/

@@ -111,21 +111,19 @@ public class MainActivity extends BaseActivity {
         BaseFragment fragment = null;
         switch (index) {
             case 0:
-                fragment = new HomeFragment();
+                fragment = new UnusedFragment();
+//                fragment = new HomeFragment();
                 break;
             case 1:
-//                fragment = new InformationFragment();
                 fragment = new UnusedFragment();
                 break;
             case 2:
-//                fragment = new InformationFragment();
                 fragment = new IssueFragment();
                 break;
             case 3:
                 fragment = new InformationFragment();
                 break;
             case 4:
-//                fragment = new InformationFragment();
                 fragment = new MeFragment();
                 break;
         }

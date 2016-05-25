@@ -1,9 +1,11 @@
 package com.news.sph.home.entity;
 
+import com.news.sph.common.entity.BaseEntity;
+
 /**
  * Created by lenovo on 2016/5/20.
  */
-public class HomeSpecialEntity {
+public class HomeSpecialEntity extends BaseEntity{
     /*点击专题跳转的url地址*/
     private String mSpecSrc  ;
     /*广告图片*/

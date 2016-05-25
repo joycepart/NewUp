@@ -1,11 +1,12 @@
 package com.news.sph.me.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.news.sph.common.entity.BaseEntity;
 
 /**
  * Created by lenovo on 2016/5/18.
  */
-public class MyIncomeEntity {
+public class MyIncomeEntity extends BaseEntity{
 
     /**
      * 可提现余额
