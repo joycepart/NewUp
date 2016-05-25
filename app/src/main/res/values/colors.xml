@@ -23,4 +23,6 @@
     <color name="color_ade7">#e7e7e7</color>
     <color name="green_light">#1da158</color>
     <color name="gray_25">#252525</color>
+    <color name="common_layout_bg">#f8f8f8</color>
+
     </resources>

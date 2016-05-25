@@ -4,7 +4,7 @@ import com.news.sph.R;
 import com.news.sph.common.base.BaseActivity;
 
 public class TestActivity extends BaseActivity {
-   // TextView tv git add . ;
+    // TextView tv;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
@@ -26,7 +26,7 @@ public class TestActivity extends BaseActivity {
         loadData();
     }
 
-    public void loadData(){
+    public void loadData() {
         /**
          * 模拟加载数据
          */
@@ -53,7 +53,7 @@ public class TestActivity extends BaseActivity {
         }.start();
     }
 
-    public void onRetry(){
+    public void onRetry() {
         loadData();
     }
 }

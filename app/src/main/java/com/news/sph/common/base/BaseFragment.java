@@ -29,10 +29,15 @@ public abstract class BaseFragment extends Fragment implements
     protected boolean prepared = false;
     protected LoadingAndRetryManager mLoadingAndRetryManager;
     private View rootView;
+
+    public int getRootLayoutId(){
+        return R.layout.base_fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.base_main, container,
+        View mView = inflater.inflate(getRootLayoutId(), container,
                 false);
         LinearLayout llContent = (LinearLayout) mView
                 .findViewById(R.id.base_content_layout);

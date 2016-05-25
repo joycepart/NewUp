@@ -9,18 +9,13 @@ import android.widget.TextView;
 import com.news.sph.R;
 import com.news.sph.common.utils.TextViewUtils;
 
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-
 /**
  * 带有标题的的基类
  */
 public abstract class BaseTitleActivity extends BaseActivity {
     private TextView mBaseTitle, mBaseEnsure, mBaseBack;
     private View mTitleLayout;
-    private PtrClassicFrameLayout ptf;
+
 
     protected void onAfterSetContentLayout() {
         LinearLayout llContent = (LinearLayout) findViewById(R.id.base_titlebar_content);
@@ -41,42 +36,8 @@ public abstract class BaseTitleActivity extends BaseActivity {
         return mTitleLayout;
     }
 
-    /**
-     * 是否打开下拉刷新。默认关闭
-     *
-     * @return
-     */
-    public boolean pulltoRefresh() {
-        return false;
-    }
-
-    public void refreshComplete() {
-        ptf.refreshComplete();
-    }
-
-    //请求数据方法
-    protected void sendRequestData() {
-
-    }
-
     private void baseInitView() {
 
-        ptf = (PtrClassicFrameLayout) findViewById(R.id.base_ptr_frame);
-        ptf.setPtrHandler(new PtrHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                sendRequestData();
-
-            }
-
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                if (pulltoRefresh()) {
-                    return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
-                }
-                return pulltoRefresh();
-            }
-        });
         mTitleLayout = findViewById(R.id.base_titlebar_layout);
         mBaseTitle = (TextView) findViewById(R.id.base_titlebar_text);
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);

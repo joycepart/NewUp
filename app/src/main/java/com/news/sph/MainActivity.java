@@ -8,8 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.news.sph.common.base.BaseActivity;
 import com.news.sph.common.base.BaseFragment;
+import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.utils.TextViewUtils;
 import com.news.sph.home.fragment.HomeFragment;
 import com.news.sph.information.fragment.InformationFragment;
@@ -26,7 +26,7 @@ import butterknife.Bind;
 整个程序的MainActivity，入口
 */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseTitleActivity {
 
     public static final int TAB_NUM = 5;
 
@@ -179,6 +179,24 @@ public class MainActivity extends BaseActivity {
             }
         }
         currentTab = idx; // 更新目标tab为当前tab
+        getTitleLayout().setVisibility(View.VISIBLE);
+        switch (currentTab){
+            case 1:
+                setTitleText("首页");
+                break;
+            case 2:
+                setTitleText("热门专题");
+                break;
+            case 3:
+                setTitleText("夺宝岛");
+                break;
+            case 4:
+                setTitleText("系统通知");
+            case 5:
+                getTitleLayout().setVisibility(View.GONE);
+                break;
+
+        }
     }
 
     @Override
@@ -206,7 +224,8 @@ public class MainActivity extends BaseActivity {
         return currentTab;
     }
 
-    protected int getLayoutResId() {
+    @Override
+    protected int getContentResId() {
         return R.layout.activity_main;
     }
 
