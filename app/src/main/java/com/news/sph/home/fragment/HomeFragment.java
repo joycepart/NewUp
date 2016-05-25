@@ -1,6 +1,5 @@
 package com.news.sph.home.fragment;
 
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +8,7 @@ import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
-import com.news.sph.common.base.BasePullFragment;
+import com.news.sph.common.base.BasePullScrollViewFragment;
 import com.news.sph.common.bean.ViewFlowBean;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
@@ -30,22 +29,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * 首页的fragment
  */
-public class HomeFragment extends BasePullFragment {
+public class HomeFragment extends BasePullScrollViewFragment {
     @Bind(R.id.vf_layout)
     ViewFlowLayout mVfLayout;
     @Bind(R.id.hsv)
     MyHorizontalScrollView mHsv;
     @Bind(R.id.special_list)
     RecyclerView mSpecialList;
-    @Bind(R.id.nsv)
-    NestedScrollView mScrollView;
+
 
     HorizontalScrollViewAdapter mHsvAdapter;
     BaseSimpleRecyclerAdapter mSpecialListAdapter;
@@ -56,25 +51,6 @@ public class HomeFragment extends BasePullFragment {
     ImageView mImgRg;
 
 
-    @Override
-    public void setsetPtrHandler() {
-        getPtf().setPtrHandler(new PtrHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                sendRequestData();
-            }
-
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                if (pulltoRefresh()) {
-                    return PtrDefaultHandler.checkContentCanBePulledDown(frame, mScrollView, header);
-                }
-                return pulltoRefresh();
-            }
-        });
-    }
-
-    //view_home_view
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -133,6 +109,7 @@ public class HomeFragment extends BasePullFragment {
     public void checkPullRefreshComplete() {
         reqCount++;
         if (reqCount == 3) {
+            reqCount=0;
             refreshComplete();
         }
     }
