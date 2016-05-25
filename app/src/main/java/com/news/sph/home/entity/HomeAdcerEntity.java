@@ -1,5 +1,6 @@
 package com.news.sph.home.entity;
 
+import com.google.gson.annotations.SerializedName;
 import com.news.sph.common.entity.BaseEntity;
 
 /**
@@ -7,23 +8,25 @@ import com.news.sph.common.entity.BaseEntity;
  */
 public class HomeAdcerEntity extends BaseEntity{
     /* 编号，主键*/
-    private String mID  ;
+    @SerializedName("ID")
+    private String id;
     /* 广告图片*/
-    private String mSpecPic;
-    public String getmID() {
-        return mID;
+    @SerializedName("spec_pic")
+    private String specPic;
+    public String getId() {
+        return id;
     }
 
-    public void setmID(String mID) {
-        this.mID = mID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getmSpecPic() {
-        return mSpecPic;
+    public String getSpecPic() {
+        return specPic;
     }
 
-    public void setmSpecPic(String mSpecPic) {
-        this.mSpecPic = mSpecPic;
+    public void setSpecPic(String specPic) {
+        this.specPic = specPic;
     }
 
 

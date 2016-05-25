@@ -1,5 +1,6 @@
 package com.news.sph.common.dto;
 
+import com.google.gson.annotations.SerializedName;
 import com.news.sph.common.utils.SecurityUtils;
 import com.news.sph.common.utils.TimeUtils;
 
@@ -12,7 +13,9 @@ public class BaseDTO implements Serializable {
     private String membermob;
     private String timestamp;
     private String sign;
+    @SerializedName("page_size")
     private int pageSize;
+    @SerializedName("page_index")
     private int pageIndex;
 
     public String getMembermob() {

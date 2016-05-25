@@ -45,11 +45,11 @@ public abstract class BaseTitleActivity extends BaseActivity {
         mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
         mBaseBack.setOnClickListener(this);
 
-        // 初始化返回按钮图片大小
-        TextViewUtils.setTextViewIcon(this, mBaseBack, R.drawable.back,
-                R.dimen.common_titlebar_icon_width,
-                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_LEFT);
-        // 初始化分享按钮图片大小
+//        // 初始化返回按钮图片大小
+//        TextViewUtils.setTextViewIcon(this, mBaseBack, R.drawable.back,
+//                R.dimen.common_titlebar_icon_width,
+//                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_LEFT);
+//        // 初始化分享按钮图片大小
 //        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.detaile_share,
 //                R.dimen.common_titlebar_icon_width,
 //                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_RIGHT);

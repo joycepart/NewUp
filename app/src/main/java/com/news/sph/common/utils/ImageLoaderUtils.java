@@ -3,6 +3,7 @@ package com.news.sph.common.utils;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,6 +21,9 @@ public class ImageLoaderUtils {
      * @param imageView 显示图片控件View
      */
     public static void displayImage(String imageUrl, ImageView imageView) {
+        if(imageUrl!=null&&!imageUrl.contains("http://")){
+            imageUrl= AppConfig.BASE_URL+imageUrl;
+        }
         ImageLoader.getInstance().displayImage(imageUrl,
                 imageView, getDefaultOptions());
     }

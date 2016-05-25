@@ -181,18 +181,18 @@ public class MainActivity extends BaseTitleActivity {
         currentTab = idx; // 更新目标tab为当前tab
         getTitleLayout().setVisibility(View.VISIBLE);
         switch (currentTab){
-            case 1:
+            case 0:
                 setTitleText("首页");
                 break;
-            case 2:
+            case 1:
                 setTitleText("热门专题");
                 break;
-            case 3:
+            case 2:
                 setTitleText("夺宝岛");
                 break;
-            case 4:
+            case 3:
                 setTitleText("系统通知");
-            case 5:
+            case 4:
                 getTitleLayout().setVisibility(View.GONE);
                 break;
 

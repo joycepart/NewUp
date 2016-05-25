@@ -60,5 +60,6 @@
         android:id="@+id/tv_tab_issue"
         style="@style/BottomTabItemText"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:text="@string/tab_issue" />
 </RelativeLayout>

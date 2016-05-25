@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -98,7 +97,6 @@ public class ViewFlowLayout extends RelativeLayout {
     int count;
 
     public void updateView(ArrayList<ViewFlowBean> beans) {
-        Log.e("tag","called");
         flipper.removeAllViews();
         linear.removeAllViews();
         final int size = beans.size();
@@ -108,7 +106,6 @@ public class ViewFlowLayout extends RelativeLayout {
             imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setTag(bean);
-            Log.e("tag","called "+bean.getImgUrl());
             ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
 
                 @Override

@@ -14,7 +14,7 @@ import in.srain.cube.views.ptr.PtrHandler;
  */
 public abstract class BasePullFragment extends BaseFragment {
 
-    private PtrClassicFrameLayout ptf;
+    private  PtrClassicFrameLayout ptf;
 
     /**
      * 是否打开下拉刷新。默认关闭
@@ -33,15 +33,15 @@ public abstract class BasePullFragment extends BaseFragment {
         return R.layout.base_pull_fragment;
     }
 
+    public PtrClassicFrameLayout getPtf() {
+        return ptf;
+    }
 
-    @Override
-    public void initView(View view) {
-        ptf = (PtrClassicFrameLayout) view.findViewById(R.id.base_ptr_frame);
+    public void setsetPtrHandler(){
         ptf.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 sendRequestData();
-
             }
 
             @Override
@@ -52,6 +52,12 @@ public abstract class BasePullFragment extends BaseFragment {
                 return pulltoRefresh();
             }
         });
+    }
+
+    @Override
+    public void initView(View view) {
+        ptf = (PtrClassicFrameLayout) view.findViewById(R.id.base_ptr_frame);
+        setsetPtrHandler();
     }
 
     //请求数据方法
