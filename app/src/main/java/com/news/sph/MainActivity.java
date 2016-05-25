@@ -192,6 +192,7 @@ public class MainActivity extends BaseTitleActivity {
                 break;
             case 3:
                 setTitleText("系统通知");
+                break;
             case 4:
                 getTitleLayout().setVisibility(View.GONE);
                 break;
