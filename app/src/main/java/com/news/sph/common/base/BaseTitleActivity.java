@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.news.sph.R;
-import com.news.sph.utils.TextViewUtils;
+import com.news.sph.common.utils.TextViewUtils;
 
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;

@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,9 +13,8 @@ import android.widget.LinearLayout;
 
 import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
-import com.news.sph.home.utils.HomeUiGoto;
-import com.news.sph.widget.ProgressWebView;
-import com.news.sph.widget.SlidingTabLayout;
+import com.news.sph.home.HomeUiGoto;
+import com.news.sph.common.widget.ProgressWebView;
 
 import butterknife.Bind;
 

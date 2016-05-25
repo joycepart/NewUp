@@ -12,10 +12,10 @@ import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.ptrrecyclerview.PtrRecyclerView;
 import com.news.sph.AppContext;
 import com.news.sph.R;
-import com.news.sph.cache.CacheManager;
+import com.news.sph.common.cache.CacheManager;
 import com.news.sph.common.entity.BaseEntity;
-import com.news.sph.utils.StringUtils;
-import com.news.sph.utils.TDevice;
+import com.news.sph.common.utils.StringUtils;
+import com.news.sph.common.utils.TDevice;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;

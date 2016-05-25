@@ -5,9 +5,8 @@ import android.widget.ListView;
 
 import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
-import com.news.sph.issue.adapter.ProductDetailsAdapter;
 import com.news.sph.issue.adapter.ToAnnounceAdapter;
-import com.news.sph.utils.ToastUtils;
+import com.news.sph.common.utils.ToastUtils;
 
 import butterknife.Bind;
 import in.srain.cube.views.ptr.PtrDefaultHandler;

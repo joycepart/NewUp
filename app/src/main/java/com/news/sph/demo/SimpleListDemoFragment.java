@@ -6,8 +6,7 @@ import android.widget.Toast;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.sph.common.base.BaseListFragment;
-import com.news.sph.demo.adapter.SimpleRecyclerAdapter;
-import com.news.sph.utils.TDevice;
+import com.news.sph.common.utils.TDevice;
 
 import java.io.Serializable;
 import java.util.ArrayList;

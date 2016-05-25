@@ -2,7 +2,6 @@ package com.news.sph.me.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.news.sph.AppConfig;
@@ -14,14 +13,10 @@ import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.me.activity.CuringOrderActivity;
 import com.news.sph.me.adapter.CuringOrderAdapter;
 import com.news.sph.me.dto.CuringOrderListDTO;
-import com.news.sph.me.entity.CuringOrderListEntity;
 import com.news.sph.me.entity.CuringOrderListResult;
-import com.news.sph.utils.LogUtils;
-
-import java.util.List;
+import com.news.sph.common.utils.LogUtils;
 
 import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Created by lenovo on 2016/5/17.

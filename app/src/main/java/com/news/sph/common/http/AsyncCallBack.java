@@ -6,8 +6,8 @@ import com.google.gson.Gson;
 import com.news.sph.AppConfig;
 import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.common.eventbus.ErrorEvent;
-import com.news.sph.utils.LogUtils;
-import com.news.sph.utils.TDevice;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.TDevice;
 
 import java.io.IOException;
 

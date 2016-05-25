@@ -1,7 +1,7 @@
 package com.news.sph.common.dto;
 
-import com.news.sph.utils.SecurityUtils;
-import com.news.sph.utils.TimeUtils;
+import com.news.sph.common.utils.SecurityUtils;
+import com.news.sph.common.utils.TimeUtils;
 
 import java.io.Serializable;
 

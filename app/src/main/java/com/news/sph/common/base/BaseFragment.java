@@ -16,7 +16,7 @@ import com.news.sph.common.eventbus.ErrorEvent;
 import com.news.sph.common.interf.IBaseFragment;
 import com.news.sph.common.loadingandretry.LoadingAndRetryManager;
 import com.news.sph.common.loadingandretry.OnLoadingAndRetryListener;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.common.utils.LogUtils;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;

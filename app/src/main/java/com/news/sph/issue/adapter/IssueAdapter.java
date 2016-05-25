@@ -1,24 +1,13 @@
 package com.news.sph.issue.adapter;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.issue.entity.IndianaListEntity;
-import com.news.sph.issue.entity.IndianaListResult;
-import com.news.sph.utils.ImageLoaderUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.news.sph.common.utils.ImageLoaderUtils;
 
 import butterknife.Bind;
 

@@ -1,10 +1,7 @@
 package com.news.sph.issue.fragment;
 
-import android.graphics.Bitmap;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.ptrrecyclerview.PtrRecyclerView;
@@ -19,11 +16,8 @@ import com.news.sph.issue.entity.AdvertisingResult;
 import com.news.sph.issue.entity.IndianaListEntity;
 import com.news.sph.issue.entity.IndianaListResult;
 import com.news.sph.issue.entity.WinningResult;
-import com.news.sph.issue.utils.IssueUiGoto;
-import com.news.sph.utils.LogUtils;
-import com.news.sph.utils.TDevice;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.news.sph.issue.IssueUiGoto;
+import com.news.sph.common.utils.LogUtils;
 
 import java.io.Serializable;
 import java.util.List;

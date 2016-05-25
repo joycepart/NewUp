@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
@@ -29,11 +28,11 @@ import com.news.sph.home.entity.HomeRecomendResult;
 import com.news.sph.home.entity.HomeRecommendEntity;
 import com.news.sph.home.entity.HomeSpecialEntity;
 import com.news.sph.home.entity.HomeSpecialResult;
-import com.news.sph.home.utils.HomeUiGoto;
+import com.news.sph.home.HomeUiGoto;
 import com.news.sph.unused.fragment.UnusedFragment;
-import com.news.sph.utils.ImageLoaderUtils;
-import com.news.sph.utils.LogUtils;
-import com.news.sph.widget.ViewFlowLayout;
+import com.news.sph.common.utils.ImageLoaderUtils;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.widget.ViewFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;

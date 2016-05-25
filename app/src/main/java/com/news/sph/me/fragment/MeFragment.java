@@ -1,7 +1,6 @@
 package com.news.sph.me.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,13 +16,9 @@ import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseFragment;
-import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.me.entity.User;
-import com.news.sph.me.utils.MeUiGoto;
-import com.news.sph.utils.ImageLoaderUtils;
-import com.news.sph.utils.LogUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.news.sph.me.MeUiGoto;
+import com.news.sph.common.utils.ImageLoaderUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

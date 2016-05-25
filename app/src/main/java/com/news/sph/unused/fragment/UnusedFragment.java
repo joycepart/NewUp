@@ -13,8 +13,8 @@ import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.unused.adapter.UnusedAdapter;
 import com.news.sph.unused.entity.HotTopEntity;
 import com.news.sph.unused.entity.HotTopResult;
-import com.news.sph.unused.utils.UnusedUiGoto;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.unused.UnusedUiGoto;
+import com.news.sph.common.utils.LogUtils;
 
 import java.io.Serializable;
 import java.util.List;

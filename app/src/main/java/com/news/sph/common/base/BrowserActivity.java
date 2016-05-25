@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.news.sph.R;
-import com.news.sph.widget.ProgressWebView;
+import com.news.sph.common.widget.ProgressWebView;
 
 
 /**

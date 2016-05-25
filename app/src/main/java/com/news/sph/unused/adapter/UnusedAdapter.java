@@ -1,6 +1,5 @@
 package com.news.sph.unused.adapter;
 
-import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -8,12 +7,7 @@ import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.unused.entity.HotTopEntity;
-import com.news.sph.unused.entity.HotTopResult;
-import com.news.sph.utils.ImageLoaderUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import butterknife.Bind;
+import com.news.sph.common.utils.ImageLoaderUtils;
 
 /**
  * Created by lenovo on 2016/5/13.

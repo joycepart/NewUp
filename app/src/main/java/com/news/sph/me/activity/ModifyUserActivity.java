@@ -16,7 +16,7 @@ import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.me.dto.ModifyDTO;
 import com.news.sph.me.entity.ModifyEntity;
 import com.news.sph.me.entity.ModifyResult;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.common.utils.LogUtils;
 
 import java.util.List;
 

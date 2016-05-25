@@ -1,58 +1,215 @@
 package com.news.sph;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.TextView;
+
 import com.news.sph.common.base.BaseActivity;
+import com.news.sph.common.base.BaseFragment;
+import com.news.sph.common.utils.TextViewUtils;
+import com.news.sph.home.fragment.HomeFragment;
+import com.news.sph.information.fragment.InformationFragment;
+import com.news.sph.issue.fragment.IssueFragment;
+import com.news.sph.me.fragment.MeFragment;
+import com.news.sph.unused.fragment.UnusedFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+
+/*
+整个程序的MainActivity，入口
+*/
 
 public class MainActivity extends BaseActivity {
-   // TextView tv git add . ;
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_main;
-    }
+
+    public static final int TAB_NUM = 5;
+
+    @Bind(R.id.tv_tab_home)
+    TextView mTvTabHome;
+    @Bind(R.id.tv_tab_unused)
+    TextView mTvTabUnused;
+    @Bind(R.id.tv_tab_information)
+    TextView mTvTabInformatin;
+    @Bind(R.id.tv_tab_mine)
+    TextView mTvTabMine;
+    @Bind(R.id.tv_tab_issue)
+    TextView mTvTabIssue;
+
+    private TextView[] mTabViews = new TextView[TAB_NUM];
+    private FragmentManager fragmentManager;
+    private List<BaseFragment> fragmentList=new ArrayList<>();
+    /**
+     * Tab图片没有选中的状态资源ID
+     */
+    private int[] mTabIconNors = {
+            R.mipmap.tab_home_n,
+            R.mipmap.tab_unused_n,
+            R.mipmap.tab_issue_n,
+            R.mipmap.tab_information_n,
+            R.mipmap.tab_me_n};
+    /**
+     * Tab图片选中的状态资源ID
+     */
+    private int[] mTabIconSels = {
+            R.mipmap.tab_home_h,
+            R.mipmap.tab_unused_h,
+            R.mipmap.tab_issue_icon,
+            R.mipmap.tab_information_h,
+            R.mipmap.tab_me_h};
+
+
+    private int currentTab=-1; // 当前Tab页面索引
+
 
     @Override
     public void initView() {
-//        tv=(TextView)findViewById(R.id.id_tv);
-//        tv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UIHelper.showFragment(MainActivity.this, SimplePage.SIMPLE_LIST_TEST);
-//            }
-//        });
+        fragmentManager = getSupportFragmentManager();
+        mTabViews[0] = mTvTabHome;
+        mTabViews[1] = mTvTabUnused;
+        mTabViews[2] = mTvTabIssue;
+        mTabViews[3] = mTvTabInformatin;
+        mTabViews[4] = mTvTabMine;
+
+        for (int i = 0; i < mTabViews.length; i++) {
+            fragmentList.add(null);
+            final int j = i;
+            mTabViews[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showTab(j);
+                }
+            });
+        }
+        showTab(0); // 显示目标tab
+    }
+
+    /**
+     *
+     * @param fragment 除了fragment，其他的都hide
+     */
+    private void hideAllFragments(BaseFragment fragment) {
+        for (int i = 0; i < TAB_NUM; i++) {
+            Fragment f = fragmentManager.findFragmentByTag("tag" + i);
+            if (f != null&&f.isAdded()&&f!=fragment) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.hide(f);
+                transaction.commit();
+                f.setUserVisibleHint(false);
+            }
+        }
+    }
+
+    private BaseFragment addFragment(int index) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        BaseFragment fragment = null;
+        switch (index) {
+            case 0:
+                fragment = new HomeFragment();
+                break;
+            case 1:
+//                fragment = new InformationFragment();
+                fragment = new UnusedFragment();
+                break;
+            case 2:
+//                fragment = new InformationFragment();
+                fragment = new IssueFragment();
+                break;
+            case 3:
+                fragment = new InformationFragment();
+                break;
+            case 4:
+//                fragment = new InformationFragment();
+                fragment = new MeFragment();
+                break;
+        }
+        fragmentList.add(index,fragment);
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", index);
+        fragment.setArguments(bundle);
+
+        transaction.add(R.id.realtabcontent, fragment, "tag" + index);
+        transaction.commit();
+       // fragmentManager.executePendingTransactions();
+        return fragment;
+    }
+
+
+    private void showFragment(BaseFragment fragment) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.show(fragment);
+        transaction.commit();
+        fragment.setUserVisibleHint(true);
+    }
+
+    /**
+     * 切换tab
+     *
+     * @param idx
+     */
+    private void showTab(int idx) {
+        if(currentTab==idx){return;}
+        BaseFragment targetFragment = (BaseFragment) fragmentManager
+                .findFragmentByTag("tag" + idx);
+        if (targetFragment == null || !targetFragment.isAdded()) {
+            if(idx<fragmentList.size()&&fragmentList.get(idx)!=null) {
+                targetFragment = fragmentList.get(idx);
+            }else{
+                targetFragment=addFragment(idx);
+            }
+        }
+        hideAllFragments(targetFragment);
+        showFragment(targetFragment);
+        for (int i = 0; i < TAB_NUM; i++) {
+            if (idx == i) {
+                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_c0));
+                TextViewUtils.setTextViewIcon(this, mTabViews[i],
+                        mTabIconSels[i], R.dimen.bottom_tab_icon_width,
+                        R.dimen.bottom_tab_icon_height, TextViewUtils.DRAWABLE_TOP);
+            } else {
+                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_00));
+                TextViewUtils.setTextViewIcon(this, mTabViews[i],
+                        mTabIconNors[i], R.dimen.bottom_tab_icon_width,
+                        R.dimen.bottom_tab_icon_height, TextViewUtils.DRAWABLE_TOP);
+            }
+        }
+        currentTab = idx; // 更新目标tab为当前tab
     }
 
     @Override
     public void initData() {
-        loadData();
+
     }
 
-    public void loadData(){
-        /**
-         * 模拟加载数据
-         */
-        mLoadingAndRetryManager.showLoading();
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-//                int v = new Random().nextInt(3);
-//
-//                if (v == 0) {
-//                    mLoadingAndRetryManager.showRetry();
-//                } else if (v == 1) {
-//                    mLoadingAndRetryManager.showContent();
-//                } else {
-//                    mLoadingAndRetryManager.showEmpty();
-//                }
-                mLoadingAndRetryManager.showContent();
+    public void updateTab() {
+        setupTab();
+    }
+
+    public void setupTab() {
+        /*
+         File f = new File(FileUtils.getCachePath(mContext) + File.separator + "tab" + i + ".png");
+            if (f.exists()) {
+                drawable = Drawable.createFromPath(f.getAbsolutePath());
+            } else {
+                drawable = ContextCompat.getDrawable(mContext,
+                        mainTab.getResIcon());
             }
-        }.start();
+         */
     }
 
-    public void onRetry(){
-        loadData();
+    public int getCurrentTab() {
+        return currentTab;
     }
+
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+
+
 }

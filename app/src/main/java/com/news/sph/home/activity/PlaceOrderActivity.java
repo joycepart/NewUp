@@ -4,9 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.news.sph.R;
-import com.news.sph.common.base.BaseActivity;
 import com.news.sph.common.base.BaseTitleActivity;
-import com.news.sph.home.utils.HomeUiGoto;
+import com.news.sph.home.HomeUiGoto;
 
 import butterknife.Bind;
 

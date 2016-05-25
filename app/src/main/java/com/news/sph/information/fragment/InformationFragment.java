@@ -13,11 +13,10 @@ import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.information.adapter.InformationAdapter;
 import com.news.sph.information.entity.InformationEntity;
 import com.news.sph.information.entity.InformationResult;
-import com.news.sph.information.utils.InformationUiGoto;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.information.InformationUiGoto;
+import com.news.sph.common.utils.LogUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /*

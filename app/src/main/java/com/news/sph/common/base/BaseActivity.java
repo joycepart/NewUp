@@ -15,9 +15,9 @@ import com.news.sph.common.http.BaseApiClient;
 import com.news.sph.common.interf.IBaseActivity;
 import com.news.sph.common.loadingandretry.LoadingAndRetryManager;
 import com.news.sph.common.loadingandretry.OnLoadingAndRetryListener;
-import com.news.sph.utils.DialogUtils;
-import com.news.sph.utils.LogUtils;
-import com.news.sph.utils.ToastUtils;
+import com.news.sph.common.utils.DialogUtils;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;

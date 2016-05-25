@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.news.sph.AppConfig;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.common.utils.LogUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

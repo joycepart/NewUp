@@ -11,8 +11,7 @@ import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
-import com.news.sph.utils.ImageLoaderUtils;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.common.utils.ImageLoaderUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

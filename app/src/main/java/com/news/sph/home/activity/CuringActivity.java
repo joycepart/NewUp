@@ -9,8 +9,7 @@ import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.adapter.TabListAdapter;
 import com.news.sph.home.fragment.CuringFragment;
-import com.news.sph.me.fragment.CuringOrderListFragment;
-import com.news.sph.widget.SlidingTabLayout;
+import com.news.sph.common.widget.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;

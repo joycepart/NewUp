@@ -9,14 +9,13 @@ import com.news.sph.AppContext;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.dto.BaseDTO;
-import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.me.adapter.MyCouponAdapter;
 import com.news.sph.me.entity.MyCouponEntity;
 import com.news.sph.me.entity.MyCouponResult;
-import com.news.sph.utils.LogUtils;
-import com.news.sph.utils.ToastUtils;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.ToastUtils;
 
 import java.util.List;
 

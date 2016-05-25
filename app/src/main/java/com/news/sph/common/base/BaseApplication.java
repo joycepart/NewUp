@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.DisplayMetrics;
 
-import com.news.sph.cache.DiskLruCacheHelper;
-import com.news.sph.utils.StringUtils;
+import com.news.sph.common.cache.DiskLruCacheHelper;
+import com.news.sph.common.utils.StringUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;

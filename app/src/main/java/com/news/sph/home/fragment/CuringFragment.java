@@ -11,7 +11,7 @@ import com.news.sph.R;
 import com.news.sph.common.base.BaseFragment;
 import com.news.sph.home.activity.CuringActivity;
 import com.news.sph.home.adapter.CuringAdapter;
-import com.news.sph.home.utils.HomeUiGoto;
+import com.news.sph.home.HomeUiGoto;
 
 import butterknife.Bind;
 import in.srain.cube.views.ptr.PtrFrameLayout;

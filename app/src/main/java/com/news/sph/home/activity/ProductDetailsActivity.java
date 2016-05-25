@@ -1,14 +1,9 @@
 package com.news.sph.home.activity;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -16,10 +11,7 @@ import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.issue.activity.ToAnnounceActivity;
 import com.news.sph.issue.adapter.ProductDetailsAdapter;
-import com.news.sph.utils.LayoutUtil;
-import com.news.sph.utils.TDevice;
-import com.news.sph.utils.ToastUtils;
-import com.news.sph.utils.ViewScrollConflictUtil;
+import com.news.sph.common.utils.ToastUtils;
 
 import butterknife.Bind;
 import in.srain.cube.views.ptr.PtrDefaultHandler;

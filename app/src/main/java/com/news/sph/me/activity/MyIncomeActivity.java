@@ -17,8 +17,8 @@ import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.me.dto.WithdrawalsDTO;
 import com.news.sph.me.entity.MyIncomeEntity;
 import com.news.sph.me.entity.MyIncomeResult;
-import com.news.sph.me.utils.MeUiGoto;
-import com.news.sph.utils.LogUtils;
+import com.news.sph.me.MeUiGoto;
+import com.news.sph.common.utils.LogUtils;
 
 import java.util.List;
 
