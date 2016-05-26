@@ -76,7 +76,7 @@ public class CuringOrderListFragment extends BaseFragment {
             @Override
             public void onSuccess(CuringOrderListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.d("我的收入请求成功");
+                    LogUtils.d("养护订单成功");
                 }
 
             }

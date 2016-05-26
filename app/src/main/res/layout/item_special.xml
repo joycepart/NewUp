@@ -7,8 +7,11 @@
     <ImageView
         android:id="@+id/iv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
+        android:layout_height="@dimen/ds_370"
+        android:scaleType="centerCrop"
         />
-        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_30"
+        android:background="@color/color_ff"/>
 </LinearLayout>

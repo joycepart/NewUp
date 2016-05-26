@@ -1,7 +1,6 @@
 package com.news.sph.me.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,10 +10,14 @@ import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
+import com.news.sph.common.http.CallBack;
+import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.common.utils.ImageLoaderUtils;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.me.dto.UserPicDTO;
+import com.news.sph.me.entity.UserPicResult;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -74,18 +77,12 @@ public class UserInformationActivity extends BaseTitleActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.user_img, R.id.user_information})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_img:
-                baseGoBack();
+                reqUserPic();
                 break;
             case R.id.user_information:
                 Intent intent = new Intent(this, ModifyUserActivity.class);
@@ -93,5 +90,21 @@ public class UserInformationActivity extends BaseTitleActivity {
 //                MeUiGoto.modifyUser(this);//修改用户名
                 break;
         }
+    }
+
+    private void reqUserPic() {
+        UserPicDTO bdto=new UserPicDTO();
+        bdto.setMemberheadimg("");
+        bdto.setMembermob(mUsNum);
+        bdto.setSign(AppConfig.SIGN_1);
+        CommonApiClient.userPic(this, bdto, new CallBack<UserPicResult>() {
+            @Override
+            public void onSuccess(UserPicResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.d("修改用户图像成功");
+                }
+            }
+        });
+
     }
 }

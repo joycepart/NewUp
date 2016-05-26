@@ -76,9 +76,9 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
     }
 
 
-    public boolean autoRefreshIn(){
-        return true;
-    }
+//    public boolean autoRefreshIn(){
+//        return true;
+//    }
 
     @Override
     public void initData() {

@@ -30,16 +30,10 @@
             android:name=".me.activity.CuringOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.MyCouponActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".me.activity.MyIncomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".common.base.BrowserActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.activity.ProductDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".me.activity.LoginActivity"
@@ -49,6 +43,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".me.activity.ModifyUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".issue.activity.SettlementActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".me.activity.TransactionDetailActivity">
 

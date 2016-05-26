@@ -1,7 +1,6 @@
 package com.news.sph.me.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,15 +12,14 @@ import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
+import com.news.sph.common.utils.LogUtils;
 import com.news.sph.me.dto.ModifyDTO;
 import com.news.sph.me.entity.ModifyEntity;
 import com.news.sph.me.entity.ModifyResult;
-import com.news.sph.common.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -50,9 +48,7 @@ public class ModifyUserActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
     }
-
 
     private void goBack() {
 
@@ -86,12 +82,6 @@ public class ModifyUserActivity extends BaseTitleActivity {
         finish();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick(R.id.modify_Btn)
     public void onClick(View v) {

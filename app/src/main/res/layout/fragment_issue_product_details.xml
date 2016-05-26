@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_layout_bg"
+    android:orientation="vertical">
+    <com.news.sph.common.widget.ViewFlowLayout
+        android:id="@+id/issue_vf_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/view_issue_product"/>
+    <include layout="@layout/item_issue_product_list"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/issue_rcy_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+<include layout="@layout/item_indiana_productdetail_bottom"/>
+</LinearLayout>

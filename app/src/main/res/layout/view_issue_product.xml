@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
         <LinearLayout
@@ -79,7 +79,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_150"
-            android:id="@+id/issue_product_ll01"
+            android:id="@+id/issue_product_it"
             android:orientation="horizontal">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -120,7 +120,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_150"
-            android:id="@+id/issue_product_ll02"
+            android:id="@+id/issue_product_past"
             android:orientation="horizontal">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -135,7 +135,6 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:id="@+id/top_img" />
                 <TextView
-                    android:id="@+id/placord_tv2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -151,33 +150,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_30"
             android:background="@color/color_cc"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_150"
-            android:orientation="horizontal">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/ds_50"
-                    android:gravity="center"
-                    android:text="2016-05-12 18：25:24 开始"
-                    android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginLeft="@dimen/ds_30"
-                    android:text="@string/issue_record"
-                    android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
 
-
-            </RelativeLayout>
-        </LinearLayout>
 
 </LinearLayout>

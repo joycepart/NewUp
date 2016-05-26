@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.news.sph.common.base.BaseFragment;
 import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.utils.TextViewUtils;
+import com.news.sph.home.HomeUiGoto;
 import com.news.sph.home.fragment.HomeFragment;
 import com.news.sph.information.fragment.InformationFragment;
 import com.news.sph.issue.fragment.IssueFragment;
@@ -29,6 +30,7 @@ import butterknife.Bind;
 public class MainActivity extends BaseTitleActivity {
 
     public static final int TAB_NUM = 5;
+    private TextView mBaseEnsure, mBaseBack;
 
     @Bind(R.id.tv_tab_home)
     TextView mTvTabHome;
@@ -113,18 +115,15 @@ public class MainActivity extends BaseTitleActivity {
                 fragment = new HomeFragment();
                 break;
             case 1:
-//                fragment = new InformationFragment();
                 fragment = new UnusedFragment();
                 break;
             case 2:
-//                fragment = new InformationFragment();
                 fragment = new IssueFragment();
                 break;
             case 3:
                 fragment = new InformationFragment();
                 break;
             case 4:
-//                fragment = new InformationFragment();
                 fragment = new MeFragment();
                 break;
         }
@@ -180,21 +179,42 @@ public class MainActivity extends BaseTitleActivity {
         }
         currentTab = idx; // 更新目标tab为当前tab
         getTitleLayout().setVisibility(View.VISIBLE);
+        mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         switch (currentTab){
             case 0:
                 setTitleText("首页");
+                setEnsureText("线下门店");
+                mBaseBack.setVisibility(View.GONE);
+                mBaseEnsure.setVisibility(View.VISIBLE);
+                TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.home_door,
+                        R.dimen.common_titlebar_icon_width,
+                        R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_TOP);
+                mBaseEnsure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HomeUiGoto.OfflineStore(getApplication(),AppConfig.URL_OFFLINE,"线下门店 - 倾奢");
+                    }
+                });
+
                 break;
             case 1:
                 setTitleText("热门专题");
+                mBaseBack.setVisibility(View.GONE);
+                mBaseEnsure.setVisibility(View.GONE);
                 break;
             case 2:
                 setTitleText("夺宝岛");
+                mBaseBack.setVisibility(View.GONE);
+                mBaseEnsure.setVisibility(View.GONE);
                 break;
             case 3:
                 setTitleText("系统通知");
-                break;
+                mBaseBack.setVisibility(View.GONE);
+                mBaseEnsure.setVisibility(View.GONE);
             case 4:
                 getTitleLayout().setVisibility(View.GONE);
+                mBaseEnsure.setVisibility(View.GONE);
                 break;
 
         }

@@ -1,4 +1,4 @@
-package com.news.sph.me.activity;
+package com.news.sph.home.activity;
 
 import android.os.Bundle;
 import android.view.View;

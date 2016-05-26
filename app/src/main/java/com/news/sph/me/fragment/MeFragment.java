@@ -2,10 +2,7 @@ package com.news.sph.me.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,12 +13,13 @@ import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseFragment;
-import com.news.sph.me.entity.User;
-import com.news.sph.me.MeUiGoto;
+import com.news.sph.common.base.SimplePage;
 import com.news.sph.common.utils.ImageLoaderUtils;
+import com.news.sph.common.utils.UIHelper;
+import com.news.sph.me.MeUiGoto;
+import com.news.sph.me.entity.User;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -117,9 +115,10 @@ public class MeFragment extends BaseFragment {
                 MeUiGoto.maintenanceOrder(getActivity());//养护订单
                 break;
             case R.id.user_ll_indiana:
+                UIHelper.showFragment(getActivity(), SimplePage.INDIANA_RECORDS);//夺宝记录
                 break;
             case R.id.user_ll_coupon:
-                MeUiGoto.myCoupon(getActivity());//优惠劵
+                UIHelper.showFragment(getActivity(), SimplePage.MY_COUPON);//我的优惠劵
                 break;
             case R.id.user_ll_income:
                 MeUiGoto.myIncome(getActivity());//我的收入

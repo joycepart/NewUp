@@ -6,12 +6,13 @@ import android.os.Bundle;
 
 import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.me.activity.CuringOrderActivity;
-import com.news.sph.me.activity.ModifyUserActivity;
-import com.news.sph.me.activity.MyCouponActivity;
-import com.news.sph.me.activity.MyIncomeActivity;
-import com.news.sph.me.activity.TransactionDetailActivity;
-import com.news.sph.me.activity.UserInformationActivity;
+import com.news.sph.me.activity.DetailActivity;
+import com.news.sph.me.activity.IndianaDetailsActivity;
 import com.news.sph.me.activity.LoginActivity;
+import com.news.sph.me.activity.ModifyUserActivity;
+import com.news.sph.me.activity.MyIncomeActivity;
+import com.news.sph.me.activity.UserInformationActivity;
+import com.news.sph.me.activity.WithdrawalsActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -38,15 +39,6 @@ public class MeUiGoto {
         context.startActivity(intent);
     }
 
-    /**
-     * 跳转到我的优惠劵页
-     * @param context
-     */
-
-    public static void myCoupon(Context context){
-        Intent intent = new Intent(context, MyCouponActivity.class);
-        context.startActivity(intent);
-    }
 
     /**
      * 跳转到我的收入页
@@ -58,14 +50,33 @@ public class MeUiGoto {
         context.startActivity(intent);
     }
 
-
     /**
-     * 跳转到交易明细页
+     * 夺宝记录之夺宝详情
      * @param context
      */
 
-    public static void transactionDetail(Context context){
-        Intent intent = new Intent(context,TransactionDetailActivity.class);
+    public static void indianaRecords(Context context){
+        Intent intent = new Intent(context, IndianaDetailsActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 跳转到申请提现页
+     * @param context
+     */
+
+    public static void withd(Context context){
+        Intent intent = new Intent(context,WithdrawalsActivity.class);
+        context.startActivity(intent);
+    }
+    /**
+     * 跳转到明细详情页
+     * @param context
+     */
+
+    public static void details(Context context){
+        Intent intent = new Intent(context,DetailActivity.class);
         context.startActivity(intent);
     }
     /**

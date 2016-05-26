@@ -1,4 +1,4 @@
-package com.news.sph.home.dto;
+package com.news.sph.me.dto;
 
 import com.news.sph.common.dto.BaseDTO;
 

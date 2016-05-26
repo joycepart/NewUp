@@ -3,20 +3,25 @@ package com.news.sph.home.fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.common.base.BasePullScrollViewFragment;
+import com.news.sph.common.base.SimplePage;
 import com.news.sph.common.bean.ViewFlowBean;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.common.utils.ImageLoaderUtils;
 import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.UIHelper;
 import com.news.sph.common.widget.FullyLinearLayoutManager;
 import com.news.sph.common.widget.ViewFlowLayout;
+import com.news.sph.home.HomeUiGoto;
 import com.news.sph.home.adapter.HorizontalScrollViewAdapter;
 import com.news.sph.home.entity.HomeAdcerEntity;
 import com.news.sph.home.entity.HomeAdcerResult;
@@ -40,6 +45,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
     MyHorizontalScrollView mHsv;
     @Bind(R.id.special_list)
     RecyclerView mSpecialList;
+    @Bind(R.id.id_gallery)
+    LinearLayout mIdGallery;
 
 
     HorizontalScrollViewAdapter mHsvAdapter;
@@ -49,6 +56,12 @@ public class HomeFragment extends BasePullScrollViewFragment {
     ImageView mImgLf;
     @Bind(R.id.img_rg)
     ImageView mImgRg;
+    @Bind(R.id.home_img1)
+    ImageView mImgOrder;
+    @Bind(R.id.home_img2)
+    ImageView mImgNew;
+    @Bind(R.id.home_img3)
+    ImageView mImgHelp;
 
 
     @Override
@@ -58,13 +71,17 @@ public class HomeFragment extends BasePullScrollViewFragment {
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                HomeUiGoto.special(getActivity(),AppConfig.URL_SPECIAL);
 
             }
         });
         mHsvAdapter = new HorizontalScrollViewAdapter(getActivity());
+        mImgOrder.setOnClickListener(this);
+        mImgNew.setOnClickListener(this);
+        mImgHelp.setOnClickListener(this);
         mImgLf.setOnClickListener(this);
         mImgRg.setOnClickListener(this);
+
         mSpecialList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mSpecialListAdapter=new BaseSimpleRecyclerAdapter<HomeSpecialEntity>() {
             @Override
@@ -81,6 +98,12 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
         };
         mSpecialList.setAdapter(mSpecialListAdapter);
+        mSpecialListAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, Object itemBean, int position) {
+                HomeUiGoto.special(getActivity(),AppConfig.URL_SPECIAL);
+            }
+        });
     }
 
     private void reqAdver() {
@@ -158,6 +181,18 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 break;
             case R.id.img_rg:
                 mHsv.smoothScrollBy(mHsv.getScroolw(),0);
+                break;
+            case R.id.home_img1:
+                HomeUiGoto.curing(getActivity());//专业养护
+                break;
+            case R.id.home_img2:
+                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS);
+                break;
+            case R.id.home_img3:
+                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
+                break;
+            case R.id.id_gallery:
+                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS);
                 break;
         }
         super.onClick(v);

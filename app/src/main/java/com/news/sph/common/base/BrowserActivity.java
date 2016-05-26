@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.news.sph.R;
+import com.news.sph.common.utils.TextViewUtils;
 import com.news.sph.common.widget.ProgressWebView;
 
 
@@ -17,6 +19,7 @@ import com.news.sph.common.widget.ProgressWebView;
 
  */
 public class BrowserActivity extends BaseTitleActivity {
+    private TextView mBaseEnsure;
     protected ProgressWebView mWebView;
     protected String strUrl;
     protected String title;
@@ -35,6 +38,11 @@ public class BrowserActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setOnClickListener(this);
+        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.detaile_share,
+                R.dimen.common_titlebar_icon_width,
+                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_RIGHT);
         mWebView = (ProgressWebView) findViewById(R.id.browser_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setOnReceivedTitleListener(new ProgressWebView.onReceivedTitleListener() {
@@ -50,11 +58,7 @@ public class BrowserActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
         mWebView.loadUrl(strUrl);
-
-
-
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.news.sph.home.activity;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
+import com.news.sph.common.base.SimplePage;
+import com.news.sph.common.utils.UIHelper;
 import com.news.sph.home.HomeUiGoto;
 
 import butterknife.Bind;
@@ -29,6 +32,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mPlacePyaBan;
     @Bind(R.id.pay_Btn)
     TextView mPayBtn;
+    @Bind(R.id.place_send)
+    LinearLayout mPlaceSend;
 
 
     @Override
@@ -40,7 +45,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("提交订单");
-        mBaseTitlebarEnsure.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -60,19 +64,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             case R.id.place_address:
                 HomeUiGoto.receiptAddress(this);//选择地址
                 break;
+            case R.id.place_send:
+                HomeUiGoto.send(this);//寄送地址之选择地址
+                break;
             case R.id.place_coupon:
-                HomeUiGoto.vouchers(this);//代金劵
-                break;
-            case R.id.palce_pay_wx:
-                baseGoBack();
-                break;
-            case R.id.palce_pay_alipay:
-                baseGoBack();
-                break;
-            case R.id.palce_pay_balance:
-                baseGoBack();
+                UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//代金劵
                 break;
             case R.id.pay_Btn:
+
                 break;
             default:
                 break;

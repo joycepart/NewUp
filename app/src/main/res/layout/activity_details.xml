@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_220"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_consumption"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_c0"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/color_cc"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_type"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_name"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_coupon"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_money"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_sources"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv6"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_side"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv7"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_130"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_data"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_tv8"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+</LinearLayout>

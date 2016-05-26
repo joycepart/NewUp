@@ -46,7 +46,7 @@ public class CuringActivity extends BaseTitleActivity {
         mAdapter = new TabListAdapter(getSupportFragmentManager(),this,titles, fragmentList);
         mCurContent.setAdapter(mAdapter);
         mCurContent.setOffscreenPageLimit(fragmentList.size());
-        mCurTab.setSelectedIndicatorColors(getResources().getColor(R.color.color_33));
+        mCurTab.setSelectedIndicatorColors(getResources().getColor(R.color.color_00));
         mCurTab.setDistributeEvenly(true);
         mCurTab.setViewPager(mCurContent);
 

@@ -2,22 +2,21 @@ package com.news.sph.me.activity;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
-import com.news.sph.common.base.BaseActivity;
+import com.news.sph.common.base.BaseTitleActivity;
+import com.news.sph.common.base.SimplePage;
 import com.news.sph.common.dto.BaseDTO;
-import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
-import com.news.sph.me.dto.WithdrawalsDTO;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.UIHelper;
+import com.news.sph.me.MeUiGoto;
 import com.news.sph.me.entity.MyIncomeEntity;
 import com.news.sph.me.entity.MyIncomeResult;
-import com.news.sph.me.MeUiGoto;
-import com.news.sph.common.utils.LogUtils;
 
 import java.util.List;
 
@@ -27,18 +26,14 @@ import butterknife.OnClick;
 /**
  * 我的收入主页面
  */
-public class MyIncomeActivity extends BaseActivity {
-
-    @Bind(R.id.top_myincome_img)
-    ImageView mImg;
-    @Bind(R.id.top_myincome_tv_detailed)
-    TextView mDetailed;
+public class MyIncomeActivity extends BaseTitleActivity {
     @Bind(R.id.myincome_withdrawals)
     TextView mWithdrawals;
     @Bind(R.id.myincome_accumulate)
     TextView mAccumulate;
     @Bind(R.id.income_Btn)
     Button mIncomeBtn;
+    TextView mBaseEnsure,mBaseBack;
 
     private String strPhoneNum;
     /**
@@ -53,12 +48,10 @@ public class MyIncomeActivity extends BaseActivity {
 
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_me_myincome;
-    }
-
-    @Override
     public void initView() {
+        setTitleText("我的收入");
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        setEnsureText("交易明细");
 
         if(flag=AppContext.getInstance().getUser().getFlag()){
             MeUiGoto.login(this);//登录
@@ -69,26 +62,6 @@ public class MyIncomeActivity extends BaseActivity {
     @Override
     public void initData() {
         MyIncome();//我的收入请求
-    }
-
-    private void Withdrawals() {
-        WithdrawalsDTO mDto = new WithdrawalsDTO();
-        mDto.setMembermob(strPhoneNum);
-        mDto.setSign(AppConfig.SIGN_1);
-        mDto.setAccountnumber("");
-        mDto.setAccounttype("");
-        mDto.setPresentmoney("");
-        mDto.setReservemobile("");
-        mDto.setReservename("");
-        CommonApiClient.IncomeWith(this, mDto, new CallBack<BaseEntity>() {
-            @Override
-            public void onSuccess(BaseEntity result) {
-                if (AppConfig.SUCCESS.equals(result.getStatus())) {
-                    LogUtils.d("提现请求成功");
-                }
-
-            }
-        });
     }
 
     private void MyIncome() {
@@ -115,18 +88,28 @@ public class MyIncomeActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.top_myincome_img, R.id.top_myincome_tv_detailed, R.id.income_Btn})
+    @OnClick({ R.id.income_Btn,R.id.base_titlebar_ensure,R.id.base_titlebar_back})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.top_myincome_img:
-                this.finish();
-                break;
-            case R.id.top_myincome_tv_detailed:
-                MeUiGoto.transactionDetail(this);//交易明细
-                break;
             case R.id.income_Btn:
-                Withdrawals();
+                if(mCashaMountMoney.isEmpty()){
+
+                }else {
+                    MeUiGoto.withd(this);//申请提现
+                }
+
+                break;
+            case R.id.base_titlebar_ensure:
+                UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//交易明细
+                break;
+            case R.id.base_titlebar_back:
+                baseGoBack();
                 break;
         }
+    }
+
+    @Override
+    protected int getContentResId() {
+        return R.layout.activity_me_myincome;
     }
 }

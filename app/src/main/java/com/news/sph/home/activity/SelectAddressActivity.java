@@ -10,11 +10,9 @@ import com.news.sph.home.HomeUiGoto;
 import butterknife.Bind;
 
 /**
- * 选择地址主页面
+ * 收货地址之选择地址主页面
  */
 public class SelectAddressActivity extends BaseTitleActivity {
-    @Bind(R.id.base_titlebar_ensure)
-    TextView mBaseTitlebarEnsure;
     @Bind(R.id.select_address)
     TextView mSelectAddress;
 
@@ -27,7 +25,6 @@ public class SelectAddressActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("选择地址");
-        mBaseTitlebarEnsure.setVisibility(View.GONE);
         mSelectAddress.setOnClickListener(this);
 
     }
@@ -36,8 +33,7 @@ public class SelectAddressActivity extends BaseTitleActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_Btn:
-                HomeUiGoto.receiptAddress(this);//新增地址
-
+                HomeUiGoto.addAddress(this);//新增地址
                 break;
             default:
                 break;

@@ -1,7 +1,6 @@
 package com.news.sph.me.activity;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
@@ -10,22 +9,17 @@ import com.news.sph.common.base.BaseTitleActivity;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
+import com.news.sph.common.utils.LogUtils;
 import com.news.sph.me.entity.TransactionEntity;
 import com.news.sph.me.entity.TransactionResult;
-import com.news.sph.common.utils.LogUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
-
 /**
- * 交易明细主页面
+ * 交易明细主页面  现在改走base- simpleActivity  调用UIHelper.showFragment（）；
  */
 public class TransactionDetailActivity extends BaseTitleActivity {
-    @Bind(R.id.base_titlebar_ensure)
-    TextView mBaseTitlebarEnsure;
     private String strPhoneNum;
-    private String mComPrice;
     @Override
     protected int getContentResId() {
         return R.layout.activity_transaction_detail;
@@ -34,7 +28,6 @@ public class TransactionDetailActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("交易明细");
-        mBaseTitlebarEnsure.setVisibility(View.GONE);
         strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
 
     }
@@ -47,7 +40,7 @@ public class TransactionDetailActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(TransactionResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.d("获取验证码请求成功");
+                    LogUtils.d("交易明细成功");
                     transactionResult(result.getData());
 
                 }

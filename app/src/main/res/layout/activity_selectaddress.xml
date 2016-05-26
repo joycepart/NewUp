@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/color_cc"
     android:orientation="vertical">
-    <include layout="@layout/top_top"/>
 
     <LinearLayout
         android:id="@+id/select_address"

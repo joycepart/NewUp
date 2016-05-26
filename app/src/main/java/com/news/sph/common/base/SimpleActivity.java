@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.news.sph.R;
 
 import java.lang.ref.WeakReference;
 
-public class SimpleActivity extends BaseActivity {
+public class SimpleActivity extends BaseTitleActivity {
 
     public final static String BUNDLE_KEY_PAGE = "BUNDLE_KEY_PAGE";
     public final static String BUNDLE_KEY_ARGS = "BUNDLE_KEY_ARGS";
@@ -17,8 +18,10 @@ public class SimpleActivity extends BaseActivity {
     protected WeakReference<Fragment> mFragment;
     protected int mPageValue = -1;
 
+
+
     @Override
-    protected int getLayoutResId() {
+    protected int getContentResId() {
         return R.layout.activity_simple;
     }
 
@@ -70,4 +73,13 @@ public class SimpleActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.base_titlebar_back:
+                baseGoBack();
+                break;
+        }
+    }
 }

@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ds_220"
                     android:gravity="center"
-                    android:text="@string/tab_me_a"
+                    android:text="@string/tab_me_no"
                     android:textColor="@color/color_25"
                     android:textSize="@dimen/fs_55" />
 
@@ -40,7 +40,7 @@
                     android:layout_marginTop="@dimen/ds_30"
                     android:background="@drawable/me_btn"
                     android:gravity="center"
-                    android:text="@string/tab_me_b"
+                    android:text="@string/tab_me_login"
                     android:textColor="@color/color_ff"
                     android:textSize="@dimen/fs_75"
                     />

@@ -17,7 +17,7 @@ import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
-import com.news.sph.home.dto.LoginDTO;
+import com.news.sph.me.dto.LoginDTO;
 import com.news.sph.me.MeUiGoto;
 import com.news.sph.me.entity.LoginEntity;
 import com.news.sph.me.entity.LoginResult;
@@ -140,7 +140,6 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         strPhoneNum = mLoginEtNum.getText().toString();
         strPwd = mLoginPwdEt.getText().toString();
-
         switch (view.getId()) {
             case R.id.img_btn_close:
                 LoginActivity.this.finish();

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/ds_200"
+    android:background="@color/color_ff"
     android:orientation="horizontal">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,6 +18,7 @@
         android:textSize="@dimen/fs_100"
         android:textColor="@color/color_00"/>
     <TextView
+        android:id="@+id/place_tv_nm"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -26,7 +28,7 @@
         android:textSize="@dimen/fs_70"
         android:textColor="@color/color_00"/>
     <Button
-        android:id="@+id/pay_Btn"
+        android:id="@+id/set_pay_Btn"
         android:layout_width="@dimen/ds_400"
         android:layout_height="match_parent"
         android:gravity="center"

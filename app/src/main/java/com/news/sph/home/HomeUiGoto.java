@@ -7,8 +7,10 @@ import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.home.activity.AddAddressActivity;
 import com.news.sph.home.activity.CuringActivity;
 import com.news.sph.home.activity.PlaceOrderActivity;
+import com.news.sph.home.activity.ProductBrowserActivity;
 import com.news.sph.home.activity.SelectAddressActivity;
-import com.news.sph.me.activity.VouchersActivity;
+import com.news.sph.home.activity.SendAddressActivity;
+import com.news.sph.home.activity.VouchersActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -33,12 +35,22 @@ public class HomeUiGoto {
         context.startActivity(intent);
     }
     /**
-     * 跳转到选择地址页
+     * 跳转到收货地址之选择地址页
      * @param context
      */
 
     public static void receiptAddress(Context context){
         Intent intent = new Intent(context, SelectAddressActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到寄送地址之选择地址页
+     * @param context
+     */
+
+    public static void send(Context context){
+        Intent intent = new Intent(context, SendAddressActivity.class);
         context.startActivity(intent);
     }
     /**
@@ -80,7 +92,7 @@ public class HomeUiGoto {
      */
 
     public static void productDetails(Context context, String mUrlSpecial, String mSpecialTitle){
-        Intent intent = new Intent(context, BrowserActivity.class);
+        Intent intent = new Intent(context, ProductBrowserActivity.class);
         intent.putExtra("url", mUrlSpecial);
         intent.putExtra("title", mSpecialTitle);
         context.startActivity(intent);
@@ -95,6 +107,7 @@ public class HomeUiGoto {
 
     public static void OfflineStore(Context context, String mUrlOffline, String mOfflineTitle){
         Intent intent = new Intent(context, BrowserActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("url", mUrlOffline);
         intent.putExtra("title", mOfflineTitle);
         context.startActivity(intent);
