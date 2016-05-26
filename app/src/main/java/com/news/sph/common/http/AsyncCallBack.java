@@ -52,9 +52,9 @@ public class AsyncCallBack<T> implements Callback {
 		if (response.isSuccessful()) {
 
 			String reader = response.body().string();
-			int startIndex=reader.indexOf("{");
-			int endIndex=reader.lastIndexOf("}");
-			reader=reader.substring(startIndex+16,endIndex-1);
+			int startIndex=reader.indexOf("{",reader.indexOf("{")+1);
+			int endIndex=reader.lastIndexOf("]");
+			reader=reader.substring(startIndex,endIndex);
 
 			LogUtils.e("response success json-->" + reader);
 			try {
