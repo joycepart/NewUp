@@ -2,11 +2,11 @@ package com.news.sph.common.http;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.news.sph.AppConfig;
 import com.news.sph.common.utils.LogUtils;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class BaseApiClient {
 
 	public static final Gson gson = new Gson();
 	private static final OkHttpClient mOkHttpClient = OkHttpUtils.getInstance().getOkHttpClient();
-	public static final MediaType JSON = MediaType
+	public static final MediaType M_JSON = MediaType
 			.parse("application/json; charset=utf-8");
 
 	public static <T> void get(Context context, String url,
@@ -97,7 +97,7 @@ public class BaseApiClient {
 								AsyncCallBack<T> asyncCallBack) {
 		String data = gson.toJson(dto);
 		LogUtils.i(data);
-		RequestBody body = RequestBody.create(JSON, data);
+		RequestBody body = RequestBody.create(M_JSON, data);
 		Request request = new Request.Builder()
 				.tag(asyncCallBack.getTag())
 				.header("Content-Type","application/json")
@@ -160,22 +160,7 @@ public class BaseApiClient {
 		if (o == null) {
 			return null;
 		}
-		Map<String, Object> resMap=null;
-		try {
-			resMap = new HashMap<>();
-			Field[] declaredFields = o.getClass().getDeclaredFields();
-			for (Field field : declaredFields) {
-				field.setAccessible(true);
-				//过滤内容为空的
-				if (field.get(o) == null) {
-					continue;
-				}
-				resMap.put(field.getName(), field.get(o));
-			}
-		}catch (Exception e){
-			resMap=null;
-		}
-		return resMap;
+		return JSON.parseObject(gson.toJson(o), HashMap.class);
 	}
 
 }
