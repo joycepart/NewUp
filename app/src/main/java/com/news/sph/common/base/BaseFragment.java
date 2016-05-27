@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.news.sph.AppConfig;
 import com.news.sph.R;
@@ -132,16 +133,22 @@ public abstract class BaseFragment extends Fragment implements
     protected abstract int getLayoutResId();
 
     public void setRetryEvent(View retryView) {
-//        View view = retryView.findViewById(R.id.id_btn_retry);
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "start reload data",
-//                        Toast.LENGTH_SHORT).show();
-//                // loadData();
-//            }
-//        });
+
+        View view = retryView.findViewById(R.id.id_btn_retry);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLoadingAndRetryManager.showContent();
+                Toast.makeText(getActivity(), "start reload data",
+                        Toast.LENGTH_SHORT).show();
+                 retry();
+            }
+        });
     }
+
+    public void retryBefore(){};
+
+    public abstract void retry();
 
     /**
      * 显示加载中的Dialog
@@ -187,12 +194,10 @@ public abstract class BaseFragment extends Fragment implements
         if (event.getContext().equals(getActivity())) {
            LogUtils.i("error_status:" + status+"  "+"error_msg:" + message);
             if(!AppConfig.SUCCESS.equals(status)) {
-                onErrorMsg();
+//                retryBefore();
+//                mLoadingAndRetryManager.showRetry();
             }
         }
     }
 
-    protected void onErrorMsg(){
-
-    }
 }

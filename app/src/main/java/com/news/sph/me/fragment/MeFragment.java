@@ -78,6 +78,11 @@ public class MeFragment extends BaseFragment {
     }
 
     @Override
+    public void retry() {
+
+    }
+
+    @Override
     public void initView(View view) {
         User user =AppContext.getInstance().getUser();
         if(user!=null && user.getFlag()==true){

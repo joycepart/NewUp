@@ -217,6 +217,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
         return R.layout.fragment_home;
     }
 
+
     @Override
     public boolean pulltoRefresh() {
         return true;

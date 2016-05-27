@@ -64,4 +64,9 @@ public abstract class BasePullFragment extends BaseFragment {
     protected void sendRequestData() {
 
     }
+
+    @Override
+    public void retry() {
+        sendRequestData();
+    }
 }

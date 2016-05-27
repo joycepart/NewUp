@@ -83,6 +83,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
             mPtrRecyclerView.setOnPullRefreshListener(new PtrRecyclerView.OnPullRefreshListener() {
                 @Override
                 public void onPullRefresh() {
+                    Log.e("tag","xxxx12313123");
                     action = ACTION_PULL_REFRESH;
                     mCurrentPage = 1;
                     requestData();
@@ -108,9 +109,35 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
         }
     }
 
+    @Override
+    public void retryBefore() {
+        super.retryBefore();
+        Log.e("tag","xxcscscsdc");
+        reset();
+    }
+
+    @Override
+    public void retry() {
+        mPtrRecyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPtrRecyclerView.autoRefresh();
+            }
+        }, 100);
+    }
+
+    public void reset(){
+        Log.e("tag","xxxxxx+"+action);
+        if (action == ACTION_PULL_REFRESH) {
+            mPtrRecyclerView.pullRefreshComplete();
+        } else if (action == ACTION_LOAD_MORE) {
+            mPtrRecyclerView.loadMoreComplete();
+        }
+    }
+
     /*
-    * 一进入页面就自动刷新,默认不刷新
-    * */
+        * 一进入页面就自动刷新,默认不刷新
+        * */
     public boolean autoRefreshIn(){
         return false;
     }
@@ -118,6 +145,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
     public abstract BaseRecyclerAdapter<T> createAdapter();
 
     public void setDataResult(List<T> list) {
+        reset();
         mLoadingAndRetryManager.showContent();
         if (list == null || list.size() == 0) {
             if (mCurrentPage == 1) {

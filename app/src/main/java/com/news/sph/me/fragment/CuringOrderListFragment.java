@@ -62,6 +62,11 @@ public class CuringOrderListFragment extends BaseFragment {
     }
 
     @Override
+    public void retry() {
+
+    }
+
+    @Override
     public void initView(View view) {
         strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
         appreqtype = "";

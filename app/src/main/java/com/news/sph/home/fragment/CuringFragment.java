@@ -9,16 +9,14 @@ import android.widget.ListView;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.common.base.BaseFragment;
-import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.common.utils.LogUtils;
+import com.news.sph.home.HomeUiGoto;
 import com.news.sph.home.activity.CuringActivity;
 import com.news.sph.home.adapter.CuringAdapter;
-import com.news.sph.home.HomeUiGoto;
 import com.news.sph.home.dto.CuringDTO;
 import com.news.sph.home.entity.CuringResult;
-import com.news.sph.home.entity.HomeRecomendResult;
 
 import butterknife.Bind;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -70,6 +68,11 @@ public class CuringFragment extends BaseFragment {
     @Override
     protected int getLayoutResId() {
         return R.layout.item_fragment_curing;
+    }
+
+    @Override
+    public void retry() {
+        reqCuring();
     }
 
     @Override

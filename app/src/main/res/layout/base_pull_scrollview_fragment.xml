@@ -11,7 +11,6 @@
     cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
     cube_ptr:ptr_resistance="2.7">
     <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/nsv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

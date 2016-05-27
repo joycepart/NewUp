@@ -3,6 +3,7 @@
     android:id="@+id/base_loading_retry_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_layout_bg"
     android:orientation="vertical" >
 
     <FrameLayout
@@ -20,12 +21,17 @@
         android:id="@+id/base_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/page_icon_empty"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="no data" />
+            android:text="@string/nodata" />
     </FrameLayout>
 
     <FrameLayout
@@ -38,13 +44,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical" >
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/iv_retry"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="xxxxxx"
-                android:textSize="15sp"
+                android:id="@+id/tv_retry"
+                android:textSize="@dimen/ds_16"
                 android:textStyle="bold" />
 
             <Button
@@ -52,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="try again" />
+                android:text="@string/retry" />
         </LinearLayout>
     </FrameLayout>
 

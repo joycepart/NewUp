@@ -82,7 +82,7 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     public void initData() {
-        sendRequestData();
+
     }
 
     @Override

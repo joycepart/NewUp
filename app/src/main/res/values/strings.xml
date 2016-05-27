@@ -1,5 +1,11 @@
 <resources>
     <string name="tab1_name">tab1</string>
+
+    <string name="nodata">没有找到数据</string>
+    <string name="pagefail">请求出错了，重试一下吧</string>
+    <string name="networkfail">网络出错了，重试一下吧</string>
+    <string name="retry">重试一下</string>
+
     <string name="common_loading">加载中&#8230;</string>
     <string name="tab_main">首页</string>
     <string name="app_name">清奢</string>

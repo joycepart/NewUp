@@ -80,4 +80,8 @@ public class SimpleListDemoFragment extends BaseListFragment<String>{
         return ((DemoEntity)seri).getData();
     }
 
+    @Override
+    public void retry() {
+
+    }
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 public class LoadingAndRetryManager {
 
-	public LoadingAndRetryLayout mLoadingAndRetryLayout;
+	private LoadingAndRetryLayout mLoadingAndRetryLayout;
 
 	public static LoadingAndRetryManager generate(Object activityOrFragment,
 												  OnLoadingAndRetryListener listener) {

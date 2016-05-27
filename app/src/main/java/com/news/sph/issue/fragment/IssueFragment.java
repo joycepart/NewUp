@@ -43,6 +43,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
 
     @Override
     public void initView(View view) {
+        super.initView(view);
         mIssuelList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mIssueAdapter=new BaseSimpleRecyclerAdapter<IndianaListEntity>() {
             @Override

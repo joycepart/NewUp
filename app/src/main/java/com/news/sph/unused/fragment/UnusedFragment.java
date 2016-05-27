@@ -70,7 +70,6 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
 
     @Override
     public void initData() {
-        sendRequestData();
     }
 
     public boolean autoRefreshIn(){
