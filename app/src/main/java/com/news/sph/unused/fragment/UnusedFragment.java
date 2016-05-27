@@ -1,20 +1,18 @@
 package com.news.sph.unused.fragment;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.sph.AppConfig;
-import com.news.sph.R;
 import com.news.sph.common.base.BaseListFragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.unused.UnusedUiGoto;
 import com.news.sph.unused.adapter.UnusedAdapter;
 import com.news.sph.unused.entity.HotTopEntity;
 import com.news.sph.unused.entity.HotTopResult;
-import com.news.sph.unused.UnusedUiGoto;
-import com.news.sph.common.utils.LogUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,15 +21,12 @@ import java.util.List;
         */
 
 public class UnusedFragment extends BaseListFragment<HotTopEntity> {
-    TextView mTopTv;
     List<HotTopEntity> mTopData;
     private String mName;
     private String mUrl;
 
     @Override
     public void initView(View view) {
-        mTopTv = (TextView) view.findViewById(R.id.top_tv);
-        mTopTv.setText("热门专题");
         super.initView(view);
 
     }
@@ -78,6 +73,9 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
         sendRequestData();
     }
 
+    public boolean autoRefreshIn(){
+        return true;
+    }
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
         mUrl = AppConfig.URL_SPECIAL;

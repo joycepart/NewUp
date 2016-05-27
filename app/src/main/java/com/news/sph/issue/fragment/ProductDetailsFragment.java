@@ -1,5 +1,6 @@
 package com.news.sph.issue.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -103,6 +104,10 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
+        Bundle bundle = new Bundle();
+        ArrayList list = bundle.getParcelableArrayList("list");
+        mIt.setOnClickListener(this);
+        mPast.setOnClickListener(this);
         mIssuelList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mListAdapter=new BaseSimpleRecyclerAdapter<IssDetailsEntity>() {
             @Override

@@ -1,5 +1,6 @@
 package com.news.sph.issue.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,9 @@ import com.news.sph.issue.entity.IndianaListEntity;
 import com.news.sph.issue.entity.IndianaListResult;
 import com.news.sph.issue.entity.WinningResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 
 /*
@@ -35,6 +39,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
     @Bind(R.id.issue_top_img)
     ImageView mIssueTopImg;
     BaseSimpleRecyclerAdapter mIssueAdapter;
+    List<IndianaListEntity> mData;
 
     @Override
     public void initView(View view) {
@@ -63,8 +68,11 @@ public class IssueFragment extends BasePullScrollViewFragment {
         mIssueAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
-//                IssueUiGoto.productDetail(getActivity());
-                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS);
+                Bundle b = new Bundle();
+                ArrayList list = new ArrayList();
+                list.add(mData);
+                b.putParcelableArrayList("list",list);
+                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);
             }
         });
 
@@ -125,8 +133,9 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onSuccess(IndianaListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝列表成功");
+                    mData = result.getData();
                     mIssueAdapter.removeAll();
-                    mIssueAdapter.append(result.getData());
+                    mIssueAdapter.append(mData);
 
                 }
             }

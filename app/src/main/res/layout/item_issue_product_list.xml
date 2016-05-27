@@ -5,7 +5,7 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_220"
+        android:layout_height="@dimen/ds_150"
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,14 +33,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
                 android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/issue_record"
-                android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_45"/>
+
                 <TextView
                     android:id="@+id/tv_user"
                     android:layout_width="match_parent"

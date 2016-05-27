@@ -7,7 +7,7 @@
         android:id="@+id/unused_list_img"
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
-        android:layout_height="@dimen/ds_430"
+        android:layout_height="@dimen/ds_350"
         />
     <View
         android:layout_width="match_parent"

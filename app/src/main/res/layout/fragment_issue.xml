@@ -3,7 +3,73 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/view_issue_top"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/issue_top_img"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="@dimen/ds_400"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_30"
+            android:background="@color/color_cc" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/fs_45"
+                android:layout_height="@dimen/fs_45"
+                android:layout_marginLeft="@dimen/fs_45"
+                android:layout_marginTop="@dimen/fs_25"
+                android:layout_marginBottom="@dimen/fs_25"
+                android:background="@drawable/laba"
+                android:id="@+id/imageView" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/fs_45"
+                android:gravity="center"
+                android:id="@+id/textView"
+                android:text="@string/issue_a"
+                android:textSize="@dimen/fs_50"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/fs_45"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:id="@+id/textView1"
+                    android:text="wwwwwwwwwww"
+                    android:textSize="@dimen/fs_50"
+                    />
+                <ViewFlipper
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/view_flipper"
+                    android:background="@color/color_ff">
+                </ViewFlipper>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_3"
+            android:background="@color/color_cc"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/issue_list"
         android:layout_width="match_parent"
@@ -11,5 +77,5 @@
         android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>
-
+    </LinearLayout>
 </LinearLayout>

@@ -64,9 +64,9 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
             public void onSuccess(InformationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("获取新闻成功");
-//                    mInforData = result.getData();
+                    mInforData = result.getData();
                     requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
-                    setDataResult(result.getData());//设置数据
+                    setDataResult(mInforData);//设置数据
                 }
 
             }
@@ -76,9 +76,9 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
     }
 
 
-//    public boolean autoRefreshIn(){
-//        return true;
-//    }
+    public boolean autoRefreshIn(){
+        return true;
+    }
 
     @Override
     public void initData() {
