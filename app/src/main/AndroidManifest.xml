@@ -30,6 +30,31 @@
             android:name=".me.activity.CuringOrderActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".home.activity.AddAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.CuringActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.CuringOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.PlaceOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.ProductBrowserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.SelectAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.SendAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.VouchersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".me.activity.MyIncomeActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -42,12 +67,24 @@
             android:name=".me.activity.UserInformationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.ModifyUserActivity"
+            android:name=".me.activity.WithdrawalsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+        android:name=".me.activity.ModifyUserActivity"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".me.activity.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".me.activity.IndianaDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".issue.activity.SettlementActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".me.activity.TransactionDetailActivity">
+
+        <activity
+            android:name=".me.activity.TransactionDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 

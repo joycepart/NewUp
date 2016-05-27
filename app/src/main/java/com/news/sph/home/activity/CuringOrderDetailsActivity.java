@@ -4,7 +4,7 @@ import com.news.sph.R;
 import com.news.sph.common.base.BaseTitleActivity;
 
 /**
- * Created by lenovo on 2016/5/27.
+ * 养护订单详情
  */
 public class CuringOrderDetailsActivity extends BaseTitleActivity {
     @Override
