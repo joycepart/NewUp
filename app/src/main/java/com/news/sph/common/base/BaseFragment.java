@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.news.sph.R;
 import com.news.sph.common.eventbus.ErrorEvent;
 import com.news.sph.common.interf.IBaseFragment;
 import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.ToastUtils;
 import com.news.sph.common.widget.EmptyLayout;
 
 import butterknife.ButterKnife;
@@ -177,10 +177,10 @@ public abstract class BaseFragment extends Fragment implements
     public void onEventMainThread(ErrorEvent event) {
         String status = event.getStatus();
         String message = event.getMsg();
-        Log.e("tag","xxx->"+event.getTag()+"   xxx->"+this);
         if (event.getTag().equals(this)) {
            LogUtils.i("baseFragment error_status:" + status+"  "+"error_msg:" + message);
             if(!AppConfig.SUCCESS.equals(status)) {
+                ToastUtils.showShort(getActivity(),message);
                 retryBefore();
                 mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
         }

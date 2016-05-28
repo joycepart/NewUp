@@ -84,7 +84,6 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
             mPtrRecyclerView.setOnPullRefreshListener(new PtrRecyclerView.OnPullRefreshListener() {
                 @Override
                 public void onPullRefresh() {
-                    Log.e("tag","xxxx12313123");
                     action = ACTION_PULL_REFRESH;
                     mCurrentPage = 1;
                     requestData();
