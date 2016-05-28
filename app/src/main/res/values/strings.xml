@@ -1,10 +1,13 @@
 <resources>
     <string name="tab1_name">tab1</string>
 
-    <string name="nodata">没有找到数据</string>
-    <string name="pagefail">请求出错了，重试一下吧</string>
-    <string name="networkfail">网络出错了，重试一下吧</string>
-    <string name="retry">重试一下</string>
+    <!-- Error View -->
+    <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
+    <string name="error_view_no_data">暂无内容</string>
+    <string name="error_view_loading">加载中…</string>
+    <string name="error_view_load_error_click_to_refresh">内容加载失败\r\n点击重新加载</string>
+    <string name="error_view_network_error_click_to_refresh">没有可用的网络</string>
+    <string name="tip_network_error">没有可用的网络</string>
 
     <string name="common_loading">加载中&#8230;</string>
     <string name="tab_main">首页</string>

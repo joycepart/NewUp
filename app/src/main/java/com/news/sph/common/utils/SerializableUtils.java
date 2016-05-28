@@ -58,7 +58,7 @@ public class SerializableUtils {
         try {
             return ois.readObject();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return null;
     }

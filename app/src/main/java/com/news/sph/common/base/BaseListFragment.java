@@ -16,6 +16,7 @@ import com.news.sph.common.cache.CacheManager;
 import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.common.utils.StringUtils;
 import com.news.sph.common.utils.TDevice;
+import com.news.sph.common.widget.EmptyLayout;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -111,23 +112,16 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
 
     @Override
     public void retryBefore() {
-        super.retryBefore();
-        Log.e("tag","xxcscscsdc");
         reset();
     }
 
     @Override
-    public void retry() {
-        mPtrRecyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPtrRecyclerView.autoRefresh();
-            }
-        }, 100);
+    protected void retry() {
+        mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+        mPtrRecyclerView.autoRefresh();
     }
 
     public void reset(){
-        Log.e("tag","xxxxxx+"+action);
         if (action == ACTION_PULL_REFRESH) {
             mPtrRecyclerView.pullRefreshComplete();
         } else if (action == ACTION_LOAD_MORE) {
@@ -146,10 +140,10 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
 
     public void setDataResult(List<T> list) {
         reset();
-        mLoadingAndRetryManager.showContent();
+        mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
         if (list == null || list.size() == 0) {
             if (mCurrentPage == 1) {
-                mLoadingAndRetryManager.showEmpty();
+                mErrorLayout.setErrorType(EmptyLayout.NODATA);
             } else {
                 mPtrRecyclerView.noMoreData();
             }
@@ -190,7 +184,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
     protected void requestData() {
         if (!cache()) {
             if (!TDevice.hasInternet(getActivity())) {
-                mLoadingAndRetryManager.showRetry();
+                mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             } else {
                 sendRequestData();
             }
@@ -204,7 +198,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
                     ) {
                 readCacheData(key);
             } else {
-                mLoadingAndRetryManager.showRetry();
+                mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             }
         } else {
             // 取新的数据

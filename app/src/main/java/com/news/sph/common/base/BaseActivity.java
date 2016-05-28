@@ -5,18 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.news.sph.AppConfig;
 import com.news.sph.AppManager;
-import com.news.sph.R;
 import com.news.sph.common.eventbus.ErrorEvent;
 import com.news.sph.common.http.BaseApiClient;
 import com.news.sph.common.interf.IBaseActivity;
-import com.news.sph.common.loadingandretry.LoadingAndRetryManager;
-import com.news.sph.common.loadingandretry.OnLoadingAndRetryListener;
 import com.news.sph.common.utils.DialogUtils;
-import com.news.sph.common.utils.LogUtils;
 import com.news.sph.common.utils.ToastUtils;
 
 import butterknife.ButterKnife;
@@ -29,7 +24,6 @@ public abstract class BaseActivity  extends FragmentActivity implements
         View.OnClickListener, IBaseActivity {
 
     private static Dialog mLoadingDialog;
-    protected LoadingAndRetryManager mLoadingAndRetryManager;
     protected Context mContext;
 
     @Override
@@ -44,14 +38,7 @@ public abstract class BaseActivity  extends FragmentActivity implements
         onAfterSetContentLayout();
         ButterKnife.bind(this);
         registerEventBus();
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(
-                this, new OnLoadingAndRetryListener() {
-                    @Override
-                    public void setRetryEvent(View retryView) {
-                        BaseActivity.this.setRetryEvent(retryView);
-                    }
-                });
-        mLoadingAndRetryManager.showContent();
+
         initView();
         initData();
     }
@@ -100,22 +87,6 @@ public abstract class BaseActivity  extends FragmentActivity implements
     @Override
     public void onClick(View v) {
 
-    }
-
-    public void onRetry(){
-
-    }
-
-    public void setRetryEvent(View retryView) {
-        View view = retryView.findViewById(R.id.id_btn_retry);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "start reload data",
-                        Toast.LENGTH_SHORT).show();
-                onRetry();
-            }
-        });
     }
 
     /**
@@ -167,7 +138,6 @@ public abstract class BaseActivity  extends FragmentActivity implements
         String status = event.getStatus();
         String message = event.getMsg();
         if (event.getContext().equals(this)) {
-            LogUtils.i("error_status:" + status+"  "+"error_msg:" + message);
             if(!AppConfig.SUCCESS.equals(status)) {
                 ToastUtils.showShort(this,message);
             }

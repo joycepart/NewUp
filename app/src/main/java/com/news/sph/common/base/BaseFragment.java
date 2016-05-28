@@ -9,15 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.common.eventbus.ErrorEvent;
 import com.news.sph.common.interf.IBaseFragment;
-import com.news.sph.common.loadingandretry.LoadingAndRetryManager;
-import com.news.sph.common.loadingandretry.OnLoadingAndRetryListener;
 import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.widget.EmptyLayout;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -28,8 +26,8 @@ import de.greenrobot.event.EventBus;
 public abstract class BaseFragment extends Fragment implements
         View.OnClickListener, IBaseFragment {
     protected boolean prepared = false;
-    protected LoadingAndRetryManager mLoadingAndRetryManager;
     private View rootView;
+    EmptyLayout mErrorLayout;
 
     public int getRootLayoutId(){
         return R.layout.base_fragment;
@@ -42,6 +40,14 @@ public abstract class BaseFragment extends Fragment implements
                 false);
         LinearLayout llContent = (LinearLayout) mView
                 .findViewById(R.id.base_content_layout);
+        mErrorLayout= (EmptyLayout) mView.findViewById(R.id.error_layout);
+        mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+        mErrorLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                retry();
+            }
+        });
         if (rootView == null) {
             registerEventBus();
             rootView = inflater.inflate(getLayoutResId(), null);
@@ -63,17 +69,11 @@ public abstract class BaseFragment extends Fragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mLoadingAndRetryManager = LoadingAndRetryManager.generate(
-                this, new OnLoadingAndRetryListener() {
-                    @Override
-                    public void setRetryEvent(View retryView) {
-                        BaseFragment.this.setRetryEvent(retryView);
-                    }
-                });
-        mLoadingAndRetryManager.showContent();
         initView(view);
-
     }
+
+
+    protected abstract void retry();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -132,24 +132,6 @@ public abstract class BaseFragment extends Fragment implements
      */
     protected abstract int getLayoutResId();
 
-    public void setRetryEvent(View retryView) {
-
-        View view = retryView.findViewById(R.id.id_btn_retry);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadingAndRetryManager.showContent();
-                Toast.makeText(getActivity(), "start reload data",
-                        Toast.LENGTH_SHORT).show();
-                 retry();
-            }
-        });
-    }
-
-    public void retryBefore(){};
-
-    public abstract void retry();
-
     /**
      * 显示加载中的Dialog
      */
@@ -188,15 +170,17 @@ public abstract class BaseFragment extends Fragment implements
         }
     }
 
+    public void retryBefore(){}
+
     public void onEventMainThread(ErrorEvent event) {
         String status = event.getStatus();
         String message = event.getMsg();
         if (event.getContext().equals(getActivity())) {
-           LogUtils.i("error_status:" + status+"  "+"error_msg:" + message);
+           LogUtils.i("baseFragment error_status:" + status+"  "+"error_msg:" + message);
             if(!AppConfig.SUCCESS.equals(status)) {
-//                retryBefore();
-//                mLoadingAndRetryManager.showRetry();
-            }
+                retryBefore();
+                mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+        }
         }
     }
 
