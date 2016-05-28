@@ -59,7 +59,7 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
         BaseDTO gdto=new BaseDTO();
         gdto.setPageSize(PAGE_SIZE);
         gdto.setPageIndex(mCurrentPage);
-        CommonApiClient.getNews(getActivity(), gdto, new CallBack<InformationResult>() {
+        CommonApiClient.getNews(this, gdto, new CallBack<InformationResult>() {
             @Override
             public void onSuccess(InformationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

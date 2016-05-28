@@ -99,7 +99,7 @@ public class CuringFragment extends BaseFragment {
         dto.setSort(1);
         dto.setPageIndex(1);
         dto.setPageSize(6);
-        CommonApiClient.curing(getActivity(), dto, new CallBack<CuringResult>() {
+        CommonApiClient.curing(this, dto, new CallBack<CuringResult>() {
             @Override
             public void onSuccess(CuringResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {

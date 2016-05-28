@@ -1,27 +1,17 @@
 package com.news.sph.common.eventbus;
 
-import android.content.Context;
-
 public class ErrorEvent {
 	private String status;
 	private String msg;
 	private Object tag;
-	private Context context;
 
-	public ErrorEvent(String status, String msg, Object tag, Context context) {
+	public ErrorEvent(String status, String msg, Object tag) {
 		super();
 		this.status = status;
 		this.msg = msg;
 		this.tag = tag;
-		this.context = context;
 	}
 
-	public ErrorEvent(String status, String msg, Context context) {
-		super();
-		this.status = status;
-		this.msg = msg;
-		this.context = context;
-	}
 
 	public String getStatus() {
 		return status;
@@ -37,14 +27,6 @@ public class ErrorEvent {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
-	}
-
-	public Context getContext() {
-		return context;
-	}
-
-	public void setContext(Context context) {
-		this.context = context;
 	}
 
 	public Object getTag() {

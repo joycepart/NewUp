@@ -1,7 +1,5 @@
 package com.news.sph.common.http;
 
-import android.content.Context;
-
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.news.sph.AppConfig;
@@ -26,16 +24,17 @@ public class BaseApiClient {
 	public static final MediaType M_JSON = MediaType
 			.parse("application/json; charset=utf-8");
 
-	public static <T> void get(Context context, String url,
+	public static <T> void get(String url,
 							   AsyncCallBack<T> asyncCallBack) {
 
 		LogUtils.e("get-------------no reqParams-------------");
 		Request request = new Request.Builder().tag(asyncCallBack.getTag())
 				.url(url).get().build();
-		enqueue(context, request, asyncCallBack);
+		enqueue(request, asyncCallBack);
 	}
 
-	public static <T> void get(Context context, String url,Object dto,
+
+	public static <T> void get(String url,Object dto,
 							   AsyncCallBack<T> asyncCallBack) {
 
 		if(dto!=null){
@@ -64,7 +63,7 @@ public class BaseApiClient {
 		LogUtils.e("tag","get url:"+url);
 		Request request = new Request.Builder().tag(asyncCallBack.getTag())
 				.url(url).get().build();
-		enqueue(context, request, asyncCallBack);
+		enqueue(request, asyncCallBack);
 	}
 
 
@@ -87,13 +86,12 @@ public class BaseApiClient {
 
 	/**
 	 * 直接传json
-	 * @param context
 	 * @param url
 	 * @param dto 请求体中封装data的对象模型
 	 * @param asyncCallBack
 	 * @param <T>
 	 */
-	public static <T> void postString(Context context, String url,Object dto,
+	public static <T> void postString(String url,Object dto,
 								AsyncCallBack<T> asyncCallBack) {
 		String data = gson.toJson(dto);
 		LogUtils.i(data);
@@ -102,12 +100,12 @@ public class BaseApiClient {
 				.tag(asyncCallBack.getTag())
 				.header("Content-Type","application/json")
 				.url(url).post(body).build();
-		enqueue(context, request, asyncCallBack);
+		enqueue(request, asyncCallBack);
 	}
 	/**
 	 * post传键值对
 	 */
-	public static <T> void post(Context context, String url, Object dto,
+	public static <T> void post(String url, Object dto,
 								AsyncCallBack<T> asyncCallBack) {
 		LogUtils.e("http_request_url:" + url);
 		FormBody.Builder builder = new FormBody.Builder();
@@ -127,10 +125,10 @@ public class BaseApiClient {
 				.url(url)
 				.post(builder.build())
 				.build();
-		enqueue(context, request, asyncCallBack);
+		enqueue(request, asyncCallBack);
 	}
 
-	public static <T> void enqueue(Context context, Request request,
+	public static <T> void enqueue( Request request,
 								   AsyncCallBack<T> asyncCallBack) {
 		mOkHttpClient.newCall(request).enqueue(asyncCallBack);
 	}

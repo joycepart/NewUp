@@ -62,7 +62,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     private void reqPic() {
         PicDTO dto=new PicDTO();
         dto.setSna_code("");
-        CommonApiClient.pic(getActivity(), dto, new CallBack<PicResult>() {
+        CommonApiClient.pic(this, dto, new CallBack<PicResult>() {
             @Override
             public void onSuccess(PicResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
@@ -89,7 +89,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
         DetailsDTO dto=new DetailsDTO();
         dto.setSna_code("");
         dto.setBat_code("");
-        CommonApiClient.issDetails(getActivity(), dto, new CallBack<IssDetailsResult>() {
+        CommonApiClient.issDetails(this, dto, new CallBack<IssDetailsResult>() {
             @Override
             public void onSuccess(IssDetailsResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

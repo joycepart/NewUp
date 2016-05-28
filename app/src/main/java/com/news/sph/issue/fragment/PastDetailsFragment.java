@@ -57,7 +57,7 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
     private void reqPic() {
         PicDTO dto=new PicDTO();
         dto.setSna_code("");
-        CommonApiClient.pic(getActivity(), dto, new CallBack<PicResult>() {
+        CommonApiClient.pic(this, dto, new CallBack<PicResult>() {
             @Override
             public void onSuccess(PicResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
@@ -83,7 +83,7 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
         TranDTO dto=new TranDTO();
         dto.setSna_code("");
         dto.setBat_code("");
-        CommonApiClient.tranDetails(getActivity(), dto, new CallBack<TranResult>() {
+        CommonApiClient.tranDetails(this, dto, new CallBack<TranResult>() {
             @Override
             public void onSuccess(TranResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {

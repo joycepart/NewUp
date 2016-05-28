@@ -51,11 +51,10 @@ public class SerializableUtils {
     // 将序列化的数据还原成Object
     public static Object str2Obj(String str) throws StreamCorruptedException,
             IOException {
-        byte[] mByte = Base64.decode(str.getBytes(), Base64.DEFAULT);
-        ByteArrayInputStream bais = new ByteArrayInputStream(mByte);
-        ObjectInputStream ois = new ObjectInputStream(bais);
-
         try {
+            byte[] mByte = Base64.decode(str.getBytes(), Base64.DEFAULT);
+            ByteArrayInputStream bais = new ByteArrayInputStream(mByte);
+            ObjectInputStream ois = new ObjectInputStream(bais);
             return ois.readObject();
         } catch (ClassNotFoundException e) {
 //            e.printStackTrace();

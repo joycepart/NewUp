@@ -51,7 +51,7 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
         BaseDTO udto=new BaseDTO();
         udto.setPageSize(PAGE_SIZE);
         udto.setPageIndex(mCurrentPage);
-        CommonApiClient.hotTopics(getActivity(), udto, new CallBack<HotTopResult>() {
+        CommonApiClient.hotTopics(this, udto, new CallBack<HotTopResult>() {
             @Override
             public void onSuccess(HotTopResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

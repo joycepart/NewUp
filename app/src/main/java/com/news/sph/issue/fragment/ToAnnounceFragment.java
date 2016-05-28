@@ -43,7 +43,7 @@ public class ToAnnounceFragment extends BaseListFragment<ToAnnounceEntity> {
         gdto.setPageSize(PAGE_SIZE);
         gdto.setPageIndex(mCurrentPage);
         gdto.setSna_code("");
-        CommonApiClient.toAnnounce(getActivity(), gdto, new CallBack<ToAnnounceResult>() {
+        CommonApiClient.toAnnounce(this, gdto, new CallBack<ToAnnounceResult>() {
             @Override
             public void onSuccess(ToAnnounceResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

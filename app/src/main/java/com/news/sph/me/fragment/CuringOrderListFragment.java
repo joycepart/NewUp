@@ -77,7 +77,7 @@ public class CuringOrderListFragment extends BaseFragment {
         cdto.setMembermob(strPhoneNum);
         cdto.setAppreqtype(appreqtype);
         cdto.setSign(AppConfig.SIGN_1);
-        CommonApiClient.CuringOrderList(getActivity(), cdto, new CallBack<CuringOrderListResult>() {
+        CommonApiClient.CuringOrderList(this, cdto, new CallBack<CuringOrderListResult>() {
             @Override
             public void onSuccess(CuringOrderListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

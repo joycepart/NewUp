@@ -137,7 +137,7 @@ public abstract class BaseActivity  extends FragmentActivity implements
         hideDialogLoading();
         String status = event.getStatus();
         String message = event.getMsg();
-        if (event.getContext().equals(this)) {
+        if (event.getTag().equals(this)) {
             if(!AppConfig.SUCCESS.equals(status)) {
                 ToastUtils.showShort(this,message);
             }

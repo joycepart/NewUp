@@ -108,7 +108,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
     private void reqAdver() {
         BaseDTO dto = new BaseDTO();
-        CommonApiClient.homeAdcer(getActivity(), dto, new CallBack<HomeAdcerResult>() {
+        CommonApiClient.homeAdcer(this, dto, new CallBack<HomeAdcerResult>() {
             @Override
             public void onSuccess(HomeAdcerResult result) {
                 checkPullRefreshComplete();
@@ -141,7 +141,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
     private void reqRecommend() {
         BaseDTO dto = new BaseDTO();
-        CommonApiClient.homeRecommend(getActivity(), dto, new CallBack<HomeRecomendResult>() {
+        CommonApiClient.homeRecommend(this, dto, new CallBack<HomeRecomendResult>() {
             @Override
             public void onSuccess(HomeRecomendResult result) {
                 checkPullRefreshComplete();
@@ -158,7 +158,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
     private void reqSpecial() {
         BaseDTO dto = new BaseDTO();
-        CommonApiClient.homeSpecial(getActivity(), dto, new CallBack<HomeSpecialResult>() {
+        CommonApiClient.homeSpecial(this, dto, new CallBack<HomeSpecialResult>() {
             @Override
             public void onSuccess(HomeSpecialResult result) {
                 checkPullRefreshComplete();

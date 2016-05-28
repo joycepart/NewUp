@@ -90,7 +90,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
 
     private void reqWinning() {
         BaseDTO dto=new BaseDTO();
-        CommonApiClient.winning(getActivity(), dto, new CallBack<WinningResult>() {
+        CommonApiClient.winning(this, dto, new CallBack<WinningResult>() {
             @Override
             public void onSuccess(WinningResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
@@ -106,7 +106,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
 
     private void reqPicture() {
         BaseDTO dto=new BaseDTO();
-        CommonApiClient.adcertising(getActivity(), dto, new CallBack<AdvertisingResult>() {
+        CommonApiClient.adcertising(this, dto, new CallBack<AdvertisingResult>() {
             @Override
             public void onSuccess(AdvertisingResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
@@ -129,7 +129,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
         BaseDTO dto=new BaseDTO();
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(mCurrentPage);
-        CommonApiClient.indianaList(getActivity(), dto, new CallBack<IndianaListResult>() {
+        CommonApiClient.indianaList(this, dto, new CallBack<IndianaListResult>() {
             @Override
             public void onSuccess(IndianaListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

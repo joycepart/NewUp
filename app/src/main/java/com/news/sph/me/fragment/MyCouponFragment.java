@@ -59,7 +59,7 @@ public class MyCouponFragment extends BasePullScrollViewFragment {
         BaseDTO bdto=new BaseDTO();
         bdto.setMembermob(strPhoneNum);
         bdto.setSign(AppConfig.SIGN_1);
-        CommonApiClient.getCoupon(getActivity(), bdto, new CallBack<MyCouponResult>() {
+        CommonApiClient.getCoupon(this, bdto, new CallBack<MyCouponResult>() {
             @Override
             public void onSuccess(MyCouponResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){

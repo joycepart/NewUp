@@ -1,6 +1,8 @@
 package com.news.sph.common.http;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import com.google.gson.Gson;
 import com.news.sph.AppConfig;
@@ -23,11 +25,17 @@ public class AsyncCallBack<T> implements Callback {
 	public static final Gson gson = new Gson();
 	private Object tag;
 
-	public AsyncCallBack(Context context, CallBack<T> callback, Class<T> clazz) {
-		this.context = context;
+	public AsyncCallBack(Activity act, CallBack<T> callback, Class<T> clazz) {
+		this.context = act;
 		this.callback = callback;
 		this.clazz = clazz;
-		this.tag = context;
+		this.tag = act;
+	}
+	public AsyncCallBack(Fragment fragment, CallBack<T> callback, Class<T> clazz) {
+		this.context = fragment.getActivity();
+		this.callback = callback;
+		this.clazz = clazz;
+		this.tag = fragment;
 	}
 
 	@Override
@@ -36,13 +44,13 @@ public class AsyncCallBack<T> implements Callback {
 		if(!TDevice.hasInternet(context)){
 			EventBus.getDefault().post(
 					new ErrorEvent(AppConfig.ERROR_NONET,
-							AppConfig.ERROR_NONET_MSG, tag, context));
+							AppConfig.ERROR_NONET_MSG, tag));
 		}else {
 			String msg = e.getMessage();
 			if (!"Canceled".equals(msg)) {
 				EventBus.getDefault().post(
 						new ErrorEvent(AppConfig.ERROR_REQ,
-								AppConfig.ERROR_REQ_MSG, tag, context));
+								AppConfig.ERROR_REQ_MSG, tag));
 			}
 		}
 	}
@@ -63,12 +71,12 @@ public class AsyncCallBack<T> implements Callback {
 				BaseEntity entity=(BaseEntity)t;
 				EventBus.getDefault().post(
 						new ErrorEvent(entity.getStatus(),
-								entity.getMsg(), tag, context));
+								entity.getMsg(), tag));
 			}catch (Exception e){
 				callback.sendMsg(CallBack.FAIL, (T) AppConfig.ERROR_PARSER_MSG);
 				EventBus.getDefault().post(
 						new ErrorEvent(AppConfig.ERROR_PARSER,
-								AppConfig.ERROR_PARSER_MSG, tag, context));
+								AppConfig.ERROR_PARSER_MSG, tag));
 				LogUtils.i("response json parse error "+e);
 				e.printStackTrace();
 			}
@@ -76,7 +84,7 @@ public class AsyncCallBack<T> implements Callback {
 			callback.sendMsg(CallBack.FAIL, (T) AppConfig.ERROR_IO_MSG);
 			EventBus.getDefault().post(
 					new ErrorEvent(AppConfig.ERROR_IO,
-							AppConfig.ERROR_IO_MSG, tag, context));
+							AppConfig.ERROR_IO_MSG, tag));
 			LogUtils.i("response is not Successful "+response);
 		}
 	}

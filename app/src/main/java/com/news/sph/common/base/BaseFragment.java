@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +111,7 @@ public abstract class BaseFragment extends Fragment implements
     }
 
     public void onVisible() {
+
     }
     public void inVisible() {
     }
@@ -175,7 +177,8 @@ public abstract class BaseFragment extends Fragment implements
     public void onEventMainThread(ErrorEvent event) {
         String status = event.getStatus();
         String message = event.getMsg();
-        if (event.getContext().equals(getActivity())) {
+        Log.e("tag","xxx->"+event.getTag()+"   xxx->"+this);
+        if (event.getTag().equals(this)) {
            LogUtils.i("baseFragment error_status:" + status+"  "+"error_msg:" + message);
             if(!AppConfig.SUCCESS.equals(status)) {
                 retryBefore();
