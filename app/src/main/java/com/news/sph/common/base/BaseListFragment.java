@@ -117,7 +117,11 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
     @Override
     protected void retry() {
         mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-        mPtrRecyclerView.autoRefresh();
+        if (!TDevice.hasInternet(getActivity())) {
+            mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+        } else {
+            mPtrRecyclerView.autoRefresh();
+        }
     }
 
     public void reset(){

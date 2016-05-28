@@ -123,12 +123,6 @@ public class EmptyLayout extends LinearLayout implements
         tv.setText(msg);
     }
 
-    /**
-     * 新添设置背景
-     * 
-     * @author 火蚁 2015-1-27 下午2:14:00
-     * 
-     */
     public void setErrorImag(int imgResource) {
         try {
             img.setImageResource(imgResource);
