@@ -24,7 +24,7 @@ public class CuringAdapter  extends BaseSimpleRecyclerAdapter<CuringEntity> {
         holder.setText(R.id.curing_tv,curingEntity.getSell_description());
         holder.setText(R.id.curing_money,curingEntity.getSell_price());
         holder.setText(R.id.curing_coupon,curingEntity.getSell_first_discription());
-        ImageView mImg=holder.getView( R.id.information_img);
+        ImageView mImg=holder.getView( R.id.curing_img);
         ImageLoaderUtils.displayImage(curingEntity.getSell_pic(),mImg);
 
     }

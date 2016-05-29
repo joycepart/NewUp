@@ -23,6 +23,9 @@ import java.util.List;
  */
 public class CuringFragment extends BaseListFragment<CuringEntity> {
     private static final String TYPE = "type";
+    public static final int TYPE_TAB_1=1;
+    public static final int TYPE_TAB_2=2;
+    public static final int TYPE_TAB_3=3;
     private int type;
 
     public static CuringFragment newInstance(int type) {
@@ -40,7 +43,7 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
 
     @Override
     protected String getCacheKeyPrefix() {
-        return "CuringFragment";
+        return "CuringFragment"+type+"_";
     }
 
     @Override
@@ -51,16 +54,7 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
     @Override
     protected void sendRequestData() {
         CuringDTO dto = new CuringDTO();
-        if(type == 1){
-            dto.setSort(1);
-        }
-        if(type == 2){
-            dto.setSort(2);
-        }
-        if(type == 3){
-            dto.setSort(3);
-        }
-
+        dto.setSort(type);
         dto.setPageIndex(mCurrentPage);
         dto.setPageSize(PAGE_SIZE);
         CommonApiClient.curing(this, dto, new CallBack<CuringResult>() {
@@ -68,6 +62,8 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
             public void onSuccess(CuringResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("专业养护成功");
+                    requestDataSuccess(result);
+                    setDataResult(result.getData());
                 }
 
             }
@@ -75,6 +71,9 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
 
     }
 
+    public boolean autoRefreshIn(){
+        return true;
+    }
 
 
     @Override

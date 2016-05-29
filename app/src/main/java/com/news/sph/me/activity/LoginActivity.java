@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity {
     private String mUrlAgreement;
     private String mAgreementTitle;
 
-    User mUser = AppContext.getInstance().getUser();
+    User mUser;
 
     @Override
     protected int getLayoutResId() {
@@ -65,6 +65,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mUser=AppContext.getInstance().getUser();
         mSetpwdCbAgreement.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
@@ -117,7 +118,7 @@ public class LoginActivity extends BaseActivity {
                     LogUtils.e("登录成功");
                     getLoginResult(result.getData());
                     setResult(1001);
-                    LoginActivity.this.finish();
+                    finish();
                 }
 
             }
@@ -125,9 +126,12 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void getLoginResult(List<LoginEntity> data) {
-        mUser.setmUserMobile(data.get(0).getMembermobile());
-        mUser.setmUserName(data.get(0).getMembername());
-        mUser.setmPictruePath(data.get(0).getMemberHeadimg());
+        LoginEntity entity=data.get(0);
+        mUser.setmUserMobile(entity.getMembermobile());
+        AppContext.set("mobileNum",entity.getMembermobile());
+        AppContext.set("isLogin",true);
+        mUser.setmUserName(entity.getMembername());
+        mUser.setmPictruePath(entity.getMemberHeadimg());
         mUser.setFlag(true);
     }
 
