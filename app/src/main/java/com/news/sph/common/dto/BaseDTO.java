@@ -1,5 +1,6 @@
 package com.news.sph.common.dto;
 
+import com.news.sph.AppContext;
 import com.news.sph.common.utils.SecurityUtils;
 import com.news.sph.common.utils.TimeUtils;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * DTO的基类
  */
 public class BaseDTO implements Serializable {
-    private String membermob;
+    private String membermob= AppContext.get("mobileNum","");;
     private String timestamp;
     private String sign;
     private int pageSize ;

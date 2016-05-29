@@ -51,7 +51,6 @@ import com.news.sph.unused.entity.HotTopResult;
 
 public class CommonApiClient extends BaseApiClient {
 
-
     /**
      * 获取短信验证码
      * @param dto

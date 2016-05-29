@@ -67,7 +67,6 @@ public class MeFragment extends BaseFragment {
     private String mQqTitle;
     private String mUrlInformation;
     private String mInformationTitle;
-    Boolean flag;//判断是否登录
     private String userName;
     private String pictruePath;
 
@@ -88,7 +87,6 @@ public class MeFragment extends BaseFragment {
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
             mMeLlClose.setVisibility(View.VISIBLE);
-            flag = user.getFlag();
             userName = user.getmUserName();
             pictruePath = user.getmPictruePath();
             mLoingTvName.setText(userName);
@@ -158,8 +156,8 @@ public class MeFragment extends BaseFragment {
                 mLoginLl.setVisibility(View.VISIBLE);
                 mLoingSuc.setVisibility(View.GONE);
                 mMeLlClose.setVisibility(View.GONE);
-                flag = false;
-                AppContext.getInstance().getUser().setFlag(flag);
+                AppContext.set("isLogin",false);
+                AppContext.getInstance().getUser().setFlag(false);
                 break;
         }
     }

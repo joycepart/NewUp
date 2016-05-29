@@ -61,8 +61,8 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     TextView mPeo;
     @Bind(R.id.in_btn)
     Button mInBtn;
-    BaseSimpleRecyclerAdapter mListAdapter;
-    ArrayList<IndianaListEntity> list;
+    BaseSimpleRecyclerAdapter mIssuelListAdapter;
+    IndianaListEntity indiana;
     String mSnaCode;
     String mCaTerm;
     String mCaTitle;
@@ -76,7 +76,11 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     @Override
     public void initData() {
         Bundle b  = getArguments();
-        list = (ArrayList<IndianaListEntity>) b.getSerializable("list");
+        if(b!=null){
+            indiana= (IndianaListEntity) b.getSerializable("itemBean");
+        }else{
+            return;
+        }
         reqPic();//夺宝商品图片
         reqDetails();//夺宝详情
         reqQecord();//夺宝详情之夺宝记录
@@ -85,10 +89,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
 
     private void reqQecord() {
         RecordIndianaDTO dto=new RecordIndianaDTO();
-        for (int i = 0; i < list.size(); i++) {
-            IndianaListEntity indiana = list.get(i);
-            dto.setBat_code(indiana.getBat_code());
-        }
+        dto.setBat_code(indiana.getBat_code());
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(mCurrentPage);
         CommonApiClient.recordsDetails(getActivity(), dto, new CallBack<RecordIndianaResult>() {
@@ -97,20 +98,14 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝详情之夺宝记录成功");
                     List<RecordIndianaEntity> rData = result.getData();
-                    LogUtils.e("result.getData().1"+result.getData().get(0).getRec_participate_count());
-                    LogUtils.e("result.getData().2"+result.getData().get(0).getRec_participate_date());
-                    LogUtils.e("result.getData().3"+result.getData().get(0).getRec_phone());
-                    if(rData != null && rData.size() != 0&&rData.get(0)!=null){
-                        LogUtils.e("出现");
-                        mIssuelList.setVisibility(View.VISIBLE);
-                        mListAdapter.removeAll();
-                        mListAdapter.append(result.getData());
-                    }else {
-                        LogUtils.e("小说");
-                        mIssuelList.setVisibility(View.GONE);
+                    if(rData != null && rData.size() > 0){
+                        RecordIndianaEntity recordIndianaEntity=rData.get(0);
+                        if(recordIndianaEntity.getRec_participate_count()==null) {
+                            return;
+                        }
+                        mIssuelListAdapter.removeAll();
+                        mIssuelListAdapter.append(rData);
                     }
-
-
                 }
 
             }
@@ -119,23 +114,21 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     }
 
     private void bindData(List<IssDetailsEntity> data) {
-        mSnaCode = data.get(0).getSna_code();
-        mCaTerm = "第"+data.get(0).getSna_term()+"期";
-        mCaTitle = data.get(0).getSna_title();
+        IssDetailsEntity detailEntity=data.get(0);
+        mSnaCode = detailEntity.getSna_code();
+        mCaTerm = "第"+detailEntity.getSna_term()+"期";
+        mCaTitle = detailEntity.getSna_title();
         mTerm.setText(mCaTerm);
         mName.setText(mCaTitle);
-        mRandom.setText(data.get(0).getSna_remark());
-        mPeople.setText("总需"+data.get(0).getSna_total_count()+"人次");
-        mPeo.setText("距离揭晓还需"+data.get(0).getSna_sell_out()+"人次");
+        mRandom.setText(detailEntity.getSna_remark());
+        mPeople.setText("总需"+detailEntity.getSna_total_count()+"人次");
+        mPeo.setText("距离揭晓还需"+detailEntity.getSna_sell_out()+"人次");
     }
 
 
     private void reqPic() {
         PicDTO pdto=new PicDTO();
-        for (int i = 0; i < list.size(); i++) {
-            IndianaListEntity indiana = list.get(i);
-            pdto.setSna_code(indiana.getSna_code());
-        }
+        pdto.setSna_code(indiana.getSna_code());
         CommonApiClient.pic(this, pdto, new CallBack<PicResult>() {
             @Override
             public void onSuccess(PicResult result) {
@@ -161,11 +154,8 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
 
     private void reqDetails() {
         DetailsDTO dto=new DetailsDTO();
-        for (int i = 0; i < list.size(); i++) {
-            IndianaListEntity indiana = list.get(i);
-            dto.setSna_code(indiana.getSna_code());
-            dto.setBat_code(indiana.getBat_code());
-        }
+        dto.setSna_code(indiana.getSna_code());
+        dto.setBat_code(indiana.getBat_code());
 
         CommonApiClient.issDetails(this, dto, new CallBack<IssDetailsResult>() {
             @Override
@@ -187,7 +177,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
         mPast.setOnClickListener(this);
         mInBtn.setOnClickListener(this);
         mIssuelList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
-        mListAdapter=new BaseSimpleRecyclerAdapter<RecordIndianaEntity>() {
+        mIssuelListAdapter =new BaseSimpleRecyclerAdapter<RecordIndianaEntity>() {
             @Override
             public int getItemViewLayoutId() {
                 return R.layout.item_issue_product;
@@ -202,7 +192,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
 
 
         };
-        mIssuelList.setAdapter(mListAdapter);
+        mIssuelList.setAdapter(mIssuelListAdapter);
 
     }
 

@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50"
-            android:text="12344567"/>
+           />
 
     </LinearLayout>
     <LinearLayout
@@ -35,7 +35,7 @@
             android:layout_alignParentLeft="true"
             android:textColor="@color/color_c0"
             android:textSize="@dimen/fs_50"
-            android:text="12344567"/>
+           />
         <TextView
             android:id="@+id/product_tv3"
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_marginRight="@dimen/ds_30"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50"
-            android:text="qwertyuui"/>
+            />
     </RelativeLayout>
     </LinearLayout>
 <View

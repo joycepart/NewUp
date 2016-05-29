@@ -44,8 +44,6 @@ public class IssueFragment extends BasePullScrollViewFragment {
     @Bind(R.id.view_flipper)
     ViewFlipper mViewFlipper;
     BaseSimpleRecyclerAdapter mIssueAdapter;
-    List<IndianaListEntity> mData;
-    ArrayList<IndianaListEntity> list = new ArrayList<>();
 
     @Override
     public void initView(View view) {
@@ -77,7 +75,8 @@ public class IssueFragment extends BasePullScrollViewFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 Bundle b = new Bundle();
-                b.putSerializable("list",list);
+                IndianaListEntity entity=(IndianaListEntity)itemBean;
+                b.putSerializable("itemBean",entity);
                 UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
             }
         });
@@ -160,18 +159,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onSuccess(IndianaListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝列表成功");
-                    mData = result.getData();
-                    mIssueAdapter.removeAll();
-                    mIssueAdapter.append(mData);
-
-                    if (mData != null && mData.size() != 0) {
-                        for (int i = 0; i < mData.size(); i++) {
-                            IndianaListEntity indianaList = new IndianaListEntity();
-                            indianaList.setSna_code(mData.get(i).getSna_code());
-                            indianaList.setBat_code(mData.get(i).getBat_code());
-                            list.add(indianaList);
-                        }
-                    }
+                    mIssueAdapter.append(result.getData());
 
                 }
             }
