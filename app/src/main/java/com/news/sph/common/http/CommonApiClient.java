@@ -85,7 +85,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<UserPicResult> callback) {
         AsyncCallBack<UserPicResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback, UserPicResult.class);
-        post(getAbsoluteUrl("/API/WsMember.asmx/ ResEdtMemberHeadImApi"), dto,
+        post(getAbsoluteUrl("/API/WsMember.asmx/ResEdtMemberHeadImApi"), dto,
                 asyncCallBack);
     }
     /**
@@ -97,7 +97,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<TransactionResult> callback) {
         AsyncCallBack<TransactionResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback, TransactionResult.class);
-        post(getAbsoluteUrl("/API/WsMember.asmx/ ResTransactionDetailApi"), dto,
+        post(getAbsoluteUrl("/API/WsMember.asmx/ResTransactionDetailApi"), dto,
                 asyncCallBack);
     }
 
@@ -110,7 +110,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<ModifyResult> callback) {
         AsyncCallBack<ModifyResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,ModifyResult.class);
-        post(getAbsoluteUrl("/API/WsMember.asmx/ ResEdtMemberNameApi"), dto,
+        post(getAbsoluteUrl("/API/WsMember.asmx/ResEdtMemberNameApi"), dto,
                 asyncCallBack);
     }
     /**
@@ -344,7 +344,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<PayResult> callback) {
         AsyncCallBack<PayResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,PayResult.class);
-        post(getAbsoluteUrl("/API/WsPlaceOrder.asmx/ AddJsonOrderCommServiceApplyApi"), dto,
+        post(getAbsoluteUrl("/API/WsPlaceOrder.asmx/AddJsonOrderCommServiceApplyApi"), dto,
                 asyncCallBack);
     }
     /**
@@ -392,7 +392,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<MyIncomeResult> callback) {
         AsyncCallBack<MyIncomeResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,MyIncomeResult.class);
-        post( getAbsoluteUrl("/API/WsMember.asmx/ ResMemberMoneyNotCashAmountApi"), dto,
+        post( getAbsoluteUrl("/API/WsMember.asmx/ResMemberMoneyNotCashAmountApi"), dto,
                 asyncCallBack);
     }
     /**
@@ -416,7 +416,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<BaseEntity> callback) {
         AsyncCallBack<BaseEntity> asyncCallBack = new AsyncCallBack<>(
                 act, callback,BaseEntity.class);
-        post( getAbsoluteUrl("/API/WsMember.asmx/ ResPresentApplicationApi"), dto,
+        post( getAbsoluteUrl("/API/WsMember.asmx/ResPresentApplicationApi"), dto,
                 asyncCallBack);
     }
 
