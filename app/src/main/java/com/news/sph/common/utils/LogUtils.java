@@ -10,7 +10,7 @@ import com.news.sph.AppConfig;
  * 
  */
 public class LogUtils {
-	public static final String TAG = "mytag";
+	public static final String TAG = "tag";
 
 	public static void i(String msg) {
 		if (AppConfig.DEBUG) {
