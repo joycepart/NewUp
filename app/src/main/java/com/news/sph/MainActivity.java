@@ -1,5 +1,6 @@
 package com.news.sph;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import com.news.sph.home.HomeUiGoto;
 import com.news.sph.home.fragment.HomeFragment;
 import com.news.sph.information.fragment.InformationFragment;
 import com.news.sph.issue.fragment.IssueFragment;
+import com.news.sph.me.MeUiGoto;
 import com.news.sph.me.fragment.MeFragment;
 import com.news.sph.unused.fragment.UnusedFragment;
 
@@ -250,6 +252,19 @@ public class MainActivity extends BaseTitleActivity {
         return R.layout.activity_main;
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == MeUiGoto.LOFIN_REQUEST&&resultCode==1001)
+        {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            MeFragment meFragment = (MeFragment)fragmentManager.findFragmentByTag("tag4");
+            meFragment.initView(null);
+        }
+        if(requestCode == MeUiGoto.USERINFORMATION_REQUEST&&resultCode==1002)
+        {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            MeFragment meFragment = (MeFragment)fragmentManager.findFragmentByTag("tag4");
+            meFragment.updata();
+        }
+    }
 }

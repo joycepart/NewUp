@@ -14,8 +14,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/ds_50"
         android:gravity="center"
-        android:text="@string/me_income_meney"
-        android:textSize="@dimen/fs_100"
+        android:text="@string/real_payment"
+        android:textSize="@dimen/fs_70"
         android:textColor="@color/color_00"/>
     <TextView
         android:id="@+id/place_tv_nm"
@@ -24,7 +24,7 @@
         android:gravity="center"
         android:layout_marginLeft="@dimen/ds_50"
         android:layout_toRightOf="@+id/placeorder_tv"
-        android:text="@string/app_day"
+        android:text="100"
         android:textSize="@dimen/fs_70"
         android:textColor="@color/color_00"/>
     <Button

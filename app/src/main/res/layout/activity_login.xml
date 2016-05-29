@@ -78,16 +78,14 @@
             android:background="@drawable/login_et"
             android:padding="5.0dip" >
 
-            <Button
+            <TextView
                 android:id="@+id/login_codeBtn"
-                android:layout_width="99.0dip"
-                android:layout_height="28.0dip"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/login_code_btn_bg"
-                android:text="@string/login_et"
-                android:textColor="@color/color_ff"
-                android:textSize="@dimen/fs_40" />
+                android:layout_alignParentRight="true"
+                android:text="验证码"
+                style="@style/UserBtSendStyle"
+
+                />
 
             <EditText
                 android:id="@+id/login_pwdEt"

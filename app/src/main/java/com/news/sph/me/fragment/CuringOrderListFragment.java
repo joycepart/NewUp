@@ -53,7 +53,9 @@ public class CuringOrderListFragment extends BaseFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             type = bundle.getInt(TYPE, CuringOrderActivity.TAB_D);
+
         }
+//        mCuringorderList.setEmptyView();
     }
 
     @Override

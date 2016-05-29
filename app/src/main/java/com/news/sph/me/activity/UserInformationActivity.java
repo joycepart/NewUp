@@ -14,8 +14,10 @@ import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.common.utils.ImageLoaderUtils;
 import com.news.sph.common.utils.LogUtils;
+import com.news.sph.me.MeUiGoto;
 import com.news.sph.me.dto.UserPicDTO;
 import com.news.sph.me.entity.UserPicResult;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -24,10 +26,7 @@ import butterknife.OnClick;
  * 用户信息主页面
  */
 public class UserInformationActivity extends BaseTitleActivity {
-    @Bind(R.id.base_titlebar_ensure)
-    TextView mBaseTitlebarEnsure;
-    @Bind(R.id.base_view)
-    TextView mBaseView;
+
     @Bind(R.id.user_name)
     TextView mUserName;
     @Bind(R.id.tv_name)
@@ -39,7 +38,7 @@ public class UserInformationActivity extends BaseTitleActivity {
     @Bind(R.id.user_information)
     LinearLayout mUserInformation;
 
-    private String mUsName, mUsNum, mUsImg,mPicUrl;
+    private String mUsName, mUsNum, mUsImg,mNewName;
 
 
     @Override
@@ -49,16 +48,16 @@ public class UserInformationActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-
-        mBaseView.setVisibility(View.VISIBLE);
         mUsName = AppContext.getInstance().getUser().getmUserName();
         mUsNum = AppContext.getInstance().getUser().getmUserMobile();
         mUsImg = AppContext.getInstance().getUser().getmPictruePath();
-        mPicUrl = AppConfig.BASE_URL+mUsImg;
         mUserName.setText(mUsName);
         mTvName.setText(mUsName);
         mTvNum.setText(mUsNum);
-        ImageLoaderUtils.displayImage(mPicUrl,mUserImg);
+        ImageLoader.getInstance().displayImage(mUsImg,
+                mUserImg, ImageLoaderUtils.getAvatarOptions());
+//        ImageLoaderUtils.displayImage(mUsImg,mUserImg);
+        mUserInformation.setOnClickListener(this);
 
     }
 
@@ -69,11 +68,9 @@ public class UserInformationActivity extends BaseTitleActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (100 == resultCode) {
-            mUsName = data.getExtras().getString("mMembername");
+            mNewName = AppContext.getInstance().getUser().getmUserName();
             mUserName.setText(mUsName);
             mTvName.setText(mUsName);
-        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -82,14 +79,25 @@ public class UserInformationActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_img:
-                reqUserPic();
+//                reqUserPic();
                 break;
             case R.id.user_information:
-                Intent intent = new Intent(this, ModifyUserActivity.class);
-                this.startActivityForResult(intent, 100);;
-//                MeUiGoto.modifyUser(this);//修改用户名
+                MeUiGoto.modifyUser(this);//修改用户名
+                break;
+            case R.id.base_titlebar_back:
+                goBack();
                 break;
         }
+    }
+
+    @Override
+    protected void baseGoBack() {
+        super.baseGoBack();
+    }
+
+    private void goBack() {
+        setResult(1002);
+        finish();
     }
 
     private void reqUserPic() {
@@ -107,4 +115,5 @@ public class UserInformationActivity extends BaseTitleActivity {
         });
 
     }
+
 }

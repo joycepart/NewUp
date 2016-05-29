@@ -1,6 +1,5 @@
 package com.news.sph.me.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,17 +16,17 @@ import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
-import com.news.sph.me.dto.LoginDTO;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.TimeCountDown;
 import com.news.sph.me.MeUiGoto;
+import com.news.sph.me.dto.LoginDTO;
 import com.news.sph.me.entity.LoginEntity;
 import com.news.sph.me.entity.LoginResult;
 import com.news.sph.me.entity.User;
-import com.news.sph.common.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,7 +41,7 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.login_et_num)
     EditText mLoginEtNum;
     @Bind(R.id.login_codeBtn)
-    Button mLoginCodeBtn;
+    TextView mLoginCodeBtn;
     @Bind(R.id.login_pwdEt)
     EditText mLoginPwdEt;
     @Bind(R.id.setpwd_cb_agreement)
@@ -51,7 +50,7 @@ public class LoginActivity extends BaseActivity {
     TextView mLoginReadProtocalBtn;
     @Bind(R.id.login_loginBtn)
     Button mLoginLoginBtn;
-
+    TimeCountDown mTcd;
     private String strPhoneNum;
     private String strPwd;
     private String mUrlAgreement;
@@ -84,12 +83,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        mTcd = new TimeCountDown(mLoginCodeBtn, 60000, 1000, "重新获取", "s");
 
     }
 
 
     //获取验证码
     private void ObtainCode() {
+        mTcd.start();
         BaseDTO bdto = new BaseDTO();
         bdto.setMembermob(strPhoneNum);
         bdto.setSign(AppConfig.SIGN_1);
@@ -115,6 +116,7 @@ public class LoginActivity extends BaseActivity {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("登录成功");
                     getLoginResult(result.getData());
+                    setResult(1001);
                     LoginActivity.this.finish();
                 }
 
@@ -129,12 +131,6 @@ public class LoginActivity extends BaseActivity {
         mUser.setFlag(true);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.img_btn_close, R.id.lg_imgbtn, R.id.login_codeBtn, R.id.login_readProtocalBtn, R.id.login_loginBtn})
     public void onClick(View view) {

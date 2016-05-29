@@ -6,20 +6,28 @@ import android.support.v4.app.Fragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.entity.BaseEntity;
 import com.news.sph.home.dto.CuringDTO;
+import com.news.sph.home.dto.PayDTO;
 import com.news.sph.home.dto.TranDTO;
 import com.news.sph.home.entity.CuringResult;
 import com.news.sph.home.entity.HomeAdcerResult;
 import com.news.sph.home.entity.HomeRecomendResult;
 import com.news.sph.home.entity.HomeSpecialResult;
+import com.news.sph.home.entity.PayResult;
 import com.news.sph.home.entity.TranResult;
 import com.news.sph.information.entity.InformationResult;
+import com.news.sph.issue.dto.AnnouncedDTO;
+import com.news.sph.issue.dto.CalcutionDTO;
 import com.news.sph.issue.dto.DetailsDTO;
+import com.news.sph.issue.dto.LanderInDTO;
 import com.news.sph.issue.dto.PicDTO;
 import com.news.sph.issue.dto.SettlementDTO;
 import com.news.sph.issue.dto.ToAnnounceDTO;
 import com.news.sph.issue.entity.AdvertisingResult;
+import com.news.sph.issue.entity.AnnouncedResult;
+import com.news.sph.issue.entity.CalculationResult;
 import com.news.sph.issue.entity.IndianaListResult;
 import com.news.sph.issue.entity.IssDetailsResult;
+import com.news.sph.issue.entity.LanderInResult;
 import com.news.sph.issue.entity.PicResult;
 import com.news.sph.issue.entity.SettlementResult;
 import com.news.sph.issue.entity.ToAnnounceResult;
@@ -235,6 +243,48 @@ public class CommonApiClient extends BaseApiClient {
     }
 
     /**
+     * 登陆者参与的次数
+     * @param fragment
+     * @param dto
+     * @param callback
+     */
+    public static void landerIn(Fragment fragment, LanderInDTO
+            dto, CallBack<LanderInResult> callback) {
+        AsyncCallBack<LanderInResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,LanderInResult.class);
+        post(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetParticipateSnaCount"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 根据批次获取50个时间之和
+     * @param fragment
+     * @param dto
+     * @param callback
+     */
+    public static void calculation(Fragment fragment, CalcutionDTO
+            dto, CallBack<CalculationResult> callback) {
+        AsyncCallBack<CalculationResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,CalculationResult.class);
+        get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetCalcByBatCode"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 揭晓信息
+     * @param fragment
+     * @param dto
+     * @param callback
+     */
+    public static void announced(Fragment fragment, AnnouncedDTO
+            dto, CallBack<AnnouncedResult> callback) {
+        AsyncCallBack<AnnouncedResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,AnnouncedResult.class);
+        get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetRecordDetailOfXYNums"), dto,
+                asyncCallBack);
+    }
+
+    /**
      * 首页推荐图片
      * @param dto
      * @param callback
@@ -281,6 +331,20 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<AdvertisingResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback,AdvertisingResult.class);
         post(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetSnaPic"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 提交订单之去支付
+     * @param act
+     * @param dto
+     * @param callback
+     */
+    public static void pay(Activity act, PayDTO
+            dto, CallBack<PayResult> callback) {
+        AsyncCallBack<PayResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,PayResult.class);
+        post(getAbsoluteUrl("/API/WsPlaceOrder.asmx/ AddJsonOrderCommServiceApplyApi"), dto,
                 asyncCallBack);
     }
     /**

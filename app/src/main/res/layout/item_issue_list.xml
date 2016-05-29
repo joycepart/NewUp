@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/app_day"
-                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
         </LinearLayout>

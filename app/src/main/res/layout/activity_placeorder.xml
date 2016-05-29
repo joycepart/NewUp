@@ -24,23 +24,22 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_f9"/>
+                android:layout_height="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_50"
+                android:background="@color/color_cc" />
 
-            <LinearLayout
-                android:id="@+id/place_take_delivery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
                 <RelativeLayout
+                    android:id="@+id/place_take_delivery"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30">
                     <TextView
                         android:id="@+id/placord_tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
+                        android:layout_centerVertical="true"
                         android:text="@string/order_take_method"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
@@ -48,10 +47,10 @@
                         android:id="@+id/pla_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/placord_tv1"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
-                        android:text="@string/order_take_method"
+                        android:text="@string/national_package"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
                     <ImageView
@@ -65,27 +64,24 @@
                         android:id="@+id/place_top_img"
                         />
                 </RelativeLayout>
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
                 android:layout_marginTop="@dimen/ds_20"
                 android:background="@color/color_cc" />
 
-            <LinearLayout
-                android:id="@+id/place_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
                 <RelativeLayout
+                    android:id="@+id/place_address"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30">
                     <TextView
                         android:id="@+id/place_tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
                         android:layout_marginBottom="@dimen/ds_80"
                         android:text="@string/order_receipt_address"
                         android:textColor="@color/color_00"
@@ -94,10 +90,10 @@
                         android:id="@+id/pla_tv_add"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/place_tv_address"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
-                        android:text="@string/order_receipt_address"
+                        android:text="ageagewgm"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
                     <ImageView
@@ -110,25 +106,22 @@
                         android:layout_marginLeft="@dimen/ds_30"
                         />
                 </RelativeLayout>
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
                 android:background="@color/color_cc" />
-            <LinearLayout
-                android:id="@+id/place_send"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
                 <RelativeLayout
+                    android:id="@+id/place_send"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30">
                     <TextView
                         android:id="@+id/tv_send"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
                         android:text="@string/place_send"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
@@ -136,9 +129,9 @@
                         android:id="@+id/send_address"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/tv_send"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
                         android:text="@string/order_take_method"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
@@ -153,7 +146,6 @@
                         android:layout_marginLeft="@dimen/ds_30"
                         />
                 </RelativeLayout>
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -167,6 +159,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/place_img"
                     android:layout_width="@dimen/ds_150"
                     android:layout_height="@dimen/ds_150"
                     android:layout_marginTop="@dimen/ds_30"
@@ -179,6 +172,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/place_titlt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ds_30"
@@ -200,6 +194,7 @@
                             android:textColor="@color/color_00"
                             android:textSize="@dimen/fs_60"/>
                         <TextView
+                            android:id="@+id/placord_dan_num"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
@@ -218,100 +213,80 @@
                 android:layout_height="@dimen/ds_3"
                 android:layout_marginTop="@dimen/ds_20"
                 android:background="@color/color_cc" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/placord_tv2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
-                        android:text="@string/order_service"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="@dimen/ds_30"
-                        android:layout_marginRight="@dimen/ds_30"
-                        android:text="@string/order_take_method"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
 
-                </RelativeLayout>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_3"
-                android:layout_marginTop="@dimen/ds_20"
-                android:background="@color/color_cc" />
-            <LinearLayout
-                android:id="@+id/place_coupon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
+
                 <RelativeLayout
+                    android:id="@+id/rel_coupon"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30"
+                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
+                        android:layout_centerVertical="true"
                         android:text="@string/order_coupon"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
-
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/place_coupon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:text="@string/order_coupon"
+                            android:textColor="@color/color_00"
+                            android:textSize="@dimen/fs_60"/>
                     <ImageView
                         android:layout_width="@dimen/ds_90"
                         android:layout_height="@dimen/ds_90"
-                        android:background="@drawable/home_right_arrow_icon"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/ds_30"
                         android:layout_centerVertical="true"
+                        android:background="@drawable/home_right_arrow_icon"
+                        android:layout_marginRight="@dimen/ds_30"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/ds_30"
                         />
+                    </LinearLayout>
                 </RelativeLayout>
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
                 android:layout_marginTop="@dimen/ds_20"
                 android:background="@color/color_cc" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+
                 <RelativeLayout
+                    android:id="@+id/rel_total"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
+                        android:layout_centerVertical="true"
                         android:text="@string/order_total"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
                     <TextView
+                        android:id="@+id/place_total"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginTop="@dimen/ds_30"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/ds_30"
                         android:text="@string/order_take_method"
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
 
                 </RelativeLayout>
-            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
@@ -351,7 +326,7 @@
                     android:background="@drawable/selector_checkbox"
                     android:layout_centerVertical="true"
                     android:button="@null"
-                    android:checked="true"
+                    android:checked="false"
                     />
 
                 <ImageView

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -23,6 +25,7 @@ import com.news.sph.issue.IssueUiGoto;
 import com.news.sph.issue.entity.AdvertisingResult;
 import com.news.sph.issue.entity.IndianaListEntity;
 import com.news.sph.issue.entity.IndianaListResult;
+import com.news.sph.issue.entity.WinningEntity;
 import com.news.sph.issue.entity.WinningResult;
 
 import java.util.ArrayList;
@@ -38,12 +41,16 @@ public class IssueFragment extends BasePullScrollViewFragment {
     RecyclerView mIssuelList;
     @Bind(R.id.issue_top_img)
     ImageView mIssueTopImg;
+    @Bind(R.id.view_flipper)
+    ViewFlipper mViewFlipper;
     BaseSimpleRecyclerAdapter mIssueAdapter;
     List<IndianaListEntity> mData;
+    ArrayList<IndianaListEntity> list = new ArrayList<>();
 
     @Override
     public void initView(View view) {
         super.initView(view);
+        mIssueTopImg.setOnClickListener(this);
         mIssuelList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mIssueAdapter=new BaseSimpleRecyclerAdapter<IndianaListEntity>() {
             @Override
@@ -53,7 +60,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, IndianaListEntity indianaListEntity, int position) {
-                holder.setText(R.id.issue_tv1,indianaListEntity.getSna_term());
+                holder.setText(R.id.issue_tv1,"第"+indianaListEntity.getSna_term()+"期");
                 holder.setText(R.id.issue_tv2,indianaListEntity.getSna_title());
 //                int mSell = Integer.parseInt(indianaListEntity.getSna_sell_out());
 //                int mTotal = Integer.parseInt(indianaListEntity.getSna_total_count());
@@ -70,10 +77,8 @@ public class IssueFragment extends BasePullScrollViewFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 Bundle b = new Bundle();
-                ArrayList list = new ArrayList();
-                list.add(mData);
-                b.putParcelableArrayList("list",list);
-                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);
+                b.putSerializable("list",list);
+                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
             }
         });
 
@@ -95,6 +100,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onSuccess(WinningResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("中奖轮播成功");
+                    bindData(result.getData());
                 }
 
             }
@@ -102,6 +108,26 @@ public class IssueFragment extends BasePullScrollViewFragment {
 
     }
 
+    private void bindData(List<WinningEntity> data) {
+        List<TextView> list = new ArrayList<TextView>();
+
+        for(int i = 0; i < 5; i++)
+        {
+            TextView tv = (TextView) new TextView(getActivity());
+            tv.setText(data.get(i).getSna_lucky_people());
+            LogUtils.e("data------"+data.get(i).getSna_lucky_people());
+            list.add(tv);
+        }
+        LogUtils.e("list------"+list);
+
+       for(int i = 0; i < list.size(); i++)
+        {
+            mViewFlipper.addView(list.get(i));
+        }
+        mViewFlipper.setInAnimation(getActivity(), R.anim.push_up_in);
+        mViewFlipper.setOutAnimation(getActivity(), R.anim.push_up_out);
+        mViewFlipper.startFlipping();
+    }
 
 
     private void reqPicture() {
@@ -138,6 +164,15 @@ public class IssueFragment extends BasePullScrollViewFragment {
                     mIssueAdapter.removeAll();
                     mIssueAdapter.append(mData);
 
+                    if (mData != null && mData.size() != 0) {
+                        for (int i = 0; i < mData.size(); i++) {
+                            IndianaListEntity indianaList = new IndianaListEntity();
+                            indianaList.setSna_code(mData.get(i).getSna_code());
+                            indianaList.setBat_code(mData.get(i).getBat_code());
+                            list.add(indianaList);
+                        }
+                    }
+
                 }
             }
         });
@@ -163,5 +198,9 @@ public class IssueFragment extends BasePullScrollViewFragment {
     @Override
     public boolean pulltoRefresh() {
         return true;
+    }
+
+    public interface OnClick{
+        public void onClick(View view);
     }
 }

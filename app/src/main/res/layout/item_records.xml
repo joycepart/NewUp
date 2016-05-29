@@ -69,36 +69,37 @@
         android:background="@color/color_cc"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_130">
+        android:layout_height="@dimen/ds_170">
         <LinearLayout
-            android:layout_width="@dimen/ds_360"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/ds_30"
             android:layout_marginLeft="@dimen/ds_20"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/records_yn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="1234456 "
+                android:text="@string/real_payment"
                 android:gravity="center"
                 android:textSize="@dimen/fs_45"
                 android:textColor="@color/color_00"/>
             <TextView
-                android:id="@+id/records_mn"
+                android:id="@+id/records_my"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text=" 678888"
+                android:text="@string/real_payment"
+                android:layout_marginLeft="@dimen/ds_20"
                 android:gravity="center"
                 android:textSize="@dimen/fs_45"
                 android:textColor="@color/color_00"/>
+
         </LinearLayout>
         <Button
             android:id="@+id/records_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/ds_30"
             android:layout_marginRight="@dimen/ds_30"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_login_normal"

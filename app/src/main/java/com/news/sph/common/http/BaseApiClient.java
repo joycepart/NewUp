@@ -117,7 +117,7 @@ public class BaseApiClient {
 		for (Iterator<String> it = key.iterator(); it.hasNext();) {
 			String s =  it.next();
 			builder.add(s, map.get(s).toString());
-			LogUtils.i(s + " = " + map.get(s).toString());
+			LogUtils.e(s + " = " + map.get(s).toString());
 		}
 		LogUtils.e("post-------------reqParams    end-------------");
 		Request request = new Request.Builder()

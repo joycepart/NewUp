@@ -59,7 +59,6 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
 
     @Override
     public void initData() {
-        sendRequestData();
 
     }
 

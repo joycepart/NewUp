@@ -2,9 +2,9 @@ package com.news.sph.issue;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.news.sph.common.base.BrowserActivity;
-import com.news.sph.home.activity.ProductBrowserActivity;
 import com.news.sph.issue.activity.SettlementActivity;
 
 /**
@@ -16,8 +16,9 @@ public class IssueUiGoto {
      *
      * @param context
      */
-    public static void settlement(Context context) {
+    public static void settlement(Context context, Bundle bundle) {
         Intent intent = new Intent(context, SettlementActivity.class);
+        intent.putExtra("bundle",bundle);
         context.startActivity(intent);
     }
 
@@ -28,7 +29,7 @@ public class IssueUiGoto {
      * @param mTitle
      */
     public static void graphicDetails(Context context, String mUrl, String mTitle){
-        Intent intent = new Intent(context, ProductBrowserActivity.class);
+        Intent intent = new Intent(context, BrowserActivity.class);
         intent.putExtra("url", mUrl);
         intent.putExtra("title", mTitle);
         context.startActivity(intent);

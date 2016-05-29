@@ -17,6 +17,7 @@ import com.news.sph.common.utils.UIHelper;
 import com.news.sph.me.MeUiGoto;
 import com.news.sph.me.entity.MyIncomeEntity;
 import com.news.sph.me.entity.MyIncomeResult;
+import com.news.sph.me.entity.User;
 
 import java.util.List;
 
@@ -52,11 +53,13 @@ public class MyIncomeActivity extends BaseTitleActivity {
         setTitleText("我的收入");
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         setEnsureText("交易明细");
-
-        if(flag=AppContext.getInstance().getUser().getFlag()){
+        User user =AppContext.getInstance().getUser();
+        if(user!=null && user.getFlag()==true){
             MeUiGoto.login(this);//登录
+        }else {
+            strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
         }
-        strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
+
     }
 
     @Override
@@ -73,7 +76,7 @@ public class MyIncomeActivity extends BaseTitleActivity {
             public void onSuccess(MyIncomeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.d("我的收入请求成功");
-//                    myIncomeResult(result.getData());
+                    myIncomeResult(result.getData());
                 }
 
             }
@@ -92,12 +95,12 @@ public class MyIncomeActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.income_Btn:
-                if(mCashaMountMoney.isEmpty()){
-
-                }else {
-                    MeUiGoto.withd(this);//申请提现
-                }
-
+//                if(mCashaMountMoney.isEmpty()){
+//
+//                }else {
+//
+//                }
+                MeUiGoto.withd(this);//申请提现
                 break;
             case R.id.base_titlebar_ensure:
                 UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//交易明细

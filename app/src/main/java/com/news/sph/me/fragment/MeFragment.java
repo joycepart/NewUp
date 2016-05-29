@@ -70,7 +70,6 @@ public class MeFragment extends BaseFragment {
     Boolean flag;//判断是否登录
     private String userName;
     private String pictruePath;
-    private String pictrueUrl;
 
     @Override
     protected int getLayoutResId() {
@@ -90,11 +89,10 @@ public class MeFragment extends BaseFragment {
             mLoingSuc.setVisibility(View.VISIBLE);
             mMeLlClose.setVisibility(View.VISIBLE);
             flag = user.getFlag();
-            userName = AppContext.getInstance().getUser().getmUserName();
-            pictruePath = AppContext.getInstance().getUser().getmPictruePath();
-            pictrueUrl = AppConfig.BASE_URL + pictruePath;
+            userName = user.getmUserName();
+            pictruePath = user.getmPictruePath();
             mLoingTvName.setText(userName);
-            ImageLoaderUtils.displayImage(pictrueUrl,mLoginImgPic);
+            ImageLoaderUtils.displayImage(pictruePath,mLoginImgPic);
 
         }else {
             mLoginLl.setVisibility(View.VISIBLE);
@@ -161,7 +159,13 @@ public class MeFragment extends BaseFragment {
                 mLoingSuc.setVisibility(View.GONE);
                 mMeLlClose.setVisibility(View.GONE);
                 flag = false;
+                AppContext.getInstance().getUser().setFlag(flag);
                 break;
         }
     }
+
+    public void updata(){
+        mLoingTvName.setText(AppContext.getInstance().getUser().getmUserName());
+    }
+
 }

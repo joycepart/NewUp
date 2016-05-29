@@ -37,7 +37,7 @@
                 android:clickable="true"
                 android:textColor="@color/color_00"
                 android:text=""
-                android:textSize="@dimen/fs_50" />
+                android:textSize="@dimen/fs_60" />
 
             <TextView
                 android:id="@+id/base_titlebar_ensure"
@@ -49,8 +49,9 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/ds_48"
                 android:paddingRight="@dimen/ds_42"
+                android:text=""
                 android:textColor="@color/color_33"
-                android:textSize="@dimen/fs_35" />
+                android:textSize="@dimen/fs_45" />
 
         </RelativeLayout>
     </LinearLayout>

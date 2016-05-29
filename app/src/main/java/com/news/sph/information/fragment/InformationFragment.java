@@ -1,20 +1,18 @@
 package com.news.sph.information.fragment;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.sph.AppConfig;
-import com.news.sph.R;
 import com.news.sph.common.base.BaseListFragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
+import com.news.sph.common.utils.LogUtils;
+import com.news.sph.information.InformationUiGoto;
 import com.news.sph.information.adapter.InformationAdapter;
 import com.news.sph.information.entity.InformationEntity;
 import com.news.sph.information.entity.InformationResult;
-import com.news.sph.information.InformationUiGoto;
-import com.news.sph.common.utils.LogUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +22,6 @@ import java.util.List;
 */
 
 public class InformationFragment extends BaseListFragment<InformationEntity> {
-    TextView mTopTv;
     List<InformationEntity> mInforData;
     private String mNewsBigTitle;
     private String mNewsCode;
@@ -33,8 +30,6 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     public void initView(View view) {
-        mTopTv = (TextView) view.findViewById(R.id.top_tv);
-        mTopTv.setText("系统通知");
         super.initView(view);
 
     }

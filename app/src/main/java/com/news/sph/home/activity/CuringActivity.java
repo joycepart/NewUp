@@ -39,8 +39,8 @@ public class CuringActivity extends BaseTitleActivity {
         mBaseTitlebarEnsure.setVisibility(View.GONE);
 
         fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(CuringFragment.newInstance(TAB_C));
-        fragmentList.add(CuringFragment.newInstance(TAB_C));
+        fragmentList.add(CuringFragment.newInstance(TAB_A));
+        fragmentList.add(CuringFragment.newInstance(TAB_B));
         fragmentList.add(CuringFragment.newInstance(TAB_C));
         String titles[] = getResources().getStringArray(R.array.curing_major_tab);
         mAdapter = new TabListAdapter(getSupportFragmentManager(),this,titles, fragmentList);

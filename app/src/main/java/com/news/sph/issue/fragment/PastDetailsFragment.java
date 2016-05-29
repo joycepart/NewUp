@@ -1,28 +1,40 @@
 package com.news.sph.issue.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.R;
 import com.news.sph.common.base.BasePullScrollViewFragment;
+import com.news.sph.common.base.SimplePage;
 import com.news.sph.common.bean.ViewFlowBean;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
 import com.news.sph.common.utils.LogUtils;
+import com.news.sph.common.utils.UIHelper;
 import com.news.sph.common.widget.FullyLinearLayoutManager;
 import com.news.sph.common.widget.ViewFlowLayout;
 import com.news.sph.home.dto.TranDTO;
+import com.news.sph.home.entity.TranEntity;
 import com.news.sph.home.entity.TranResult;
 import com.news.sph.issue.IssueUiGoto;
+import com.news.sph.issue.dto.AnnouncedDTO;
+import com.news.sph.issue.dto.LanderInDTO;
 import com.news.sph.issue.dto.PicDTO;
-import com.news.sph.issue.entity.IssDetailsEntity;
+import com.news.sph.issue.entity.AnnouncedEntity;
+import com.news.sph.issue.entity.AnnouncedResult;
+import com.news.sph.issue.entity.LanderInResult;
 import com.news.sph.issue.entity.PicEntity;
 import com.news.sph.issue.entity.PicResult;
+import com.news.sph.me.dto.RecordIndianaDTO;
+import com.news.sph.me.entity.RecordIndianaEntity;
+import com.news.sph.me.entity.RecordIndianaResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +51,34 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
     RecyclerView mPtdList;
     @Bind(R.id.in_btn)
     Button mInBtn;
+    @Bind(R.id.tran_term)
+    TextView mTranTerm;
+    @Bind(R.id.tran_title)
+    TextView mTranTitle;
+    @Bind(R.id.tran_rad)
+    TextView mTranRad;
+    @Bind(R.id.issue_tv_city)
+    TextView mTvCity;
+    @Bind(R.id.issue_tv_user)
+    TextView mTvUser;
+    @Bind(R.id.issue_tv_data)
+    TextView mTvData;
+    @Bind(R.id.issue_tv_ple)
+    TextView mTvPle;
+    @Bind(R.id.ple)
+    TextView mPle;
+    @Bind(R.id.product_data)
+    TextView mProData;
+    @Bind(R.id.issue_calculation)
+    TextView mCalculation;
     @Bind(R.id.issue_product_it)
     LinearLayout mProductIt;
+
     BaseSimpleRecyclerAdapter mTranAdapter;
+    String mSnaCode;
+    String mBatCode;
+    String mBat;
+    String mTvLucky;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_pro_tran_details;
@@ -49,14 +86,80 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
 
     @Override
     public void initData() {
+        Bundle b  = getArguments();
+        mSnaCode = b.getString("mCode");
+        mBatCode = b.getString("mBat");
         reqPic();//夺宝商品图片
+        reqQecord();//夺宝详情之夺宝记录
         reqTranDetails();//夺宝往期详情
+        reqDetails();//登陆者参与的次数
+        announced();//揭晓信息
 
+    }
+
+    private void reqDetails() {
+        LanderInDTO dto=new LanderInDTO();
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setMembermob("");
+        dto.setSna_code(mSnaCode);
+        dto.setBat_code(mBatCode);
+        CommonApiClient.landerIn(this, dto, new CallBack<LanderInResult>() {
+            @Override
+            public void onSuccess(LanderInResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("登陆者参与的次数成功");
+
+                }
+
+            }
+        });
+    }
+
+    private void announced() {
+        AnnouncedDTO dto=new AnnouncedDTO();
+        dto.setSna_code(mSnaCode);
+        dto.setBat_code(mBatCode);
+        CommonApiClient.announced(this, dto, new CallBack<AnnouncedResult>() {
+            @Override
+            public void onSuccess(AnnouncedResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("揭晓信息成功");
+                    bind(result.getData());
+
+                }
+
+            }
+        });
+    }
+
+    private void bind(List<AnnouncedEntity> data) {
+        mBat = data.get(0).getBat_code();
+        mTvLucky = data.get(0).getSna_lucky_num();
+        mTvCity.setText(mTvLucky);
+        mTvUser.setText(data.get(0).getSna_lucky_people());
+        mTvData.setText(data.get(0).getParticipate_date());
+    }
+
+    private void reqQecord() {
+        RecordIndianaDTO dto=new RecordIndianaDTO();
+        dto.setBat_code(mBatCode);
+        dto.setPageSize(PAGE_SIZE);
+        dto.setPageIndex(mCurrentPage);
+        CommonApiClient.recordsDetails(getActivity(), dto, new CallBack<RecordIndianaResult>() {
+            @Override
+            public void onSuccess(RecordIndianaResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("夺宝详情之夺宝记录成功");
+
+                }
+
+            }
+        });
     }
 
     private void reqPic() {
         PicDTO dto=new PicDTO();
-        dto.setSna_code("");
+        dto.setSna_code(mSnaCode);
         CommonApiClient.pic(this, dto, new CallBack<PicResult>() {
             @Override
             public void onSuccess(PicResult result) {
@@ -81,18 +184,27 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
 
     private void reqTranDetails() {
         TranDTO dto=new TranDTO();
-        dto.setSna_code("");
-        dto.setBat_code("");
+        dto.setSna_code(mSnaCode);
+        dto.setBat_code(mBatCode);
         CommonApiClient.tranDetails(this, dto, new CallBack<TranResult>() {
             @Override
             public void onSuccess(TranResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("夺宝往期详情成功");
-
+                    bindData(result.getData());
                     }
             }
         });
 
+    }
+
+    private void bindData(List<TranEntity> data) {
+        mTranTerm.setText("第"+data.get(0).getSna_term()+"期");
+        mTranTitle.setText(data.get(0).getSna_title());
+        mTranRad.setText(data.get(0).getSna_remark());
+        mPle.setText("总需"+data.get(0).getSna_total_count()+"人次");
+        mTvPle.setText(data.get(0).getSna_sell_out());
+        mProData.setText(data.get(0).getSna_begin_date());
     }
 
     @Override
@@ -100,18 +212,20 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
         super.initView(view);
         mInBtn.setText("前往最新期");
         mInBtn.setOnClickListener(this);
+        mCalculation.setOnClickListener(this);
+        mProductIt.setOnClickListener(this);
         mPtdList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
-        mTranAdapter=new BaseSimpleRecyclerAdapter<IssDetailsEntity>() {
+        mTranAdapter=new BaseSimpleRecyclerAdapter<RecordIndianaEntity>() {
             @Override
             public int getItemViewLayoutId() {
-                return R.layout.item_issue_product_list;
+                return R.layout.item_issue_product;
             }
 
             @Override
-            public void bindData(BaseRecyclerViewHolder holder, IssDetailsEntity issDetailsEntity, int position) {
-                holder.setText(R.id.tv_num,issDetailsEntity.getSna_begin_date());
-                holder.setText(R.id.tv_user,issDetailsEntity.getSna_sell_out());
-                holder.setText(R.id.product_data,issDetailsEntity.getSna_begin_date());
+            public void bindData(BaseRecyclerViewHolder holder, RecordIndianaEntity recordIndianaEntity, int position) {
+                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone());
+                holder.setText(R.id.product_tv2,"参与"+recordIndianaEntity.getRec_participate_count()+"人次");
+                holder.setText(R.id.product_tv3,recordIndianaEntity.getRec_participate_date());
             }
 
 
@@ -123,6 +237,12 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.in_btn:
+                break;
+            case R.id.issue_calculation:
+                Bundle b = new Bundle();
+                b.putString("mBat",mBat);
+                b.putString("mTvLucky",mTvLucky);
+                UIHelper.showFragment(getActivity(), SimplePage.CALULATION,b);//计算详情
                 break;
             case R.id.issue_product_it:
                 IssueUiGoto.graphicDetails(getActivity(),AppConfig.URL_TEMPLATE,"图文详情");

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.news.sph.MainActivity;
 import com.news.sph.common.base.BrowserActivity;
 import com.news.sph.me.activity.CuringOrderActivity;
 import com.news.sph.me.activity.DetailActivity;
@@ -17,16 +18,20 @@ import com.news.sph.me.activity.WithdrawalsActivity;
 /**
  * Created by lenovo on 2016/5/17.
  */
+
+
 public class MeUiGoto {
     /**
      * 跳转到登录页
      * @param context
      */
-
+    public static final int LOFIN_REQUEST = 0x100;
     public static void login(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
-        context.startActivity(intent);
+
+        ((MainActivity)context).startActivityForResult(intent, LOFIN_REQUEST);
     }
+
 
     /**
      * 跳转到养护订单页
@@ -83,19 +88,19 @@ public class MeUiGoto {
      * 跳转到用户信息页
      * @param context
      */
-
+    public static final int USERINFORMATION_REQUEST = 0x101;
     public static void userInformation(Context context){
         Intent intent = new Intent(context,UserInformationActivity.class);
-        context.startActivity(intent);
+        ((MainActivity)context).startActivityForResult(intent,USERINFORMATION_REQUEST);
     }
     /**
      * 跳转到修改用户名页
      * @param context
      */
-
+    public static final int MODIFYUSER_REQUEST = 0x101;
     public static void modifyUser(Context context){
         Intent intent = new Intent(context,ModifyUserActivity.class);
-        context.startActivity(intent);
+        ((UserInformationActivity)context).startActivityForResult(intent,MODIFYUSER_REQUEST);
     }
 
     /**

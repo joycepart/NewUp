@@ -47,7 +47,8 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
     @Override
     protected void sendRequestData() {
         BaseDTO bdto=new BaseDTO();
-        bdto.setMembermob(strPhoneNum);
+//        bdto.setMembermob(strPhoneNum);
+        bdto.setMembermob("18810326847");
         bdto.setSign(AppConfig.SIGN_1);
         CommonApiClient.getTransaction(getActivity(), bdto, new CallBack<TransactionResult>() {
             @Override

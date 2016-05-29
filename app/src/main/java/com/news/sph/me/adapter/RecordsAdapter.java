@@ -23,7 +23,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
         holder.setText(R.id.records_title,recordsEntity.getSna_title());
         holder.setText(R.id.records_term,recordsEntity.getRec_term());
         holder.setText(R.id.records_yn,recordsEntity.getRec_pay_type());
-        holder.setText(R.id.records_mn,recordsEntity.getRec_pay_balance());
+        holder.setText(R.id.records_my,recordsEntity.getRec_pay_balance());
         ImageView mRecordsImg=holder.getView( R.id.records_img);
         ImageLoaderUtils.displayImage(recordsEntity.getPic_url(), mRecordsImg);
 

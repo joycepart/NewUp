@@ -21,7 +21,7 @@ public class UnusedAdapter extends BaseSimpleRecyclerAdapter<HotTopEntity>{
     @Override
     public void bindData(BaseRecyclerViewHolder holder, HotTopEntity hotTopEntity, int position) {
         ImageView mUnusedImg=holder.getView( R.id.unused_list_img);
-        ImageLoaderUtils.displayImage(hotTopEntity.getmSpecPic(),mUnusedImg);
+        ImageLoaderUtils.displayImage(hotTopEntity.getSpec_pic(),mUnusedImg);
     }
 
 

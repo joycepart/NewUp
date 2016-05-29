@@ -39,6 +39,7 @@
                 android:textSize="@dimen/fs_70" />
                 />
                 <ImageView
+                    android:id="@+id/modify_img"
                     android:layout_width="@dimen/ds_80"
                     android:layout_height="@dimen/ds_80"
                     android:layout_marginTop="@dimen/ds_50"

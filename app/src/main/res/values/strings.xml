@@ -46,6 +46,7 @@
     <string name="login_tv"> 我已阅读并同意</string>
     <string name="login_tv_pro"> 用户注册协议</string>
     <string name="login_lg">登录</string>
+    <string name="issue_begin">开始</string>
     <string name="curing_clean">基础清洗</string>
     <string name="curing_repair">补色修复</string>
     <string name="curing_maintain">专业维护</string>
@@ -73,6 +74,7 @@
 
     <string name="order_submit">提交订单</string>
     <string name="order_take_method">取送方式：</string>
+    <string name="national_package">全国包邮</string>
     <string name="order_receipt_address">收货地址：</string>
     <string name="order_mail">请将物品寄到：北京市通州区宋庄镇南堡南街141号心上（收），010—60572565.服务完成后，将寄还到您填写的地址。</string>
     <string name="order_service">上门服务费：</string>
@@ -181,6 +183,15 @@
     <string name="curing_state">订单状态</string>
     <string name="curing_inpon">电话客服</string>
     <string name="curing_kf">在线客服</string>
+    <string name="current_announcement">揭晓公式</string>
+    <string name="current_remainder">(数值A/商品所需次数)取余数+10000001</string>
+    <string name="current_sum">数值A=该商品最后一个夺宝号码分配完毕时间点前，夺宝岛平台最后50个参与时间相加求和</string>
+    <string name="current_num">数值A=1926798355</string>
+    <string name="current_data">参与时间</string>
+    <string name="current_user">用户名</string>
+    <string name="current_nb">本期揭晓号码</string>
+    <string name="calculation_details">计算详情</string>
+    <string name="real_payment">实付款：¥</string>
 
 
 </resources>
