@@ -1,5 +1,6 @@
 package com.news.sph.me;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,10 +27,10 @@ public class MeUiGoto {
      * @param context
      */
     public static final int LOFIN_REQUEST = 0x100;
-    public static void login(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
+    public static void login(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
 
-        ((MainActivity)context).startActivityForResult(intent, LOFIN_REQUEST);
+        activity.startActivityForResult(intent, LOFIN_REQUEST);
     }
 
 

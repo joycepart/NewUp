@@ -2,13 +2,15 @@ package com.news.sph.me.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.news.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.news.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.news.sph.AppConfig;
 import com.news.sph.AppContext;
 import com.news.sph.R;
-import com.news.sph.common.base.BasePullScrollViewFragment;
+import com.news.sph.common.base.BasePullFragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
@@ -22,18 +24,24 @@ import butterknife.Bind;
 /**
  *我的优惠劵 fragment
  */
-public class MyCouponFragment extends BasePullScrollViewFragment {
+public class MyCouponFragment extends BasePullFragment {
     @Bind(R.id.mycoupon_list)
     RecyclerView mMycouponList;
-    BaseSimpleRecyclerAdapter mListAdapter;
+    @Bind(R.id.mycoupon_et)
+    EditText mMouponEt;
+    @Bind(R.id.mycoupon_tv)
+    TextView mCouponTv;
+    BaseSimpleRecyclerAdapter mMycouponListAdapter;
     private String strPhoneNum;
+    private String mMoupom;
 
     @Override
     public void initView(View view) {
         super.initView(view);
-        strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
+        strPhoneNum = AppContext.get("mobileNum","");
+        mCouponTv.setOnClickListener(this);
         mMycouponList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
-        mListAdapter=new BaseSimpleRecyclerAdapter<MyCouponEntity>() {
+        mMycouponListAdapter=new BaseSimpleRecyclerAdapter<MyCouponEntity>() {
             @Override
             public int getItemViewLayoutId() {
                 return R.layout.item_novice_securities;
@@ -41,18 +49,23 @@ public class MyCouponFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, MyCouponEntity myCouponEntity, int position) {
+                LogUtils.e("tag3------"+myCouponEntity.getCouponmoney());
                 holder.setText(R.id.novice_tv,myCouponEntity.getCouponmoney());
                 holder.setText(R.id.coupon_vt,myCouponEntity.getCouponType());
-                holder.setText(R.id.item_tv,myCouponEntity.getCouponRedeemName());
+                holder.setText(R.id.item_tv,myCouponEntity.getCouponExpirationTime());
                 holder.setText(R.id.tv_time,myCouponEntity.getCouponExpirationTime());
             }
 
 
         };
-        mMycouponList.setAdapter(mListAdapter);
+        mMycouponList.setAdapter(mMycouponListAdapter);
 
     }
+    @Override
+    public void initData() {
+        sendRequestData();
 
+    }
 
     @Override
     protected void sendRequestData() {
@@ -64,8 +77,10 @@ public class MyCouponFragment extends BasePullScrollViewFragment {
             public void onSuccess(MyCouponResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("优惠劵请求成功");
-                    mListAdapter.removeAll();
-                    mListAdapter.append(result.getData());
+                    LogUtils.e("tag1----"+result.getData().get(0).getCouponmoney());
+                    mMycouponListAdapter.removeAll();
+                    mMycouponListAdapter.append(result.getData());
+                    LogUtils.e("tag2---"+result.getData().get(0).getCouponmoney());
                 }
             }
         });
@@ -73,9 +88,13 @@ public class MyCouponFragment extends BasePullScrollViewFragment {
     }
 
     @Override
-    public void initData() {
-        sendRequestData();
-
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.mycoupon_tv:
+                mMoupom = mMouponEt.getText().toString();
+                break;
+        }
     }
 
     @Override

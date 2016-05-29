@@ -1,5 +1,6 @@
 package com.news.sph.me.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,12 +13,12 @@ import com.news.sph.common.base.SimplePage;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
 import com.news.sph.common.http.CommonApiClient;
+import com.news.sph.common.utils.DialogUtils;
 import com.news.sph.common.utils.LogUtils;
 import com.news.sph.common.utils.UIHelper;
 import com.news.sph.me.MeUiGoto;
 import com.news.sph.me.entity.MyIncomeEntity;
 import com.news.sph.me.entity.MyIncomeResult;
-import com.news.sph.me.entity.User;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class MyIncomeActivity extends BaseTitleActivity {
     TextView mAccumulate;
     @Bind(R.id.income_Btn)
     Button mIncomeBtn;
-    TextView mBaseEnsure,mBaseBack;
+    TextView mBaseEnsure;
 
     private String strPhoneNum;
     /**
@@ -45,7 +46,6 @@ public class MyIncomeActivity extends BaseTitleActivity {
      * 累计收入
      */
     private String mAccumuLatedMoney;
-    Boolean flag = false;//判断是否登录，false为没有登录
 
 
     @Override
@@ -53,11 +53,10 @@ public class MyIncomeActivity extends BaseTitleActivity {
         setTitleText("我的收入");
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         setEnsureText("交易明细");
-        User user =AppContext.getInstance().getUser();
-        if(user!=null && user.getFlag()==true){
-            MeUiGoto.login(this);//登录
+        if(!AppContext.get("mobileNum","").isEmpty()){
+            strPhoneNum = AppContext.get("mobileNum","");
         }else {
-            strPhoneNum = AppContext.getInstance().getUser().getmUserMobile();
+            MeUiGoto.login(this);//登录
         }
 
     }
@@ -84,8 +83,9 @@ public class MyIncomeActivity extends BaseTitleActivity {
     }
 
     private void myIncomeResult(List<MyIncomeEntity> data) {
-        mCashaMountMoney = data.get(0).getCashamountmoney();
-        mAccumuLatedMoney = data.get(0).getAccumulatedmoney();
+        MyIncomeEntity entity = data.get(0);
+        mCashaMountMoney = entity.getCashamountmoney();
+        mAccumuLatedMoney = entity.getAccumulatedmoney();
         mWithdrawals.setText(mCashaMountMoney);
         mAccumulate.setText(mAccumuLatedMoney);
     }
@@ -95,15 +95,19 @@ public class MyIncomeActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.income_Btn:
-//                if(mCashaMountMoney.isEmpty()){
-//
-//                }else {
-//
-//                }
-                MeUiGoto.withd(this);//申请提现
+                if(mCashaMountMoney.equals("0.00")){
+                    DialogUtils.showPrompt(this,"暂无可提现余额");
+
+                }else {
+                    MeUiGoto.withd(this);//申请提现
+                }
                 break;
+
             case R.id.base_titlebar_ensure:
-                UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//交易明细
+                String s = "我的优惠劵";
+                Bundle b = new Bundle();
+                b.putString("s",s);
+                UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL,b);//交易明细
                 break;
             case R.id.base_titlebar_back:
                 baseGoBack();

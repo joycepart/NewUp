@@ -45,16 +45,21 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
     }
 
     @Override
+    public void initData() {
+
+    }
+    @Override
     protected void sendRequestData() {
         BaseDTO bdto=new BaseDTO();
-//        bdto.setMembermob(strPhoneNum);
-        bdto.setMembermob("18810326847");
+        bdto.setMembermob(AppContext.get("mobileNum",""));
         bdto.setSign(AppConfig.SIGN_1);
         CommonApiClient.getTransaction(getActivity(), bdto, new CallBack<TransactionResult>() {
             @Override
             public void onSuccess(TransactionResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("交易明细成功");
+                    requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
+                    setDataResult(result.getData());//设置数据
 
                 }
             }
@@ -62,9 +67,8 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
 
     }
 
-    @Override
-    public void initData() {
-
+    public boolean autoRefreshIn(){
+        return true;
     }
 
     @Override

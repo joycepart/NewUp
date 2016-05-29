@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ds_30"
             android:layout_marginLeft="@dimen/ds_40"
+            android:singleLine="true"
             android:text="@string/me_registered"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_45"/>

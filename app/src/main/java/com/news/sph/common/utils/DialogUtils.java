@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.news.sph.R;
@@ -39,6 +40,36 @@ public class DialogUtils {
 		mView.setPadding(30, 30, 30, 30);
 		TextView tv = (TextView) mView.findViewById(R.id.base_loading_msg);
 		tv.setTextColor(ContextCompat.getColor(context,R.color.color_ff));
+		if (!TextUtils.isEmpty(messge)) {
+			tv.setText(messge);
+		}
+		dialog = new Dialog(context, R.style.CommonLoadingShadeDialog);
+		dialog.setContentView(mView);
+		dialog.show();
+		return dialog;
+	}
+
+	/**
+	 * 提示对话框
+	 *
+	 * @param context
+	 * @return
+	 */
+	public static Dialog showPrompt(Context context, String messge) {
+		Dialog dialog = null;
+		View mView = LayoutInflater.from(context).inflate(
+				R.layout.base_prompt, null);
+//		mView.setBackgroundResource(R.drawable.base_loading_bg);
+		mView.setVisibility(View.VISIBLE);
+		mView.setPadding(30, 30, 30, 30);
+		TextView tv = (TextView) mView.findViewById(R.id.prompt_tv);
+		Button mTvYes = (Button) mView.findViewById(R.id.prompt_tv_yes);
+		mTvYes.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			}
+		});
+		tv.setTextColor(ContextCompat.getColor(context,R.color.color_00));
 		if (!TextUtils.isEmpty(messge)) {
 			tv.setText(messge);
 		}

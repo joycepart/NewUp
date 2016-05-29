@@ -192,6 +192,9 @@
     <string name="current_nb">本期揭晓号码</string>
     <string name="calculation_details">计算详情</string>
     <string name="real_payment">实付款：¥</string>
+    <string name="dialog_prompt">提示</string>
+    <string name="dialog_prompt_no">暂无可提现余额</string>
+    <string name="dialog_prompt_yes">确定</string>
 
 
 </resources>

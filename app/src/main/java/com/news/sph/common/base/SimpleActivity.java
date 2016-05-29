@@ -17,6 +17,7 @@ public class SimpleActivity extends BaseTitleActivity {
     private static final String TAG = "FLAG_TAG";
     protected WeakReference<Fragment> mFragment;
     protected int mPageValue = -1;
+    protected String mPageTitle;
 
 
 
@@ -45,7 +46,9 @@ public class SimpleActivity extends BaseTitleActivity {
                     + pageValue);
         }
 
-        setTitle(page.getTitle());
+        setTitle(data.getStringExtra(BUNDLE_KEY_ARGS));
+
+//        setTitle(page.getTitle());
 
         try {
             Fragment fragment = (Fragment) page.getClz().newInstance();

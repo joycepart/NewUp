@@ -10,7 +10,7 @@ import java.io.Serializable;
  * DTO的基类
  */
 public class BaseDTO implements Serializable {
-    private String membermob= AppContext.get("mobileNum","");;
+    private String membermob= AppContext.get("mobileNum","");
     private String timestamp;
     private String sign;
     private int pageSize ;
