@@ -19,13 +19,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by lenovo on 2016/5/18.
+ * 专业养护的fragment
  */
 public class CuringFragment extends BaseListFragment<CuringEntity> {
     private static final String TYPE = "type";
-    public static final int TYPE_TAB_1=1;
-    public static final int TYPE_TAB_2=2;
-    public static final int TYPE_TAB_3=3;
     private int type;
 
     public static CuringFragment newInstance(int type) {

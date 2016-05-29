@@ -49,10 +49,9 @@ public class MyCouponFragment extends BasePullFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, MyCouponEntity myCouponEntity, int position) {
-                LogUtils.e("tag3------"+myCouponEntity.getCouponmoney());
                 holder.setText(R.id.novice_tv,myCouponEntity.getCouponmoney());
                 holder.setText(R.id.coupon_vt,myCouponEntity.getCouponType());
-                holder.setText(R.id.item_tv,myCouponEntity.getCouponExpirationTime());
+                holder.setText(R.id.item_tv,myCouponEntity.getCouponRedeemName());
                 holder.setText(R.id.tv_time,myCouponEntity.getCouponExpirationTime());
             }
 
@@ -77,10 +76,8 @@ public class MyCouponFragment extends BasePullFragment {
             public void onSuccess(MyCouponResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("优惠劵请求成功");
-                    LogUtils.e("tag1----"+result.getData().get(0).getCouponmoney());
                     mMycouponListAdapter.removeAll();
                     mMycouponListAdapter.append(result.getData());
-                    LogUtils.e("tag2---"+result.getData().get(0).getCouponmoney());
                 }
             }
         });

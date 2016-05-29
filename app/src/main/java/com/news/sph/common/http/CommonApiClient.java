@@ -403,7 +403,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<CuringOrderListResult> callback) {
         AsyncCallBack<CuringOrderListResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback,CuringOrderListResult.class);
-        post( getAbsoluteUrl("/API/WsMember.asmx/ResMemberLoginApi"), dto,
+        post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResDtByJsonOrderCuringApi"), dto,
                 asyncCallBack);
     }
     /**

@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.news.ptrrecyclerview.BaseRecyclerAdapter;
 import com.news.sph.AppConfig;
+import com.news.sph.AppContext;
 import com.news.sph.common.base.BaseListFragment;
 import com.news.sph.common.dto.BaseDTO;
 import com.news.sph.common.http.CallBack;
@@ -39,7 +40,7 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
     @Override
     protected void sendRequestData() {
         BaseDTO gdto=new BaseDTO();
-        gdto.setMembermob("");
+        gdto.setMembermob(AppContext.get("mobileNum",""));
         gdto.setSign(AppConfig.SIGN_1);
         gdto.setPageSize(PAGE_SIZE);
         gdto.setPageIndex(mCurrentPage);
@@ -60,6 +61,9 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
     @Override
     public void initData() {
 
+    }
+    public boolean autoRefreshIn(){
+        return true;
     }
 
     @Override

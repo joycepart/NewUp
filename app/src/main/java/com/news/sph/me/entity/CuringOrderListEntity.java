@@ -1,9 +1,11 @@
 package com.news.sph.me.entity;
 
+import com.news.sph.common.entity.BaseEntity;
+
 /**
  * Created by lenovo on 2016/5/20.
  */
-public class CuringOrderListEntity {
+public class CuringOrderListEntity  extends BaseEntity {
     /*
               订单编号
                 */
