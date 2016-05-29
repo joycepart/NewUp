@@ -66,6 +66,11 @@ public abstract class BasePullFragment extends BaseFragment {
     }
 
     @Override
+    public void retryBefore() {
+        ptf.refreshComplete();
+    }
+
+    @Override
     public void retry() {
         sendRequestData();
     }

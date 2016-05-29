@@ -100,12 +100,17 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
             });
         }
         if(autoRefreshIn()) {
-            mPtrRecyclerView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPtrRecyclerView.autoRefresh();
-                }
-            }, 100);
+            if (!TDevice.hasInternet(getActivity())) {
+                mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
+            } else {
+                mPtrRecyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPtrRecyclerView.autoRefresh();
+                    }
+                }, 100);
+            }
+
         }
     }
 

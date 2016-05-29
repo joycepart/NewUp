@@ -62,6 +62,11 @@ public abstract class BasePullScrollViewFragment extends BaseFragment {
     }
 
     @Override
+    public void retryBefore() {
+        ptf.refreshComplete();
+    }
+
+    @Override
     public void retry() {
         sendRequestData();
     }
