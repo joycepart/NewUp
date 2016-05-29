@@ -73,7 +73,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<MyCouponResult> callback) {
         AsyncCallBack<MyCouponResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback, MyCouponResult.class);
-        post(getAbsoluteUrl("/API/ WsMemberCoupon.asmx/ResBrwMemberCouponApi"), dto,
+        post(getAbsoluteUrl("/API/WsMemberCoupon.asmx/ResBrwMemberCouponApi"), dto,
                 asyncCallBack);
     }
     /**
