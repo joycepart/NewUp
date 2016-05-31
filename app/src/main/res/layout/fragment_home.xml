@@ -5,7 +5,7 @@
     android:background="@color/common_layout_bg"
     android:orientation="vertical">
 
-    <com.news.sph.common.widget.ViewFlowLayout
+    <com.qluxstory.qingshe.common.widget.ViewFlowLayout
         android:id="@+id/vf_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -83,7 +83,7 @@
                     android:layout_marginLeft="@dimen/ds_20"
                     android:background="@drawable/home_right_arrow_icon" />
 
-                <com.news.sph.home.widget.MyHorizontalScrollView
+                <com.qluxstory.qingshe.home.widget.MyHorizontalScrollView
                     android:id="@+id/hsv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:orientation="horizontal" />
-                </com.news.sph.home.widget.MyHorizontalScrollView>
+                </com.qluxstory.qingshe.home.widget.MyHorizontalScrollView>
 
             </RelativeLayout>
         </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <com.news.ptrrecyclerview.PtrRecyclerView
+    <com.qluxstory.ptrrecyclerview.PtrRecyclerView
         android:id="@+id/base_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

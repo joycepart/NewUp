@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ff"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/selcet"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ds_180"
+            android:layout_marginTop="@dimen/ds_30"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_90"
+                android:layout_marginLeft="@dimen/ds_30">
+                <TextView
+                    android:id="@+id/select_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/ds_50"/>
+                <TextView
+                    android:id="@+id/select_ipone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/place_send_add"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/ds_50"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_20"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/send_province"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_20"
+                    android:text="北京"
+                    android:textColor="@color/color_f3"
+                    android:textSize="@dimen/ds_40"/>
+                <TextView
+                    android:id="@+id/select_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_20"
+                    android:text="@string/place_send_province"
+                    android:textColor="@color/color_f3"
+                    android:textSize="@dimen/ds_40"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/select_ck"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/ds_40"
+            android:layout_marginRight="@dimen/ds_30"
+            android:background="@drawable/selector_checkbox"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:checked="false"
+            />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/color_f9"/>
+
+</LinearLayout>

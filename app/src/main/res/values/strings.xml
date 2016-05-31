@@ -11,7 +11,7 @@
 
     <string name="common_loading">加载中&#8230;</string>
     <string name="tab_main">首页</string>
-    <string name="app_name">清奢</string>
+    <string name="app_name">倾奢</string>
     <string name="demo_simple_title">简单list测试</string>
     <string name="tab_home">首页</string>
     <string name="app_day">每日推荐</string>
@@ -76,6 +76,7 @@
     <string name="order_take_method">取送方式：</string>
     <string name="national_package">全国包邮</string>
     <string name="order_receipt_address">收货地址：</string>
+    <string name="order_receipt_choice">选择地址</string>
     <string name="order_mail">请将物品寄到：北京市通州区宋庄镇南堡南街141号心上（收），010—60572565.服务完成后，将寄还到您填写的地址。</string>
     <string name="order_service">上门服务费：</string>
     <string name="order_coupon">优惠劵：</string>
@@ -84,7 +85,7 @@
     <string name="order_payment">去支付</string>
     <string name="order_weixin">微信支付</string>
     <string name="order_zhifubao">支付宝...</string>
-    <string name="order_member">会员余额支付 0</string>
+    <string name="order_member">会员余额支付 </string>
     <string name="order_contact">联系客服</string>
     <string name="order_immediate">立即下单</string>
 
@@ -143,12 +144,12 @@
     <string name="detail_expenditure">支持 ¥ </string>
     <string name="detail_suc">成功</string>
     <string name="place_send">寄送地址：</string>
-    <string name="place_send_si">四季青服务点</string>
+    <string name="place_send_province">省</string>
     <string name="place_send_add">13212345678</string>
-    <string name="place_send_pu">北京省 北京市 朝阳区 朝阳区四季青</string>
+    <string name="place_send_city">市</string>
     <string name="place_send_num">浦东大桥服务点</string>
     <string name="place_send_sh">13412345678</string>
-    <string name="place_send_city">上海 上海市 浦东区 浦东大桥</string>
+    <string name="place_send_area">区</string>
     <string name="product_details">商品详情</string>
     <string name="tran_details">已满</string>
     <string name="ipone">手机号码</string>
@@ -195,6 +196,7 @@
     <string name="dialog_prompt">提示</string>
     <string name="dialog_prompt_no">暂无可提现余额</string>
     <string name="dialog_prompt_yes">确定</string>
+    <string name="pro_img">请拍摄一张需要养护的商品的图片</string>
 
 
 </resources>

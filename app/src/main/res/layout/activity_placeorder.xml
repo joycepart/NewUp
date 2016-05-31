@@ -15,9 +15,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/place_order_img"
+                    android:layout_marginTop="@dimen/ds_250"
+                    android:layout_width="@dimen/ds_320"
+                    android:layout_height="@dimen/ds_320"
+                    android:layout_gravity="center"
+                    android:background="@drawable/tianjia"/>
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/ds_30"
+                    android:textSize="@dimen/fs_55"
+                    android:textColor="@color/color_f5"
+                    android:text="@string/pro_img"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -25,45 +37,44 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_50"
+                android:layout_marginTop="@dimen/ds_180"
                 android:background="@color/color_cc" />
 
-
-                <RelativeLayout
-                    android:id="@+id/place_take_delivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30">
-                    <TextView
-                        android:id="@+id/placord_tv1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_centerVertical="true"
-                        android:text="@string/order_take_method"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <TextView
-                        android:id="@+id/pla_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/placord_tv1"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:text="@string/national_package"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <ImageView
-                        android:layout_width="@dimen/ds_90"
-                        android:layout_height="@dimen/ds_90"
-                        android:background="@drawable/home_right_arrow_icon"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/ds_30"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:id="@+id/place_top_img"
-                        />
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/place_take_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30">
+                <TextView
+                    android:id="@+id/placord_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:text="@string/order_take_method"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <TextView
+                    android:id="@+id/pla_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/placord_tv1"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text=""
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <ImageView
+                    android:layout_width="@dimen/ds_90"
+                    android:layout_height="@dimen/ds_90"
+                    android:background="@drawable/home_right_arrow_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:id="@+id/place_top_img"
+                    />
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
@@ -71,81 +82,81 @@
                 android:background="@color/color_cc" />
 
 
-                <RelativeLayout
-                    android:id="@+id/place_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30">
-                    <TextView
-                        android:id="@+id/place_tv_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_marginBottom="@dimen/ds_80"
-                        android:text="@string/order_receipt_address"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <TextView
-                        android:id="@+id/pla_tv_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/place_tv_address"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:text="ageagewgm"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <ImageView
-                        android:layout_width="@dimen/ds_90"
-                        android:layout_height="@dimen/ds_90"
-                        android:background="@drawable/home_right_arrow_icon"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/ds_30"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        />
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/place_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30">
+                <TextView
+                    android:id="@+id/place_tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_marginBottom="@dimen/ds_80"
+                    android:text="@string/order_receipt_address"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <TextView
+                    android:id="@+id/pla_tv_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/place_tv_address"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text=""
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <ImageView
+                    android:layout_width="@dimen/ds_90"
+                    android:layout_height="@dimen/ds_90"
+                    android:background="@drawable/home_right_arrow_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    />
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
                 android:background="@color/color_cc" />
 
-                <RelativeLayout
-                    android:id="@+id/place_send"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30">
-                    <TextView
-                        android:id="@+id/tv_send"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:text="@string/place_send"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <TextView
-                        android:id="@+id/send_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/tv_send"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:text="@string/order_take_method"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
+            <RelativeLayout
+                android:id="@+id/place_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30">
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text="@string/place_send"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <TextView
+                    android:id="@+id/send_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_send"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text=""
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/ds_90"
-                        android:layout_height="@dimen/ds_90"
-                        android:background="@drawable/home_right_arrow_icon"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/ds_30"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        />
-                </RelativeLayout>
+                <ImageView
+                    android:layout_width="@dimen/ds_90"
+                    android:layout_height="@dimen/ds_90"
+                    android:background="@drawable/home_right_arrow_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -165,7 +176,7 @@
                     android:layout_marginTop="@dimen/ds_30"
                     android:layout_marginBottom="@dimen/ds_20"
                     android:layout_marginLeft="@dimen/ds_40"
-                    android:background="@drawable/service_icon2"/>
+                    />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -177,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ds_30"
                         android:layout_marginLeft="@dimen/ds_30"
-                        android:text="上面传递过来的商品名字"
+                        android:text=""
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
                     <RelativeLayout
@@ -216,34 +227,34 @@
 
 
 
-                <RelativeLayout
-                    android:id="@+id/rel_coupon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30"
-                    >
+            <RelativeLayout
+                android:id="@+id/rel_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:text="@string/order_coupon"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/place_coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/ds_30"
                         android:layout_centerVertical="true"
-                        android:text="@string/order_coupon"
+                        android:text=""
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/place_coupon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:text="@string/order_coupon"
-                            android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_60"/>
                     <ImageView
                         android:layout_width="@dimen/ds_90"
                         android:layout_height="@dimen/ds_90"
@@ -253,40 +264,40 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/ds_30"
                         />
-                    </LinearLayout>
-                </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
                 android:layout_marginTop="@dimen/ds_20"
                 android:background="@color/color_cc" />
 
-                <RelativeLayout
-                    android:id="@+id/rel_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_centerVertical="true"
-                        android:text="@string/order_total"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
-                    <TextView
-                        android:id="@+id/place_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/ds_30"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/ds_30"
-                        android:text="@string/order_take_method"
-                        android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
+            <RelativeLayout
+                android:id="@+id/rel_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:text="@string/order_total"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
+                <TextView
+                    android:id="@+id/place_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:text="@string/order_take_method"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"/>
 
-                </RelativeLayout>
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
@@ -312,6 +323,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_3"
                 android:background="@color/color_cc" />
+
             <LinearLayout
                 android:id="@+id/palce_pay_wx"
                 android:layout_width="match_parent"
@@ -416,6 +428,15 @@
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/order_member"
+                    android:textSize="@dimen/fs_65"
+                    android:textColor="@color/color_00"/>
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text="ddddddd"
                     android:textSize="@dimen/fs_65"
                     android:textColor="@color/color_00"/>
             </LinearLayout>

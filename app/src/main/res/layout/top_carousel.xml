@@ -9,13 +9,13 @@
         android:layout_height="wrap_content"
         android:background="#ffffff">
 
-        <com.news.sph.common.viewflow.ViewFlow
+        <com.qluxstory.qingshe.common.viewflow.ViewFlow
             android:id="@+id/vf_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff">
 
-        </com.news.sph.common.viewflow.ViewFlow>
+        </com.qluxstory.qingshe.common.viewflow.ViewFlow>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:gravity="center"
             android:padding="@dimen/ds_9">
 
-            <com.news.sph.common.viewflow.CircleFlowIndicator
+            <com.qluxstory.qingshe.common.viewflow.CircleFlowIndicator
                 android:id="@+id/vfi_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

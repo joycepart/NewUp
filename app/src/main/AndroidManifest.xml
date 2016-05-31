@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.news.sph">
+    package="com.qluxstory.qingshe">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,13 +10,13 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
-        android:name=".AppContext"
+        android:name="com.qluxstory.qingshe.AppContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.qluxstory.qingshe.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,66 +24,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".common.base.SimpleActivity"
+            android:name="com.qluxstory.qingshe.common.base.SimpleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.CuringOrderActivity"
+            android:name="com.qluxstory.qingshe.me.activity.CuringOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.activity.AddAddressActivity"
+            android:name="com.qluxstory.qingshe.home.activity.AddAddressActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.activity.CuringActivity"
+            android:name="com.qluxstory.qingshe.home.activity.CuringActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.activity.CuringOrderDetailsActivity"
+            android:name=".me.activity.CuringOrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.activity.PlaceOrderActivity"
+            android:name="com.qluxstory.qingshe.home.activity.PlaceOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.activity.ProductBrowserActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.activity.SelectAddressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.activity.SendAddressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.activity.VouchersActivity"
+            android:name="com.qluxstory.qingshe.home.activity.ProductBrowserActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".me.activity.MyIncomeActivity"
+            android:name="com.qluxstory.qingshe.me.activity.MyIncomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".common.base.BrowserActivity"
+            android:name="com.qluxstory.qingshe.common.base.BrowserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.LoginActivity"
+            android:name="com.qluxstory.qingshe.me.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.UserInformationActivity"
+            android:name="com.qluxstory.qingshe.me.activity.UserInformationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.WithdrawalsActivity"
+            android:name="com.qluxstory.qingshe.me.activity.WithdrawalsActivity"
             android:screenOrientation="portrait" />
         <activity
-        android:name=".me.activity.ModifyUserActivity"
+        android:name="com.qluxstory.qingshe.me.activity.ModifyUserActivity"
         android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.DetailActivity"
+            android:name="com.qluxstory.qingshe.me.activity.DetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".me.activity.IndianaDetailsActivity"
+            android:name="com.qluxstory.qingshe.me.activity.IndianaDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".issue.activity.SettlementActivity"
+            android:name="com.qluxstory.qingshe.issue.activity.SettlementActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".me.activity.TransactionDetailActivity"
+            android:name="com.qluxstory.qingshe.me.activity.TransactionDetailActivity"
             android:screenOrientation="portrait">
 
         </activity>

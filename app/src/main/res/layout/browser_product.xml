@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <com.news.sph.common.widget.ProgressWebView
+    <com.qluxstory.qingshe.common.widget.ProgressWebView
         android:id="@+id/browser_product_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

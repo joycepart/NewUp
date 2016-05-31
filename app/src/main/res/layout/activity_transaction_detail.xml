@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.news.sph.me.activity.TransactionDetailActivity">
+    tools:context="com.qluxstory.qingshe.me.activity.TransactionDetailActivity">
 
     <include layout="@layout/item_transaction_no"/>
 </RelativeLayout>
