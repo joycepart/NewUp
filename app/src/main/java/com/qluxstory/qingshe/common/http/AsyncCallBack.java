@@ -60,7 +60,7 @@ public class AsyncCallBack<T> implements Callback {
 		if (response.isSuccessful()) {
 
 			String reader = response.body().string();
-			LogUtils.e("reader--------",reader);
+			LogUtils.e("reader--------"+reader);
 			int startIndex=reader.indexOf("{",reader.indexOf("{")+1);
 			int endIndex=reader.lastIndexOf("]");
 			reader=reader.substring(startIndex,endIndex);

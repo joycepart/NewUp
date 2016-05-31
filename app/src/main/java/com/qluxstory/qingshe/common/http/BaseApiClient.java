@@ -1,5 +1,7 @@
 package com.qluxstory.qingshe.common.http;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.qluxstory.qingshe.AppConfig;
@@ -47,6 +49,10 @@ public class BaseApiClient {
 			String beginLetter="?";
 			for (Iterator<String> it = key.iterator(); it.hasNext();) {
 				String s =  it.next();
+				if(TextUtils.isEmpty(map.get(s).toString())){
+					LogUtils.e("Found Empty Params--> "+s + "=" + map.get(s));
+					continue;
+				}
 				if (params.equals(""))
 				{
 					params += beginLetter + s + "=" + map.get(s);
@@ -116,6 +122,10 @@ public class BaseApiClient {
 		Set<String> key = map.keySet();
 		for (Iterator<String> it = key.iterator(); it.hasNext();) {
 			String s =  it.next();
+			if(TextUtils.isEmpty(map.get(s).toString())){
+				LogUtils.e("Found Empty Params--> "+s + "=" + map.get(s));
+				continue;
+			}
 			builder.add(s, map.get(s).toString());
 			LogUtils.e(s + " = " + map.get(s).toString());
 		}
