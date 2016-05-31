@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.me.entity;
 
+import com.google.gson.annotations.SerializedName;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 
 /**
@@ -30,6 +31,7 @@ public class CuringOrderListEntity  extends BaseEntity {
     /*
            封面图片
             */
+    @SerializedName("app_show_pic")
     private String com_show_pic;
     /*
            数量

@@ -46,6 +46,7 @@ import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
+import com.qluxstory.qingshe.me.dto.IndianaRecordsDTO;
 import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ModifyDTO;
 import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
@@ -183,7 +184,7 @@ public class CommonApiClient extends BaseApiClient {
      * @param dto
      * @param callback
      */
-    public static void records(Fragment fragment, BaseDTO
+    public static void records(Fragment fragment, IndianaRecordsDTO
             dto, CallBack<RecordsResult> callback) {
         AsyncCallBack<RecordsResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback,RecordsResult.class);

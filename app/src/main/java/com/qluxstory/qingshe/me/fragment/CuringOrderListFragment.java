@@ -60,7 +60,7 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
 
     @Override
     protected String getCacheKeyPrefix() {
-        return "CuringFragment"+type+"_";
+        return "CuringOrderListFragment"+type+"_";
     }
 
     @Override

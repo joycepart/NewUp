@@ -196,7 +196,9 @@
     <string name="dialog_prompt">提示</string>
     <string name="dialog_prompt_no">暂无可提现余额</string>
     <string name="dialog_prompt_yes">确定</string>
-    <string name="pro_img">请拍摄一张需要养护的商品的图片</string>
+    <string name="order_one">请拍摄一张需要养护的商品的图片</string>
+
+
 
 
 </resources>

@@ -6,12 +6,12 @@ import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.common.base.BaseListFragment;
-import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.adapter.RecordsAdapter;
+import com.qluxstory.qingshe.me.dto.IndianaRecordsDTO;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
 import com.qluxstory.qingshe.me.entity.RecordsResult;
 
@@ -39,8 +39,8 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
 
     @Override
     protected void sendRequestData() {
-        BaseDTO gdto=new BaseDTO();
-        gdto.setMembermob(AppContext.get("mobileNum",""));
+        IndianaRecordsDTO gdto=new IndianaRecordsDTO();
+        gdto.setUserPhone(AppContext.get("mobileNum",""));
         gdto.setSign(AppConfig.SIGN_1);
         gdto.setPageSize(PAGE_SIZE);
         gdto.setPageIndex(mCurrentPage);

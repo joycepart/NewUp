@@ -30,7 +30,7 @@ public class DetailActivity extends BaseTitleActivity {
 
     @Override
     protected int getContentResId() {
-        return R.layout.activity_details;
+        return R.layout.activity_curing_order_details;
     }
 
     @Override
