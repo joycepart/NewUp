@@ -31,6 +31,13 @@ public class EmptyLayout extends LinearLayout implements
     private String strNoDataContent = "";
     private TextView tv;
 
+    public static final int FLAG_HTTP_FAIL=0;
+    public static final int FLAG_NONET=1;
+    public static final int FLAG_NODATA=2;
+
+    //内容加载失败，没网，没数据
+    int[] ImgResId={R.drawable.pagefailed_bg,R.drawable.page_icon_network,R.drawable.page_icon_empty};
+
     public EmptyLayout(Context context) {
         super(context);
         this.context = context;
@@ -123,9 +130,10 @@ public class EmptyLayout extends LinearLayout implements
         tv.setText(msg);
     }
 
-    public void setErrorImag(int imgResource) {
+
+    public void setErrorImag(int imgResource,int type) {
         try {
-            img.setImageResource(imgResource);
+            ImgResId[type]=imgResource;
         } catch (Exception e) {
         }
     }
@@ -138,10 +146,10 @@ public class EmptyLayout extends LinearLayout implements
             // img.setBackgroundDrawable(SkinsUtil.getDrawable(context,"pagefailed_bg"));
             if (TDevice.hasInternet(context)) {
                 tv.setText(R.string.error_view_load_error_click_to_refresh);
-                img.setBackgroundResource(R.drawable.pagefailed_bg);
+                img.setBackgroundResource(ImgResId[FLAG_HTTP_FAIL]);
             } else {
                 tv.setText(R.string.error_view_network_error_click_to_refresh);
-                img.setBackgroundResource(R.drawable.page_icon_network);
+                img.setBackgroundResource(ImgResId[FLAG_NONET]);
             }
             img.setVisibility(View.VISIBLE);
             animProgress.setVisibility(View.GONE);
@@ -158,7 +166,7 @@ public class EmptyLayout extends LinearLayout implements
         case NODATA:
             mErrorState = NODATA;
             // img.setBackgroundDrawable(SkinsUtil.getDrawable(context,"page_icon_empty"));
-            img.setBackgroundResource(R.drawable.page_icon_empty);
+            img.setBackgroundResource(ImgResId[FLAG_NODATA]);
             img.setVisibility(View.VISIBLE);
             animProgress.setVisibility(View.GONE);
             setTvNoDataContent();
