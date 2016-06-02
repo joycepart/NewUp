@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
@@ -27,8 +26,7 @@ public class EmptyLayout extends LinearLayout implements
     public ImageView img;
     private OnClickListener listener;
     private int mErrorState;
-    private RelativeLayout mLayout;
-    private String strNoDataContent = "";
+
     private TextView tv;
 
     public static final int FLAG_HTTP_FAIL=0;
@@ -36,8 +34,11 @@ public class EmptyLayout extends LinearLayout implements
     public static final int FLAG_NODATA=2;
 
     //内容加载失败，没网，没数据
-    int[] ImgResId={R.drawable.pagefailed_bg,R.drawable.page_icon_network,R.drawable.page_icon_empty};
-
+    int[] imgResId ={R.drawable.pagefailed_bg,R.drawable.page_icon_network,R.drawable.page_icon_empty};
+    String[] tvMsgResId={getResources().getString(R.string.error_view_load_error_click_to_refresh),
+            getResources().getString(R.string.error_view_network_error_click_to_refresh) ,
+            getResources().getString(R.string.error_view_no_data)
+    };
     public EmptyLayout(Context context) {
         super(context);
         this.context = context;
@@ -54,7 +55,6 @@ public class EmptyLayout extends LinearLayout implements
         View view = View.inflate(context, R.layout.view_error_layout, null);
         img = (ImageView) view.findViewById(R.id.img_error_layout);
         tv = (TextView) view.findViewById(R.id.tv_error_layout);
-        mLayout = (RelativeLayout) view.findViewById(R.id.pageerrLayout);
         animProgress = (ProgressBar) view.findViewById(R.id.animProgress);
         setBackgroundColor(-1);
         setOnClickListener(this);
@@ -63,21 +63,15 @@ public class EmptyLayout extends LinearLayout implements
             @Override
             public void onClick(View v) {
                 if (clickEnable) {
-                    // setErrorType(NETWORK_LOADING);
                     if (listener != null)
                         listener.onClick(v);
                 }
             }
         });
         addView(view);
-        changeErrorLayoutBgMode(context);
+
     }
 
-    public void changeErrorLayoutBgMode(Context context1) {
-        // mLayout.setBackgroundColor(SkinsUtil.getColor(context1,
-        // "bgcolor01"));
-        // tv.setTextColor(SkinsUtil.getColor(context1, "textcolor05"));
-    }
 
     public void dismiss() {
         mErrorState = HIDE_LAYOUT;
@@ -99,41 +93,20 @@ public class EmptyLayout extends LinearLayout implements
     @Override
     public void onClick(View v) {
         if (clickEnable) {
-            // setErrorType(NETWORK_LOADING);
             if (listener != null)
                 listener.onClick(v);
         }
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        // MyApplication.getInstance().getAtSkinObserable().registered(this);
-        onSkinChanged();
-    }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        // MyApplication.getInstance().getAtSkinObserable().unregistered(this);
-    }
-
-    public void onSkinChanged() {
-        // mLayout.setBackgroundColor(SkinsUtil
-        // .getColor(getContext(), "bgcolor01"));
-        // tv.setTextColor(SkinsUtil.getColor(getContext(), "textcolor05"));
-    }
-
-    public void setDayNight(boolean flag) {}
-
-    public void setErrorMessage(String msg) {
-        tv.setText(msg);
+    public void setErrorMessage(String msg,int type) {
+        tvMsgResId[type]=msg;
     }
 
 
     public void setErrorImag(int imgResource,int type) {
         try {
-            ImgResId[type]=imgResource;
+            imgResId[type]=imgResource;
         } catch (Exception e) {
         }
     }
@@ -143,13 +116,12 @@ public class EmptyLayout extends LinearLayout implements
         switch (i) {
         case NETWORK_ERROR:
             mErrorState = NETWORK_ERROR;
-            // img.setBackgroundDrawable(SkinsUtil.getDrawable(context,"pagefailed_bg"));
             if (TDevice.hasInternet(context)) {
-                tv.setText(R.string.error_view_load_error_click_to_refresh);
-                img.setBackgroundResource(ImgResId[FLAG_HTTP_FAIL]);
+                tv.setText(tvMsgResId[FLAG_HTTP_FAIL]);
+                img.setBackgroundResource(imgResId[FLAG_HTTP_FAIL]);
             } else {
-                tv.setText(R.string.error_view_network_error_click_to_refresh);
-                img.setBackgroundResource(ImgResId[FLAG_NONET]);
+                tv.setText(tvMsgResId[FLAG_NONET]);
+                img.setBackgroundResource(imgResId[FLAG_NONET]);
             }
             img.setVisibility(View.VISIBLE);
             animProgress.setVisibility(View.GONE);
@@ -157,7 +129,6 @@ public class EmptyLayout extends LinearLayout implements
             break;
         case NETWORK_LOADING:
             mErrorState = NETWORK_LOADING;
-            // animProgress.setBackgroundDrawable(SkinsUtil.getDrawable(context,"loadingpage_bg"));
             animProgress.setVisibility(View.VISIBLE);
             img.setVisibility(View.GONE);
             tv.setText(R.string.error_view_loading);
@@ -165,11 +136,10 @@ public class EmptyLayout extends LinearLayout implements
             break;
         case NODATA:
             mErrorState = NODATA;
-            // img.setBackgroundDrawable(SkinsUtil.getDrawable(context,"page_icon_empty"));
-            img.setBackgroundResource(ImgResId[FLAG_NODATA]);
+            img.setBackgroundResource(imgResId[FLAG_NODATA]);
             img.setVisibility(View.VISIBLE);
             animProgress.setVisibility(View.GONE);
-            setTvNoDataContent();
+            tv.setText(tvMsgResId[FLAG_NODATA]);
             clickEnable = true;
             break;
         case HIDE_LAYOUT:
@@ -180,20 +150,10 @@ public class EmptyLayout extends LinearLayout implements
         }
     }
 
-    public void setNoDataContent(String noDataContent) {
-        strNoDataContent = noDataContent;
-    }
-
     public void setOnLayoutClickListener(OnClickListener listener) {
         this.listener = listener;
     }
 
-    public void setTvNoDataContent() {
-        if (!strNoDataContent.equals(""))
-            tv.setText(strNoDataContent);
-        else
-            tv.setText(R.string.error_view_no_data);
-    }
 
     @Override
     public void setVisibility(int visibility) {
