@@ -10,11 +10,11 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/settle_img"
-            android:layout_width="@dimen/ds_200"
-            android:layout_height="@dimen/ds_200"
+            android:layout_width="@dimen/ds_250"
+            android:layout_height="@dimen/ds_250"
             android:layout_marginLeft="@dimen/ds_50"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/default_profile_icon"/>
+           />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -56,22 +56,18 @@
             android:text="@string/ipone"
             android:textSize="@dimen/fs_55"
             android:textColor="@color/color_00"/>
-        <EditText
+        <TextView
             android:id="@+id/set_ed"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:layout_marginRight="@dimen/ds_40"
             android:layout_marginTop="@dimen/ds_30"
             android:layout_marginBottom="@dimen/ds_30"
-            android:layout_weight="1"
-            android:inputType="number"
-            android:background="@drawable/prompt_box"
-            android:imeOptions="actionNext"
-            android:maxLength="11"
-            android:padding="@dimen/ds_20"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_60" />
+            android:textSize="@dimen/fs_60"
+            android:text="12345677890"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -88,6 +84,7 @@
         android:background="@color/color_ff"
         android:orientation="horizontal">
         <CheckBox
+            android:clickable="false"
             android:id="@+id/set_cb_wx"
             android:layout_width="@dimen/ds_80"
             android:layout_height="@dimen/ds_80"
@@ -127,6 +124,7 @@
         android:background="@color/color_ff"
         android:orientation="horizontal">
         <CheckBox
+            android:clickable="false"
             android:id="@+id/set_cb_zhi"
             android:layout_width="@dimen/ds_80"
             android:layout_height="@dimen/ds_80"
@@ -165,6 +163,7 @@
         android:background="@color/color_ff"
         android:orientation="horizontal">
         <CheckBox
+            android:clickable="false"
             android:id="@+id/set_cb_hui"
             android:layout_width="@dimen/ds_80"
             android:layout_height="@dimen/ds_80"

@@ -84,32 +84,40 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             mIndianaCode.setText(mCode);
             mRecordsTitle.setText(mTitle);
             mRecordsTerm.setText("第"+mTerm+"期");
-            if(entity.getRec_state()=="0"){
+            LogUtils.e("entity.getRec_state()",""+entity.getRec_state());
+
+            if(entity.getRec_state().equals("0")){
+                LogUtils.e("entity.getRec_state()",""+entity.getRec_state());
                 mRecordsStatu.setText("未付款");
                 mInBtn.setText("去支付");
                 mDetLin.setVisibility(View.GONE);
 
-            }else if(entity.getRec_state()=="1"){
+            }else if(entity.getRec_state().equals("1")){
+                LogUtils.e("entity.getRec_state()1",""+entity.getRec_state());
                 mRecordsStatu.setText("已付款");
                 mInBtn.setText("继续夺宝");
                 mDetLin.setVisibility(View.VISIBLE);
             }
-            else if(entity.getRec_state()=="2"){
+            else if(entity.getRec_state().equals("2")){
+                LogUtils.e("entity.getRec_state()2",""+entity.getRec_state());
                 mRecordsStatu.setText("已中奖");
                 mInBtn.setText("去支付");
                 mDetLin.setVisibility(View.GONE);
             }
-            else if(entity.getRec_state()=="3"){
+            else if(entity.getRec_state().equals("3")){
+                LogUtils.e("entity.getRec_state()3",""+entity.getRec_state());
                 mRecordsStatu.setText("未抢中");
                 mInBtn.setText("去支付");
                 mDetLin.setVisibility(View.GONE);
             }
-            else if(entity.getRec_state()=="4"){
+            else if(entity.getRec_state().equals("4")){
+                LogUtils.e("entity.getRec_state()4",""+entity.getRec_state());
                 mRecordsStatu.setText("派奖中");
                 mInBtn.setText("去支付");
                 mDetLin.setVisibility(View.GONE);
             }
-            else if(entity.getRec_state()=="5"){
+            else if(entity.getRec_state().equals("5")){
+                LogUtils.e("entity.getRec_state()5",""+entity.getRec_state());
                 mRecordsStatu.setText("已完结");
                 mInBtn.setText("去支付");
                 mDetLin.setVisibility(View.GONE);
@@ -152,7 +160,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                     LogUtils.e("夺宝详情成功");
                     RecordIndianaEntity record = result.getData().get(0);
                     mDetInf.setText(record.getRec_phone());
-                    mDetNum.setText(record.getRec_participate_count());
+                    mDetNum.setText(record.getRec_participate_count()+"次");
                     mDetData.setText(record.getRec_participate_date());
                 }
 

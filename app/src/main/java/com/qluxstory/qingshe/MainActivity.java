@@ -104,7 +104,7 @@ public class MainActivity extends BaseTitleActivity {
             if (f != null&&f.isAdded()&&f!=fragment) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.hide(f);
-                transaction. commitAllowingStateLoss();
+                transaction.commitAllowingStateLoss();
                 f.setUserVisibleHint(false);
             }
         }
@@ -145,7 +145,7 @@ public class MainActivity extends BaseTitleActivity {
     private void showFragment(BaseFragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.show(fragment);
-        transaction. commitAllowingStateLoss();
+        transaction.commitAllowingStateLoss();
         fragment.setUserVisibleHint(true);
     }
 

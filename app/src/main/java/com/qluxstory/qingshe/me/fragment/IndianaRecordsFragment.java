@@ -50,7 +50,7 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
         gdto.setTime(TimeUtils.getSignTime());
         gdto.setSign(AppConfig.SIGN_1);
         gdto.setPageSize(PAGE_SIZE);
-        gdto.setPageIndex(PAGE_INDEX);
+        gdto.setPageIndex(mCurrentPage);
         CommonApiClient.records(this, gdto, new CallBack<RecordsResult>() {
             @Override
             public void onSuccess(RecordsResult result) {

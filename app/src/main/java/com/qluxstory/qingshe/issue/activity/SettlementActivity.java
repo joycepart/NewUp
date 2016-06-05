@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,7 +27,7 @@ import butterknife.Bind;
  */
 public class SettlementActivity extends BaseTitleActivity {
     @Bind(R.id.set_ed)
-    EditText mInBtn;
+    TextView mInBtn;
     @Bind(R.id.set_cb_wx)
     CheckBox mSetWx;
     @Bind(R.id.set_cb_zhi)

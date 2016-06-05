@@ -1,6 +1,7 @@
 package com.qluxstory.qingshe.me.fragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.qluxstory.qingshe.common.base.BasePullFragment;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.widget.EmptyLayout;
@@ -78,7 +80,12 @@ public class MyCouponFragment extends BasePullFragment {
         switch (v.getId()) {
             case R.id.mycoupon_tv:
                 mMoupom = mMouponEt.getText().toString();
-                exchangeVoucher();//兑换优惠劵
+                if(TextUtils.isEmpty(mMoupom)){
+                    DialogUtils.showPrompt(getActivity(),"优惠劵兑换码为空!","确定");
+                }else {
+                    exchangeVoucher();//兑换优惠劵
+                }
+
                 break;
         }
     }

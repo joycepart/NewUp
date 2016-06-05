@@ -2,6 +2,7 @@ package com.qluxstory.qingshe.me.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
+import com.qluxstory.qingshe.issue.activity.SettlementActivity;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
 
 /**
@@ -18,6 +20,8 @@ import com.qluxstory.qingshe.me.entity.RecordsEntity;
  */
 public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     Context mContext;
+    private Button btn;
+    private String mTerm,mTitle,mBalance,mPic;
 
     public RecordsAdapter (Context context) {
         mContext = context;
@@ -30,19 +34,10 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
 
     @Override
     public void bindData(final BaseRecyclerViewHolder holder, RecordsEntity recordsEntity, int position) {
-
-        Button btn = holder.getView(R.id.records_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra("tag",2);
-                if(mContext!=null)
-                {
-                    mContext.startActivity(intent);
-                }
-            }
-        });
+            mTerm = recordsEntity.getRec_term();
+            mTitle = recordsEntity.getSna_title();
+            mBalance = recordsEntity.getRec_pay_balance();
+            mPic = recordsEntity.getPic_url();
 
             if(recordsEntity.getRec_state().equals("0")){
                 holder.setText(R.id.records_payment,"未付款");
@@ -68,12 +63,44 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                 holder.setText(R.id.records_payment,"已完结");
                 holder.setText(R.id.records_btn,"去支付");
             }
+            else if(recordsEntity.getRec_state().equals("6")){
+                holder.setText(R.id.records_payment,"已取消");
+                holder.setText(R.id.records_btn,"继续夺宝");
+            }
+          holder.setText(R.id.records_title,mTitle);
+          holder.setText(R.id.records_term,"第"+mTerm+"期");
+          holder.setText(R.id.records_my,mBalance);
+          ImageView mRecordsImg=holder.getView( R.id.records_img);
+          ImageLoaderUtils.displayImage(mPic, mRecordsImg);
 
-            holder.setText(R.id.records_title,recordsEntity.getSna_title());
-            holder.setText(R.id.records_term,"第"+recordsEntity.getRec_term()+"期");
-            holder.setText(R.id.records_my,recordsEntity.getRec_pay_balance());
-            ImageView mRecordsImg=holder.getView( R.id.records_img);
-            ImageLoaderUtils.displayImage(recordsEntity.getPic_url(), mRecordsImg);
+           btn = holder.getView(R.id.records_btn);
+           btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(btn.getText().toString().equals("继续夺宝")){
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("tag",2);
+                    if(mContext!=null)
+                    {
+                        mContext.startActivity(intent);
+                    }
+                }else {
+                    Intent intent = new Intent(mContext, SettlementActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mTerm",mTerm);
+                    bundle.putString("mTitle",mTitle);
+                    bundle.putString("mBalance",mBalance);
+                    bundle.putString("mPic",mPic);
+                    intent.putExtra("bundle",bundle);
+                    mContext.startActivity(intent);
+                }
+
+
+            }
+        });
+
+
+
         }
 
 

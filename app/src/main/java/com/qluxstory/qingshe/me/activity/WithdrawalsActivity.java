@@ -1,12 +1,17 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
@@ -20,8 +25,11 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
-import com.qluxstory.qingshe.common.widget.PopuoWithdrawals;
+import com.qluxstory.qingshe.me.adapter.BindListAdapter;
 import com.qluxstory.qingshe.me.dto.WithdrawalsDTO;
+import com.qluxstory.qingshe.me.entity.Bank;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -49,7 +57,11 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     @Bind(R.id.pay_Btn)
     Button mWBtn;
     private String strPhoneNum,mMon,mUs,mNm,mIpone,mWTv;
-    PopuoWithdrawals popMenus;
+    private  String[] mStr = {"支付宝","银行卡"};
+    private List<Bank> mList;
+    Bank bank ;
+    Dialog dialog;
+    int item;
 
     @Override
     protected int getContentResId() {
@@ -79,13 +91,13 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.withd_md:
-                showPopWith();
+                showPopWith(mStr);
                 break;
             case R.id.pay_Btn:
                 mMon = mWithdMon.getText().toString();
-                mUs = mWithdMon.getText().toString();
-                mNm = mWithdMon.getText().toString();
-                mIpone = mWithdMon.getText().toString();
+                mUs = mWithdUs.getText().toString();
+                mNm = mWithdNm.getText().toString();
+                mIpone = mWithdIpone.getText().toString();
                 if(TextUtils.isEmpty(mMon)){
                     DialogUtils.showPrompt(this,"请填写正确的提现金额!","确定");
                 }
@@ -113,31 +125,52 @@ public class WithdrawalsActivity extends BaseTitleActivity {
         }
     }
 
-    private void showPopWith() {
-        popMenus = new PopuoWithdrawals(this,itemsOnClick);
+    private void showPopWith(String[] list) {
 
-        popMenus.showAtLocation(this.findViewById(R.id.with_tv_t),
-                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.pop_withdrawals, null);
+        dialog = DialogUtils.showDialog(this, view);
+
+        ListView listView = (ListView) view.findViewById(R.id.listview);
+        TextView mCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        TextView mDetermine = (TextView) view.findViewById(R.id.tv_determine);
+        final BindListAdapter adapter=new BindListAdapter(this,list);
+        listView.setAdapter(adapter);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        mDetermine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mWithdTv.setText(mStr[item]);
+                dialog.dismiss();
+            }
+        });
+
+        listView.setOnTouchListener(new AdapterView.OnTouchListener(){
+                                        @Override
+                                        public boolean onTouch(View v, MotionEvent event) {
+                                            return false;
+                                        }
+                                    }
+        );
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                item = position;
+            }
+        });
+//        popMenus = new PopuoWithdrawals(this,itemsOnClick);
+//
+//        popMenus.showAtLocation(this.findViewById(R.id.with_tv_t),
+//                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
-    //为弹出窗口实现监听类
-    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
-
-        public void onClick(View v) {
-            popMenus.dismiss();
-            switch (v.getId()) {
-                case R.id.fre_btn:
-
-                    break;
-
-                default:
-                    break;
-            }
-
-
-        }
-
-    };
 
     private void Withdrawals() {
         WithdrawalsDTO mDto = new WithdrawalsDTO();

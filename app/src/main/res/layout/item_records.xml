@@ -91,6 +91,8 @@
             <TextView
                 android:id="@+id/records_my"
                 android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/ds_30"
+                android:paddingRight="@dimen/ds_30"
                 android:layout_height="match_parent"
                 android:text="@string/real_payment"
                 android:layout_marginLeft="@dimen/ds_20"
@@ -107,7 +109,7 @@
             android:layout_marginBottom="@dimen/ds_20"
             android:layout_marginRight="@dimen/ds_30"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_click"
+            android:background="@drawable/btn_while"
             android:text="@string/continue_indiana"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50" />
