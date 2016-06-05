@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.fragment.HomeFragment;
@@ -103,7 +104,7 @@ public class MainActivity extends BaseTitleActivity {
             if (f != null&&f.isAdded()&&f!=fragment) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.hide(f);
-                transaction.commit();
+                transaction. commitAllowingStateLoss();
                 f.setUserVisibleHint(false);
             }
         }
@@ -135,7 +136,7 @@ public class MainActivity extends BaseTitleActivity {
         fragment.setArguments(bundle);
 
         transaction.add(R.id.realtabcontent, fragment, "tag" + index);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
        // fragmentManager.executePendingTransactions();
         return fragment;
     }
@@ -144,8 +145,16 @@ public class MainActivity extends BaseTitleActivity {
     private void showFragment(BaseFragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.show(fragment);
-        transaction.commit();
+        transaction. commitAllowingStateLoss();
         fragment.setUserVisibleHint(true);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if(intent != null) {
+            int tag = intent.getExtras().getInt("tag");
+            showTab(tag);
+        }
     }
 
     /**
@@ -157,10 +166,14 @@ public class MainActivity extends BaseTitleActivity {
         if(currentTab==idx){return;}
         BaseFragment targetFragment = (BaseFragment) fragmentManager
                 .findFragmentByTag("tag" + idx);
+        LogUtils.e("targetFragment-------------",""+targetFragment);
         if (targetFragment == null || !targetFragment.isAdded()) {
+            LogUtils.e("fragmentList.size()----",""+fragmentList.size());
+            LogUtils.e("fragmentList.get(idx)----",""+fragmentList.get(idx));
             if(idx<fragmentList.size()&&fragmentList.get(idx)!=null) {
                 targetFragment = fragmentList.get(idx);
             }else{
+                LogUtils.e("addFragment(idx)-----",fragmentList.size()+"");
                 targetFragment=addFragment(idx);
             }
         }
@@ -264,7 +277,7 @@ public class MainActivity extends BaseTitleActivity {
         {
             FragmentManager fragmentManager = getSupportFragmentManager();
             MeFragment meFragment = (MeFragment)fragmentManager.findFragmentByTag("tag4");
-            meFragment.updata();
+            meFragment.initView(null);
         }
     }
 }

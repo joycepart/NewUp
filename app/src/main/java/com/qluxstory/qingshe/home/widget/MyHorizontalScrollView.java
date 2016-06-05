@@ -41,6 +41,7 @@ public class MyHorizontalScrollView extends HorizontalScrollView
 	public MyHorizontalScrollView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+
 		// 获得屏幕宽度
 		WindowManager wm = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);

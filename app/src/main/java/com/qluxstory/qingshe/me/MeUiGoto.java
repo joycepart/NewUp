@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.common.base.BrowserActivity;
+import com.qluxstory.qingshe.common.widget.SelectPicPopup;
 import com.qluxstory.qingshe.me.activity.CuringOrderActivity;
+import com.qluxstory.qingshe.me.activity.CuringOrderDetailsActivity;
 import com.qluxstory.qingshe.me.activity.DetailActivity;
 import com.qluxstory.qingshe.me.activity.IndianaDetailsActivity;
 import com.qluxstory.qingshe.me.activity.LoginActivity;
@@ -26,10 +27,9 @@ public class MeUiGoto {
      * 跳转到登录页
      * @param context
      */
-    public static final int LOFIN_REQUEST = 0x100;
+    public static final int LOFIN_REQUEST = 0x1100;
     public static void login(Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
-
         activity.startActivityForResult(intent, LOFIN_REQUEST);
     }
 
@@ -59,10 +59,12 @@ public class MeUiGoto {
     /**
      * 夺宝记录之夺宝详情
      * @param context
+     * @param b
      */
 
-    public static void indianaRecords(Context context){
+    public static void indianaRecords(Context context, Bundle b){
         Intent intent = new Intent(context, IndianaDetailsActivity.class);
+        intent.putExtra("itemBean",b);
         context.startActivity(intent);
     }
 
@@ -79,10 +81,12 @@ public class MeUiGoto {
     /**
      * 跳转到明细详情页
      * @param context
+     * @param bundle
      */
 
-    public static void details(Context context){
+    public static void details(Context context, Bundle bundle){
         Intent intent = new Intent(context,DetailActivity.class);
+        intent.putExtra("bundle",bundle);
         context.startActivity(intent);
     }
 
@@ -93,8 +97,8 @@ public class MeUiGoto {
      */
 
     public static void curingOrderdetails(Context context, Bundle b){
-        Intent intent = new Intent(context,DetailActivity.class);
-        intent.putExtra("b",b);
+        Intent intent = new Intent(context,CuringOrderDetailsActivity.class);
+        intent.putExtra("bundle",b);
         context.startActivity(intent);
     }
 
@@ -103,10 +107,10 @@ public class MeUiGoto {
      * 跳转到用户信息页
      * @param context
      */
-    public static final int USERINFORMATION_REQUEST = 0x101;
-    public static void userInformation(Context context){
-        Intent intent = new Intent(context,UserInformationActivity.class);
-        ((MainActivity)context).startActivityForResult(intent,USERINFORMATION_REQUEST);
+    public static final int USERINFORMATION_REQUEST = 0x201;
+    public static void userInformation(Activity act){
+        Intent intent = new Intent(act,UserInformationActivity.class);
+        act.startActivityForResult(intent,USERINFORMATION_REQUEST);
     }
     /**
      * 跳转到修改用户名页
@@ -116,6 +120,16 @@ public class MeUiGoto {
     public static void modifyUser(Activity act){
         Intent intent = new Intent(act,ModifyUserActivity.class);
         act.startActivityForResult(intent,MODIFYUSER_REQUEST);
+    }
+
+    /**
+     * 跳转到调用系统拍照和相册页
+     * @param context
+     */
+    public static final int SELECT_REQUEST = 0x111;
+    public static void selectPic(Activity act){
+        Intent intent = new Intent(act,SelectPicPopup.class);
+        act.startActivityForResult(intent,SELECT_REQUEST);
     }
 
     /**

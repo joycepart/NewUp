@@ -1,10 +1,12 @@
 package com.qluxstory.qingshe.issue;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.qluxstory.qingshe.common.base.BrowserActivity;
+import com.qluxstory.qingshe.common.widget.PopupProductDetails;
 import com.qluxstory.qingshe.issue.activity.SettlementActivity;
 
 /**
@@ -12,15 +14,29 @@ import com.qluxstory.qingshe.issue.activity.SettlementActivity;
  */
 public class IssueUiGoto {
     /**
+     * 跳转到popup滑窗页
+     *
+     * @param act
+     */
+    public static final int POPUP_REQUEST = 0101;
+    public static void popup(Activity act) {
+        Intent intent = new Intent(act, PopupProductDetails.class);
+        act.startActivityForResult(intent,POPUP_REQUEST);
+    }
+
+    /**
      * 跳转到结算页
      *
      * @param context
      */
+
     public static void settlement(Context context, Bundle bundle) {
         Intent intent = new Intent(context, SettlementActivity.class);
         intent.putExtra("bundle",bundle);
         context.startActivity(intent);
     }
+
+
 
     /**
      * 跳转到图文详情页

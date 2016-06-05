@@ -46,18 +46,23 @@ import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
+import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
 import com.qluxstory.qingshe.me.dto.IndianaRecordsDTO;
 import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ModifyDTO;
+import com.qluxstory.qingshe.me.dto.NumDTO;
+import com.qluxstory.qingshe.me.dto.ObtainDTO;
 import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
 import com.qluxstory.qingshe.me.dto.UserPicDTO;
 import com.qluxstory.qingshe.me.dto.WithdrawalsDTO;
 import com.qluxstory.qingshe.me.entity.CuringOrderDetailsResult;
 import com.qluxstory.qingshe.me.entity.CuringOrderListResult;
+import com.qluxstory.qingshe.me.entity.ExchangeVoucherResult;
 import com.qluxstory.qingshe.me.entity.LoginResult;
 import com.qluxstory.qingshe.me.entity.ModifyResult;
 import com.qluxstory.qingshe.me.entity.MyCouponResult;
 import com.qluxstory.qingshe.me.entity.MyIncomeResult;
+import com.qluxstory.qingshe.me.entity.NumResult;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 import com.qluxstory.qingshe.me.entity.RecordsResult;
 import com.qluxstory.qingshe.me.entity.TransactionResult;
@@ -71,7 +76,7 @@ public class CommonApiClient extends BaseApiClient {
      * @param dto
      * @param callback
      */
-    public static void getVerify(Activity act, BaseDTO
+    public static void getVerify(Activity act, ObtainDTO
             dto, CallBack<BaseEntity> callback) {
         AsyncCallBack<BaseEntity> asyncCallBack = new AsyncCallBack<>(
                 act, callback, BaseEntity.class);
@@ -88,6 +93,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<MyCouponResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback, MyCouponResult.class);
         post(getAbsoluteUrl("/API/WsMemberCoupon.asmx/ResBrwMemberCouponApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 兑换优惠劵
+     * @param dto
+     * @param callback
+     */
+    public static void exchangeVoucher(Fragment fragment, ExchangeVoucherDTO
+            dto, CallBack<ExchangeVoucherResult> callback) {
+        AsyncCallBack<ExchangeVoucherResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback, ExchangeVoucherResult.class);
+        post(getAbsoluteUrl("/API/WsMemberCoupon.asmx/ResAddMemberConsigeeApi"), dto,
                 asyncCallBack);
     }
 
@@ -279,6 +297,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<RecordIndianaResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,RecordIndianaResult.class);
         get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetSnaRecordByBatCode"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 参与信息
+     * @param dto
+     * @param callback
+     */
+    public static void num(Activity act, NumDTO
+            dto, CallBack<NumResult> callback) {
+        AsyncCallBack<NumResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,NumResult.class);
+        post(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetRecordDetailOfSnaNums"), dto,
                 asyncCallBack);
     }
 

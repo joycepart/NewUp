@@ -11,11 +11,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
-import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.widget.ProgressWebView;
 import com.qluxstory.qingshe.home.HomeUiGoto;
+import com.qluxstory.qingshe.home.entity.ProductDetails;
 
 import butterknife.Bind;
 
@@ -32,39 +33,26 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     @Bind(R.id.placeorder_tv)
     TextView mTv;
     protected String mStrUrl;
-    protected String mTitle;
-    protected String mPrice;
-    protected String mName;
-    protected String mPic;
-    private  String mCode;
+    ProductDetails mProductDetails;
     @Override
     protected int getContentResId() {
         return R.layout.browser_product;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent mIntent = getIntent();
-        if (mIntent != null) {
-            mStrUrl = mIntent.getStringExtra("url");
-            mPrice = mIntent.getStringExtra("mPrice");
-            mName = mIntent.getStringExtra("mName");
-            mPic = mIntent.getStringExtra("mPic");
-            mCode = mIntent.getStringExtra("mCode");
-//            LogUtils.e("mStrUrl----mIntent",mStrUrl);
-            LogUtils.e("mPrice----mIntent",mPrice);
-            LogUtils.e("mName----mIntent",mName);
-            LogUtils.e("mPic----mIntent",mPic);
-            LogUtils.e("mCode----mIntent",mCode);
-        }
         super.onCreate(savedInstanceState);
 
     }
 
     @Override
     public void initView() {
+        mProductDetails = AppContext.getInstance().getProductDetails();
         setTitleText("商品详情");
-        LogUtils.e("mPrice----",mPrice);
-        mTv.setText(mPrice);
+        Intent intent = getIntent();
+        if(intent!=null){
+            mStrUrl = intent.getStringExtra("mUrl");
+        }
+        mTv.setText(mProductDetails.getSellPrice());
         mProBottom.setOnClickListener(this);
         mPlace.setOnClickListener(this);
         mWebView.setWebViewClient(new MyWebViewClient());
@@ -85,7 +73,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
             case R.id.pro_bottom_kf:
                 break;
             case R.id.place_btn:
-                HomeUiGoto.placeOrder(this,mPrice,mName,mPic,mCode);//提交订单
+                HomeUiGoto.placeOrder(this);//提交订单
                 break;
             default:
                 break;
@@ -96,10 +84,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     @Override
     public void initData() {
         mWebView.loadUrl(mStrUrl);
-
-
     }
-
 
     @Override
     protected void baseGoBack() {

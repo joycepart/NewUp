@@ -311,9 +311,9 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
     @Override
     public void onResume() {
         super.onResume();
-        if (onTimeRefresh()) {
-            sendRequestData();
-        }
+//        if (onTimeRefresh()) {
+//            sendRequestData();
+//        }
     }
 
     // 是否需要自动刷新

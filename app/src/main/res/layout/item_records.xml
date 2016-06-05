@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,7 +10,7 @@
             android:id="@+id/records_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/address_cities"
+            android:text="@string/issue_records"
             android:layout_marginLeft="@dimen/ds_30"
             android:gravity="center"
             android:textSize="@dimen/fs_45"
@@ -36,11 +36,11 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/records_img"
-            android:layout_width="@dimen/ds_120"
-            android:layout_height="@dimen/ds_120"
+            android:layout_width="@dimen/ds_180"
+            android:layout_height="@dimen/ds_180"
             android:layout_marginLeft="@dimen/ds_30"
             android:layout_gravity="center"
-            android:background="@drawable/default_profile_icon"/>
+            />
         <LinearLayout
 
             android:layout_width="wrap_content"
@@ -52,6 +52,8 @@
                 android:id="@+id/records_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="123445678888"
                 android:textSize="@dimen/fs_45"
                 android:textColor="@color/color_00"/>
@@ -70,7 +72,7 @@
         android:background="@color/color_cc"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_170">
+        android:layout_height="@dimen/ds_140">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -101,17 +103,19 @@
             android:id="@+id/records_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/ds_20"
+            android:layout_marginBottom="@dimen/ds_20"
             android:layout_marginRight="@dimen/ds_30"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_login_normal"
+            android:background="@drawable/btn_click"
             android:text="@string/continue_indiana"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_40" />
+            android:textSize="@dimen/fs_50" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_30"
-        android:layout_marginTop="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_10"
         android:background="@color/color_cc"/>
 </LinearLayout>

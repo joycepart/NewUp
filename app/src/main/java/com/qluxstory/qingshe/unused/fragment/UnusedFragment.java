@@ -28,7 +28,6 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
     @Override
     public void initView(View view) {
         super.initView(view);
-
     }
 
     @Override

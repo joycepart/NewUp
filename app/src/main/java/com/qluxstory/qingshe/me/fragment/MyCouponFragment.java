@@ -15,7 +15,11 @@ import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
+import com.qluxstory.qingshe.common.widget.EmptyLayout;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
+import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
+import com.qluxstory.qingshe.me.entity.ExchangeVoucherResult;
 import com.qluxstory.qingshe.me.entity.MyCouponEntity;
 import com.qluxstory.qingshe.me.entity.MyCouponResult;
 
@@ -62,26 +66,11 @@ public class MyCouponFragment extends BasePullFragment {
     }
     @Override
     public void initData() {
-        reqCoupon();
+        reqCoupon();//优惠劵
 
     }
 
-    protected void reqCoupon() {
-        BaseDTO bdto=new BaseDTO();
-        bdto.setMembermob(strPhoneNum);
-        bdto.setSign(AppConfig.SIGN_1);
-        CommonApiClient.getCoupon(this, bdto, new CallBack<MyCouponResult>() {
-            @Override
-            public void onSuccess(MyCouponResult result) {
-                if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.d("优惠劵请求成功");
-                    mMycouponListAdapter.removeAll();
-                    mMycouponListAdapter.append(result.getData());
-                }
-            }
-        });
 
-    }
 
     @Override
     public void onClick(View v) {
@@ -89,9 +78,62 @@ public class MyCouponFragment extends BasePullFragment {
         switch (v.getId()) {
             case R.id.mycoupon_tv:
                 mMoupom = mMouponEt.getText().toString();
+                exchangeVoucher();//兑换优惠劵
                 break;
         }
     }
+
+    protected void reqCoupon() {
+        BaseDTO bdto=new BaseDTO();
+        bdto.setMembermob(strPhoneNum);
+        bdto.setSign(AppConfig.SIGN_1);
+        bdto.setTimestamp(TimeUtils.getSignTime());
+        CommonApiClient.getCoupon(this, bdto, new CallBack<MyCouponResult>() {
+            @Override
+            public void onSuccess(MyCouponResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.d("兑换优惠劵成功");
+                    mErrorLayout.setErrorMessage("暂无优惠劵",mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
+                    if(result.getData().get(0).getCouponExpirationTime()==null){
+
+                    }else {
+                        mMycouponListAdapter.removeAll();
+                        mMycouponListAdapter.append(result.getData());
+                    }
+
+                }
+            }
+        });
+
+    }
+    private void exchangeVoucher() {
+        ExchangeVoucherDTO bdto=new ExchangeVoucherDTO();
+        bdto.setCouponredeemcode(mMoupom);
+        bdto.setMembermob(strPhoneNum);
+        bdto.setSign(AppConfig.SIGN_1);
+        bdto.setTimestamp(TimeUtils.getSignTime());
+        CommonApiClient.exchangeVoucher(this, bdto, new CallBack<ExchangeVoucherResult>() {
+            @Override
+            public void onSuccess(ExchangeVoucherResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.d("优惠劵请求成功");
+                    mErrorLayout.setErrorMessage("暂无优惠劵",mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
+                    if(result.getData().get(0).getCouponExpirationTime()==null){
+                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+                    }else {
+                        mMycouponListAdapter.removeAll();
+                        mMycouponListAdapter.append(result.getData());
+                    }
+
+                }
+            }
+        });
+    }
+
+
+
 
     @Override
     protected int getLayoutResId() {

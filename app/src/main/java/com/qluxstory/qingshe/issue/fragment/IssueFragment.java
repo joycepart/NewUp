@@ -2,6 +2,7 @@ package com.qluxstory.qingshe.issue.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,10 +61,15 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void bindData(BaseRecyclerViewHolder holder, IndianaListEntity indianaListEntity, int position) {
                 holder.setText(R.id.issue_tv1,"第"+indianaListEntity.getSna_term()+"期");
                 holder.setText(R.id.issue_tv2,indianaListEntity.getSna_title());
-//                int mSell = Integer.parseInt(indianaListEntity.getSna_sell_out());
-//                int mTotal = Integer.parseInt(indianaListEntity.getSna_total_count());
-//                String mStr = String.valueOf(mSell*100/mTotal);
-//                holder.setText(R.id.issue_tv3,mStr+"%");
+                int mSell;
+                if(TextUtils.isEmpty(indianaListEntity.getSna_sell_out())){
+                     mSell =Integer.parseInt("0");
+                }else {
+                     mSell = Integer.parseInt(indianaListEntity.getSna_sell_out());
+                }
+                int mTotal = Integer.parseInt(indianaListEntity.getSna_total_count());
+                String mStr = String.valueOf(mSell*100/mTotal);
+                holder.setText(R.id.issue_tv3,mStr+"%");
                 ImageView iv=holder.getView(R.id.issue_img);
                 ImageLoaderUtils.displayImage(indianaListEntity.getPic_url(),iv);
             }
@@ -76,7 +82,12 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onItemClick(View itemView, Object itemBean, int position) {
                 Bundle b = new Bundle();
                 IndianaListEntity entity=(IndianaListEntity)itemBean;
-                b.putSerializable("itemBean",entity);
+                String bat = entity.getBat_code();
+                String sna = entity.getSna_code();
+                String url = entity.getPic_url();
+                b.putString("bat",bat);
+                b.putString("sna",sna);
+                b.putString("mPic",url);
                 UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
             }
         });
@@ -155,11 +166,13 @@ public class IssueFragment extends BasePullScrollViewFragment {
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(mCurrentPage);
         CommonApiClient.indianaList(this, dto, new CallBack<IndianaListResult>() {
+
             @Override
             public void onSuccess(IndianaListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝列表成功");
                     mIssueAdapter.append(result.getData());
+                    refreshComplete();
 
                 }
             }

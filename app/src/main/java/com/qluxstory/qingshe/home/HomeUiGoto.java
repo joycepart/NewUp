@@ -3,12 +3,15 @@ package com.qluxstory.qingshe.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.home.activity.AddAddressActivity;
 import com.qluxstory.qingshe.home.activity.CuringActivity;
 import com.qluxstory.qingshe.home.activity.PlaceOrderActivity;
 import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
+import com.qluxstory.qingshe.home.activity.TestActivity;
+import com.qluxstory.qingshe.home.activity.VerticalScrollTextActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -23,21 +26,50 @@ public class HomeUiGoto {
         Intent intent = new Intent(context, CuringActivity.class);
         context.startActivity(intent);
     }
+
     /**
-     * 跳转到提交订单页
+     * 测试页
      * @param context
-     * @param mCode
-     * @param mPrice
-     * @param mName
-     * @param mPic
      */
 
-    public static void placeOrder(Context context, String mPrice, String mName, String mPic, String mCode){
+    public static void test(Context context){
+        Intent intent = new Intent(context, TestActivity.class);
+        context.startActivity(intent);
+    }
+    /**
+     * 测试页
+     * @param context
+     */
+
+    public static void testOne(Context context){
+        Intent intent = new Intent(context, VerticalScrollTextActivity.class);
+        context.startActivity(intent);
+    }
+
+
+
+    /**
+     * 从商品详情跳转到提交订单页
+     * @param context
+     */
+
+    public static void placeOrder(Context context){
         Intent intent = new Intent(context, PlaceOrderActivity.class);
-        intent.putExtra("mPrice", mPrice);
-        intent.putExtra("mName", mName);
-        intent.putExtra("mPic", mPic);
-        intent.putExtra("mCode", mCode);
+//        intent.putExtra("mPrice", mPrice);
+//        intent.putExtra("mName", mName);
+//        intent.putExtra("mPic", mPic);
+//        intent.putExtra("mCode", mCode);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 从寄送地址跳转到提交订单页
+     * @param context
+     */
+
+    public static void sendPlaceOrder(Context context, Bundle bundle){
+        Intent intent = new Intent(context, PlaceOrderActivity.class);
+        intent.putExtra("bundle", bundle);
         context.startActivity(intent);
     }
 
@@ -67,20 +99,12 @@ public class HomeUiGoto {
     /**
      * 跳转到专业养护之商品详情页（加载h5页面）
      * @param context
-     * @param mCode
-     * @param mName
-     * @param mPic
      * @param mUrl
-     * @param mPrice
      */
 
-    public static void curingProductDetails(Context context, String mUrl, String mPrice, String mName, String mPic, String mCode){
+    public static void curingProductDetails(Context context, String mUrl){
         Intent intent = new Intent(context, ProductBrowserActivity.class);
         intent.putExtra("mUrl", mUrl);
-        intent.putExtra("mPrice", mPrice);
-        intent.putExtra("mName", mName);
-        intent.putExtra("mPic", mPic);
-        intent.putExtra("mCode", mCode);
         context.startActivity(intent);
     }
     /**

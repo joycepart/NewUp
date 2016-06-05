@@ -57,8 +57,8 @@ public class AsyncCallBack<T> implements Callback {
 
 	@Override
 	public void onResponse(Call call, Response response) throws IOException {
-		if (response.isSuccessful()) {
 
+		if (response.isSuccessful()) {
 			String reader = response.body().string();
 			//LogUtils.e("原始数据："+reader);
 			int startIndex=reader.indexOf("{",reader.indexOf("{")+1);
@@ -82,11 +82,12 @@ public class AsyncCallBack<T> implements Callback {
 				e.printStackTrace();
 			}
 		} else {
+			LogUtils.e("response is not Successful "+response);
 			callback.sendMsg(CallBack.FAIL, (T) AppConfig.ERROR_IO_MSG);
 			EventBus.getDefault().post(
 					new ErrorEvent(AppConfig.ERROR_IO,
 							AppConfig.ERROR_IO_MSG, tag));
-			LogUtils.i("response is not Successful "+response);
+			LogUtils.e("response is not Successful "+response);
 		}
 	}
 

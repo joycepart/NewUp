@@ -1,6 +1,5 @@
 package com.qluxstory.qingshe.me.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.entity.MyIncomeEntity;
@@ -70,6 +70,7 @@ public class MyIncomeActivity extends BaseTitleActivity {
         BaseDTO bdto = new BaseDTO();
         bdto.setMembermob(strPhoneNum);
         bdto.setSign(AppConfig.SIGN_1);
+        bdto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.myIncome(this, bdto, new CallBack<MyIncomeResult>() {
             @Override
             public void onSuccess(MyIncomeResult result) {
@@ -96,7 +97,7 @@ public class MyIncomeActivity extends BaseTitleActivity {
         switch (view.getId()) {
             case R.id.income_Btn:
                 if(mCashaMountMoney.equals("0.00")){
-                    DialogUtils.showPrompt(this,"暂无可提现余额");
+                    DialogUtils.showPrompt(this,"暂无可提现余额","确定");
 
                 }else {
                     MeUiGoto.withd(this);//申请提现
@@ -104,10 +105,10 @@ public class MyIncomeActivity extends BaseTitleActivity {
                 break;
 
             case R.id.base_titlebar_ensure:
-                String s = "我的优惠劵";
-                Bundle b = new Bundle();
-                b.putString("s",s);
-                UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL,b);//交易明细
+//                String s = "我的优惠劵";
+//                Bundle b = new Bundle();
+//                b.putString("s",s);
+                UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//交易明细
                 break;
             case R.id.base_titlebar_back:
                 baseGoBack();

@@ -66,7 +66,7 @@
             android:layout_marginBottom="@dimen/ds_30"
             android:layout_weight="1"
             android:inputType="number"
-            android:background="@drawable/btn_login_normal"
+            android:background="@drawable/prompt_box"
             android:imeOptions="actionNext"
             android:maxLength="11"
             android:padding="@dimen/ds_20"

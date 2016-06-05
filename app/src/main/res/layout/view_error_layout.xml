@@ -22,10 +22,11 @@
 
                 <ImageView
                     android:id="@+id/img_error_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/ds_250"
+                    android:layout_height="@dimen/ds_250"
+
                     android:background="@drawable/pagefailed_bg"
-                    android:visibility="gone" />
+                     />
 
                 <ProgressBar
                     android:id="@+id/animProgress"
@@ -44,7 +45,19 @@
                 android:gravity="center"
                 android:text="@string/error_view_loading"
                 android:textColor="@color/color_33"
-                android:textSize="@dimen/fs_42" />
+                android:textSize="@dimen/fs_50" />
+            <TextView
+                android:id="@+id/tv_tv_error_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10.0dip"
+                android:lines="2"
+                android:gravity="center"
+                android:text="@string/error_view_loading"
+                android:textColor="@color/color_33"
+                android:textSize="@dimen/fs_42"
+                android:visibility="gone"/>
         </LinearLayout>
     </RelativeLayout>
 

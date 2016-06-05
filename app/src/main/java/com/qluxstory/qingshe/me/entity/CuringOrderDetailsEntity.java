@@ -78,10 +78,89 @@ public class CuringOrderDetailsEntity  extends BaseEntity {
               详细地址
                 */
     private String AddressInDetail;
+
     /*
                  商品成色
                    */
     private String com_necklace;
+    /*
+                 服务点
+                   */
+    private String sto_name;
+    /*
+                 寄送地址
+                   */
+    private String dis_cityAddress;
+    /*
+                     寄送电话
+                       */
+    private String sto_phone;
+    /*
+
+                           */
+    private String isovertime;
+    /*
+
+                           */
+    private String app_show_pic;
+    /*
+
+                               */
+    private String ServerKHImg;
+
+    public String getApp_show_pic() {
+        return app_show_pic;
+    }
+
+    public void setApp_show_pic(String app_show_pic) {
+        this.app_show_pic = app_show_pic;
+    }
+
+    public String getServerKHImg() {
+        return ServerKHImg;
+    }
+
+    public void setServerKHImg(String serverKHImg) {
+        ServerKHImg = serverKHImg;
+    }
+
+
+
+    public String getIsovertime() {
+        return isovertime;
+    }
+
+    public void setIsovertime(String isovertime) {
+        this.isovertime = isovertime;
+    }
+
+
+
+    public String getDis_cityAddress() {
+        return dis_cityAddress;
+    }
+
+    public void setDis_cityAddress(String dis_cityAddress) {
+        this.dis_cityAddress = dis_cityAddress;
+    }
+
+    public String getSto_name() {
+        return sto_name;
+    }
+
+    public void setSto_name(String sto_name) {
+        this.sto_name = sto_name;
+    }
+
+    public String getSto_phone() {
+        return sto_phone;
+    }
+
+    public void setSto_phone(String sto_phone) {
+        this.sto_phone = sto_phone;
+    }
+
+
 
     public String getAddressInDetail() {
         return AddressInDetail;

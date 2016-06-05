@@ -4,46 +4,70 @@ package com.qluxstory.qingshe.home.entity;
  * Created by lenovo on 2016/5/30.
  */
 public class Consignee {
+    /*收货地址编号*/
+    private String ConsigneeCode;
     /*收货人*/
-    private String conname;
+    private String ConsigneeName;
     /*手机号码*/
-    private String delivmobile;
+    private String DeliveredMobile;
     /*省市区*/
-    private String provincity;
+    private String ProvincialCity;
     /*详细地址*/
-    private String addredetail;
+    private String AddressInDetail;
+    /*item*/
+    private int item;
 
-    public String getAddredetail() {
-        return addredetail;
+    public int getItem() {
+        return item;
     }
 
-    public void setAddredetail(String addredetail) {
-        this.addredetail = addredetail;
+    public void setItem(int item) {
+        this.item = item;
     }
 
-    public String getConname() {
-        return conname;
+
+
+
+    public String getAddressInDetail() {
+        return AddressInDetail;
     }
 
-    public void setConname(String conname) {
-        this.conname = conname;
+    public void setAddressInDetail(String addressInDetail) {
+        AddressInDetail = addressInDetail;
     }
 
-    public String getDelivmobile() {
-        return delivmobile;
+    public String getConsigneeCode() {
+        return ConsigneeCode;
     }
 
-    public void setDelivmobile(String delivmobile) {
-        this.delivmobile = delivmobile;
+    public void setConsigneeCode(String consigneeCode) {
+        ConsigneeCode = consigneeCode;
     }
 
-    public String getProvincity() {
-        return provincity;
+    public String getConsigneeName() {
+        return ConsigneeName;
     }
 
-    public void setProvincity(String provincity) {
-        this.provincity = provincity;
+    public void setConsigneeName(String consigneeName) {
+        ConsigneeName = consigneeName;
     }
+
+    public String getDeliveredMobile() {
+        return DeliveredMobile;
+    }
+
+    public void setDeliveredMobile(String deliveredMobile) {
+        DeliveredMobile = deliveredMobile;
+    }
+
+    public String getProvincialCity() {
+        return ProvincialCity;
+    }
+
+    public void setProvincialCity(String provincialCity) {
+        ProvincialCity = provincialCity;
+    }
+
 
 
 }

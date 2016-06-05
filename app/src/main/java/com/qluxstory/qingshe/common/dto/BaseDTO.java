@@ -12,9 +12,18 @@ import java.io.Serializable;
 public class BaseDTO implements Serializable {
     private String membermob= AppContext.get("mobileNum","");
     private String timestamp;
+    private String time ;
     private String sign;
     private int pageSize ;
     private int pageIndex;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public String getMembermob() {
         return membermob;
@@ -37,9 +46,8 @@ public class BaseDTO implements Serializable {
     }
 
     public void setSign(String sign) {
-        String time = TimeUtils.getTime();
-        setTimestamp(time);
-        this.sign = SecurityUtils.md5(time + sign);
+        String time = TimeUtils.getSignTime();
+        this.sign = SecurityUtils.MD5(time + sign);
     }
 
     public int getPageIndex() {

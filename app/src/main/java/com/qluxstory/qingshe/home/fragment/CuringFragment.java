@@ -10,6 +10,7 @@ import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullFragment;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -22,6 +23,7 @@ import com.qluxstory.qingshe.home.activity.CuringActivity;
 import com.qluxstory.qingshe.home.dto.CuringDTO;
 import com.qluxstory.qingshe.home.entity.CuringEntity;
 import com.qluxstory.qingshe.home.entity.CuringResult;
+import com.qluxstory.qingshe.home.entity.ProductDetails;
 
 import butterknife.Bind;
 
@@ -39,6 +41,7 @@ public class CuringFragment extends BasePullFragment {
     private  String mName;
     private  String mPic;
     private  String mCode;
+    ProductDetails mProductDetails;
 
     public static CuringFragment newInstance(int type) {
         CuringFragment fragment = new CuringFragment();
@@ -52,6 +55,7 @@ public class CuringFragment extends BasePullFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
+        mProductDetails = AppContext.getInstance().getProductDetails();
         Bundle bundle = getArguments();
         if (bundle != null) {
             type = bundle.getInt(TYPE, CuringActivity.TAB_A);
@@ -65,13 +69,10 @@ public class CuringFragment extends BasePullFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, CuringEntity curingEntity, int position) {
-                mPrice = curingEntity.getSell_price();
-                mName  = curingEntity.getSell_name();
-                mPic = curingEntity.getSell_pic();
-                mCode = curingEntity.getSell_only_code();
-                holder.setText(R.id.curing_titlte,mName);
+
+                holder.setText(R.id.curing_titlte,curingEntity.getSell_name());
                 holder.setText(R.id.curing_tv,curingEntity.getSell_description());
-                holder.setText(R.id.curing_money,mPrice);
+                holder.setText(R.id.curing_money,curingEntity.getSell_price());
                 TextView tv=holder.getView( R.id.curing_coupon);
                 if(curingEntity.getSell_first_discription().isEmpty()){
                     tv.setVisibility(View.GONE);
@@ -79,7 +80,7 @@ public class CuringFragment extends BasePullFragment {
                     holder.setText(R.id.curing_coupon,curingEntity.getSell_first_discription());
                 }
                 ImageView mImg=holder.getView( R.id.curing_img);
-                ImageLoaderUtils.displayImage(mPic,mImg);
+                ImageLoaderUtils.displayImage(curingEntity.getSell_pic(),mImg);
             }
 
 
@@ -90,7 +91,12 @@ public class CuringFragment extends BasePullFragment {
             public void onItemClick(View itemView, Object itemBean, int position) {
                 CuringEntity curingEntity = (CuringEntity) itemBean;
                 mUrl= AppConfig.Server_Html+curingEntity.getSell_only_code();
-                HomeUiGoto.curingProductDetails(getActivity(),mUrl,mPrice,mName,mPic,mCode);//专业养护之商品详情
+                mProductDetails.setSellName(curingEntity.getSell_name());
+                mProductDetails.setSellOnlyCode(curingEntity.getSell_only_code());
+                mProductDetails.setSellPrice(curingEntity.getSell_price());
+                mProductDetails.setSellPic(curingEntity.getSell_pic());
+                mProductDetails.setSellSort(curingEntity.getSell_sort());
+                HomeUiGoto.curingProductDetails(getActivity(),mUrl);//专业养护之商品详情
             }
         });
 

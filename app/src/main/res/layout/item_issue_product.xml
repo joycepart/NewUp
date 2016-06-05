@@ -3,54 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ds_30"
-        android:layout_marginLeft="@dimen/ds_30"
-        android:orientation="vertical">
-        <TextView
+
+    <TextView
             android:id="@+id/product_tv1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_30"
+             android:layout_marginLeft="@dimen/ds_30"
+            android:text="@string/address_cities"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50"
            />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="@dimen/ds_15"
-        android:layout_marginLeft="@dimen/ds_30">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/ds_90"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:orientation="horizontal">
         <TextView
-            android:id="@+id/product_tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/issue_partici"
             android:layout_alignParentLeft="true"
-            android:textColor="@color/color_c0"
+            android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50"
            />
+            <TextView
+                android:id="@+id/product_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/color_c0"
+                android:textSize="@dimen/fs_50"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/issue_pation"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/color_00"
+                android:textSize="@dimen/fs_50"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/product_tv3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/ds_30"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50"
             />
     </RelativeLayout>
-    </LinearLayout>
 <View
     android:layout_width="match_parent"
     android:layout_height="@dimen/ds_1"
-    android:layout_marginTop="@dimen/ds_20"
+    android:layout_marginTop="@dimen/ds_10"
     android:layout_marginLeft="@dimen/ds_40"
-    android:background="@color/color_cc"/>
+    android:background="@color/color_f9"/>
+
 </LinearLayout>

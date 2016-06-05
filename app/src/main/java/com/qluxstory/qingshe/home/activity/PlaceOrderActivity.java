@@ -1,7 +1,11 @@
 package com.qluxstory.qingshe.home.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -9,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
@@ -18,16 +23,25 @@ import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.PhotoSystemUtils;
+import com.qluxstory.qingshe.common.utils.SecurityUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.dto.PayDTO;
 import com.qluxstory.qingshe.home.dto.TakeDTO;
+import com.qluxstory.qingshe.home.entity.Address;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
+import com.qluxstory.qingshe.home.entity.Consignee;
 import com.qluxstory.qingshe.home.entity.PayResult;
-import com.qluxstory.qingshe.home.entity.SendAddress;
+import com.qluxstory.qingshe.home.entity.ProductDetails;
 import com.qluxstory.qingshe.home.entity.TakeEntity;
 import com.qluxstory.qingshe.home.entity.TakeResult;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.Bind;
 
@@ -73,6 +87,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mTvNm;
     @Bind(R.id.set_pay_Btn)
     Button mSetPayBtn;
+    @Bind(R.id.placeorder_lin)
+    LinearLayout mLrderLin;
     @Bind(R.id.palce_pay_wx)
     LinearLayout mPayWx;
     @Bind(R.id.palce_pay_alipay)
@@ -89,9 +105,23 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private  String mName;
     private  String mPic;
     private  String mCode;
-    SendAddress sa;
+    Address address;
     private String rturn;
+    Consignee consignee;
+    /* 头像文件 */
+    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
+    /* 请求识别码 */
+    private static final int CODE_GALLERY_REQUEST = 0xa0;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
 
+    // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
+    private static int output_X = 480;
+    private static int output_Y = 480;
+    TakeEntity  takeEntity;
+    ProductDetails mProductDetails;
+    Bitmap bitmap;
+    private String mMemberheadimg;
 
 
     @Override
@@ -102,21 +132,21 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        Intent mIntent = getIntent();
-        if (mIntent != null) {
-            mPrice = mIntent.getStringExtra("mPrice");
-            mName = mIntent.getStringExtra("mName");
-            mPic = mIntent.getStringExtra("mPic");
-            mCode = mIntent.getStringExtra("mCode");
-        }
-        setTitleText("提交订单");
+        mProductDetails = AppContext.getInstance().getProductDetails();
+        consignee = AppContext.getInstance().getConsignee();
+        mPrice = mProductDetails.getSellPrice();
+        mName = mProductDetails.getSellName();
+        mPic = mProductDetails.getSellPic();
+        mCode = mProductDetails.getSellOnlyCode();
         mPlaceTitlt.setText(mName);
         mPlacordDan.setText("¥ "+mPrice+"*1="+mPrice);
         mDanNum.setText("¥ "+mPrice);
-        mPlaceTotal.setText("¥ "+mPrice+".00");
+        mPlaceTotal.setText(mPrice);
         mTv.setText("¥ ");
-        mTvNm.setText(mPrice+".00");
+        mTvNm.setText(mPrice);
         ImageLoaderUtils.displayImage(mPic,mPlaceImg);
+        setTitleText("提交订单");
+
         mSetPayBtn.setOnClickListener(this);
         mPlaceOrderImg.setOnClickListener(this);
         mPlaceTake.setOnClickListener(this);
@@ -126,7 +156,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         mPayWx.setOnClickListener(this);
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
-        mPlaceCoupon.setOnClickListener(this);
     }
 
     @Override
@@ -159,38 +188,40 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 Bundle b = new Bundle();
                 b.putString("mCode",mCode);
                 b.putString("mPrice",mPrice);
-                UIHelper.showFragment(this, SimplePage.VOUCHERS,b);//优惠劵
+                UIHelper.showRorCouponFragment(this, SimplePage.VOUCHERS,b);//优惠劵
                 break;
             case R.id.set_pay_Btn:
                 if(mPlaTvAdd.getText().toString()==null){
-
+                    DialogUtils.showPrompt(this,"暂无可提现余额","确定");
                 }
                 if(mSendAddress.getText().toString()==null){
-
+                    DialogUtils.showPrompt(this,"暂无可提现余额","确定");
                 }
                 if(!mCbWx.isChecked()&&!mCbZhi.isChecked()&&!mVbHui.isChecked()){
-
+                    DialogUtils.showPrompt(this,"暂无可提现余额","确定");
+                }else {
+                    reqPay();//去支付
                 }
-                reqPay();//去支付
+
 
                 break;
             case R.id.palce_pay_wx:
                 mCbWx.setChecked(true);
                 mCbZhi.setChecked(false);
                 mVbHui.setChecked(false);
-
                 break;
             case R.id.palce_pay_alipay:
                 mCbWx.setChecked(false);
                 mCbZhi.setChecked(true);
                 mVbHui.setChecked(false);
-
                 break;
             case R.id.palce_pay_balance:
                 mCbWx.setChecked(false);
                 mCbZhi.setChecked(false);
                 mVbHui.setChecked(true);
-
+                break;
+            case R.id.place_order_img:
+                choseHeadImageFromCameraCapture();
                 break;
             default:
                 break;
@@ -201,6 +232,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private void reqBalance() {
         BaseDTO dto=new BaseDTO();
         dto.setSign(AppConfig.SIGN_1);
+        LogUtils.e("未加密前的----", TimeUtils.getSignTime()+AppConfig.SIGN_1);
+        LogUtils.e("加密后的---",SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));
+        dto.setTimestamp(TimeUtils.getSignTime());
         dto.setMembermob(AppContext.get("mobileNum",""));
         CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
             @Override
@@ -218,15 +252,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqTake() {
         TakeDTO dto=new TakeDTO();
-        dto.setCity("");
+        dto.setCity("北京市");
         CommonApiClient.take(this, dto, new CallBack<TakeResult>() {
             @Override
             public void onSuccess(TakeResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("取送方式成功");
-                    TakeEntity  entity = result.getData().get(0);
-                    rturn = entity.getDis_type_code();
-                    mPlaTv.setText(entity.getDis_type_name());
+                    takeEntity = result.getData().get(0);
+                    rturn = takeEntity.getDis_type_code();
+                    mPlaTv.setText(takeEntity.getDis_type_name());
 
                 }
 
@@ -237,14 +271,44 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqPay() {
         PayDTO dto=new PayDTO();
-        dto.setAddressInDetail("");
-        dto.setComOnlyCode("");
-        dto.setConsigneeCode("");
-        dto.setConsigneeName("");
-        dto.setConsigneeType("");
-        dto.setOrderMoney("");
-        dto.setProvincialCity("");
-        dto.setDeliveredMobile("");
+        dto.setConsigneeType(takeEntity.getDis_type_name());
+        if(takeEntity.getDis_type_name().equals("上门取送")){
+            dto.setTimeToAppointmen("10");
+        }else {
+            dto.setTimeToAppointmen("10");
+        }
+        if(takeEntity.getDis_type_name().equals("全国包回邮")){
+            dto.setServerYJCode(mSendAddress.getText().toString());
+        }else {
+            dto.setServerYJCode("");
+        }
+        dto.setConsigneeCode(consignee.getConsigneeCode());
+        dto.setConsigneeName(consignee.getConsigneeName());
+        dto.setDeliveredMobile(consignee.getDeliveredMobile());
+        dto.setProvincialCity(consignee.getProvincialCity());
+        dto.setAddressInDetail(consignee.getAddressInDetail());
+        dto.setComOnlyCode(mCode);
+        dto.setOrderMoney(mPlaceTotal.getText().toString());
+        dto.setComCount("1");
+        dto.setCouponPrice("1");
+        dto.setMemberIDCoupon("1");
+        dto.setCouponCode("1");
+        dto.setMemMobile(AppContext.get("mobileNum",""));
+        if(mCbWx.isChecked()){
+            dto.setApplyType("微信");
+        }else  if(mCbZhi.isChecked()){
+            dto.setApplyType("支付宝");
+        }else {
+            dto.setApplyType("会员");
+        }
+        dto.setServiceMoney("1");
+        dto.setReqType("服务");
+        dto.setOldOrderNum("1");
+        dto.setShoudamoney(mPrice);
+        dto.setBase64string(mMemberheadimg);
+        dto.setServerName(mProductDetails.getSellSort());
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.pay(this, dto, new CallBack<PayResult>() {
             @Override
             public void onSuccess(PayResult result) {
@@ -257,17 +321,107 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == UIHelper.SEND_REQUEST)
-        {
-            mSendAddress.setText(sa.getAddress());
-        }
-        if(requestCode == UIHelper.SELECT_REQUEST)
-        {
-            mPlaTvAdd.setText(sa.getAddress());
+    // 启动手机相机拍摄照片作为头像
+    private void choseHeadImageFromCameraCapture() {
+        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // 判断存储卡是否可用，存储照片文件
+        if (PhotoSystemUtils.hasSdcard()) {
+            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+                    .fromFile(new File(Environment
+                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
         }
 
+        startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        // 用户没有进行有效的设置操作，返回
+//        if (resultCode == RESULT_CANCELED) {
+//            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+
+        switch (requestCode) {
+            case UIHelper.SEND_REQUEST:
+                mSendAddress.setText( AppContext.get("Dis_province_send",""));//寄送地址
+                AppContext.set("Dis_province_send","");
+                break;
+
+            case CODE_CAMERA_REQUEST:
+                if (PhotoSystemUtils.hasSdcard()) {
+                    File tempFile = new File(
+                            Environment.getExternalStorageDirectory(),
+                            IMAGE_FILE_NAME);
+                    Uri uri = Uri.fromFile(tempFile);
+                    String mImg = PhotoSystemUtils.getRealFilePath(this,uri);
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mMemberheadimg = ImageLoaderUtils.imgToBase64(mImg,bitmap,null);
+                    cropRawPhoto(uri);
+                } else {
+                    Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                break;
+
+            case CODE_RESULT_REQUEST:
+                if (intent != null) {
+                    setImageToHeadView(intent);
+                }
+            case UIHelper.SELECT_REQUEST:
+                mPlaTvAdd.setText(consignee.getConsigneeName()+consignee.getDeliveredMobile()
+                        +consignee.getProvincialCity()+consignee.getAddressInDetail());
+
+//                mPlaTvAdd.setText( AppContext.get("Dis_province_select",""));//收货地址
+//                AppContext.set("Dis_province_select","");
+                break;
+            case UIHelper.COUPON_REQUEST:
+                mPlaceCoupon.setText( AppContext.get("vouchers",""));//代金劵
+                AppContext.set("vouchers","");
+                break;
+        }
+
+    }
+
+    /**
+     * 裁剪原始的图片
+     */
+    public void cropRawPhoto(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+
+        // aspectX , aspectY :宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        // outputX , outputY : 裁剪图片宽高
+        intent.putExtra("outputX", output_X);
+        intent.putExtra("outputY", output_Y);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, CODE_RESULT_REQUEST);
+    }
+
+    /**
+     * 提取保存裁剪之后的图片数据，并设置头像部分的View
+     */
+    private void setImageToHeadView(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
+            mPlaceOrderImg.setImageBitmap(photo);
+        }
     }
 }

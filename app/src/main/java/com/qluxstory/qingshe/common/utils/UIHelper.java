@@ -24,6 +24,14 @@ public class UIHelper {
         act.startActivityForResult(intent,SELECT_REQUEST);
     }
 
+    public static final int COUPON_REQUEST = 0x110;//代金劵
+    public static void showRorCouponFragment(Activity act, SimplePage page,Bundle args) {
+        Intent intent = new Intent(act, SimpleActivity.class);
+        intent.putExtra(SimpleActivity.BUNDLE_KEY_PAGE, page.getValue());
+        intent.putExtra(SimpleActivity.BUNDLE_KEY_ARGS, args);
+        act.startActivityForResult(intent,COUPON_REQUEST);
+    }
+
     public static void showFragment(Context context, SimplePage page) {
         Intent intent = new Intent(context, SimpleActivity.class);
         intent.putExtra(SimpleActivity.BUNDLE_KEY_PAGE, page.getValue());

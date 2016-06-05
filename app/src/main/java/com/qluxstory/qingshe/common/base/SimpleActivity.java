@@ -22,7 +22,7 @@ public class SimpleActivity extends BaseTitleActivity {
     protected WeakReference<Fragment> mFragment;
     protected int mPageValue = -1;
     private FragmentManager fragmentManager;
-
+    SimplePage page;
 
 
     @Override
@@ -44,7 +44,7 @@ public class SimpleActivity extends BaseTitleActivity {
             throw new RuntimeException(
                     "you must provide a page info to display");
         }
-        SimplePage page = SimplePage.getPageByValue(pageValue);
+        page = SimplePage.getPageByValue(pageValue);
         if (page == null) {
             throw new IllegalArgumentException("can not find page by value:"
                     + pageValue);
@@ -92,13 +92,14 @@ public class SimpleActivity extends BaseTitleActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == HomeUiGoto.NEWADD_REQUEST)
+
         {
-            LogUtils.e("requestCode---","HomeUiGoto.NEWADD_REQUEST");
+            FragmentManager fragmentManager = getSupportFragmentManager();
             SelectFragment selectFragment = new SelectFragment();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.show(selectFragment);
-            transaction.commit();
-            selectFragment.upAddress();
+            selectFragment = (SelectFragment)fragmentManager.findFragmentByTag(TAG);
+            LogUtils.e("selectFragment",""+selectFragment);
+            selectFragment.initData();
+//            UIHelper.showFragment(this, SimplePage.SELECT_ADDRESS);//收货地址
         }
     }
 }

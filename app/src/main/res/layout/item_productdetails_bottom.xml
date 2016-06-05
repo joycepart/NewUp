@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/detaile_talk"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ds_140"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
@@ -49,8 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginLeft="@dimen/ds_20"
-            android:background="@drawable/btn_login_selector"
+            android:layout_marginLeft="@dimen/ds_70"
+            android:background="@drawable/btn_click"
             android:text="@string/order_immediate"
             android:textColor="@color/color_ff"
             android:textSize="@dimen/fs_70" />

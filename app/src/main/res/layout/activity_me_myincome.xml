@@ -100,7 +100,7 @@
         android:layout_marginLeft="@dimen/ds_50"
         android:layout_marginRight="@dimen/ds_50"
         android:layout_marginTop="@dimen/ds_100"
-        android:background="@drawable/btn_login_selector"
+        android:background="@drawable/btn_click"
         android:text="@string/me_income_withdrawals"
         android:textColor="@color/color_ff"
         android:textSize="@dimen/fs_70" />

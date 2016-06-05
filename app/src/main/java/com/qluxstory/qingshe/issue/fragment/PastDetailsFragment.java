@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullScrollViewFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
@@ -17,6 +18,7 @@ import com.qluxstory.qingshe.common.bean.ViewFlowBean;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
@@ -69,6 +71,8 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
     TextView mPle;
     @Bind(R.id.product_data)
     TextView mProData;
+    @Bind(R.id.issue_tv_yn)
+    TextView mTvYn;
     @Bind(R.id.issue_calculation)
     TextView mCalculation;
     @Bind(R.id.issue_product_it)
@@ -83,24 +87,52 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
     protected int getLayoutResId() {
         return R.layout.fragment_pro_tran_details;
     }
+    @Override
+    public void initView(View view) {
+        super.initView(view);
+        mInBtn.setText("前往最新期");
+        mInBtn.setOnClickListener(this);
+        mCalculation.setOnClickListener(this);
+        mProductIt.setOnClickListener(this);
+        mPtdList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
+        mTranAdapter=new BaseSimpleRecyclerAdapter<RecordIndianaEntity>() {
+            @Override
+            public int getItemViewLayoutId() {
+                return R.layout.item_issue_product;
+            }
 
+            @Override
+            public void bindData(BaseRecyclerViewHolder holder, RecordIndianaEntity recordIndianaEntity, int position) {
+                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone());
+                holder.setText(R.id.product_tv2,"参与"+recordIndianaEntity.getRec_participate_count()+"人次");
+                holder.setText(R.id.product_tv3,recordIndianaEntity.getRec_participate_date());
+            }
+
+
+        };
+        mPtdList.setAdapter(mTranAdapter);
+    }
     @Override
     public void initData() {
         Bundle b  = getArguments();
-        mSnaCode = b.getString("mCode");
-        mBatCode = b.getString("mBat");
+        if(b!=null){
+            mSnaCode = b.getString("mSna");
+            mBatCode = b.getString("mBat");
+        }
+
         reqPic();//夺宝商品图片
         reqQecord();//夺宝详情之夺宝记录
         reqTranDetails();//夺宝往期详情
-        reqDetails();//登陆者参与的次数
+        reqParticipate();//登陆者参与的次数
         announced();//揭晓信息
 
     }
 
-    private void reqDetails() {
+    private void reqParticipate() {
         LanderInDTO dto=new LanderInDTO();
         dto.setSign(AppConfig.SIGN_1);
-        dto.setMembermob("");
+        dto.setTime(TimeUtils.getSignTime());
+        dto.setMembermob(AppContext.get("mobileNum",""));
         dto.setSna_code(mSnaCode);
         dto.setBat_code(mBatCode);
         CommonApiClient.landerIn(this, dto, new CallBack<LanderInResult>() {
@@ -108,6 +140,11 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
             public void onSuccess(LanderInResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("登陆者参与的次数成功");
+                    if(result.getData().get(0).getReceive_ran_num()!=null){
+                        mTvYn.setText("您参与了"+result.getData().get(0).getReceive_ran_num()+"次夺宝");
+                    }else {
+                        mTvYn.setText("您未参与本次夺宝活动");
+                    }
 
                 }
 
@@ -150,6 +187,8 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
             public void onSuccess(RecordIndianaResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝详情之夺宝记录成功");
+                    mTranAdapter.removeAll();
+                    mTranAdapter.append(result.getData());
 
                 }
 
@@ -207,31 +246,7 @@ public class PastDetailsFragment extends BasePullScrollViewFragment {
         mProData.setText(data.get(0).getSna_begin_date());
     }
 
-    @Override
-    public void initView(View view) {
-        super.initView(view);
-        mInBtn.setText("前往最新期");
-        mInBtn.setOnClickListener(this);
-        mCalculation.setOnClickListener(this);
-        mProductIt.setOnClickListener(this);
-        mPtdList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
-        mTranAdapter=new BaseSimpleRecyclerAdapter<RecordIndianaEntity>() {
-            @Override
-            public int getItemViewLayoutId() {
-                return R.layout.item_issue_product;
-            }
 
-            @Override
-            public void bindData(BaseRecyclerViewHolder holder, RecordIndianaEntity recordIndianaEntity, int position) {
-                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone());
-                holder.setText(R.id.product_tv2,"参与"+recordIndianaEntity.getRec_participate_count()+"人次");
-                holder.setText(R.id.product_tv3,recordIndianaEntity.getRec_participate_date());
-            }
-
-
-        };
-        mPtdList.setAdapter(mTranAdapter);
-    }
 
     @Override
     public void onClick(View v) {

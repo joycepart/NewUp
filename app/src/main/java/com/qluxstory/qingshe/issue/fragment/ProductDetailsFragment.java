@@ -1,15 +1,19 @@
 package com.qluxstory.qingshe.issue.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullScrollViewFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
@@ -17,16 +21,19 @@ import com.qluxstory.qingshe.common.bean.ViewFlowBean;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
+import com.qluxstory.qingshe.common.widget.PopupProductDetails;
 import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
-import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.dto.DetailsDTO;
+import com.qluxstory.qingshe.issue.dto.LanderInDTO;
 import com.qluxstory.qingshe.issue.dto.PicDTO;
 import com.qluxstory.qingshe.issue.entity.IndianaListEntity;
 import com.qluxstory.qingshe.issue.entity.IssDetailsEntity;
 import com.qluxstory.qingshe.issue.entity.IssDetailsResult;
+import com.qluxstory.qingshe.issue.entity.LanderInResult;
 import com.qluxstory.qingshe.issue.entity.PicEntity;
 import com.qluxstory.qingshe.issue.entity.PicResult;
 import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
@@ -51,7 +58,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     @Bind(R.id.issue_product_past)
     LinearLayout mPast;
     @Bind(R.id.iss_pro_tv_term)
-    TextView mTerm;
+    TextView mTvTerm;
     @Bind(R.id.iss_pro_tv_name)
     TextView mName;
     @Bind(R.id.iss_pro_tv_random)
@@ -60,16 +67,24 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     TextView mPeople;
     @Bind(R.id.iss_pro_peo)
     TextView mPeo;
+    @Bind(R.id.product_data)
+    TextView mProductData;
+    @Bind(R.id.product_participate)
+    TextView mParticipate;
     @Bind(R.id.in_btn)
     Button mInBtn;
     BaseSimpleRecyclerAdapter mIssuelListAdapter;
     IndianaListEntity indiana;
-    List<HomeRecommendEntity> entity;
-    String mSnaCode;
-    String mCaTerm;
-    String mCaTitle;
-    String mCaNum;
-    String mCaPic;
+    private String mSnaCode;
+    private String mTerm;
+    private String mTitle;
+    private String mPic;
+    private String mBat;
+    private String mSna;
+    private String mUrl;
+    PopupProductDetails popMenus;
+    private View view;
+    private PopupWindow popupWindow;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_issue_product_details;
@@ -87,14 +102,16 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     public void initData() {
         Bundle b  = getArguments();
         if(b!=null){
-            indiana= (IndianaListEntity) b.getSerializable("itemBean");
-            entity = (List<HomeRecommendEntity>) b.getSerializable("entity");
+            mBat=  b.getString("bat");
+            mSna=  b.getString("sna");
+            mUrl = b.getString("mPic");
         }else{
             return;
         }
 
         reqPic();//夺宝商品图片
         reqDetails();//夺宝详情
+        reqParticipate();//登陆者参与的次数
         reqQecord();//夺宝详情之夺宝记录
 
         mIssuelList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
@@ -107,7 +124,7 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
             @Override
             public void bindData(BaseRecyclerViewHolder holder, RecordIndianaEntity recordIndianaEntity, int position) {
                 holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone());
-                holder.setText(R.id.product_tv2,"参与"+recordIndianaEntity.getRec_participate_count()+"人次");
+                holder.setText(R.id.product_tv2,recordIndianaEntity.getRec_participate_count());
                 holder.setText(R.id.product_tv3,recordIndianaEntity.getRec_participate_date());
             }
 
@@ -117,13 +134,33 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
 
 
     }
+    private void reqParticipate() {
+        LanderInDTO dto=new LanderInDTO();
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setTime(TimeUtils.getSignTime());
+        dto.setMembermob(AppContext.get("mobileNum",""));
+        dto.setSna_code(mSna);
+        dto.setBat_code(mBat);
+        CommonApiClient.landerIn(this, dto, new CallBack<LanderInResult>() {
+            @Override
+            public void onSuccess(LanderInResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("登陆者参与的次数成功");
+                    if(result.getData().get(0).getReceive_ran_num()!=null){
+                        mParticipate.setText("您参与了"+result.getData().get(0).getReceive_ran_num()+"次夺宝");
+                    }else {
+                        mParticipate.setText("您未参与本次夺宝活动");
+                    }
+
+                }
+
+            }
+        });
+    }
 
     private void reqQecord() {
         RecordIndianaDTO dto=new RecordIndianaDTO();
-        if(indiana==null){
-//            dto.setBat_code(entity.get());
-        }
-        dto.setBat_code(indiana.getBat_code());
+        dto.setBat_code(mBat);
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(mCurrentPage);
         CommonApiClient.recordsDetails(getActivity(), dto, new CallBack<RecordIndianaResult>() {
@@ -150,19 +187,23 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
     private void bindResult(List<IssDetailsEntity> data) {
         IssDetailsEntity detailEntity=data.get(0);
         mSnaCode = detailEntity.getSna_code();
-        mCaTerm = "第"+detailEntity.getSna_term()+"期";
-        mCaTitle = detailEntity.getSna_title();
-        mTerm.setText(mCaTerm);
-        mName.setText(mCaTitle);
+        mTerm = detailEntity.getSna_term();
+        mTitle = detailEntity.getSna_title();
+        mTvTerm.setText("第"+mTerm+"期");
+        mName.setText(mTitle);
         mRandom.setText(detailEntity.getSna_remark());
         mPeople.setText("总需"+detailEntity.getSna_total_count()+"人次");
-        mPeo.setText("距离揭晓还需"+detailEntity.getSna_sell_out()+"人次");
+//        int value1 = Integer.valueOf(detailEntity.getSna_total_count());
+//        int value2 = Integer.valueOf(detailEntity.getSna_sell_out());
+//        int result = value1-value2;
+//        mPeo.setText("距离揭晓还需"+result+"人次");
+        mProductData.setText(detailEntity.getSna_begin_date());
     }
 
 
     private void reqPic() {
         PicDTO pdto=new PicDTO();
-        pdto.setSna_code(indiana.getSna_code());
+        pdto.setSna_code(mSna);
         CommonApiClient.pic(this, pdto, new CallBack<PicResult>() {
             @Override
             public void onSuccess(PicResult result) {
@@ -188,8 +229,8 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
 
     private void reqDetails() {
         DetailsDTO dto=new DetailsDTO();
-        dto.setSna_code(indiana.getSna_code());
-        dto.setBat_code(indiana.getBat_code());
+        dto.setSna_code(mSna);
+        dto.setBat_code(mBat);
 
         CommonApiClient.issDetails(this, dto, new CallBack<IssDetailsResult>() {
             @Override
@@ -218,14 +259,51 @@ public class ProductDetailsFragment extends BasePullScrollViewFragment {
                 UIHelper.showFragment(getActivity(), SimplePage.TOANNOUNCE,b);//往期揭晓
                 break;
             case R.id.in_btn:
-//                DialogUtils.showDialog(getActivity(),view);
-                Bundle bd = new Bundle();
-                bd.putString("mCaTerm",mCaTerm);
-                bd.putString("mCaTitle",mCaTitle);
-                IssueUiGoto.settlement(getActivity(),bd);//结算
+                showPopMenu();
                 break;
 
         }
         super.onClick(v);
+    }
+
+    private void showPopMenu() {
+        popMenus = new PopupProductDetails(getActivity(),itemsOnClick);
+
+        popMenus.showAtLocation(getActivity().findViewById(R.id.product_data),
+                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+    }
+
+    //为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
+
+        public void onClick(View v) {
+            popMenus.dismiss();
+            switch (v.getId()) {
+                case R.id.fre_btn:
+
+                    break;
+
+                default:
+                    break;
+            }
+
+
+        }
+
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IssueUiGoto.POPUP_REQUEST){
+            String num = data.getStringExtra("num");
+            Bundle bd = new Bundle();
+            bd.putString("mBalance",num);
+            bd.putString("mPic",mUrl);
+            bd.putString("mTerm",mTerm);
+            bd.putString("mTitle",mTitle);
+            IssueUiGoto.settlement(getActivity(),bd);//结算
+        }
     }
 }

@@ -81,6 +81,7 @@
             android:background="@color/color_cc"/>
 
         <TextView
+            android:id="@+id/product_participate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/ds_30"

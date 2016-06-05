@@ -28,7 +28,7 @@ public abstract class BaseFragment extends Fragment implements
         View.OnClickListener, IBaseFragment {
     protected boolean prepared = false;
     private View rootView;
-    EmptyLayout mErrorLayout;
+    public EmptyLayout mErrorLayout;
     protected final static int PAGE_SIZE = 6;
     protected final static int PAGE_INDEX = 1;
 

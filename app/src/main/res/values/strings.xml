@@ -84,13 +84,13 @@
     <string name="order_payment_method">请选择支付方式：</string>
     <string name="order_payment">去支付</string>
     <string name="order_weixin">微信支付</string>
-    <string name="order_zhifubao">支付宝...</string>
+    <string name="order_zhifubao">支付宝</string>
     <string name="order_member">会员余额支付 </string>
     <string name="order_contact">联系客服</string>
     <string name="order_immediate">立即下单</string>
 
     <string name="order_new_address">添加新地址</string>
-
+    <string name="issue_records">一元夺宝</string>
     <string name="issue_indiana">夺宝进度</string>
     <string name="issue_progress">-</string>
     <string name="address_consignee">* 收货人</string>
@@ -121,6 +121,8 @@
     <string name="issue_lucky_user">得宝用户:</string>
     <string name="issue_lucky_data">参与日期:</string>
     <string name="issue_participation">参与人次:</string>
+    <string name="issue_partici">参与</string>
+    <string name="issue_pation">人次</string>
     <string name="issue_calculation">计算详情</string>
     <string name="issue_stage">第十九期</string>
     <string name="transaction_no">暂无明细</string>
@@ -153,10 +155,12 @@
     <string name="product_details">商品详情</string>
     <string name="tran_details">已满</string>
     <string name="ipone">手机号码</string>
-    <string name="issue_agreement">夺宝岛用户服务协议</string>
+    <string name="ipone_dian">手机号码：</string>
+    <string name="issue_agreement">《夺宝岛用户服务协议》</string>
     <string name="indiana_order">订单编号：</string>
     <string name="indiana_infor">参与信息：</string>
     <string name="indiana_frequency">参与次数：</string>
+    <string name="details_frequency">参与次数</string>
     <string name="indiana_time">参与时间：</string>
     <string name="indiana_num">参与号码：</string>
     <string name="indiana_look">点击查看</string>
@@ -197,6 +201,17 @@
     <string name="dialog_prompt_no">暂无可提现余额</string>
     <string name="dialog_prompt_yes">确定</string>
     <string name="order_one">请拍摄一张需要养护的商品的图片</string>
+    <string name="photo_graph">拍照</string>
+    <string name="photo_choose">从手机相册选取</string>
+    <string name="photo_cancel">取消</string>
+    <string name="reduce">—</string>
+    <string name="plus">+</string>
+    <string name="five">5</string>
+    <string name="ten">10</string>
+    <string name="ttew">20</string>
+    <string name="right">(</string>
+    <string name="left">)</string>
+    <string name="pop_ok">完成</string>
 
 
 

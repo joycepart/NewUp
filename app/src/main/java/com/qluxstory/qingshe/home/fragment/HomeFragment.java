@@ -1,6 +1,7 @@
 package com.qluxstory.qingshe.home.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
 import com.qluxstory.qingshe.home.widget.MyHorizontalScrollView;
+import com.qluxstory.qingshe.unused.fragment.UnusedFragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,13 +66,15 @@ public class HomeFragment extends BasePullScrollViewFragment {
     ImageView mImgNew;
     @Bind(R.id.home_img3)
     ImageView mImgHelp;
+    @Bind(R.id.home_img_dian)
+    ImageView mHomeImgDian;
     List<HomeRecommendEntity> entity;
 
 
     @Override
     public void initView(View view) {
         super.initView(view);
-
+        mHomeImgDian.setOnClickListener(this);
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -191,7 +195,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 HomeUiGoto.curing(getActivity());//专业养护
                 break;
             case R.id.home_img2:
-                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS);
+                HomeUiGoto.testOne(getActivity());//测试
                 break;
             case R.id.home_img3:
                 HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
@@ -201,9 +205,16 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 b.putSerializable("entity", (Serializable) entity);
                 UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);
                 break;
+            case R.id.home_img_dian:
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                UnusedFragment unusedFragment = (UnusedFragment)fragmentManager.findFragmentByTag("tag2");
+                unusedFragment.initView(null);
+                break;
         }
         super.onClick(v);
     }
+
+
 
 
     @Override

@@ -12,17 +12,17 @@ import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseActivity;
-import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeCountDown;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.dto.LoginDTO;
+import com.qluxstory.qingshe.me.dto.ObtainDTO;
 import com.qluxstory.qingshe.me.entity.LoginEntity;
 import com.qluxstory.qingshe.me.entity.LoginResult;
-import com.qluxstory.qingshe.me.entity.User;
 
 import java.util.List;
 
@@ -56,8 +56,6 @@ public class LoginActivity extends BaseActivity {
     private String mUrlAgreement;
     private String mAgreementTitle;
 
-    User mUser;
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_login;
@@ -65,7 +63,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mUser=AppContext.getInstance().getUser();
         mSetpwdCbAgreement.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
@@ -92,9 +89,11 @@ public class LoginActivity extends BaseActivity {
     //获取验证码
     private void ObtainCode() {
         mTcd.start();
-        BaseDTO bdto = new BaseDTO();
+        ObtainDTO bdto = new ObtainDTO();
         bdto.setMembermob(strPhoneNum);
         bdto.setSign(AppConfig.SIGN_1);
+        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setRegisterFrom(AppConfig.RegisterFrom);
         CommonApiClient.getVerify(this, bdto, new CallBack<BaseEntity>() {
             @Override
             public void onSuccess(BaseEntity result) {
@@ -111,6 +110,8 @@ public class LoginActivity extends BaseActivity {
         ldto.setMemberverifycode(strPwd);
         ldto.setMembermob(strPhoneNum);
         ldto.setSign(AppConfig.SIGN_1);
+        ldto.setRegisterFrom(AppConfig.RegisterFrom);
+        ldto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.login(this, ldto, new CallBack<LoginResult>() {
             @Override
             public void onSuccess(LoginResult result) {
@@ -127,12 +128,10 @@ public class LoginActivity extends BaseActivity {
 
     private void getLoginResult(List<LoginEntity> data) {
         LoginEntity entity=data.get(0);
-        mUser.setmUserMobile(entity.getMembermobile());
         AppContext.set("mobileNum",entity.getMembermobile());
         AppContext.set("isLogin",true);
-        mUser.setmUserName(entity.getMembername());
-        mUser.setmPictruePath(entity.getMemberHeadimg());
-        mUser.setFlag(true);
+        AppContext.set("mUserName",entity.getMembername());
+        AppContext.set("mPictruePath",entity.getMemberHeadimg());
     }
 
 

@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullFragment;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -15,7 +16,6 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.home.dto.SendDTO;
-import com.qluxstory.qingshe.home.entity.SendAddress;
 import com.qluxstory.qingshe.home.entity.SendEntity;
 import com.qluxstory.qingshe.home.entity.SendResult;
 
@@ -31,8 +31,6 @@ public class SendAddressFragment extends BasePullFragment {
     RecyclerView mSendList;
     BaseSimpleRecyclerAdapter mSendListAdapter;
     CheckBox mSendCk;
-    private String address;
-    SendAddress sa;
     private String rturn;
     @Override
     protected int getLayoutResId() {
@@ -64,8 +62,7 @@ public class SendAddressFragment extends BasePullFragment {
                 holder.setText(R.id.send_city,sendEntity.getDis_city());
                 holder.setText(R.id.send_area,sendEntity.getDis_area());
                 holder.setText(R.id.send_addre,sendEntity.getDis_address());
-                address = sendEntity.getSto_name()+sendEntity.getSto_phone()+sendEntity.getDis_province()+
-                        sendEntity.getDis_city()+sendEntity.getDis_area()+sendEntity.getDis_address();
+
             }
 
 
@@ -75,8 +72,10 @@ public class SendAddressFragment extends BasePullFragment {
 
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
+                SendEntity sendEntity = (SendEntity) itemBean;
                 mSendCk.setChecked(true);
-                sa.setAddress(address);
+                AppContext.set("Dis_province_send",sendEntity.getSto_name()+sendEntity.getSto_phone()+
+                        sendEntity.getDis_province()+sendEntity.getDis_city()+sendEntity.getDis_area());
                 getActivity().finish();
 
             }
@@ -102,9 +101,11 @@ public class SendAddressFragment extends BasePullFragment {
                         SendEntity sendEntity=sData.get(0);
                         if(sendEntity.getDis_address()==null) {
                             return;
+                        }else {
+                            mSendListAdapter.removeAll();
+                            mSendListAdapter.append(sData);
                         }
-                        mSendListAdapter.removeAll();
-                        mSendListAdapter.append(sData);
+
                     }
 
 

@@ -58,6 +58,20 @@ public class TransactionEntity extends BaseEntity{
               上门服务费
                 */
     private String ServiceMoney;
+    /*
+                   提交状态，1002为申请中，1004为成功
+                    */
+    private String TranState;
+
+    public String getTranState() {
+        return TranState;
+    }
+
+    public void setTranState(String tranState) {
+        TranState = tranState;
+    }
+
+
 
     public String getComCommission() {
         return comCommission;

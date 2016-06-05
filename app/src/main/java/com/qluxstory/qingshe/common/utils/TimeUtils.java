@@ -5,9 +5,10 @@ package com.qluxstory.qingshe.common.utils;
  */
 public class TimeUtils {
 
-    public static String getTime(){
+    public static String getSignTime(){
         long t=System.currentTimeMillis();
-        String st=(t+"").substring(0,11);
+        String st=(t+"").substring(0,11).trim();
         return st;
     }
+
 }

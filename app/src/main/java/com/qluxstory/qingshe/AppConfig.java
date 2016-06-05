@@ -38,5 +38,6 @@ public class AppConfig {
 	public static final String Server_Html="SMSBase/ReturnApp/ServerHtml.aspx?id=";
 	public static final String Server_SnatchCommodity="SMSBase/ReturnApp/SnatchCommodityHtml.aspx?id=";
 	public static final String Server_Special="SMSBase/ReturnApp/SpecialHtml.aspx?id=";
+	public static final String RegisterFrom = "android";
 
 }

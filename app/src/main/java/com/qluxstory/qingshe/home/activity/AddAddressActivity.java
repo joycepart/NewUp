@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.home.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.SecurityUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.dto.AddAddressDTO;
 import com.qluxstory.qingshe.home.entity.AddAddressEntity;
 import com.qluxstory.qingshe.home.entity.AddAddressResult;
@@ -46,7 +49,9 @@ public class AddAddressActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("新增地址");
+        mEtCity.setOnClickListener(this);
         consignee = AppContext.getInstance().getConsignee();
+
 
     }
 
@@ -65,6 +70,10 @@ public class AddAddressActivity extends BaseTitleActivity {
             case R.id.base_titlebar_back:
                 baseGoBack();
                 break;
+            case R.id.et_city:
+                Intent intent = new Intent(this,TestPopActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -72,7 +81,10 @@ public class AddAddressActivity extends BaseTitleActivity {
 
     private void reqAdd() {
         AddAddressDTO dto = new AddAddressDTO();
+        LogUtils.e("未加密前的----", TimeUtils.getSignTime()+AppConfig.SIGN_1);
+        LogUtils.e("加密后的---", SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));
         dto.setSign(AppConfig.SIGN_1);
+        dto.setTimestamp(TimeUtils.getSignTime());
         dto.setMembermob(AppContext.get("mobileNum",""));
         dto.setProvincity(mEtCity.getText().toString());
         dto.setDelivmobile(mEtNum.getText().toString());
@@ -84,10 +96,10 @@ public class AddAddressActivity extends BaseTitleActivity {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("添加收货地址成功");
                     AddAddressEntity addData  = result.getData().get(0);
-                    consignee.setAddredetail(addData.getAddreDetail());
-                    consignee.setConname(addData.getConName());
-                    consignee.setDelivmobile(addData.getDelivMobile());
-                    consignee.setProvincity(addData.getProvinCity());
+                    consignee.setProvincialCity(addData.getProvinCity());
+                    consignee.setDeliveredMobile(addData.getDelivMobile());
+                    consignee.setAddressInDetail(addData.getAddreDetail());
+                    consignee.setConsigneeName(addData.getConName());
                     finish();
                 }
 

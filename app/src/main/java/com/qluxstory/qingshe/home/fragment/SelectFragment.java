@@ -14,6 +14,8 @@ import com.qluxstory.qingshe.common.base.BasePullFragment;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.SecurityUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.dto.SelectDTO;
@@ -44,6 +46,7 @@ public class SelectFragment extends BasePullFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
+        consignee = AppContext.getInstance().getConsignee();
         mSelectAddress.setOnClickListener(this);
         mSelectList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mSelectListAdapter=new BaseSimpleRecyclerAdapter<SelectEntity>() {
@@ -55,14 +58,13 @@ public class SelectFragment extends BasePullFragment {
             @Override
             public void bindData(BaseRecyclerViewHolder holder, SelectEntity selectEntity, int position) {
                 mSelect = holder.getView(R.id.select_ck);
+                if(consignee!=null&&consignee.getItem()==position){
+                    mSelect.setChecked(true);
+                }
                 holder.setText(R.id.send_province,selectEntity.getProvinCity());
                 holder.setText(R.id.select_detail,selectEntity.getAddreDetail());
                 holder.setText(R.id.select_service,selectEntity.getConName());
                 holder.setText(R.id.select_ipone,selectEntity.getDelivMobile());
-//                holder.setText(R.id.send_province,consignee.getProvincity());
-//                holder.setText(R.id.select_detail,consignee.getAddredetail());
-//                holder.setText(R.id.select_service,consignee.getConname());
-//                holder.setText(R.id.select_ipone,consignee.getDelivmobile());
 
             }
 
@@ -74,8 +76,17 @@ public class SelectFragment extends BasePullFragment {
 
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
-//                mSelect.setChecked(true);
-//                getActivity().finish();
+                SelectEntity selectEntity = (SelectEntity) itemBean;
+                consignee.setConsigneeName(selectEntity.getConName());
+                consignee.setConsigneeCode(selectEntity.getConCode());
+                consignee.setAddressInDetail(selectEntity.getAddreDetail());
+                consignee.setDeliveredMobile(selectEntity.getDelivMobile());
+                consignee.setProvincialCity(selectEntity.getProvinCity());
+                consignee.setItem(position);
+
+//                AppContext.set("Dis_province_select",selectEntity.getConName()+selectEntity.getDelivMobile()+
+//                        selectEntity.getProvinCity()+selectEntity.getAddreDetail());
+                getActivity().finish();
 
             }
         });
@@ -92,8 +103,13 @@ public class SelectFragment extends BasePullFragment {
 
     private void reqSelect() {
         SelectDTO dto=new SelectDTO();
+
         dto.setConcode("");
+
         dto.setSign(AppConfig.SIGN_1);
+        LogUtils.e("未加密前的----", TimeUtils.getSignTime()+AppConfig.SIGN_1);
+        LogUtils.e("加密后的---",SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));
+        dto.setTimestamp(TimeUtils.getSignTime());
         dto.setMembermob(AppContext.get("mobileNum",""));
         CommonApiClient.selcet(getActivity(), dto, new CallBack<SelectResult>() {
             @Override
@@ -127,36 +143,4 @@ public class SelectFragment extends BasePullFragment {
         }
     }
 
-    public void upAddress(){
-        LogUtils.e("requestCode---upAddress","upAddress.HomeUiGoto.NEWADD_REQUEST");
-        mSelectListAdapter=new BaseSimpleRecyclerAdapter<SelectEntity>() {
-            @Override
-            public int getItemViewLayoutId() {
-                return R.layout.item_select_address;
-            }
-
-            @Override
-            public void bindData(BaseRecyclerViewHolder holder, SelectEntity selectEntity, int position) {
-                mSelect = holder.getView(R.id.select_ck);
-                holder.setText(R.id.send_province,consignee.getProvincity());
-                holder.setText(R.id.select_detail,consignee.getAddredetail());
-                holder.setText(R.id.select_service,consignee.getConname());
-                holder.setText(R.id.select_ipone,consignee.getDelivmobile());
-
-            }
-
-
-        };
-        mSelectList.setAdapter(mSelectListAdapter);
-        mSelectListAdapter.setOnItemClickListener(new BaseSimpleRecyclerAdapter.OnRecyclerViewItemClickListener(){
-
-            @Override
-            public void onItemClick(View itemView, Object itemBean, int position) {
-                mSelect.setChecked(true);
-                getActivity().finish();
-
-            }
-        });
-
-    }
 }

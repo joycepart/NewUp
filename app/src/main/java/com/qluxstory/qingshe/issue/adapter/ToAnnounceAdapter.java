@@ -17,11 +17,11 @@ public class ToAnnounceAdapter extends BaseSimpleRecyclerAdapter<ToAnnounceEntit
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, ToAnnounceEntity toAnnounceEntity, int position) {
-        holder.setText(R.id.toannounce_tv1,toAnnounceEntity.getSna_term());
+        holder.setText(R.id.toannounce_tv1,"第"+toAnnounceEntity.getSna_term()+"期");
         holder.setText(R.id.item_toan_tv,toAnnounceEntity.getSna_end_date());
         holder.setText(R.id.toannounce_tv3,toAnnounceEntity.getSna_lucky_people());
         holder.setText(R.id.toannounce_tv4,toAnnounceEntity.getSna_lucky_num());
-        holder.setText(R.id.toannounce_tv5,toAnnounceEntity.getSna_participate_count());
+        holder.setText(R.id.toannounce_tv5,toAnnounceEntity.getSna_participate_count()+"次");
 
     }
 }

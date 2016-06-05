@@ -13,6 +13,7 @@
         android:id="@+id/issue_img"
         android:layout_width="@dimen/ds_250"
         android:layout_height="@dimen/ds_250"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/ds_50"
         />
     <LinearLayout
@@ -52,7 +53,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ds_20"
+            android:layout_marginTop="@dimen/ds_10"
             android:orientation="horizontal">
 
         <TextView
@@ -72,7 +73,7 @@
                 android:id="@+id/issue_tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0%"
+                android:text="%"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/fs_45"/>
         </LinearLayout>

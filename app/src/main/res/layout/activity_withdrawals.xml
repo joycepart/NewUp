@@ -74,9 +74,10 @@
                 android:layout_toRightOf="@+id/withd_money"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center_vertical"
+                android:inputType="number"
                 android:background="@null"
                 android:hint="@string/withdrawals_money_ed"
-                android:textColor="@color/color_cc"
+                android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
                 />
         </RelativeLayout>
@@ -111,8 +112,8 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center_vertical"
                 android:background="@null"
-                android:text="@string/withdrawals_user_ed"
-                android:textColor="@color/color_cc"
+                android:hint="@string/withdrawals_user_ed"
+                android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
 
                 />
@@ -148,8 +149,8 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center_vertical"
                 android:background="@null"
-                android:text="@string/withdrawals_name_ed"
-                android:textColor="@color/color_cc"
+                android:hint="@string/withdrawals_name_ed"
+                android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
 
         </RelativeLayout>
@@ -186,8 +187,8 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center_vertical"
                 android:background="@null"
-                android:text="@string/withdrawals_num_edit"
-                android:textColor="@color/color_cc"
+                android:hint="@string/withdrawals_num_edit"
+                android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
 
         </RelativeLayout>
@@ -223,8 +224,8 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center_vertical"
                 android:background="@null"
-                android:text="@string/withdrawals_bank"
-                android:textColor="@color/color_cc"
+                android:hint="@string/withdrawals_bank"
+                android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
 
         </RelativeLayout>
@@ -235,6 +236,7 @@
         android:background="@color/color_cc" />
 
 <TextView
+    android:id="@+id/with_tv_t"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/ds_20"

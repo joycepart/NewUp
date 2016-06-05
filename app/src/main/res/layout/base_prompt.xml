@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_ff"
+    android:background="@drawable/prompt_box_no"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:id="@+id/prompt_tv_yes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_15"
         android:background="@null"
         android:textSize="@dimen/fs_60"
         android:gravity="center"

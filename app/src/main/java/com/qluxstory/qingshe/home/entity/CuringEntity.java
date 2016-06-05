@@ -20,6 +20,18 @@ public class CuringEntity extends BaseEntity {
     private String sell_first_discription;
     /*是否启用*/
     private String IsYesOrNo;
+    /*服务名称 专业 维护（3）/清洗（ 1）/修复（2）*/
+    private String sell_sort;
+
+    public String getSell_sort() {
+        return sell_sort;
+    }
+
+    public void setSell_sort(String sell_sort) {
+        this.sell_sort = sell_sort;
+    }
+
+
 
     public String getIsYesOrNo() {
         return IsYesOrNo;

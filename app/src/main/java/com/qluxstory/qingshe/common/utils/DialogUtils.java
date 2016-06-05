@@ -53,9 +53,11 @@ public class DialogUtils {
 	 * 提示对话框
 	 *
 	 * @param context
+	 * @param mes
+	 * @param btn
 	 * @return
 	 */
-	public static Dialog showPrompt(Context context, String messge) {
+	public static Dialog showPrompt(Context context, String mes, String btn) {
 		final Dialog dialog =  new Dialog(context, R.style.CommonLoadingShadeDialog);;
 		View mView = LayoutInflater.from(context).inflate(
 				R.layout.base_prompt, null);
@@ -72,8 +74,11 @@ public class DialogUtils {
 			}
 		});
 		tv.setTextColor(ContextCompat.getColor(context,R.color.color_00));
-		if (!TextUtils.isEmpty(messge)) {
-			tv.setText(messge);
+		if (!TextUtils.isEmpty(mes)) {
+			tv.setText(mes);
+		}
+		if (!TextUtils.isEmpty(btn)) {
+			mTvYes.setText(btn);
 		}
 		dialog.setContentView(mView);
 		dialog.show();

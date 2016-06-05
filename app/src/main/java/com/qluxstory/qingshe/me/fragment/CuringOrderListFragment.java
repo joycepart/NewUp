@@ -6,10 +6,13 @@ import android.view.View;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
+import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseListFragment;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
+import com.qluxstory.qingshe.common.widget.EmptyLayout;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.activity.CuringOrderActivity;
 import com.qluxstory.qingshe.me.adapter.CuringOrderAdapter;
@@ -26,8 +29,6 @@ import java.util.List;
 public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEntity> {
     private static final String TYPE = "type";
     private int type;
-    private String mOrderNum;
-    List<CuringOrderListEntity> entity;
 
 
     public static CuringOrderListFragment newInstance(int type) {
@@ -78,15 +79,21 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
         cdto.setMembermob(AppContext.get("mobileNum",""));
         cdto.setAppreqtype(type);
         cdto.setSign(AppConfig.SIGN_1);
+        cdto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.CuringOrderList(this, cdto, new CallBack<CuringOrderListResult>() {
             @Override
             public void onSuccess(CuringOrderListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("养护订单成功");
-                    requestDataSuccess(result);
-                    setDataResult(result.getData());
-                    entity = result.getData();
-//                    mOrderNum = result.getData().get(0).getOrderNum();
+                    mErrorLayout.setErrorMessage("暂无交易明细记录",mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
+                    if(result.getData().get(0).getComName()==null){
+                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+                    }else {
+                        requestDataSuccess(result);
+                        setDataResult(result.getData());
+                    }
+
                 }
 
             }
@@ -101,10 +108,10 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
         super.onItemClick(itemView, itemBean, position);
+        CuringOrderListEntity entitiy = (CuringOrderListEntity) itemBean;
         Bundle b = new Bundle();
-        CuringOrderListEntity entity=(CuringOrderListEntity)itemBean;
-        b.putSerializable("entity",entity);
-        MeUiGoto.curingOrderdetails(getActivity(),b);
+        b.putSerializable("entitiy",entitiy);
+        MeUiGoto.curingOrderdetails(getActivity(),b);//养护订单详情
 
     }
 }

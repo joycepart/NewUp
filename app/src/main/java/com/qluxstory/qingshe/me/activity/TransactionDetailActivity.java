@@ -10,6 +10,7 @@ import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.entity.TransactionEntity;
 import com.qluxstory.qingshe.me.entity.TransactionResult;
 
@@ -36,6 +37,7 @@ public class TransactionDetailActivity extends BaseTitleActivity {
         BaseDTO bdto=new BaseDTO();
         bdto.setMembermob(strPhoneNum);
         bdto.setSign(AppConfig.SIGN_1);
+        bdto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.getTransaction(this, bdto, new CallBack<TransactionResult>() {
             @Override
             public void onSuccess(TransactionResult result) {

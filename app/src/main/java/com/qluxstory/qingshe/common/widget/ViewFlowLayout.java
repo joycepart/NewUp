@@ -104,7 +104,7 @@ public class ViewFlowLayout extends RelativeLayout {
             final ViewFlowBean bean = beans.get(i);
             final ImageView imageView = new ImageView(context_);
             imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setTag(bean);
             ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
 

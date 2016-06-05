@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.issue.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -56,7 +57,8 @@ public class SettlementActivity extends BaseTitleActivity {
     LinearLayout mPayBalance;
     String mCaTerm;
     String mCaTitle;
-    String mCaNum;
+    String mBalance;
+    String mPic;
 
     @Override
     protected int getContentResId() {
@@ -66,12 +68,18 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("结算");
-        mCaTerm = getIntent().getBundleExtra("bundle").getString("mCaTerm");
-        mCaTitle = getIntent().getBundleExtra("bundle").getString("mCaTitle");
-        mCaNum = getIntent().getBundleExtra("bundle").getString("mCaNum");
-        mTitle.setText(mCaTitle);
-        mTerm.setText(mCaTerm);
-        ImageLoaderUtils.displayImage(mCaNum,mImg);
+        Intent intent = getIntent();
+        if(intent!=null){
+            mCaTerm = intent.getBundleExtra("bundle").getString("mTerm");
+            mCaTitle = intent.getBundleExtra("bundle").getString("mTitle");
+            mBalance = intent.getBundleExtra("bundle").getString("mBalance");
+            mPic = intent.getBundleExtra("bundle").getString("mPic");
+            mTitle.setText(mCaTitle);
+            mTerm.setText("第"+mCaTerm+"期");
+            mPlaceNm.setText(mBalance);
+            ImageLoaderUtils.displayImage(mPic,mImg);
+        }
+
         mSetAgree.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 

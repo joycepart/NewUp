@@ -15,9 +15,9 @@ import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.me.MeUiGoto;
-import com.qluxstory.qingshe.me.entity.User;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -82,21 +82,25 @@ public class MeFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        User user =AppContext.getInstance().getUser();
-        if(user!=null && user.getFlag()==true){
+        Boolean bool = AppContext.get("isLogin",true);
+        if(bool=true){
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
             mMeLlClose.setVisibility(View.VISIBLE);
-            userName = user.getmUserName();
-            pictruePath = user.getmPictruePath();
+            userName = AppContext.get("mUserName","");
+            pictruePath = AppContext.get("mPictruePath","");
+            LogUtils.e("userName-----",userName);
+            LogUtils.e("mPictruePath-----",pictruePath);
             mLoingTvName.setText(userName);
-            ImageLoaderUtils.displayImage(pictruePath,mLoginImgPic);
+            ImageLoaderUtils.displayAvatarImage(pictruePath,
+                    mLoginImgPic);
 
         }else {
             mLoginLl.setVisibility(View.VISIBLE);
             mLoingSuc.setVisibility(View.GONE);
             mMeLlClose.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -157,13 +161,9 @@ public class MeFragment extends BaseFragment {
                 mLoingSuc.setVisibility(View.GONE);
                 mMeLlClose.setVisibility(View.GONE);
                 AppContext.set("isLogin",false);
-                AppContext.getInstance().getUser().setFlag(false);
                 break;
         }
     }
 
-    public void updata(){
-        mLoingTvName.setText(AppContext.getInstance().getUser().getmUserName());
-    }
 
 }

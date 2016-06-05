@@ -1,5 +1,8 @@
 package com.qluxstory.qingshe.me.adapter;
 
+import android.view.View;
+import android.widget.LinearLayout;
+
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.R;
@@ -16,9 +19,23 @@ public class TransactionDetailAdapter extends BaseSimpleRecyclerAdapter<Transact
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, TransactionEntity transactionEntity, int position) {
-        holder.setText(R.id.tran_detail_tv,transactionEntity.getComName());
+        LinearLayout lin = holder.getView(R.id.details_lin);
+        if(transactionEntity.getComName().equals("提现")){
+            lin.setVisibility(View.VISIBLE);
+
+            if(transactionEntity.getTranState().equals("1002")){
+                holder.setText(R.id.tran_detail_gone,"申请中");
+            }
+            if(transactionEntity.getTranState().equals("1004")){
+                holder.setText(R.id.tran_detail_gone,"成功");
+            }
+        }else {
+            lin.setVisibility(View.GONE);
+        }
+        holder.setText(R.id.tran_detail_name,transactionEntity.getComName());
         holder.setText(R.id.tran_detail_data,transactionEntity.getComTradingData());
-        holder.setText(R.id.tran_detail_money,transactionEntity.getComPrice());
+        holder.setText(R.id.tran_detail_time,transactionEntity.getComTradingTime());
+        holder.setText(R.id.tran_detail_money,transactionEntity.getComIncomeAmount());
 
     }
 }

@@ -27,7 +27,7 @@ public class EmptyLayout extends LinearLayout implements
     private OnClickListener listener;
     private int mErrorState;
 
-    private TextView tv;
+    private TextView tv,mTv;
 
     public static final int FLAG_HTTP_FAIL=0;
     public static final int FLAG_NONET=1;
@@ -55,6 +55,7 @@ public class EmptyLayout extends LinearLayout implements
         View view = View.inflate(context, R.layout.view_error_layout, null);
         img = (ImageView) view.findViewById(R.id.img_error_layout);
         tv = (TextView) view.findViewById(R.id.tv_error_layout);
+        mTv = (TextView) view.findViewById(R.id.tv_tv_error_layout);
         animProgress = (ProgressBar) view.findViewById(R.id.animProgress);
         setBackgroundColor(-1);
         setOnClickListener(this);
@@ -125,12 +126,14 @@ public class EmptyLayout extends LinearLayout implements
             }
             img.setVisibility(View.VISIBLE);
             animProgress.setVisibility(View.GONE);
+//            mTv.setVisibility(View.GONE);
             clickEnable = true;
             break;
         case NETWORK_LOADING:
             mErrorState = NETWORK_LOADING;
             animProgress.setVisibility(View.VISIBLE);
             img.setVisibility(View.GONE);
+//            mTv.setVisibility(View.GONE);
             tv.setText(R.string.error_view_loading);
             clickEnable = false;
             break;
@@ -140,6 +143,7 @@ public class EmptyLayout extends LinearLayout implements
             img.setVisibility(View.VISIBLE);
             animProgress.setVisibility(View.GONE);
             tv.setText(tvMsgResId[FLAG_NODATA]);
+//            mTv.setVisibility(View.VISIBLE);
             clickEnable = true;
             break;
         case HIDE_LAYOUT:
