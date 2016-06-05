@@ -45,7 +45,7 @@ public class BindListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder = null;
         if (convertView == null) {
-            convertView =  LayoutInflater.from(context).inflate(R.layout.item_pop_withdrawals, parent, false);
+            convertView =  LayoutInflater.from(context).inflate(R.layout.item_common_pop, parent, false);
             ViewGroup.LayoutParams params = convertView.getLayoutParams();
             convertView.setLayoutParams(params);
             mViewHolder = new ViewHolder(convertView);

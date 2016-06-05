@@ -1,17 +1,12 @@
 package com.qluxstory.qingshe.me.activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
@@ -25,7 +20,6 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
-import com.qluxstory.qingshe.me.adapter.BindListAdapter;
 import com.qluxstory.qingshe.me.dto.WithdrawalsDTO;
 import com.qluxstory.qingshe.me.entity.Bank;
 
@@ -127,44 +121,44 @@ public class WithdrawalsActivity extends BaseTitleActivity {
 
     private void showPopWith(String[] list) {
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.pop_withdrawals, null);
-        dialog = DialogUtils.showDialog(this, view);
-
-        ListView listView = (ListView) view.findViewById(R.id.listview);
-        TextView mCancel = (TextView) view.findViewById(R.id.tv_cancel);
-        TextView mDetermine = (TextView) view.findViewById(R.id.tv_determine);
-        final BindListAdapter adapter=new BindListAdapter(this,list);
-        listView.setAdapter(adapter);
-        mCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-
-        mDetermine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mWithdTv.setText(mStr[item]);
-                dialog.dismiss();
-            }
-        });
-
-        listView.setOnTouchListener(new AdapterView.OnTouchListener(){
-                                        @Override
-                                        public boolean onTouch(View v, MotionEvent event) {
-                                            return false;
-                                        }
-                                    }
-        );
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                item = position;
-            }
-        });
+//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        final View view = inflater.inflate(R.layout.view_common_pop, null);
+//        dialog = DialogUtils.showDialog(this, view);
+//
+//        ListView listView = (ListView) view.findViewById(R.id.listview);
+//        TextView mCancel = (TextView) view.findViewById(R.id.tv_cancel);
+//        TextView mDetermine = (TextView) view.findViewById(R.id.tv_determine);
+//        final BindListAdapter adapter=new BindListAdapter(this,list);
+//        listView.setAdapter(adapter);
+//        mCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//
+//        mDetermine.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mWithdTv.setText(mStr[item]);
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        listView.setOnTouchListener(new AdapterView.OnTouchListener(){
+//                                        @Override
+//                                        public boolean onTouch(View v, MotionEvent event) {
+//                                            return false;
+//                                        }
+//                                    }
+//        );
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                item = position;
+//            }
+//        });
 //        popMenus = new PopuoWithdrawals(this,itemsOnClick);
 //
 //        popMenus.showAtLocation(this.findViewById(R.id.with_tv_t),

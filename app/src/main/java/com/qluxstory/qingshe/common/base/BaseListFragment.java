@@ -106,7 +106,10 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
                 mPtrRecyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPtrRecyclerView.autoRefresh();
+                        showDialogLoading();
+                        action = ACTION_PULL_REFRESH;
+                        mCurrentPage = 1;
+                        requestData();
                     }
                 }, 100);
             }
@@ -147,6 +150,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
     public abstract BaseRecyclerAdapter<T> createAdapter();
 
     public void setDataResult(List<T> list) {
+        hideDialogLoading();
         reset();
         mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
         if (list == null || list.size() == 0) {
@@ -192,6 +196,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
     protected void requestData() {
         if (!cache()) {
             if (!TDevice.hasInternet(getActivity())) {
+                hideDialogLoading();
                 mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             } else {
                 sendRequestData();
@@ -206,6 +211,7 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
                     ) {
                 readCacheData(key);
             } else {
+                hideDialogLoading();
                 mErrorLayout.setErrorType(EmptyLayout.NETWORK_ERROR);
             }
         } else {

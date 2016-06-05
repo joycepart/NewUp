@@ -96,11 +96,15 @@ public class MyIncomeActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.income_Btn:
-                if(mCashaMountMoney.equals("0.00")){
+                if(mCashaMountMoney==null){
                     DialogUtils.showPrompt(this,"暂无可提现余额","确定");
-
-                }else {
-                    MeUiGoto.withd(this);//申请提现
+                }else{
+                    double cash=Double.parseDouble(mCashaMountMoney);
+                    if(cash==0){
+                        DialogUtils.showPrompt(this,"暂无可提现余额","确定");
+                    }else{
+                        MeUiGoto.withd(this);//申请提现
+                    }
                 }
                 break;
 

@@ -177,6 +177,7 @@ public abstract class BaseFragment extends Fragment implements
     public void retryBefore(){}
 
     public void onEventMainThread(ErrorEvent event) {
+        hideDialogLoading();
         String status = event.getStatus();
         String message = event.getMsg();
         if (event.getTag().equals(this)) {
