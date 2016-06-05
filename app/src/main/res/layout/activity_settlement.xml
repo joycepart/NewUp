@@ -5,7 +5,7 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_260"
+        android:layout_height="@dimen/ds_360"
         android:background="@color/color_ff"
         android:orientation="horizontal">
         <ImageView

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -78,7 +79,12 @@ public class SettlementActivity extends BaseTitleActivity {
             mPlaceNm.setText(mBalance);
             ImageLoaderUtils.displayImage(mPic,mImg);
         }
+        mInBtn.setText(AppContext.get("mobileNum",""));
 
+        mPayWx.setOnClickListener(this);
+        mPayAlipay.setOnClickListener(this);
+        mPayBalance.setOnClickListener(this);
+        mSetTv.setOnClickListener(this);
         mSetAgree.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
@@ -123,6 +129,7 @@ public class SettlementActivity extends BaseTitleActivity {
                 mSetZhi.setChecked(false);
                 mSetHui.setChecked(true);
                 break;
+
         }
         super.onClick(v);
     }
@@ -145,9 +152,9 @@ public class SettlementActivity extends BaseTitleActivity {
         gdto.setBat_code("");
         gdto.setSna_code("");
         gdto.setRec_participate_count("");
-        gdto.setBalance("");
+        gdto.setBalance(mBalance);
         gdto.setSna_total_count("");
-        gdto.setTerm("");
+        gdto.setTerm(mCaTerm);
         gdto.setRec_code("");
         gdto.setSign(AppConfig.SIGN_1);
         CommonApiClient.settlement(this, gdto, new CallBack<SettlementResult>() {

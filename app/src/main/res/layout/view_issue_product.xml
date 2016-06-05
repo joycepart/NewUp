@@ -89,6 +89,38 @@
             android:textSize="@dimen/fs_65"
             android:textColor="@color/color_00"
             android:text="@string/issue_no_activity"/>
+
+    <LinearLayout
+        android:id="@+id/product_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/fs_65"
+            android:textColor="@color/color_00"
+            android:text="@string/product_num"/>
+        <TextView
+            android:id="@+id/product_participate_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/fs_65"
+            android:textColor="@color/color_c0"
+            android:text="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/fs_65"
+            android:textColor="@color/color_00"
+            android:text="@string/product_text"/>
+    </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_30"

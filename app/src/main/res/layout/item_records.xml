@@ -110,7 +110,7 @@
             android:layout_marginRight="@dimen/ds_30"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_while"
-            android:text="@string/continue_indiana"
+            android:text=""
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50" />
     </RelativeLayout>

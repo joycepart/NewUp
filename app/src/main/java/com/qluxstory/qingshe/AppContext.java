@@ -8,6 +8,7 @@ import com.qluxstory.qingshe.common.utils.SerializableUtils;
 import com.qluxstory.qingshe.home.entity.Address;
 import com.qluxstory.qingshe.home.entity.Consignee;
 import com.qluxstory.qingshe.home.entity.ProductDetails;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.me.entity.User;
 
 import java.io.IOException;
@@ -26,7 +27,45 @@ public class AppContext  extends BaseApplication {
     private static Address mAddress = null;
     public static final String PROUDCTDETAILS = "productDetails";
     private static ProductDetails mProductDetails = null;
+    public static final String ISSUEPROUDCTD = "issueProduct";
+    private static IssueProduct mIssueProduct = null;
 
+    /**
+     * 夺宝之商品信息
+     * @param issueProduct
+     */
+    public void setIssueProduct(IssueProduct issueProduct) {
+        String str = "";
+        try {
+            str = SerializableUtils.obj2Str(issueProduct);
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        this.editor.putString(ISSUEPROUDCTD, str);
+        this.editor.commit();
+        mIssueProduct = issueProduct;
+    }
+
+    public IssueProduct getIssueProduct() {
+        if (mIssueProduct == null) {
+            mIssueProduct = new IssueProduct();
+            // 获取序列化的数据
+            String str = this.sp.getString(ISSUEPROUDCTD, "");
+
+            try {
+                Object obj = SerializableUtils.str2Obj(str);
+                if (obj != null) {
+                    mIssueProduct = (IssueProduct) obj;
+                }
+
+            } catch (StreamCorruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return mIssueProduct;
+    }
     /**
      * 专业养护之商品信息
      * @param productDetails

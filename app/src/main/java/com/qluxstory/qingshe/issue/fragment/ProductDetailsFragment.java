@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.Button;
 
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 
+import butterknife.Bind;
+
 /**
  * 夺宝 商品详情的fragment
  */
 public class ProductDetailsFragment extends BaseFragment {
+    @Bind(R.id.in_btn)
+    Button mBtn;
 
     @Override
     protected void retry() {
@@ -27,9 +32,11 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        FrameFragment frameFragment = new FrameFragment();
+        mBtn.setOnClickListener(this);
+        ProductFrameFragment frameFragment = new ProductFrameFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        frameFragment.setArguments(getArguments());
         fragmentTransaction.replace(R.id.issue_product_frame, frameFragment);
         fragmentTransaction.commit();
 
@@ -37,6 +44,20 @@ public class ProductDetailsFragment extends BaseFragment {
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            case R.id.in_btn:
+                showPop();
+                break;
+           
+        }
+    }
+
+    private void showPop() {
     }
 
     @Override

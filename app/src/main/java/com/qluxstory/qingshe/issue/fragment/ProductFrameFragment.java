@@ -1,12 +1,10 @@
 package com.qluxstory.qingshe.issue.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -14,7 +12,7 @@ import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.base.BaseFragment;
+import com.qluxstory.qingshe.common.base.BasePullScrollViewFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.bean.ViewFlowBean;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -23,7 +21,6 @@ import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
-import com.qluxstory.qingshe.common.widget.PopupProductDetails;
 import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.dto.DetailsDTO;
@@ -47,13 +44,15 @@ import butterknife.Bind;
 /**
  * Created by lenovo on 2016/6/5.
  */
-public class FrameFragment extends BaseFragment {
+public class ProductFrameFragment extends BasePullScrollViewFragment {
     @Bind(R.id.issue_vf_layout)
     ViewFlowLayout mVfLayout;
     @Bind(R.id.issue_rcy_list)
     RecyclerView mIssuelList;
     @Bind(R.id.issue_product_it)
     LinearLayout mIt;
+    @Bind(R.id.product_lin)
+    LinearLayout mLin;
     @Bind(R.id.issue_product_past)
     LinearLayout mPast;
     @Bind(R.id.iss_pro_tv_term)
@@ -64,6 +63,8 @@ public class FrameFragment extends BaseFragment {
     TextView mRandom;
     @Bind(R.id.iss_pro_people)
     TextView mPeople;
+    @Bind(R.id.product_participate_num)
+    TextView mParticipateNum;
     @Bind(R.id.iss_pro_peo)
     TextView mPeo;
     @Bind(R.id.product_data)
@@ -79,30 +80,14 @@ public class FrameFragment extends BaseFragment {
     private String mBat;
     private String mSna;
     private String mUrl;
-    PopupProductDetails popMenus;
-    private View view;
-    private PopupWindow popupWindow;
-    private FragmentTransaction fragmentTransaction;
-    private FragmentManager fragmentManager;
-    @Override
-    protected void retry() {
-
-    }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_frame;
+        return R.layout.fragment_product_frame;
     }
 
     @Override
     public void initView(View view) {
-        mIt.setOnClickListener(this);
-        mPast.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void initData() {
         Bundle b  = getArguments();
         if(b!=null){
             mBat=  b.getString("bat");
@@ -111,6 +96,13 @@ public class FrameFragment extends BaseFragment {
         }else{
             return;
         }
+        mIt.setOnClickListener(this);
+        mPast.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void initData() {
 
         reqPic();//夺宝商品图片
         reqDetails();//夺宝详情
@@ -149,10 +141,12 @@ public class FrameFragment extends BaseFragment {
             public void onSuccess(LanderInResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("登陆者参与的次数成功");
-                    if(result.getData().get(0).getReceive_ran_num()!=null){
-                        mParticipate.setText("您参与了"+result.getData().get(0).getReceive_ran_num()+"次夺宝");
-                    }else {
+                    if(TextUtils.isEmpty(result.getData().get(0).getReceive_ran_num())){
+                        mLin.setVisibility(View.GONE);
                         mParticipate.setText("您未参与本次夺宝活动");
+                    }else {
+                        mLin.setVisibility(View.VISIBLE);
+                        mParticipateNum.setText(result.getData().get(0).getReceive_ran_num());
                     }
 
                 }
@@ -260,9 +254,6 @@ public class FrameFragment extends BaseFragment {
                 Bundle b = new Bundle();
                 b.putString("mSnaCode",mSnaCode);
                 UIHelper.showFragment(getActivity(), SimplePage.TOANNOUNCE,b);//往期揭晓
-                break;
-            case R.id.in_btn:
-//                showPopMenu();
                 break;
 
         }
