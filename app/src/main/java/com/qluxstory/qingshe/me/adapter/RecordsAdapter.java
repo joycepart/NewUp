@@ -80,10 +80,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                 if(btn.getText().toString().equals("继续夺宝")){
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("tag",2);
-                    if(mContext!=null)
-                    {
-                        mContext.startActivity(intent);
-                    }
+                    mContext.startActivity(intent);
                 }else {
                     Intent intent = new Intent(mContext, SettlementActivity.class);
                     Bundle bundle = new Bundle();
