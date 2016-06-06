@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120">
+        <LinearLayout
+            android:id="@+id/ll_text1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f1f1f1"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/ll_text1_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="学朴槿惠穿衣风格"
+                android:textColor="#3b3b3b"
+                android:ellipsize="end"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-    <com.qluxstory.qingshe.common.widget.VerticalScrollText
-        android:id="@+id/sampleView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:lines="1"
-        />
-
+        <LinearLayout
+            android:id="@+id/ll_text2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f1f1f1"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/ll_text2_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:text="能穿出N中风格的打底衫"
+                android:textColor="#3b3b3b"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
