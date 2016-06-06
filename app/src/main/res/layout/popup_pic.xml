@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
     <LinearLayout
-        android:background="@drawable/prompt_box"
+        android:background="@drawable/prompt_box_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -49,7 +49,7 @@
         android:id="@+id/btn_alter_exit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_150"
-        android:background="@drawable/prompt_box"
+        android:background="@drawable/prompt_box_no"
         android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:layout_marginTop="@dimen/ds_30"

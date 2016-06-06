@@ -105,6 +105,7 @@
             android:id="@+id/records_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:padding="@dimen/ds_15"
             android:layout_marginTop="@dimen/ds_20"
             android:layout_marginBottom="@dimen/ds_20"
             android:layout_marginRight="@dimen/ds_30"

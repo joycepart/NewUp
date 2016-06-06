@@ -22,15 +22,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/ds_15"
-            android:text="@string/me_free"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text=""
             android:textColor="@color/color_ff"
-            android:textSize="@dimen/fs_80"/>
+            android:textSize="@dimen/fs_50"/>
 
         <TextView
             android:id="@+id/coupon_vt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/ds_30"
             android:text="@string/me_coupon"
             android:textColor="@color/color_ff"
             android:textSize="@dimen/fs_40"/>

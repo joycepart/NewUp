@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.common.widget.PopupProductDetails;
+import com.qluxstory.qingshe.issue.activity.PaymentSuccessActivity;
 import com.qluxstory.qingshe.issue.activity.SettlementActivity;
 
 /**
@@ -33,6 +35,28 @@ public class IssueUiGoto {
     public static void settlement(Context context, Bundle bundle) {
         Intent intent = new Intent(context, SettlementActivity.class);
         intent.putExtra("bundle",bundle);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到首页
+     *
+     * @param context
+     */
+
+    public static void home(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("tag",0);
+        context.startActivity(intent);
+    }
+    /**
+     * 跳转到支付结果页
+     *
+     * @param context
+     */
+
+    public static void payment(Context context) {
+        Intent intent = new Intent(context, PaymentSuccessActivity.class);
         context.startActivity(intent);
     }
 

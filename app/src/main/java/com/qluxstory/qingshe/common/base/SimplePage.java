@@ -26,6 +26,7 @@ public enum SimplePage{
     CALULATION(9, R.string.calculation_details, CalculationFragment.class),
     SEND_ADDRESS(10, R.string.order_receipt_choice, SendAddressFragment.class),
     SELECT_ADDRESS(11, R.string.order_receipt_choice, SelectFragment.class),
+    STORE(12, R.string.order_receipt_store, SendAddressFragment.class),
     ;
 
     private int title;

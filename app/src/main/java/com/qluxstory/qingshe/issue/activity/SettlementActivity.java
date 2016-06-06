@@ -1,6 +1,7 @@
 package com.qluxstory.qingshe.issue.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,8 +18,10 @@ import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.dto.SettlementDTO;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.SettlementResult;
 
 import butterknife.Bind;
@@ -59,6 +62,12 @@ public class SettlementActivity extends BaseTitleActivity {
     String mCaTitle;
     String mBalance;
     String mPic;
+    String mTotalVount;
+    String mParticipate;
+    String mRecCode;
+    String mBatCode;
+    String mSnaCode  ;
+    IssueProduct issueProduct;
 
     @Override
     protected int getContentResId() {
@@ -68,19 +77,34 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("结算");
+        issueProduct = AppContext.getInstance().getIssueProduct();
+        mCaTerm = issueProduct.getmSnaTerm();
+        mCaTitle = issueProduct.getmSnaTitle();
+        mPic = issueProduct.getmPicUrl();
+        mTotalVount = issueProduct.getmTotalCount();
+        mParticipate = issueProduct.getmSnaOut();
+        mBatCode = issueProduct.getmBatCode();
+        mSnaCode = issueProduct.getmSnaCode();
+        if(!TextUtils.isEmpty(issueProduct.getmRecCode())){
+            mRecCode = issueProduct.getmRecCode();
+        }else {
+            mRecCode = "";
+        }
+
+        mTitle.setText(mCaTitle);
+        mTerm.setText("第"+mCaTerm+"期");
+        mPlaceNm.setText(mBalance);
+        ImageLoaderUtils.displayImage(mPic,mImg);
+
         Intent intent = getIntent();
         if(intent!=null){
-            mCaTerm = intent.getBundleExtra("bundle").getString("mTerm");
-            mCaTitle = intent.getBundleExtra("bundle").getString("mTitle");
             mBalance = intent.getBundleExtra("bundle").getString("mBalance");
-            mPic = intent.getBundleExtra("bundle").getString("mPic");
-            mTitle.setText(mCaTitle);
-            mTerm.setText("第"+mCaTerm+"期");
             mPlaceNm.setText(mBalance);
-            ImageLoaderUtils.displayImage(mPic,mImg);
         }
-        mInBtn.setText(AppContext.get("mobileNum",""));
 
+
+        mInBtn.setText(AppContext.get("mobileNum",""));
+        mPayBtn.setOnClickListener(this);
         mPayWx.setOnClickListener(this);
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
@@ -147,23 +171,25 @@ public class SettlementActivity extends BaseTitleActivity {
             gdto.setType("3");
         }
 
-        gdto.setUserPhone("");
-        gdto.setInfor_phone("");
-        gdto.setBat_code("");
-        gdto.setSna_code("");
-        gdto.setRec_participate_count("");
+        gdto.setUserPhone(AppContext.get("mobileNum",""));
+        gdto.setInfor_phone(AppContext.get("mobileNum",""));
+        gdto.setBat_code(mBatCode);
+        gdto.setSna_code(mSnaCode);
+        gdto.setRec_participate_count(mParticipate);
         gdto.setBalance(mBalance);
-        gdto.setSna_total_count("");
+        gdto.setSna_total_count(mTotalVount);
         gdto.setTerm(mCaTerm);
-        gdto.setRec_code("");
+        gdto.setRec_code(mRecCode);
         gdto.setSign(AppConfig.SIGN_1);
+        gdto.setTime(TimeUtils.getSignTime());
         CommonApiClient.settlement(this, gdto, new CallBack<SettlementResult>() {
             @Override
             public void onSuccess(SettlementResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("结算成功");
-                }
 
+                }
+                IssueUiGoto.payment(SettlementActivity.this);//支付结果页
             }
         });
 

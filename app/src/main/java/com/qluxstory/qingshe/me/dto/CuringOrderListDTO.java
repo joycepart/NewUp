@@ -7,15 +7,19 @@ import com.qluxstory.qingshe.common.dto.BaseDTO;
  */
 public class CuringOrderListDTO extends BaseDTO {
     /*请求状态(不填是请求全部)
-                    */
-    private int appreqtype;
-    public int getAppreqtype() {
+                                */
+    private String appreqtype;
+
+    public String getAppreqtype() {
         return appreqtype;
     }
 
-    public void setAppreqtype(int appreqtype) {
+    public void setAppreqtype(String appreqtype) {
         this.appreqtype = appreqtype;
     }
+
+
+
 
 
 

@@ -13,7 +13,7 @@ public class CalculationEntity extends BaseEntity {
     /*
                    当前时间(int型)
                               */
-    private int calc_number;
+    private String calc_number;
     /*
                     当前时间所属人
                               */
@@ -43,11 +43,11 @@ public class CalculationEntity extends BaseEntity {
         this.calc_date = calc_date;
     }
 
-    public int getCalc_number() {
+    public String getCalc_number() {
         return calc_number;
     }
 
-    public void setCalc_number(int calc_number) {
+    public void setCalc_number(String calc_number) {
         this.calc_number = calc_number;
     }
 

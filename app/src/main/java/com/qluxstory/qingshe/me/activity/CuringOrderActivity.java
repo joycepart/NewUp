@@ -20,10 +20,10 @@ import butterknife.Bind;
  * 养护订单主页面
  */
 public class CuringOrderActivity extends BaseTitleActivity {
-    public static final int TAB_A = 000;
-    public static final int TAB_B = 0;
-    public static final int TAB_C = 10;
-    public static final int TAB_D = 5;
+    public static final int TAB_A = 1;
+    public static final int TAB_B = 2;
+    public static final int TAB_C = 3;
+    public static final int TAB_D = 4;
     @Bind(R.id.base_titlebar_ensure)
     TextView mBaseTitlebarEnsure;
     @Bind(R.id.curing_tab)

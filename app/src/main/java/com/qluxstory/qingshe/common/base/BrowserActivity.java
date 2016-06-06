@@ -58,7 +58,9 @@ public class BrowserActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
+
         mWebView.loadUrl(strUrl);
+//        mWebView.setWebViewClient("");
     }
 
     @Override

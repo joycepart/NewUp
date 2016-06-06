@@ -29,6 +29,7 @@ import com.qluxstory.qingshe.issue.dto.PicDTO;
 import com.qluxstory.qingshe.issue.entity.IndianaListEntity;
 import com.qluxstory.qingshe.issue.entity.IssDetailsEntity;
 import com.qluxstory.qingshe.issue.entity.IssDetailsResult;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.LanderInResult;
 import com.qluxstory.qingshe.issue.entity.PicEntity;
 import com.qluxstory.qingshe.issue.entity.PicResult;
@@ -51,8 +52,9 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     RecyclerView mIssuelList;
     @Bind(R.id.issue_product_it)
     LinearLayout mIt;
-    @Bind(R.id.product_lin)
-    LinearLayout mLin;
+    @Bind(R.id.issue_product_lin)
+    LinearLayout mProductLin;
+
     @Bind(R.id.issue_product_past)
     LinearLayout mPast;
     @Bind(R.id.iss_pro_tv_term)
@@ -80,6 +82,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     private String mBat;
     private String mSna;
     private String mUrl;
+    IssueProduct issueProduct;
 
     @Override
     protected int getLayoutResId() {
@@ -88,6 +91,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
 
     @Override
     public void initView(View view) {
+        issueProduct = AppContext.getInstance().getIssueProduct();
         Bundle b  = getArguments();
         if(b!=null){
             mBat=  b.getString("bat");
@@ -142,10 +146,12 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("登陆者参与的次数成功");
                     if(TextUtils.isEmpty(result.getData().get(0).getReceive_ran_num())){
-                        mLin.setVisibility(View.GONE);
+                        mProductLin.setVisibility(View.GONE);
+                        mParticipate.setVisibility(View.VISIBLE);
                         mParticipate.setText("您未参与本次夺宝活动");
                     }else {
-                        mLin.setVisibility(View.VISIBLE);
+                        mProductLin.setVisibility(View.VISIBLE);
+                        mParticipate.setVisibility(View.GONE);
                         mParticipateNum.setText(result.getData().get(0).getReceive_ran_num());
                     }
 
@@ -183,6 +189,12 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
 
     private void bindResult(List<IssDetailsEntity> data) {
         IssDetailsEntity detailEntity=data.get(0);
+        issueProduct.setmTotalCount(detailEntity.getSna_total_count());
+        issueProduct.setmSnaOut(detailEntity.getSna_sell_out());
+        issueProduct.setmSnaTerm(detailEntity.getSna_term());
+        issueProduct.setmSnaCode(detailEntity.getSna_code());
+        issueProduct.setmBatCode(detailEntity.getBat_code());
+        issueProduct.setmSnaTitle(detailEntity.getSna_title());
         mSnaCode = detailEntity.getSna_code();
         mTerm = detailEntity.getSna_term();
         mTitle = detailEntity.getSna_title();

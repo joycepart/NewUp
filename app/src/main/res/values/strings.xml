@@ -22,7 +22,7 @@
     <string name="tab_information">消息</string>
     <string name="tab_mine">我的</string>
     <string name="tab_me_no">您还没有登录哦</string>
-    <string name="tab_me_login">点击登录</string>
+    <string name="tab_me_login">立即登录</string>
     <string name="tab_me_c">闲置订单</string>
     <string name="tab_me_d">养护订单</string>
     <string name="tab_me_e">我的发布</string>
@@ -76,7 +76,10 @@
     <string name="order_take_method">取送方式：</string>
     <string name="national_package">全国包邮</string>
     <string name="order_receipt_address">收货地址：</string>
+    <string name="order_receipt_address_door">上门地址：</string>
+    <string name="order_receipt_address_time">预约上门时间：</string>
     <string name="order_receipt_choice">选择地址</string>
+    <string name="order_receipt_store">选择门店</string>
     <string name="order_mail">请将物品寄到：北京市通州区宋庄镇南堡南街141号心上（收），010—60572565.服务完成后，将寄还到您填写的地址。</string>
     <string name="order_service">上门服务费：</string>
     <string name="order_coupon">优惠劵：</string>
@@ -138,7 +141,7 @@
     <string name="withdrawals_name_ed">请输入姓名</string>
     <string name="withdrawals_num_edit">银行卡(支付宝)绑定手机号</string>
     <string name="withdrawals_care">注意： 单笔提现最低金额为100元，为确保您的资金安全，提现需要账户和姓名对应，预计提现到账时间72小时。</string>
-    <string name="withdrawals_apply">申请支付</string>
+    <string name="withdrawals_apply">申请提现</string>
     <string name="withdrawals_bankname">银行名称：</string>
     <string name="withdrawals_bank">例： 中国农业银行</string>
     <string name="detail_data">2016-6-6 14:23:23</string>
@@ -214,6 +217,24 @@
     <string name="pop_ok">完成</string>
     <string name="product_num">您参与了</string>
     <string name="product_text">夺宝活动</string>
+    <string name="issut_inf">揭晓信息</string>
+    <string name="issut_num">揭晓号码:</string>
+    <string name="issu_user">得宝用户:</string>
+    <string name="issu_time">揭晓时间:</string>
+    <string name="issue_nm">参与次数:</string>
+    <string name="issue_text">很遗憾，您未能成功参与本期一元夺宝</string>
+    <string name="issu_con">继续参与，机会多多</string>
+    <string name="choose">请选择取送货方式</string>
+    <string name="indiana_plo">收货人：</string>
+    <string name="indiana_add">收货地址：</string>
+    <string name="indiana_mode">配送方式：</string>
+    <string name="indiana_numn">快递单号：</string>
+    <string name="Winning">恭喜您中奖</string>
+    <string name="deliver_no">暂未发货</string>
+    <string name="add_confirm">确认收货地址</string>
+    <string name="add_choose">请选择收货地址</string>
+    <string name="home_rturn">回到首页</string>
+    <string name="home_suc">支付成功</string>
 
 
 

@@ -90,37 +90,56 @@
             android:textColor="@color/color_00"
             android:text="@string/issue_no_activity"/>
 
-    <LinearLayout
-        android:id="@+id/product_lin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/fs_65"
-            android:textColor="@color/color_00"
-            android:text="@string/product_num"/>
-        <TextView
-            android:id="@+id/product_participate_num"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/fs_65"
-            android:textColor="@color/color_c0"
-            android:text="1"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/fs_65"
-            android:textColor="@color/color_00"
-            android:text="@string/product_text"/>
-    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:id="@+id/issue_product_lin"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/ds_90"
+                android:layout_height="@dimen/ds_90"
+                android:background="@drawable/home_right_arrow_icon"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/ds_30"
+                android:layout_centerVertical="true"
+               />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_260"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:text="@string/product_num"
+                android:textColor="@color/color_00"
+                android:textSize="@dimen/fs_60"/>
+                <TextView
+                    android:id="@+id/product_participate_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/color_c0"
+                    android:textSize="@dimen/fs_60"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/issue_product__img"
+                android:gravity="center"
+                android:text="@string/product_text"
+                android:textColor="@color/color_00"
+                android:textSize="@dimen/fs_60"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_30"

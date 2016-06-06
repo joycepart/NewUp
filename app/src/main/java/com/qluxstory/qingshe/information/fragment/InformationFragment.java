@@ -5,10 +5,12 @@ import android.view.View;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
+import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseListFragment;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.widget.EmptyLayout;
 import com.qluxstory.qingshe.information.InformationUiGoto;
 import com.qluxstory.qingshe.information.adapter.InformationAdapter;
 import com.qluxstory.qingshe.information.dto.InformationDTO;
@@ -61,9 +63,16 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
             public void onSuccess(InformationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("获取新闻成功");
-                    mInforData = result.getData();
-                    requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
-                    setDataResult(mInforData);//设置数据
+                    mErrorLayout.setErrorMessage("暂无新闻",mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
+                    if(result.getData().get(0).getNews_add_time()==null){
+                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+                    }else {
+                        mInforData = result.getData();
+                        requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
+                        setDataResult(mInforData);//设置数据
+                    }
+
                 }
 
             }

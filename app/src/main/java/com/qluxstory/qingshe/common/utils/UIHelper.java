@@ -17,7 +17,15 @@ public class UIHelper {
         act.startActivityForResult(intent,SEND_REQUEST);
     }
 
-    public static final int SELECT_REQUEST = 0x101;//收货地址之选择地址
+    public static final int STORE_REQUEST = 0x102;//门店地址
+    public static void showRorStoreFragment(Activity act, SimplePage page,Bundle args) {
+        Intent intent = new Intent(act, SimpleActivity.class);
+        intent.putExtra(SimpleActivity.BUNDLE_KEY_PAGE, page.getValue());
+        intent.putExtra(SimpleActivity.BUNDLE_KEY_ARGS, args);
+        act.startActivityForResult(intent,SEND_REQUEST);
+    }
+
+    public static final int SELECT_REQUEST = 0x1001;//收货地址之选择地址
     public static void showRorSelectFragment(Activity act, SimplePage page) {
         Intent intent = new Intent(act, SimpleActivity.class);
         intent.putExtra(SimpleActivity.BUNDLE_KEY_PAGE, page.getValue());

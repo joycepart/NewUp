@@ -4,17 +4,11 @@
     android:layout_height="match_parent"
     android:background="@color/common_layout_bg"
     android:orientation="vertical">
-    <com.qluxstory.qingshe.common.widget.ViewFlowLayout
-        android:id="@+id/ptd_vf_layout"
+    <FrameLayout
+        android:id="@+id/issue_past_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <include layout="@layout/view_issue_tran_details"/>
-    <include layout="@layout/item_issue_product_list"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/ptd_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"></FrameLayout>
     <include layout="@layout/item_indiana_productdetail_bottom"/>
 
 </LinearLayout>

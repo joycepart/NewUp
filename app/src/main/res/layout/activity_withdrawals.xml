@@ -12,8 +12,7 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ds_40">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/withd_tv1"
                 android:layout_width="@dimen/ds_280"
@@ -186,6 +185,8 @@
                 android:layout_toRightOf="@+id/withd_num"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center_vertical"
+                android:inputType="number"
+                android:maxLength="11"
                 android:background="@null"
                 android:hint="@string/withdrawals_num_edit"
                 android:textColor="@color/color_00"
@@ -251,7 +252,7 @@
         android:layout_height="@dimen/ds_150"
         android:gravity="center"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/ds_350"
+        android:layout_marginTop="@dimen/ds_450"
         android:layout_marginRight="@dimen/ds_50"
         android:layout_marginLeft="@dimen/ds_50"
         android:background="@drawable/btn_login_selector"

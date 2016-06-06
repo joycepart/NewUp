@@ -18,7 +18,6 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
-import com.qluxstory.qingshe.common.widget.EmptyLayout;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
 import com.qluxstory.qingshe.me.entity.ExchangeVoucherResult;
@@ -55,8 +54,28 @@ public class MyCouponFragment extends BasePullFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, MyCouponEntity myCouponEntity, int position) {
-                holder.setText(R.id.novice_tv,myCouponEntity.getCouponmoney());
-                holder.setText(R.id.coupon_vt,myCouponEntity.getCouponType());
+                if(myCouponEntity.getCouponType().equals("1001")){
+                    holder.setText(R.id.novice_tv,myCouponEntity.getDiscountNumber()+"折");
+                }else if(myCouponEntity.getCouponType().equals("1002")){
+                    holder.setText(R.id.novice_tv,"满"+myCouponEntity.getCouponmoney()+"减"+myCouponEntity.getCouponMoneyEqual());
+                }
+                else if(myCouponEntity.getCouponType().equals("1003")){
+                    holder.setText(R.id.novice_tv,"免费");
+                }
+                else if(myCouponEntity.getCouponType().equals("1004")){
+                    holder.setText(R.id.novice_tv,"直减"+myCouponEntity.getCouponMoneyEqual());
+                }
+                else if(myCouponEntity.getCouponType().equals("1005")){
+                    holder.setText(R.id.novice_tv,myCouponEntity.getCouponMoneyEqual()+"抵用"+myCouponEntity.getCouponmoney());
+                }
+                if(myCouponEntity.getCouponRangeOfUse().equals("2001")){
+                    holder.setText(R.id.coupon_vt,"优惠劵");
+                }else if(myCouponEntity.getCouponRangeOfUse().equals("2002")){
+                    holder.setText(R.id.coupon_vt,"服务劵");
+                }
+
+
+
                 holder.setText(R.id.item_tv,myCouponEntity.getCouponRedeemName());
                 holder.setText(R.id.tv_time,myCouponEntity.getCouponExpirationTime());
             }
@@ -128,7 +147,7 @@ public class MyCouponFragment extends BasePullFragment {
                     mErrorLayout.setErrorMessage("暂无优惠劵",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
                     if(result.getData().get(0).getCouponExpirationTime()==null){
-                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+//                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         mMycouponListAdapter.removeAll();
                         mMycouponListAdapter.append(result.getData());

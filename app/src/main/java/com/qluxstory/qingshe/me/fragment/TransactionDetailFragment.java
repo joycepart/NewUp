@@ -75,6 +75,12 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
 
     }
 
+    @Override
+    public void retry() {
+
+    }
+
+
     public boolean autoRefreshIn(){
         return true;
     }

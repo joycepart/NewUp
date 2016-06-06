@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="@dimen/ds_150"
+        android:layout_height="@dimen/ds_150"
+        android:layout_marginTop="@dimen/ds_120"
+        android:background="@drawable/xuan"/>
+    <TextView
+        android:layout_width="@dimen/ds_350"
+        android:layout_height="@dimen/ds_120"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/ds_40"
+        android:text="@string/home_suc"
+        android:textColor="@color/color_00"
+        android:textSize="@dimen/fs_65"/>
+    <TextView
+        android:id="@+id/payment_tv"
+        android:layout_width="@dimen/ds_350"
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/btn_while"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/ds_50"
+        android:text="@string/home_rturn"
+        android:textColor="@color/color_00"
+        android:textSize="@dimen/fs_65"/>
+
+</LinearLayout>

@@ -1,14 +1,17 @@
 package com.qluxstory.qingshe.me.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.MainActivity;
@@ -21,9 +24,8 @@ import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.dto.WithdrawalsDTO;
-import com.qluxstory.qingshe.me.entity.Bank;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,12 +52,8 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     TextView mWithdTv;
     @Bind(R.id.pay_Btn)
     Button mWBtn;
-    private String strPhoneNum,mMon,mUs,mNm,mIpone,mWTv;
-    private  String[] mStr = {"支付宝","银行卡"};
-    private List<Bank> mList;
-    Bank bank ;
-    Dialog dialog;
-    int item;
+    private String strPhoneNum,mMon,mUs,mNm,mIpone,mWTv,mBank;
+    private ArrayList<String> sList;
 
     @Override
     protected int getContentResId() {
@@ -85,19 +83,17 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.withd_md:
-                showPopWith(mStr);
+                showModePop();
                 break;
             case R.id.pay_Btn:
                 mMon = mWithdMon.getText().toString();
                 mUs = mWithdUs.getText().toString();
                 mNm = mWithdNm.getText().toString();
                 mIpone = mWithdIpone.getText().toString();
-                if(TextUtils.isEmpty(mMon)){
+                mBank = mWithdBank.getText().toString();
+                if(TextUtils.isEmpty(mMon)||mMon.length()<3){
                     DialogUtils.showPrompt(this,"请填写正确的提现金额!","确定");
                 }
-//                if(mMon<"100"){
-//                    DialogUtils.showPrompt(this,"请填写正确的提现金额","确定");
-//                }
 
                 else if(TextUtils.isEmpty(mUs)){
                     DialogUtils.showPrompt(this,"请填写账户！","确定");
@@ -105,8 +101,11 @@ public class WithdrawalsActivity extends BaseTitleActivity {
                 else if(TextUtils.isEmpty(mNm)){
                     DialogUtils.showPrompt(this,"请填写姓名！","确定");
                 }
-                else if(TextUtils.isEmpty(mIpone)&&mIpone.length()<11){
+                else if(TextUtils.isEmpty(mIpone)||mIpone.length()<11){
                     DialogUtils.showPrompt(this,"请填写手机号！","确定");
+                }
+                else if(mLinBank.getVisibility() == View.VISIBLE&&TextUtils.isEmpty(mBank)){
+                    DialogUtils.showPrompt(this,"请填写银行号！","确定");
                 }
                else {
                     Withdrawals();
@@ -119,50 +118,54 @@ public class WithdrawalsActivity extends BaseTitleActivity {
         }
     }
 
-    private void showPopWith(String[] list) {
+    private void showModePop() {
+        sList = new ArrayList<>();
+        sList.add("支付宝");
+        sList.add("银行卡");
+        OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
+        tipPopup.setPicker(sList);//设置里面list
+        tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                if ("支付宝".equals(sList.get(options1))) {
+                    mWithdTv.setText("支付宝");
+                    mLinBank.setVisibility(View.GONE);
 
-//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        final View view = inflater.inflate(R.layout.view_common_pop, null);
-//        dialog = DialogUtils.showDialog(this, view);
-//
-//        ListView listView = (ListView) view.findViewById(R.id.listview);
-//        TextView mCancel = (TextView) view.findViewById(R.id.tv_cancel);
-//        TextView mDetermine = (TextView) view.findViewById(R.id.tv_determine);
-//        final BindListAdapter adapter=new BindListAdapter(this,list);
-//        listView.setAdapter(adapter);
-//        mCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//
-//        mDetermine.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mWithdTv.setText(mStr[item]);
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        listView.setOnTouchListener(new AdapterView.OnTouchListener(){
-//                                        @Override
-//                                        public boolean onTouch(View v, MotionEvent event) {
-//                                            return false;
-//                                        }
-//                                    }
-//        );
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                item = position;
-//            }
-//        });
-//        popMenus = new PopuoWithdrawals(this,itemsOnClick);
-//
-//        popMenus.showAtLocation(this.findViewById(R.id.with_tv_t),
-//                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                } else if("银行卡".equals(sList.get(options1))){
+                    mWithdTv.setText("银行卡");
+                    mLinBank.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        tipPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {//设置窗体消失后，屏幕恢复亮度
+            @Override
+            public void onDismiss() {
+                closePopupWindow();
+            }
+        });
+        tipPopup.showAtLocation(mWithdBank, Gravity.BOTTOM, 0, 0);//显示的位置
+        //弹窗后背景变暗
+        openPopupWindow();
+
+    }
+
+    /**
+     *  打开窗口 
+     */
+    private void openPopupWindow() {
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.7f;
+        getWindow().setAttributes(params);
+    }
+
+    /**
+     *  关闭窗口 
+     */
+    private void closePopupWindow() {
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 1f;
+        getWindow().setAttributes(params);
     }
 
 

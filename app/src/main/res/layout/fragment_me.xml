@@ -31,29 +31,27 @@
                     android:textColor="@color/color_25"
                     android:textSize="@dimen/fs_55" />
 
-
-
                 <Button
                     android:id="@+id/user_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/ds_370"
                     android:layout_height="@dimen/ds_130"
-                    android:layout_marginTop="@dimen/ds_30"
-                    android:background="@drawable/me_btn"
+                    android:layout_marginTop="@dimen/ds_50"
+                    android:background="@drawable/btn_grey"
                     android:gravity="center"
+                    android:padding="@dimen/ds_10"
                     android:text="@string/tab_me_login"
-                    android:textColor="@color/color_ff"
-                    android:textSize="@dimen/fs_75"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_60"
                     />
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/loing_suc"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_cc">
                 <LinearLayout
-                    android:layout_width="@dimen/ds_350"
+                    android:layout_width="@dimen/ds_450"
                     android:layout_height="@dimen/ds_560"
                     android:layout_centerInParent="true"
                     android:gravity="center"
@@ -68,6 +66,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:layout_marginTop="@dimen/ds_30"
                         android:text="用户名"
                         android:textSize="@dimen/fs_55"
@@ -76,8 +76,8 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="@dimen/ds_100"
-                    android:layout_height="@dimen/ds_100"
+                    android:layout_width="@dimen/ds_70"
+                    android:layout_height="@dimen/ds_70"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/ds_50"

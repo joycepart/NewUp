@@ -161,6 +161,8 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
         else {
             mDetailsTvStatu.setText("处理中");
         }
+        LogUtils.e("curingOrderListEntity.getServerKHImg()----",curingOrderDetails.getServerKHImg());
+        LogUtils.e("curingOrderListEntity.getApp_show_pic()()----",curingOrderDetails.getApp_show_pic());
         ImageLoaderUtils.displayImage(curingOrderDetails.getServerKHImg(),mDetailsCuringImg);
         ImageLoaderUtils.displayImage(curingOrderDetails.getApp_show_pic(),mDetailsTitImg);
     }

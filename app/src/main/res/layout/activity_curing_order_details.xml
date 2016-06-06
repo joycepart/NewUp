@@ -17,7 +17,7 @@
                 android:id="@+id/details_tit_img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_500"
-                android:background="@drawable/goods1"/>
+                android:scaleType="centerCrop" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
                     android:text="@string/curing_state"
                     android:layout_marginLeft="@dimen/fs_40"
                     android:textSize="@dimen/fs_50"
-                    android:textColor="@color/color_00"/>
+                    android:textColor="@color/color_c0"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -329,13 +329,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ds_40"
+                android:padding="@dimen/ds_30"
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/details_curing_img"
                     android:layout_width="@dimen/ds_280"
                     android:layout_height="@dimen/ds_280"
+                    android:scaleType="centerCrop"
                     android:layout_marginLeft="@dimen/ds_40"
-                    android:background="@drawable/goods1"/>
+                   />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

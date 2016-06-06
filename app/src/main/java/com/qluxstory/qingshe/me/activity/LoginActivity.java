@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,6 +16,7 @@ import com.qluxstory.qingshe.common.base.BaseActivity;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeCountDown;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
@@ -146,7 +148,12 @@ public class LoginActivity extends BaseActivity {
             case R.id.lg_imgbtn:
                 break;
             case R.id.login_codeBtn:
-                ObtainCode();
+                if(TextUtils.isEmpty(mLoginEtNum.getText().toString())&&mLoginEtNum.getText().toString().length()<11){
+                    DialogUtils.showPrompt(this,"提示","请输入正确的手机号");
+                }else {
+                    ObtainCode();
+                }
+
                 break;
             case R.id.login_readProtocalBtn:
                 mUrlAgreement = AppConfig.URL_AGREEMENT;

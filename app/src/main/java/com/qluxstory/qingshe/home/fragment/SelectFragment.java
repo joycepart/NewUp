@@ -103,9 +103,7 @@ public class SelectFragment extends BasePullFragment {
 
     private void reqSelect() {
         SelectDTO dto=new SelectDTO();
-
         dto.setConcode("");
-
         dto.setSign(AppConfig.SIGN_1);
         LogUtils.e("未加密前的----", TimeUtils.getSignTime()+AppConfig.SIGN_1);
         LogUtils.e("加密后的---",SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));

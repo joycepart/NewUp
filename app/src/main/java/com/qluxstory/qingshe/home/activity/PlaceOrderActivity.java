@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,8 @@ import butterknife.Bind;
  * 提交订单主页面
  */
 public class PlaceOrderActivity extends BaseTitleActivity {
+    @Bind(R.id.place_address_time)
+    RelativeLayout mTime;
     @Bind(R.id.place_take_delivery)
     RelativeLayout mPlaceTake;
     @Bind(R.id.place_address)
@@ -86,6 +89,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mPlaceTotal;
     @Bind(R.id.place_img)
     ImageView mPlaceImg;
+    @Bind(R.id.place_order_img_pon)
+    ImageView mImgPon;
     @Bind(R.id.place_order_img)
     ImageView mPlaceOrderImg;
     @Bind(R.id.placeorder_tv)
@@ -110,6 +115,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     CheckBox mCbZhi;
     @Bind(R.id.place_cb_hui)
     CheckBox mVbHui;
+    @Bind(R.id.place_tv_address_time)
+    TextView mTvTime;
+    @Bind(R.id.place_tv_address)
+    TextView mTvAddress;
+    @Bind(R.id.pla_tv_add_time)
+    TextView mAddTime;
     private String mPrice;
     private String mName;
     private String mPic;
@@ -181,11 +192,25 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             case R.id.base_titlebar_back:
                 baseGoBack();
                 break;
+            case R.id.place_address_time:
+                if(mTvTime.getText().toString().equals("预约上门时间：")){
+                    showTimePop();
+                }
+                break;
+
             case R.id.place_take_delivery:
                 reqTake();//取送方式
+//                showPopwindow();
                 break;
             case R.id.place_address:
-                UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址
+                if(mTvAddress.getText().toString().equals("选择门店：")){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("rturn", rturn);
+                    UIHelper.showRorStoreFragment(this, SimplePage.SELECT_ADDRESS,bundle);//选择门店
+                }else {
+                    UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
+                }
+                
                 break;
             case R.id.place_send:
                 Bundle bundle = new Bundle();
@@ -237,6 +262,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         super.onClick(v);
     }
 
+    private void showTimePop() {
+
+    }
+
     private void reqBalance() {
         BaseDTO dto = new BaseDTO();
         dto.setSign(AppConfig.SIGN_1);
@@ -267,8 +296,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onSuccess(TakeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("取送方式成功");
-                    qusongList = result.getData();
-                    showPopwindow();
+                    takeEntity = result.getData().get(0);
+//                    qusongList = result.getData();
+                    if(!TextUtils.isEmpty(takeEntity.getDis_type_name())){
+                        mPlaTv.setText(takeEntity.getDis_type_name());
+                        rturn = takeEntity.getDis_type_code();
+                    }
+
+
+
                 }
             }
         });
@@ -279,6 +315,42 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         final View view = inflater.inflate(R.layout.view_common_pop, null);
         final Dialog dialog = DialogUtils.showDialog(this, view);
         WheelView wheelView = (WheelView) view.findViewById(R.id.wheelview);
+        TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
+        TextView determine = (TextView) view.findViewById(R.id.tv_determine);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        determine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if(mPlaTv.getText().toString().equals("全国包回邮")){
+                    mTime.setVisibility(View.GONE);
+                    mPlaceAddress.setVisibility(View.VISIBLE);
+                    mPlaceSend.setVisibility(View.VISIBLE);
+                    mTvAddress.setText("收货地址");
+
+                }else if(mPlaTv.getText().toString().equals("上门取送")){
+                    mTime.setVisibility(View.VISIBLE);
+                    mPlaceAddress.setVisibility(View.VISIBLE);
+                    mPlaceSend.setVisibility(View.GONE);
+                    mTvTime.setText("预约上门时间：");
+                    mTvAddress.setText("上门地址");
+
+                }else if(mPlaTv.getText().toString().equals("自送门店")){
+                    mTime.setVisibility(View.VISIBLE);
+                    mPlaceAddress.setVisibility(View.VISIBLE);
+                    mPlaceSend.setVisibility(View.GONE);
+                    mTvAddress.setText("选择门店：");
+                    mTvTime.setText("门店工作时间：");
+                    mAddTime.setText("10:00 - 18:00");
+
+                }
+            }
+        });
         wheelView.setVisibleItems(3);
         wheelView.setViewAdapter(new QusongAdapter(this));
         wheelView.addChangingListener(new OnWheelChangedListener() {
@@ -286,6 +358,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 int currentItem = wheel.getCurrentItem();
                 mPlaTv.setText(qusongList.get(currentItem).getDis_type_name());
+
             }
         });
     }
@@ -324,17 +397,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqPay() {
         PayDTO dto = new PayDTO();
-        dto.setConsigneeType(takeEntity.getDis_type_name());
-        if (takeEntity.getDis_type_name().equals("上门取送")) {
-            dto.setTimeToAppointmen("10");
-        } else {
-            dto.setTimeToAppointmen("10");
-        }
-        if (takeEntity.getDis_type_name().equals("全国包回邮")) {
-            dto.setServerYJCode(mSendAddress.getText().toString());
-        } else {
-            dto.setServerYJCode("");
-        }
+        dto.setConsigneeType(mPlaTv.getText().toString());
         dto.setConsigneeCode(consignee.getConsigneeCode());
         dto.setConsigneeName(consignee.getConsigneeName());
         dto.setDeliveredMobile(consignee.getDeliveredMobile());
@@ -347,6 +410,23 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setMemberIDCoupon("1");
         dto.setCouponCode("1");
         dto.setMemMobile(AppContext.get("mobileNum", ""));
+        dto.setOrderType("养护");
+
+
+        if (mPlaTv.getText().toString().equals("上门取送")) {
+            dto.setTimeToAppointmen("2016-06-07 10:00 - 18:00");
+        } else {
+            dto.setTimeToAppointmen("");
+        }
+        if (mPlaTv.getText().toString().equals("全国包回邮")) {
+            dto.setServerYJCode(mSendAddress.getText().toString());
+        } else {
+            dto.setServerYJCode("");
+        }
+
+
+
+
         if (mCbWx.isChecked()) {
             dto.setApplyType("微信");
         } else if (mCbZhi.isChecked()) {
@@ -474,7 +554,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
-            mPlaceOrderImg.setImageBitmap(photo);
+            if(photo!=null){
+                mLrderLin.setVisibility(View.GONE);
+                mImgPon.setVisibility(View.VISIBLE);
+                mImgPon.setImageBitmap(photo);
+            }else {
+                mLrderLin.setVisibility(View.VISIBLE);
+                mImgPon.setVisibility(View.GONE);
+            }
+
         }
     }
 }

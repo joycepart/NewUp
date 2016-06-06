@@ -12,7 +12,7 @@
     <application
         android:name="com.qluxstory.qingshe.AppContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -74,6 +74,9 @@
         <activity
             android:name="com.qluxstory.qingshe.issue.activity.SettlementActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qluxstory.qingshe.issue.activity.PaymentSuccessActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.qluxstory.qingshe.me.activity.TransactionDetailActivity"
@@ -84,6 +87,9 @@
 
         <activity
             android:name="com.qluxstory.qingshe.home.activity.VerticalScrollTextActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.qluxstory.qingshe.home.activity.TestPopActivity"
             android:screenOrientation="portrait"/>
 
         <activity

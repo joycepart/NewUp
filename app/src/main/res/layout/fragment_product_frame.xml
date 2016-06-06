@@ -6,7 +6,7 @@
     <com.qluxstory.qingshe.common.widget.ViewFlowLayout
         android:id="@+id/issue_vf_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_600"
+        android:layout_height="wrap_content"
         />
     <include layout="@layout/view_issue_product"/>
     <include layout="@layout/item_issue_product_list"/>

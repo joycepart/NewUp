@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_90">
@@ -18,14 +18,7 @@
             android:text="2016-05-23"
             android:textSize="@dimen/fs_40"
             android:textColor="@color/color_00"/>
-        <TextView
-            android:id="@+id/list_tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14:09:23.483"
-            android:layout_marginLeft="@dimen/ds_30"
-            android:textSize="@dimen/fs_40"
-            android:textColor="@color/color_00"/>
+
         <TextView
             android:id="@+id/list_tv3"
             android:layout_width="wrap_content"

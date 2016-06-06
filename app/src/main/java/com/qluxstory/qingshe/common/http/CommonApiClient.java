@@ -22,6 +22,7 @@ import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
 import com.qluxstory.qingshe.home.entity.PayResult;
 import com.qluxstory.qingshe.home.entity.SelectResult;
 import com.qluxstory.qingshe.home.entity.SendResult;
+import com.qluxstory.qingshe.home.entity.StoreResult;
 import com.qluxstory.qingshe.home.entity.TakeResult;
 import com.qluxstory.qingshe.home.entity.TranResult;
 import com.qluxstory.qingshe.home.entity.VouchersResult;
@@ -44,6 +45,7 @@ import com.qluxstory.qingshe.issue.entity.PicResult;
 import com.qluxstory.qingshe.issue.entity.SettlementResult;
 import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
+import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
 import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
@@ -119,6 +121,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<SendResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback, SendResult.class);
         get(getAbsoluteUrl("/webservice/Parts.asmx/GetAddressByType"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 门店地址
+     * @param dto
+     * @param callback
+     */
+    public static void store(Fragment fragment, BaseDTO
+            dto, CallBack<StoreResult> callback) {
+        AsyncCallBack<StoreResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback, StoreResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/GetAddressFromInfo"), dto,
                 asyncCallBack);
     }
     /**
@@ -223,6 +238,19 @@ public class CommonApiClient extends BaseApiClient {
         get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetOldTimeSnatch"), dto,
                 asyncCallBack);
     }
+
+    /**
+     * 往期揭晓之个人
+     * @param dto
+     * @param callback
+     */
+    public static void announce(Activity act, ToAnnounceDTO
+            dto, CallBack<ToAnnounceResult> callback) {
+        AsyncCallBack<ToAnnounceResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,ToAnnounceResult.class);
+        get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetOldTimeSnatch"), dto,
+                asyncCallBack);
+    }
     /**
      * 热门专题
      * @param dto
@@ -310,6 +338,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<NumResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,NumResult.class);
         post(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetRecordDetailOfSnaNums"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 确认收货地址
+     * @param dto
+     * @param callback
+     */
+    public static void comfirm(Activity act, ConfirmDTO
+            dto, CallBack<NumResult> callback) {
+        AsyncCallBack<NumResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,NumResult.class);
+        post(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/UpdateRecState"), dto,
                 asyncCallBack);
     }
 

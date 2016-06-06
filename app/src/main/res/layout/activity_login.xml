@@ -8,8 +8,8 @@
         android:id="@+id/img_btn_close"
         android:layout_marginTop="@dimen/ds_30"
         android:layout_marginLeft="@dimen/ds_30"
-        android:layout_width="@dimen/ds_100"
-        android:layout_height="@dimen/ds_100"
+        android:layout_width="@dimen/ds_80"
+        android:layout_height="@dimen/ds_80"
         android:background="@drawable/login_close"
         android:padding="15.0dip" />
 

@@ -77,7 +77,15 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
     protected void sendRequestData() {
         CuringOrderListDTO cdto=new CuringOrderListDTO();
         cdto.setMembermob(AppContext.get("mobileNum",""));
-        cdto.setAppreqtype(type);
+        if(type ==1){
+            cdto.setAppreqtype("000");
+        }else if(type ==2){
+            cdto.setAppreqtype("0");
+        }else if(type ==3){
+            cdto.setAppreqtype("10");
+        }else if(type ==4){
+            cdto.setAppreqtype("5");
+        }
         cdto.setSign(AppConfig.SIGN_1);
         cdto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.CuringOrderList(this, cdto, new CallBack<CuringOrderListResult>() {
@@ -85,7 +93,7 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
             public void onSuccess(CuringOrderListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("养护订单成功");
-                    mErrorLayout.setErrorMessage("暂无交易明细记录",mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorMessage("暂无养护订单记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
                     if(result.getData().get(0).getComName()==null){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);

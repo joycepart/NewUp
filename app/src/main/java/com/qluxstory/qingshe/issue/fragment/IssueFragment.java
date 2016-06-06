@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullScrollViewFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
@@ -26,10 +26,10 @@ import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.entity.AdvertisingResult;
 import com.qluxstory.qingshe.issue.entity.IndianaListEntity;
 import com.qluxstory.qingshe.issue.entity.IndianaListResult;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.WinningEntity;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -45,10 +45,13 @@ public class IssueFragment extends BasePullScrollViewFragment {
     @Bind(R.id.view_flipper)
     ViewFlipper mViewFlipper;
     BaseSimpleRecyclerAdapter mIssueAdapter;
+    IssueProduct issueProduct;
+
 
     @Override
     public void initView(View view) {
         super.initView(view);
+        issueProduct = AppContext.getInstance().getIssueProduct();
         mIssueTopImg.setOnClickListener(this);
         mIssuelList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mIssueAdapter=new BaseSimpleRecyclerAdapter<IndianaListEntity>() {
@@ -82,6 +85,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onItemClick(View itemView, Object itemBean, int position) {
                 Bundle b = new Bundle();
                 IndianaListEntity entity=(IndianaListEntity)itemBean;
+                issueProduct.setmPicUrl(entity.getPic_url());
                 String bat = entity.getBat_code();
                 String sna = entity.getSna_code();
                 String url = entity.getPic_url();
@@ -119,24 +123,6 @@ public class IssueFragment extends BasePullScrollViewFragment {
     }
 
     private void bindData(List<WinningEntity> data) {
-        List<TextView> list = new ArrayList<TextView>();
-
-        for(int i = 0; i < 5; i++)
-        {
-            TextView tv = (TextView) new TextView(getActivity());
-            tv.setText(data.get(i).getSna_lucky_people());
-            LogUtils.e("data------"+data.get(i).getSna_lucky_people());
-            list.add(tv);
-        }
-        LogUtils.e("list------"+list);
-
-       for(int i = 0; i < list.size(); i++)
-        {
-            mViewFlipper.addView(list.get(i));
-        }
-        mViewFlipper.setInAnimation(getActivity(), R.anim.push_up_in);
-        mViewFlipper.setOutAnimation(getActivity(), R.anim.push_up_out);
-        mViewFlipper.startFlipping();
     }
 
 
@@ -172,13 +158,14 @@ public class IssueFragment extends BasePullScrollViewFragment {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝列表成功");
                     mIssueAdapter.append(result.getData());
-                    refreshComplete();
+//                    refreshComplete();
 
                 }
             }
         });
 
     }
+
 
     @Override
     public void onClick(View v) {

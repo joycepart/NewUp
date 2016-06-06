@@ -52,10 +52,9 @@ public class CalculationFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, CalculationEntity calculationEntity, int position) {
-//                holder.setText(R.id.list_tv1,calculationEntity.);
-//                holder.setText(R.id.list_tv2,calculationEntity.);
-//                holder.setText(R.id.list_tv3,calculationEntity.);
-//                holder.setText(R.id.list_tv4,calculationEntity.);
+                holder.setText(R.id.list_tv1,calculationEntity.getCalc_date());
+                holder.setText(R.id.list_tv3,calculationEntity.getCalc_number());
+                holder.setText(R.id.list_tv4,calculationEntity.getCalc_people());
 
             }
 

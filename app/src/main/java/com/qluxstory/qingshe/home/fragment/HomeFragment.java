@@ -1,16 +1,21 @@
 package com.qluxstory.qingshe.home.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
+import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullScrollViewFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
@@ -32,7 +37,6 @@ import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
 import com.qluxstory.qingshe.home.widget.MyHorizontalScrollView;
-import com.qluxstory.qingshe.unused.fragment.UnusedFragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -198,7 +202,9 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 HomeUiGoto.testOne(getActivity());//测试
                 break;
             case R.id.home_img3:
-                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
+                showPop();
+
+//                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
                 break;
             case R.id.id_gallery:
                 Bundle b = new Bundle();
@@ -206,15 +212,62 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);
                 break;
             case R.id.home_img_dian:
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                UnusedFragment unusedFragment = (UnusedFragment)fragmentManager.findFragmentByTag("tag2");
-                unusedFragment.initView(null);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("tag",1);
+                getActivity().startActivity(intent);
                 break;
         }
         super.onClick(v);
     }
 
+    private ArrayList<String> tipList;
+    private void showPop() {
+        tipList = new ArrayList<>();
+        tipList.add("nan");
+        tipList.add("nv");
+        OptionsPopupWindow tipPopup = new OptionsPopupWindow(getActivity());
+        tipPopup.setPicker(tipList);//设置里面list
+        tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                if ("无".equals(tipList.get(options1))) {
+                } else {
+                }
 
+            }
+        });
+        tipPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {//设置窗体消失后，屏幕恢复亮度
+            @Override
+            public void onDismiss() {
+                closePopupWindow();
+            }
+        });
+        tipPopup.showAtLocation(mHsv, Gravity.BOTTOM, 0, 0);//显示的位置
+        //弹窗后背景变暗
+        openPopupWindow();
+    }
+
+
+
+
+
+    /**
+     *  打开窗口 
+     */
+    private void openPopupWindow() {
+        WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+        params.alpha = 0.7f;
+        getActivity().getWindow().setAttributes(params);
+    }
+
+    /**
+     *  关闭窗口 
+     */
+    private void closePopupWindow() {
+        WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+        params.alpha = 1f;
+        getActivity().getWindow().setAttributes(params);
+    }
 
 
     @Override

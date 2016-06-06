@@ -8,99 +8,131 @@ public class IssueProduct  {
     /*
                      夺宝商品编号
                           */
-    private String sna_code;
+    private String mSnaCode;
     /*
                      批次编号
                           */
-    private String bat_code;
+    private String mBatCode;
     /*
                      夺宝期数
                           */
-    private String sna_term;
+    private String mSnaTerm;
     /*
                     商品标题
                           */
-    private String sna_title;
+    private String mSnaTitle;
     /*
                     开奖所需人次
                           */
-    private String sna_total_count;
+    private String mTotalCount;
     /*
                      商品备注
                           */
-    private String sna_remark;
+    private String mSnaRemark;
     /*
                     已参与人次
                           */
-    private String sna_sell_out;
+    private String mSnaOut;
     /*
-                          开始时间
-                                */
-    private String sna_begin_date;
+                             开始时间
+                                   */
+    private String mSeginDate;
+    /*
+                           封面图片地址
+                                 */
+    private String mPicUrl;
+    /*
+                               封面图片地址
+                                     */
+    private String mRecCode;
 
-    public String getBat_code() {
-        return bat_code;
+    public String getmRecCode() {
+        return mRecCode;
     }
 
-    public void setBat_code(String bat_code) {
-        this.bat_code = bat_code;
+    public void setmRecCode(String mRecCode) {
+        this.mRecCode = mRecCode;
     }
 
-    public String getSna_begin_date() {
-        return sna_begin_date;
+
+
+    public String getmPicUrl() {
+        return mPicUrl;
     }
 
-    public void setSna_begin_date(String sna_begin_date) {
-        this.sna_begin_date = sna_begin_date;
+    public void setmPicUrl(String mPicUrl) {
+        this.mPicUrl = mPicUrl;
     }
 
-    public String getSna_code() {
-        return sna_code;
+
+
+
+    public String getmBatCode() {
+        return mBatCode;
     }
 
-    public void setSna_code(String sna_code) {
-        this.sna_code = sna_code;
+    public void setmBatCode(String mBatCode) {
+        this.mBatCode = mBatCode;
     }
 
-    public String getSna_remark() {
-        return sna_remark;
+    public String getmSeginDate() {
+        return mSeginDate;
     }
 
-    public void setSna_remark(String sna_remark) {
-        this.sna_remark = sna_remark;
+    public void setmSeginDate(String mSeginDate) {
+        this.mSeginDate = mSeginDate;
     }
 
-    public String getSna_sell_out() {
-        return sna_sell_out;
+    public String getmSnaCode() {
+        return mSnaCode;
     }
 
-    public void setSna_sell_out(String sna_sell_out) {
-        this.sna_sell_out = sna_sell_out;
+    public void setmSnaCode(String mSnaCode) {
+        this.mSnaCode = mSnaCode;
     }
 
-    public String getSna_term() {
-        return sna_term;
+    public String getmSnaOut() {
+        return mSnaOut;
     }
 
-    public void setSna_term(String sna_term) {
-        this.sna_term = sna_term;
+    public void setmSnaOut(String mSnaOut) {
+        this.mSnaOut = mSnaOut;
     }
 
-    public String getSna_title() {
-        return sna_title;
+    public String getmSnaRemark() {
+        return mSnaRemark;
     }
 
-    public void setSna_title(String sna_title) {
-        this.sna_title = sna_title;
+    public void setmSnaRemark(String mSnaRemark) {
+        this.mSnaRemark = mSnaRemark;
     }
 
-    public String getSna_total_count() {
-        return sna_total_count;
+    public String getmSnaTerm() {
+        return mSnaTerm;
     }
 
-    public void setSna_total_count(String sna_total_count) {
-        this.sna_total_count = sna_total_count;
+    public void setmSnaTerm(String mSnaTerm) {
+        this.mSnaTerm = mSnaTerm;
     }
+
+    public String getmSnaTitle() {
+        return mSnaTitle;
+    }
+
+    public void setmSnaTitle(String mSnaTitle) {
+        this.mSnaTitle = mSnaTitle;
+    }
+
+    public String getmTotalCount() {
+        return mTotalCount;
+    }
+
+    public void setmTotalCount(String mTotalCount) {
+        this.mTotalCount = mTotalCount;
+    }
+
+
+
 
 
 
