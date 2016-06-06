@@ -1,7 +1,6 @@
 package com.qluxstory.qingshe;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
-import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.fragment.HomeFragment;
@@ -131,10 +129,6 @@ public class MainActivity extends BaseTitleActivity {
                 break;
         }
         fragmentList.add(index,fragment);
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", index);
-        fragment.setArguments(bundle);
-
         transaction.add(R.id.realtabcontent, fragment, "tag" + index);
         transaction.commitAllowingStateLoss();
        // fragmentManager.executePendingTransactions();
@@ -166,14 +160,10 @@ public class MainActivity extends BaseTitleActivity {
         if(currentTab==idx){return;}
         BaseFragment targetFragment = (BaseFragment) fragmentManager
                 .findFragmentByTag("tag" + idx);
-        LogUtils.e("targetFragment-------------",""+targetFragment);
         if (targetFragment == null || !targetFragment.isAdded()) {
-            LogUtils.e("fragmentList.size()----",""+fragmentList.size());
-            LogUtils.e("fragmentList.get(idx)----",""+fragmentList.get(idx));
             if(idx<fragmentList.size()&&fragmentList.get(idx)!=null) {
                 targetFragment = fragmentList.get(idx);
             }else{
-                LogUtils.e("addFragment(idx)-----",fragmentList.size()+"");
                 targetFragment=addFragment(idx);
             }
         }
@@ -196,6 +186,7 @@ public class MainActivity extends BaseTitleActivity {
         getTitleLayout().setVisibility(View.VISIBLE);
         mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        getTitleLayout().setVisibility(View.VISIBLE);
         switch (currentTab){
             case 0:
                 setTitleText("首页");
@@ -227,6 +218,7 @@ public class MainActivity extends BaseTitleActivity {
                 setTitleText("系统通知");
                 mBaseBack.setVisibility(View.GONE);
                 mBaseEnsure.setVisibility(View.GONE);
+                break;
             case 4:
                 getTitleLayout().setVisibility(View.GONE);
                 mBaseEnsure.setVisibility(View.GONE);
@@ -240,21 +232,6 @@ public class MainActivity extends BaseTitleActivity {
 
     }
 
-    public void updateTab() {
-        setupTab();
-    }
-
-    public void setupTab() {
-        /*
-         File f = new File(FileUtils.getCachePath(mContext) + File.separator + "tab" + i + ".png");
-            if (f.exists()) {
-                drawable = Drawable.createFromPath(f.getAbsolutePath());
-            } else {
-                drawable = ContextCompat.getDrawable(mContext,
-                        mainTab.getResIcon());
-            }
-         */
-    }
 
     public int getCurrentTab() {
         return currentTab;
