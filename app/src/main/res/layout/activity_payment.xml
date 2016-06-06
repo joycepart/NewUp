@@ -14,7 +14,7 @@
         android:layout_height="@dimen/ds_120"
         android:gravity="center"
         android:layout_marginTop="@dimen/ds_40"
-        android:text="@string/home_suc"
+        android:text="@string/home_rturn"
         android:textColor="@color/color_00"
         android:textSize="@dimen/fs_65"/>
     <TextView

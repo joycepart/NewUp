@@ -3,6 +3,7 @@ package com.qluxstory.qingshe.common.base;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.home.fragment.SelectFragment;
 import com.qluxstory.qingshe.home.fragment.SendAddressFragment;
+import com.qluxstory.qingshe.home.fragment.StoreFragment;
 import com.qluxstory.qingshe.home.fragment.VouchersFragment;
 import com.qluxstory.qingshe.issue.fragment.CalculationFragment;
 import com.qluxstory.qingshe.issue.fragment.PastDetailsFragment;
@@ -26,7 +27,7 @@ public enum SimplePage{
     CALULATION(9, R.string.calculation_details, CalculationFragment.class),
     SEND_ADDRESS(10, R.string.order_receipt_choice, SendAddressFragment.class),
     SELECT_ADDRESS(11, R.string.order_receipt_choice, SelectFragment.class),
-    STORE(12, R.string.order_receipt_store, SendAddressFragment.class),
+    STORE(12, R.string.order_receipt_store, StoreFragment.class),
     ;
 
     private int title;

@@ -1,7 +1,5 @@
 package com.qluxstory.qingshe.home.activity;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,17 +7,19 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
@@ -32,7 +32,6 @@ import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.PhotoSystemUtils;
-import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.dto.PayDTO;
@@ -44,9 +43,8 @@ import com.qluxstory.qingshe.home.entity.PayResult;
 import com.qluxstory.qingshe.home.entity.ProductDetails;
 import com.qluxstory.qingshe.home.entity.TakeEntity;
 import com.qluxstory.qingshe.home.entity.TakeResult;
-import com.qluxstory.qingshe.wheel.widget.OnWheelChangedListener;
-import com.qluxstory.qingshe.wheel.widget.WheelView;
-import com.qluxstory.qingshe.wheel.widget.adapters.AbstractWheelAdapter;
+import com.qluxstory.qingshe.home.entity.TimeEntity;
+import com.qluxstory.qingshe.home.entity.TimeResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,7 +136,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
     private static int output_X = 480;
     private static int output_Y = 480;
-    TakeEntity takeEntity;
+    List<TakeEntity> takeEntity ;
+    List<TimeEntity> timeEntity ;
     ProductDetails mProductDetails;
     Bitmap bitmap;
     private String mMemberheadimg;
@@ -200,17 +199,18 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
             case R.id.place_take_delivery:
                 reqTake();//取送方式
-//                showPopwindow();
+                showTakePop();
                 break;
             case R.id.place_address:
                 if(mTvAddress.getText().toString().equals("选择门店：")){
                     Bundle bundle = new Bundle();
                     bundle.putString("rturn", rturn);
-                    UIHelper.showRorStoreFragment(this, SimplePage.SELECT_ADDRESS,bundle);//选择门店
+                    UIHelper.showRorStoreFragment(this, SimplePage.STORE,bundle);//选择门店
                 }else {
                     UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
                 }
-                
+
+
                 break;
             case R.id.place_send:
                 Bundle bundle = new Bundle();
@@ -262,15 +262,124 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         super.onClick(v);
     }
 
-    private void showTimePop() {
+    ArrayList<String>  tList ;
+    private void showTakePop() {
+        tList = new ArrayList<>();
+        tList.add(takeEntity.get(0).getDis_type_name());
+        tList.add(takeEntity.get(1).getDis_type_name());
+        tList.add(takeEntity.get(2).getDis_type_name());
+        OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
+        tipPopup.setPicker(tList);//设置里面list
+        tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                if ("全国包回邮".equals(tList.get(options1))) {
+                    mPlaTv.setText("全国包回邮");
+                    mTime.setVisibility(View.GONE);
+                    mPlaceAddress.setVisibility(View.VISIBLE);
+                    mPlaceSend.setVisibility(View.VISIBLE);
+                    mTvAddress.setText("收货地址:");
+                    mPlaTvAdd.setText("");
 
+                } else if("上门取送".equals(tList.get(options1))){
+                    mPlaTv.setText("上门取送");
+                    mTime.setVisibility(View.VISIBLE);
+                    mPlaceAddress.setVisibility(View.VISIBLE);
+                    mPlaceSend.setVisibility(View.GONE);
+                    mTvTime.setText("预约上门时间：");
+                    mTvAddress.setText("上门地址:");
+                    mPlaTvAdd.setText("");
+
+                }
+                else if("自送门店".equals(tList.get(options1))){
+                    mPlaTv.setText("自送门店");
+                    mTime.setVisibility(View.VISIBLE);
+                    mPlaceAddress.setVisibility(View.VISIBLE);
+                    mPlaceSend.setVisibility(View.GONE);
+                    mTvAddress.setText("选择门店：");
+                    mTvTime.setText("门店工作时间：");
+                    mAddTime.setText("10:00 - 18:00");
+                    mPlaTvAdd.setText("");
+
+                }
+
+            }
+        });
+        tipPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {//设置窗体消失后，屏幕恢复亮度
+            @Override
+            public void onDismiss() {
+                closePopupWindow();
+            }
+        });
+        tipPopup.showAtLocation(mPlaceCoupon, Gravity.BOTTOM, 0, 0);//显示的位置
+        //弹窗后背景变暗
+        openPopupWindow();
+    }
+
+    /**
+     *  打开窗口 
+     */
+    private void openPopupWindow() {
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.7f;
+        getWindow().setAttributes(params);
+    }
+
+    /**
+     *  关闭窗口 
+     */
+    private void closePopupWindow() {
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 1f;
+        getWindow().setAttributes(params);
+    }
+
+    ArrayList<String>  tiList ;
+    private void showTimePop() {
+        reqTime();//获取后十五天时间
+        tList = new ArrayList<>();
+        for(int i = 0;i<timeEntity.size();i++){
+            tiList.add(timeEntity.get(i).getTime());
+        }
+        OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
+        tipPopup.setPicker(tiList);//设置里面list
+        tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mAddTime.setText(tiList.get(options1)+"10:00 - 18:00");
+
+            }
+        });
+        tipPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {//设置窗体消失后，屏幕恢复亮度
+            @Override
+            public void onDismiss() {
+                closePopupWindow();
+            }
+        });
+        tipPopup.showAtLocation(mPlaceCoupon, Gravity.BOTTOM, 0, 0);//显示的位置
+        //弹窗后背景变暗
+        openPopupWindow();
+
+    }
+
+    private void reqTime() {
+        BaseDTO dto = new BaseDTO();
+        CommonApiClient.time(this, dto, new CallBack<TimeResult>() {
+            @Override
+            public void onSuccess(TimeResult result) {
+                if (AppConfig.SUCCESS.equals(result.getStatus())) {
+                    LogUtils.e("获取后十五天成功");
+                    timeEntity = result.getData();
+
+                }
+
+            }
+        });
     }
 
     private void reqBalance() {
         BaseDTO dto = new BaseDTO();
         dto.setSign(AppConfig.SIGN_1);
-        LogUtils.e("未加密前的----", TimeUtils.getSignTime() + AppConfig.SIGN_1);
-        LogUtils.e("加密后的---", SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));
         dto.setTimestamp(TimeUtils.getSignTime());
         dto.setMembermob(AppContext.get("mobileNum", ""));
         CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
@@ -296,11 +405,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onSuccess(TakeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("取送方式成功");
-                    takeEntity = result.getData().get(0);
-//                    qusongList = result.getData();
-                    if(!TextUtils.isEmpty(takeEntity.getDis_type_name())){
-                        mPlaTv.setText(takeEntity.getDis_type_name());
-                        rturn = takeEntity.getDis_type_code();
+                    takeEntity = result.getData();
+                    if(!TextUtils.isEmpty(takeEntity.get(0).getDis_type_name())){
+                        mPlaTv.setText(takeEntity.get(0).getDis_type_name());
+                        rturn = takeEntity.get(0).getDis_type_code();
                     }
 
 
@@ -308,90 +416,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 }
             }
         });
-    }
-
-    private void showPopwindow() {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.view_common_pop, null);
-        final Dialog dialog = DialogUtils.showDialog(this, view);
-        WheelView wheelView = (WheelView) view.findViewById(R.id.wheelview);
-        TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
-        TextView determine = (TextView) view.findViewById(R.id.tv_determine);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        determine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if(mPlaTv.getText().toString().equals("全国包回邮")){
-                    mTime.setVisibility(View.GONE);
-                    mPlaceAddress.setVisibility(View.VISIBLE);
-                    mPlaceSend.setVisibility(View.VISIBLE);
-                    mTvAddress.setText("收货地址");
-
-                }else if(mPlaTv.getText().toString().equals("上门取送")){
-                    mTime.setVisibility(View.VISIBLE);
-                    mPlaceAddress.setVisibility(View.VISIBLE);
-                    mPlaceSend.setVisibility(View.GONE);
-                    mTvTime.setText("预约上门时间：");
-                    mTvAddress.setText("上门地址");
-
-                }else if(mPlaTv.getText().toString().equals("自送门店")){
-                    mTime.setVisibility(View.VISIBLE);
-                    mPlaceAddress.setVisibility(View.VISIBLE);
-                    mPlaceSend.setVisibility(View.GONE);
-                    mTvAddress.setText("选择门店：");
-                    mTvTime.setText("门店工作时间：");
-                    mAddTime.setText("10:00 - 18:00");
-
-                }
-            }
-        });
-        wheelView.setVisibleItems(3);
-        wheelView.setViewAdapter(new QusongAdapter(this));
-        wheelView.addChangingListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                int currentItem = wheel.getCurrentItem();
-                mPlaTv.setText(qusongList.get(currentItem).getDis_type_name());
-
-            }
-        });
-    }
-
-    class QusongAdapter extends AbstractWheelAdapter {
-        Context context;
-        public QusongAdapter(Context context) {
-            this.context = context;
-
-        }
-        @Override
-        public int getItemsCount() {
-            return qusongList.size();
-        }
-
-        @Override
-        public View getItem(int index, View convertView, ViewGroup parent) {
-            ViewHolder mViewHolder = null;
-            if (convertView == null) {
-                mViewHolder = new ViewHolder();
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_common_pop, parent, false);
-                mViewHolder.tv = (TextView) convertView.findViewById(R.id.tv_item);
-                convertView.setTag(mViewHolder);
-            } else {
-                mViewHolder = (ViewHolder) convertView.getTag();
-            }
-            mViewHolder.tv.setText(qusongList.get(index).getDis_type_name());
-            return convertView;
-        }
-
-        class ViewHolder {
-            TextView tv;
-        }
     }
 
 
@@ -509,12 +533,13 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if (intent != null) {
                     setImageToHeadView(intent);
                 }
+                break;
             case UIHelper.SELECT_REQUEST:
-                mPlaTvAdd.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile()
-                        + consignee.getProvincialCity() + consignee.getAddressInDetail());
+                if(consignee!=null){
+                    mPlaTvAdd.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile()
+                            + consignee.getProvincialCity() + consignee.getAddressInDetail());
+                }
 
-//                mPlaTvAdd.setText( AppContext.get("Dis_province_select",""));//收货地址
-//                AppContext.set("Dis_province_select","");
                 break;
             case UIHelper.COUPON_REQUEST:
                 mPlaceCoupon.setText(AppContext.get("vouchers", ""));//代金劵

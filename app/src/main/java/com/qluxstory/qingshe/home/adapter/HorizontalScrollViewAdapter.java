@@ -76,7 +76,7 @@ public class HorizontalScrollViewAdapter
 		}
 		ImageLoaderUtils.displayImage(AppConfig.BASE_URL+getItem(position).getPic_url(),viewHolder.mImg);
 		viewHolder.mTitle.setText(getItem(position).getSna_title());
-		viewHolder.mQishu.setText(getItem(position).getSna_term());
+		viewHolder.mQishu.setText("第"+getItem(position).getSna_term()+"期");
 		viewHolder.mItemRel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

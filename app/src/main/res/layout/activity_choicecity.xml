@@ -2,25 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9E9E9"
+    android:background="@color/color_cc"
     android:orientation="vertical"
-    android:paddingTop="20dip">
-    <RelativeLayout
+   >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dip" >
+        android:layout_marginTop="@dimen/ds_300"
+        android:layout_marginLeft="@dimen/ds_30"
+        android:layout_marginRight="@dimen/ds_30"
+        android:background="@drawable/pop"
+
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dip"
-            android:text="请选择省市区"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-    </RelativeLayout>
-
+            android:layout_marginTop="@dimen/ds_30"
+            android:layout_marginLeft="@dimen/ds_25"
+            android:text="@string/choise_city"
+            android:textSize="@dimen/fs_55"
+            android:textColor="@color/color_00"  />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/color_cc"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -48,13 +57,19 @@
             android:layout_weight="1" >
         </com.qluxstory.qingshe.wheel.widget.WheelView>
     </LinearLayout>
-
-    <Button
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_1"
+    android:background="@color/color_cc"/>
+    <TextView
         android:id="@+id/btn_confirm"
         android:layout_marginTop="10dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ds_30"
         android:gravity="center"
-        android:text="确定"
-        android:textColor="#000000" />
+        android:text="@string/pop_ok"
+        android:textSize="@dimen/fs_55"
+        android:textColor="@color/color_00" />
+    </LinearLayout>
 </LinearLayout>

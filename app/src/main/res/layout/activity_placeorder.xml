@@ -102,7 +102,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ds_30"
                     android:layout_marginBottom="@dimen/ds_80"
-                    android:text="@string/order_receipt_address"
+                    android:text=""
                     android:textColor="@color/color_00"
                     android:textSize="@dimen/fs_60"/>
                 <TextView

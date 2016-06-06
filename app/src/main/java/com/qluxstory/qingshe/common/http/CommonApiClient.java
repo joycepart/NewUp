@@ -24,6 +24,7 @@ import com.qluxstory.qingshe.home.entity.SelectResult;
 import com.qluxstory.qingshe.home.entity.SendResult;
 import com.qluxstory.qingshe.home.entity.StoreResult;
 import com.qluxstory.qingshe.home.entity.TakeResult;
+import com.qluxstory.qingshe.home.entity.TimeResult;
 import com.qluxstory.qingshe.home.entity.TranResult;
 import com.qluxstory.qingshe.home.entity.VouchersResult;
 import com.qluxstory.qingshe.information.dto.InformationDTO;
@@ -497,6 +498,20 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<BalanceResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,BalanceResult.class);
         post(getAbsoluteUrl("/API/WsMember.asmx/ResMemberCashAmountMoneyApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 获取后十五天
+     * @param act
+     * @param dto
+     * @param callback
+     */
+    public static void time(Activity act, BaseDTO
+            dto, CallBack<TimeResult> callback) {
+        AsyncCallBack<TimeResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,TimeResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/GetDateTime"), dto,
                 asyncCallBack);
     }
 

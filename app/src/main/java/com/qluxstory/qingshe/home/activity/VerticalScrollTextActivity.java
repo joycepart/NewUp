@@ -46,7 +46,7 @@ public class VerticalScrollTextActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vertical);
+        setContentView(R.layout.item_issue_wining);
         ll_text1=(LinearLayout) findViewById(R.id.ll_text1);
         ll_text2=(LinearLayout) findViewById(R.id.ll_text2);
         ll_text1_tv=(TextView) findViewById(R.id.ll_text1_tv);

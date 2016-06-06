@@ -2,8 +2,7 @@ package com.qluxstory.qingshe.home.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.LogUtils;
@@ -14,16 +13,18 @@ import com.qluxstory.qingshe.wheel.widget.adapters.ArrayWheelAdapter;
 /**
  * Created by lenovo on 2016/6/4.
  */
-public class TestPopActivity extends WheelAcitivity implements View.OnClickListener, OnWheelChangedListener {
+public class ChoiceCityActivity extends WheelAcitivity implements View.OnClickListener, OnWheelChangedListener {
     private WheelView mViewProvince;
     private WheelView mViewCity;
     private WheelView mViewDistrict;
-    private Button mBtnConfirm;
+    private TextView mBtnConfirm;
+    private String mProvince,mCity,mArea;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testpop);
+        setContentView(R.layout.activity_choicecity);
         setUpViews();
         setUpListener();
         setUpData();
@@ -34,7 +35,7 @@ public class TestPopActivity extends WheelAcitivity implements View.OnClickListe
         mViewProvince = (WheelView) findViewById(R.id.id_province);
         mViewCity = (WheelView) findViewById(R.id.id_city);
         mViewDistrict = (WheelView) findViewById(R.id.id_district);
-        mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
+        mBtnConfirm = (TextView) findViewById(R.id.btn_confirm);
     }
     private void setUpListener() {
         // 添加change事件
@@ -50,7 +51,7 @@ public class TestPopActivity extends WheelAcitivity implements View.OnClickListe
     private void setUpData() {
         initProvinceDatas();
         LogUtils.e("mProvinceDatas",""+mProvinceDatas);
-        mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(TestPopActivity.this, mProvinceDatas));
+        mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(ChoiceCityActivity.this, mProvinceDatas));
         // 设置可见条目数量
         mViewProvince.setVisibleItems(7);
         mViewCity.setVisibleItems(7);
@@ -108,15 +109,12 @@ public class TestPopActivity extends WheelAcitivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_confirm:
-                showSelectedResult();
+//                mProvince = mViewProvince.get;
                 break;
             default:
                 break;
         }
     }
 
-    private void showSelectedResult() {
-        Toast.makeText(TestPopActivity.this, "当前选中:"+mCurrentProviceName+","+mCurrentCityName+","
-                +mCurrentDistrictName+","+mCurrentZipCode, Toast.LENGTH_SHORT).show();
-    }
+
 }

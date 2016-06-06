@@ -11,6 +11,7 @@ import com.qluxstory.qingshe.home.activity.CuringActivity;
 import com.qluxstory.qingshe.home.activity.PlaceOrderActivity;
 import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
 import com.qluxstory.qingshe.home.activity.TestActivity;
+import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
 import com.qluxstory.qingshe.home.activity.VerticalScrollTextActivity;
 
 /**
@@ -24,6 +25,16 @@ public class HomeUiGoto {
 
     public static void curing(Context context){
         Intent intent = new Intent(context, CuringActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到选择省，市页
+     * @param context
+     */
+
+    public static void city(Context context){
+        Intent intent = new Intent(context, ChoiceCityActivity.class);
         context.startActivity(intent);
     }
 

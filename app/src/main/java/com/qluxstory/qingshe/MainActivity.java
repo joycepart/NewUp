@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.fragment.HomeFragment;
@@ -147,7 +148,13 @@ public class MainActivity extends BaseTitleActivity {
     protected void onNewIntent(Intent intent) {
         if(intent != null) {
             int tag = intent.getExtras().getInt("tag");
-            showTab(tag);
+            LogUtils.e("tag-----",tag+"");
+            if(Integer.valueOf(tag)!=null){
+                showTab(tag);
+            }else {
+                return;
+            }
+
         }
     }
 

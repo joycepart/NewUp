@@ -1,6 +1,6 @@
 package com.qluxstory.qingshe.home.activity;
 
-import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,9 +12,11 @@ import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
+import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.dto.AddAddressDTO;
 import com.qluxstory.qingshe.home.entity.AddAddressEntity;
 import com.qluxstory.qingshe.home.entity.AddAddressResult;
@@ -65,14 +67,27 @@ public class AddAddressActivity extends BaseTitleActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_Btn:
-                reqAdd();//添加收货地址
+                if(TextUtils.isEmpty(mEtConsignee.getText().toString())){
+                    DialogUtils.showPrompt(this,"提示","请填写收货人姓名");
+                }
+                else if(TextUtils.isEmpty(mEtNum.getText().toString())||mEtNum.getText().toString().length()<11){
+                    DialogUtils.showPrompt(this,"提示","请填写正确手机号");
+                }
+                else if(TextUtils.isEmpty(mEtCity.getText().toString())){
+                    DialogUtils.showPrompt(this,"提示","请选择省，市");
+                }
+                else if(TextUtils.isEmpty(mEtAddress.getText().toString())){
+                    DialogUtils.showPrompt(this,"提示","请填写详细地址");
+                }else {
+                    reqAdd();//添加收货地址
+                }
+
                 break;
             case R.id.base_titlebar_back:
                 baseGoBack();
                 break;
             case R.id.et_city:
-                Intent intent = new Intent(this,TestPopActivity.class);
-                startActivity(intent);
+                HomeUiGoto.city(this);//选择省，市
                 break;
             default:
                 break;

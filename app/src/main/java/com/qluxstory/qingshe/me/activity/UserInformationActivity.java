@@ -88,7 +88,7 @@ public class UserInformationActivity extends BaseTitleActivity {
         switch (view.getId()) {
             case R.id.user_img:
                 showPicPop();
-                MeUiGoto.selectPic(this);//修改用户图像
+//                MeUiGoto.selectPic(this);//修改用户图像
 
                 break;
             case R.id.user_information:
@@ -136,9 +136,9 @@ public class UserInformationActivity extends BaseTitleActivity {
     private void showPicPop() {
         final View view = LayoutInflater.from(this).inflate(R.layout.popup_pic, null);
         final Dialog dialog = DialogUtils.showDialog(this, view);
-        mCamera = (TextView) this.findViewById(R.id.btn_alter_pic_camera);
-        mPhoto = (TextView) this.findViewById(R.id.btn_alter_pic_photo);
-        mExit = (TextView) this.findViewById(R.id.btn_alter_exit);
+        mCamera = (TextView) view.findViewById(R.id.btn_alter_pic_camera);
+        mPhoto = (TextView) view.findViewById(R.id.btn_alter_pic_photo);
+        mExit = (TextView) view.findViewById(R.id.btn_alter_exit);
         mCamera.setOnClickListener(this);
         mPhoto.setOnClickListener(this);
         mExit.setOnClickListener(this);
@@ -198,7 +198,7 @@ public class UserInformationActivity extends BaseTitleActivity {
 
         LogUtils.e("data--------",""+data);
         switch (requestCode) {
-            case MeUiGoto.SELECT_REQUEST:
+            case 1:
                 if (data != null) {
                     //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
                     Uri mImageCaptureUri = data.getData();

@@ -14,6 +14,7 @@ import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.issue.activity.SettlementActivity;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
 
 /**
@@ -23,6 +24,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     Context mContext;
     private Button btn;
     private String mTerm,mTitle,mBalance,mPic;
+    IssueProduct issueProduct;
 
     public RecordsAdapter (Context context) {
         mContext = context;
@@ -34,12 +36,13 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     }
 
     @Override
-    public void bindData(final BaseRecyclerViewHolder holder, RecordsEntity recordsEntity, int position) {
+    public void bindData(final BaseRecyclerViewHolder holder, final RecordsEntity recordsEntity, int position) {
             mTerm = recordsEntity.getRec_term();
             mTitle = recordsEntity.getSna_title();
             mBalance = recordsEntity.getRec_pay_balance();
             mPic = recordsEntity.getPic_url();
             btn = holder.getView(R.id.records_btn);
+             LogUtils.e("recordsEntity.getRec_state()---",recordsEntity.getRec_state());
 
             if(recordsEntity.getRec_state().equals("0")){
                 holder.setText(R.id.records_payment,"未付款");
@@ -77,12 +80,20 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
            btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUtils.e("btn--",btn.getText().toString());
                 if(btn.getText().toString().equals("继续夺宝")){
                     LogUtils.e("btn.getText().toString()---if",btn.getText().toString());
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("tag",2);
                     mContext.startActivity(intent);
                 }else if(btn.getText().toString().equals("去支付")){
+                    issueProduct.setmRecCode(recordsEntity.getRec_code());
+                    issueProduct.setmBatCode(recordsEntity.getBat_code());
+                    issueProduct.setmSnaCode(recordsEntity.getSna_code());
+                    issueProduct.setmSnaTitle(recordsEntity.getSna_title());
+                    issueProduct.setmSnaTerm(recordsEntity.getRec_term());
+                    issueProduct.setmPicUrl(recordsEntity.getPic_url());
+
                     LogUtils.e("btn.getText().toString()---else",btn.getText().toString());
                     Intent intent = new Intent(mContext, SettlementActivity.class);
                     Bundle bundle = new Bundle();

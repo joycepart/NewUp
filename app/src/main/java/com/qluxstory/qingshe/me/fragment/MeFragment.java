@@ -18,6 +18,9 @@ import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.me.MeUiGoto;
+import com.qluxstory.qingshe.me.entity.Bank;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -147,9 +150,12 @@ public class MeFragment extends BaseFragment {
                 startActivity(intent); //电话客服
                 break;
             case R.id.user_ll_qq:
-                mUrlQq = AppConfig.URL_QQ;
-                mQqTitle = "官方QQ群 - 倾奢";
-                MeUiGoto.qq(getActivity(), mUrlQq, mQqTitle);//官方QQ群
+                showPop(new ArrayList<Bank>());
+
+
+//                mUrlQq = AppConfig.URL_QQ;
+//                mQqTitle = "官方QQ群 - 倾奢";
+//                MeUiGoto.qq(getActivity(), mUrlQq, mQqTitle);//官方QQ群
                 break;
             case R.id.user_ll_inf:
                 mUrlInformation = AppConfig.URL_INFORMATION;
@@ -163,6 +169,10 @@ public class MeFragment extends BaseFragment {
                 AppContext.set("isLogin",false);
                 break;
         }
+    }
+
+    private void showPop(ArrayList<Bank> banks) {
+//        DialogUtils.showDialog(new ArrayList<Bank>());
     }
 
 

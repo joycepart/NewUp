@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ViewFlipper;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -40,10 +39,16 @@ import butterknife.Bind;
 public class IssueFragment extends BasePullScrollViewFragment {
     @Bind(R.id.issue_list)
     RecyclerView mIssuelList;
+//    @Bind(R.id.issue_top_img)
+//    LinearLayout mIssueTopImg;
+//    @Bind(R.id.issue_top_img)
+//    LinearLayout mIssueTopImg;
+//    @Bind(R.id.issue_top_img)
+//    TextView mIssueTopImg;
+//    @Bind(R.id.issue_top_img)
+//    TextView mIssueTopImg;
     @Bind(R.id.issue_top_img)
     ImageView mIssueTopImg;
-    @Bind(R.id.view_flipper)
-    ViewFlipper mViewFlipper;
     BaseSimpleRecyclerAdapter mIssueAdapter;
     IssueProduct issueProduct;
 
@@ -123,6 +128,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
     }
 
     private void bindData(List<WinningEntity> data) {
+
     }
 
 

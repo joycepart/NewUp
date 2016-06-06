@@ -89,7 +89,7 @@
             android:name="com.qluxstory.qingshe.home.activity.VerticalScrollTextActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.qluxstory.qingshe.home.activity.TestPopActivity"
+            android:name=".home.activity.ChoiceCityActivity"
             android:screenOrientation="portrait"/>
 
         <activity

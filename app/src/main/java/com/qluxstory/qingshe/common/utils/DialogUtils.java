@@ -205,11 +205,11 @@ public class DialogUtils {
 		int width = dm.widthPixels;//宽度
 		int height = dm.heightPixels ;//高度
 
-		dlg.setCanceledOnTouchOutside(true);
+
 		dlg.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));
 		dlg.show();
-
+		dlg.setCanceledOnTouchOutside(true);
 		Window w = dlg.getWindow();
 		WindowManager.LayoutParams lp = w.getAttributes();
 		lp.x = 0;
