@@ -64,15 +64,20 @@ public class AsyncCallBack<T> implements Callback {
 			int startIndex=reader.indexOf("{",reader.indexOf("{")+1);
 			int endIndex=reader.lastIndexOf("]");
 			reader=reader.substring(startIndex,endIndex);
-
 			LogUtils.e("response success json-->" + reader);
+			if(reader.contains("[{}]")){
+				reader=reader.replace("[{}]","null");
+			}
+			LogUtils.e("response success json 转换后-->" + reader);
 			try {
 				T t = gson.fromJson(reader.trim(), clazz);
-				callback.sendMsg(CallBack.SUCCESS, t);
-				BaseEntity entity=(BaseEntity)t;
-				EventBus.getDefault().post(
-						new ErrorEvent(entity.getStatus(),
-								entity.getMsg(), tag));
+
+					callback.sendMsg(CallBack.SUCCESS, t);
+
+					BaseEntity entity = (BaseEntity) t;
+					EventBus.getDefault().post(
+							new ErrorEvent(entity.getStatus(),
+									entity.getMsg(), tag));
 			}catch (Exception e){
 				callback.sendMsg(CallBack.FAIL, (T) AppConfig.ERROR_PARSER_MSG);
 				EventBus.getDefault().post(

@@ -2,7 +2,6 @@ package com.qluxstory.qingshe.issue.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -145,7 +144,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
             public void onSuccess(LanderInResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("登陆者参与的次数成功");
-                    if(TextUtils.isEmpty(result.getData().get(0).getReceive_ran_num())){
+                    if(result.getData()==null||result.getData().size()==0){
                         mProductLin.setVisibility(View.GONE);
                         mParticipate.setVisibility(View.VISIBLE);
                         mParticipate.setText("您未参与本次夺宝活动");
