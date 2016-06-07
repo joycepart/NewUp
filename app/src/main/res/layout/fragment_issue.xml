@@ -20,6 +20,7 @@
 
         <LinearLayout
             android:orientation="horizontal"
+            android:background="@color/color_ff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -35,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/fs_45"
                 android:gravity="center"
+                android:textColor="@color/color_00"
                 android:id="@+id/textView"
                 android:text="@string/issue_a"
                 android:textSize="@dimen/fs_50"
@@ -42,7 +44,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/fs_45"
+                android:layout_marginLeft="@dimen/ds_15"
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -51,7 +53,6 @@
                         android:id="@+id/ll_text1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#f1f1f1"
                         android:orientation="horizontal" >
                         <TextView
                             android:id="@+id/ll_text1_tv"
@@ -59,18 +60,18 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dp"
+                            android:maxLines="1"
                             android:gravity="center_vertical"
-                            android:text="学朴槿惠穿衣风格"
-                            android:textColor="#3b3b3b"
+                            android:text=""
+                            android:textColor="@color/color_00"
                             android:ellipsize="end"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/fs_45" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_text2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#f1f1f1"
                         android:orientation="horizontal" >
                         <TextView
                             android:id="@+id/ll_text2_tv"
@@ -79,13 +80,15 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dp"
                             android:gravity="center_vertical"
+                            android:maxLines="1"
                             android:ellipsize="end"
-                            android:text="能穿出N中风格的打底衫"
-                            android:textColor="#3b3b3b"
-                            android:textSize="15sp" />
+                            android:text=""
+                            android:textColor="@color/color_00"
+                            android:textSize="@dimen/fs_45" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
+
         </LinearLayout>
 
         <View

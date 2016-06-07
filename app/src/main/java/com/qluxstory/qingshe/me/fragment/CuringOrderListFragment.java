@@ -56,7 +56,7 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
 
     @Override
     public BaseRecyclerAdapter<CuringOrderListEntity> createAdapter() {
-        return new CuringOrderAdapter();
+        return new CuringOrderAdapter(getActivity());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
                     LogUtils.d("养护订单成功");
                     mErrorLayout.setErrorMessage("暂无养护订单记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getComName()==null){
+                    if(null==result.getData()){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         requestDataSuccess(result);

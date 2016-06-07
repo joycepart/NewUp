@@ -59,6 +59,11 @@ public class UserInformationActivity extends BaseTitleActivity {
     private String mImg;
     TextView mCamera,mPhoto,mExit;
     private Intent intent;
+    Dialog dialog;
+    /* 请求识别码 */
+    private static final int CODE_GALLERY_REQUEST = 0xa0;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
 
     @Override
     protected int getContentResId() {
@@ -87,31 +92,42 @@ public class UserInformationActivity extends BaseTitleActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_img:
-                showPicPop();
-//                MeUiGoto.selectPic(this);//修改用户图像
-
+                showPicPop();//修改用户图像
                 break;
             case R.id.user_information:
                 MeUiGoto.modifyUser(this);//修改用户名
                 break;
             case R.id.base_titlebar_back:
-                goBack();
+                baseGoBack();
             case R.id.btn_alter_pic_camera:
-                try {
-                    //拍照我们用Action为MediaStore.ACTION_IMAGE_CAPTURE，
-                    //有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    // 判断存储卡是否可用，存储照片文件
-                    if (PhotoSystemUtils.hasSdcard()) {
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-                                .fromFile(new File(Environment
-                                        .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-                    }
-                    startActivityForResult(intent, 1);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                // 判断存储卡是否可用，存储照片文件
+                if (PhotoSystemUtils.hasSdcard()) {
+                    intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+                            .fromFile(new File(Environment
+                                    .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
                 }
+
+                startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+
+
+//                try {
+//                    //拍照我们用Action为MediaStore.ACTION_IMAGE_CAPTURE，
+//                    //有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    // 判断存储卡是否可用，存储照片文件
+//                    if (PhotoSystemUtils.hasSdcard()) {
+//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+//                                .fromFile(new File(Environment
+//                                        .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+//                    }
+//                    startActivityForResult(intent, 1);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.btn_alter_pic_photo:
                 try {
@@ -120,7 +136,7 @@ public class UserInformationActivity extends BaseTitleActivity {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, 2);
+                    startActivityForResult(intent, CODE_CAMERA_REQUEST);
                 } catch (ActivityNotFoundException e) {
 
                 }
@@ -135,7 +151,7 @@ public class UserInformationActivity extends BaseTitleActivity {
 
     private void showPicPop() {
         final View view = LayoutInflater.from(this).inflate(R.layout.popup_pic, null);
-        final Dialog dialog = DialogUtils.showDialog(this, view);
+        dialog = DialogUtils.showDialog(this, view);
         mCamera = (TextView) view.findViewById(R.id.btn_alter_pic_camera);
         mPhoto = (TextView) view.findViewById(R.id.btn_alter_pic_photo);
         mExit = (TextView) view.findViewById(R.id.btn_alter_exit);
@@ -144,15 +160,6 @@ public class UserInformationActivity extends BaseTitleActivity {
         mExit.setOnClickListener(this);
     }
 
-    @Override
-    protected void baseGoBack() {
-        super.baseGoBack();
-    }
-
-    private void goBack() {
-        setResult(1002);
-        finish();
-    }
 
     private void reqUserPic() {
         UserPicDTO bdto=new UserPicDTO();
@@ -166,6 +173,7 @@ public class UserInformationActivity extends BaseTitleActivity {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("修改用户图像成功");
                     AppContext.set("mPictruePath",result.getData().get(0).getMemberHeadimg());
+                    ImageLoaderUtils.displayAvatarImage(result.getData().get(0).getMemberHeadimg(),mUserImg);
                 }
             }
         });
@@ -179,26 +187,9 @@ public class UserInformationActivity extends BaseTitleActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        LogUtils.e("data-----------",data+"");
-//        if(data != null) {
-//            //选择完或者拍完照后会在这里处理，然后我们继续使用setResult返回Intent以便可以传递数据和调用
-//            if (data.getExtras() != null) {
-//                intent.putExtras(data.getExtras());
-//            }
-//            if (data.getData() != null) {
-//                intent.setData(data.getData());
-//            }
-//            setResult(1, intent);
-//        }
-//        finish();
-
-
         LogUtils.e("data--------",""+data);
         switch (requestCode) {
-            case 1:
+            case CODE_CAMERA_REQUEST:
                 if (data != null) {
                     //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
                     Uri mImageCaptureUri = data.getData();
@@ -218,21 +209,19 @@ public class UserInformationActivity extends BaseTitleActivity {
                     }
 
                 } else {
-
                         if (PhotoSystemUtils.hasSdcard()) {
                             File tempFile = new File(
                                     Environment.getExternalStorageDirectory(),
                                     IMAGE_FILE_NAME);
                             Uri uri = Uri.fromFile(tempFile);
+                            LogUtils.e("Uri--------------", uri + "");
                             mImg = PhotoSystemUtils.getRealFilePath(this,uri);
+                            LogUtils.e("mImg--------------", mImg + "");
                             try {
                                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-
-                            ImageLoader.getInstance().displayImage("file:///"+mImg,
-                                    mUserImg, ImageLoaderUtils.getAvatarOptions());;
 
                         } else {
                             Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
@@ -241,6 +230,7 @@ public class UserInformationActivity extends BaseTitleActivity {
 
                         }
                     mMemberheadimg = ImageLoaderUtils.imgToBase64(mImg,image,null);
+                    dialog.dismiss();
                     reqUserPic();//修改用户图像
 
 

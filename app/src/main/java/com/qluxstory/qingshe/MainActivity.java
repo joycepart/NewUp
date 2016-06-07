@@ -146,6 +146,7 @@ public class MainActivity extends BaseTitleActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
+        LogUtils.e("intent-----",intent+"");
         if(intent != null) {
             int tag = intent.getExtras().getInt("tag");
             LogUtils.e("tag-----",tag+"");
@@ -154,6 +155,7 @@ public class MainActivity extends BaseTitleActivity {
             }else {
                 return;
             }
+
 
         }
     }

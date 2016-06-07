@@ -160,8 +160,14 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页推荐成功");
                     entity = result.getData();
-                    mHsvAdapter.append(result.getData());
-                    mHsv.initDatas(mHsvAdapter);
+                    if(null==entity){
+                        return;
+                    }else {
+                        mHsvAdapter.append(result.getData());
+                        mHsv.initDatas(mHsvAdapter);
+                    }
+
+
                 }
 
             }

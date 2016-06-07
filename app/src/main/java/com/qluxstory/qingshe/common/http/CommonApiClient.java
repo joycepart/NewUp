@@ -66,6 +66,7 @@ import com.qluxstory.qingshe.me.entity.ModifyResult;
 import com.qluxstory.qingshe.me.entity.MyCouponResult;
 import com.qluxstory.qingshe.me.entity.MyIncomeResult;
 import com.qluxstory.qingshe.me.entity.NumResult;
+import com.qluxstory.qingshe.me.entity.PaymentOrderResult;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 import com.qluxstory.qingshe.me.entity.RecordsResult;
 import com.qluxstory.qingshe.me.entity.TransactionResult;
@@ -599,6 +600,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<CuringOrderDetailsResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,CuringOrderDetailsResult.class);
         post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResDtByJsonOrderCuringShowOneApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 养护之支付
+     * @param dto
+     * @param callback
+     */
+    public static void curingOrderPays(Activity act, CuringOrderDetailsDTO
+            dto, CallBack<PaymentOrderResult> callback) {
+        AsyncCallBack<PaymentOrderResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,PaymentOrderResult.class);
+        post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResAddTwoOrderJsonOnlinePaymentApi"), dto,
                 asyncCallBack);
     }
 

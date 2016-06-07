@@ -65,7 +65,7 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
                     LogUtils.e("获取新闻成功");
                     mErrorLayout.setErrorMessage("暂无新闻",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getNews_add_time()==null){
+                    if(null==result.getData()){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         mInforData = result.getData();

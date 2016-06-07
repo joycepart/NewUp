@@ -14,6 +14,7 @@ import com.qluxstory.qingshe.me.activity.IndianaDetailsActivity;
 import com.qluxstory.qingshe.me.activity.LoginActivity;
 import com.qluxstory.qingshe.me.activity.ModifyUserActivity;
 import com.qluxstory.qingshe.me.activity.MyIncomeActivity;
+import com.qluxstory.qingshe.me.activity.PaymentOrderActivity;
 import com.qluxstory.qingshe.me.activity.UserInformationActivity;
 import com.qluxstory.qingshe.me.activity.WithdrawalsActivity;
 
@@ -98,6 +99,18 @@ public class MeUiGoto {
 
     public static void curingOrderdetails(Context context, Bundle b){
         Intent intent = new Intent(context,CuringOrderDetailsActivity.class);
+        intent.putExtra("bundle",b);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到支付订单页
+     * @param context
+     * @param b
+     */
+
+    public static void payment(Context context, Bundle b){
+        Intent intent = new Intent(context,PaymentOrderActivity.class);
         intent.putExtra("bundle",b);
         context.startActivity(intent);
     }

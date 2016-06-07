@@ -2,7 +2,6 @@ package com.qluxstory.qingshe.me.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,7 +22,7 @@ import com.qluxstory.qingshe.me.entity.RecordsEntity;
 public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     Context mContext;
     private Button btn;
-    private String mTerm,mTitle,mBalance,mPic;
+    private String mTerm,mTitle,mBalance,mPic,mRec,mBat,mSna;
     IssueProduct issueProduct;
 
     public RecordsAdapter (Context context) {
@@ -41,6 +40,10 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
             mTitle = recordsEntity.getSna_title();
             mBalance = recordsEntity.getRec_pay_balance();
             mPic = recordsEntity.getPic_url();
+            mRec = recordsEntity.getRec_code();
+            mBat = recordsEntity.getRec_code();
+            mSna = recordsEntity.getRec_code();
+
             btn = holder.getView(R.id.records_btn);
              LogUtils.e("recordsEntity.getRec_state()---",recordsEntity.getRec_state());
 
@@ -80,28 +83,21 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
            btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Button mBtn = (Button) v;
                 LogUtils.e("btn--",btn.getText().toString());
-                if(btn.getText().toString().equals("继续夺宝")){
+                if(mBtn.getText().toString().equals("继续夺宝")){
                     LogUtils.e("btn.getText().toString()---if",btn.getText().toString());
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("tag",2);
                     mContext.startActivity(intent);
-                }else if(btn.getText().toString().equals("去支付")){
-                    issueProduct.setmRecCode(recordsEntity.getRec_code());
-                    issueProduct.setmBatCode(recordsEntity.getBat_code());
-                    issueProduct.setmSnaCode(recordsEntity.getSna_code());
-                    issueProduct.setmSnaTitle(recordsEntity.getSna_title());
-                    issueProduct.setmSnaTerm(recordsEntity.getRec_term());
-                    issueProduct.setmPicUrl(recordsEntity.getPic_url());
-
-                    LogUtils.e("btn.getText().toString()---else",btn.getText().toString());
+                }else if(mBtn.getText().toString().equals("去支付")){
+                    issueProduct.setmRecCode(mRec);
+                    issueProduct.setmBatCode(mBat);
+                    issueProduct.setmSnaCode(mSna);
+                    issueProduct.setmSnaTitle(mTitle);
+                    issueProduct.setmSnaTerm(mTerm);
+                    issueProduct.setmPicUrl(mPic);
                     Intent intent = new Intent(mContext, SettlementActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("mTerm",mTerm);
-                    bundle.putString("mTitle",mTitle);
-                    bundle.putString("mBalance",mBalance);
-                    bundle.putString("mPic",mPic);
-                    intent.putExtra("bundle",bundle);
                     mContext.startActivity(intent);
                 }
 

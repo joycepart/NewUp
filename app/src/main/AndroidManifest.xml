@@ -50,6 +50,9 @@
             android:name="com.qluxstory.qingshe.me.activity.MyIncomeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.qluxstory.qingshe.me.activity.PaymentOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.qluxstory.qingshe.common.base.BrowserActivity"
             android:screenOrientation="portrait" />
         <activity

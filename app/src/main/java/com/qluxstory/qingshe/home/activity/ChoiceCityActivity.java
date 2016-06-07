@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.home.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ public class ChoiceCityActivity extends WheelAcitivity implements View.OnClickLi
     private WheelView mViewCity;
     private WheelView mViewDistrict;
     private TextView mBtnConfirm;
-    private String mProvince,mCity,mArea;
+
 
 
     @Override
@@ -109,7 +110,12 @@ public class ChoiceCityActivity extends WheelAcitivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_confirm:
-//                mProvince = mViewProvince.get;
+                Intent intent = new Intent();
+                intent.putExtra("mCurrentProviceName",mCurrentProviceName);
+                intent.putExtra("mCurrentCityName",mCurrentCityName);
+                intent.putExtra("mCurrentDistrictName",mCurrentDistrictName);
+                setResult(10,intent);
+                finish();
                 break;
             default:
                 break;

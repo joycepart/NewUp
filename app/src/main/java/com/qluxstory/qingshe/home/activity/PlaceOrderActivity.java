@@ -45,6 +45,7 @@ import com.qluxstory.qingshe.home.entity.TakeEntity;
 import com.qluxstory.qingshe.home.entity.TakeResult;
 import com.qluxstory.qingshe.home.entity.TimeEntity;
 import com.qluxstory.qingshe.home.entity.TimeResult;
+import com.qluxstory.qingshe.issue.IssueUiGoto;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,18 +63,16 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     @Bind(R.id.place_take_delivery)
     RelativeLayout mPlaceTake;
     @Bind(R.id.place_address)
-    RelativeLayout mPlaceAddress;
+    LinearLayout mPlaceAddress;
     @Bind(R.id.rel_coupon)
     RelativeLayout mRelCoupon;
     @Bind(R.id.place_send)
-    RelativeLayout mPlaceSend;
+    LinearLayout mPlaceSend;
     @Bind(R.id.rel_total)
     RelativeLayout mRelTotal;
     @Bind(R.id.pla_tv)
     TextView mPlaTv;
-    @Bind(R.id.pla_tv_add)
-    TextView mPlaTvAdd;
-    @Bind(R.id.send_address)
+    @Bind(R.id.place_send_tv_name)
     TextView mSendAddress;
     @Bind(R.id.place_titlt)
     TextView mPlaceTitlt;
@@ -119,6 +118,16 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mTvAddress;
     @Bind(R.id.pla_tv_add_time)
     TextView mAddTime;
+    @Bind(R.id.place_send_tv_city)
+    TextView mSendVity;
+    @Bind(R.id.place_send_tv_add)
+    TextView mSendAdd;
+    @Bind(R.id.place_tv_address_name)
+    TextView mAddressName;
+    @Bind(R.id.place_tv_address_city)
+    TextView mAddressCity;
+    @Bind(R.id.place_tv_address_add)
+    TextView mAddressAdd;
     private String mPrice;
     private String mName;
     private String mPic;
@@ -202,13 +211,16 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 showTakePop();
                 break;
             case R.id.place_address:
-                if(mTvAddress.getText().toString().equals("选择门店：")){
-                    Bundle bundle = new Bundle();
-                    bundle.putString("rturn", rturn);
-                    UIHelper.showRorStoreFragment(this, SimplePage.STORE,bundle);//选择门店
-                }else {
-                    UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
-                }
+                Bundle b = new Bundle();
+                b.putString("rturn", rturn);
+                UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
+//                if(mTvAddress.getText().toString().equals("选择门店：")){
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("rturn", rturn);
+//                    UIHelper.showRorStoreFragment(this, SimplePage.STORE,bundle);//选择门店
+//                }else {
+//                    UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
+//                }
 
 
                 break;
@@ -218,20 +230,34 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 UIHelper.showRorSendFragment(this, SimplePage.SEND_ADDRESS, bundle);//寄送地址
                 break;
             case R.id.rel_coupon:
-                Bundle b = new Bundle();
-                b.putString("mCode", mCode);
-                b.putString("mPrice", mPrice);
-                UIHelper.showRorCouponFragment(this, SimplePage.VOUCHERS, b);//优惠劵
+                Bundle bun = new Bundle();
+                bun.putString("mCode", mCode);
+                bun.putString("mPrice", mPrice);
+                UIHelper.showRorCouponFragment(this, SimplePage.VOUCHERS, bun);//优惠劵
                 break;
             case R.id.set_pay_Btn:
-                if (mPlaTvAdd.getText().toString() == null) {
-                    DialogUtils.showPrompt(this, "暂无可提现余额", "确定");
+                if(TextUtils.isEmpty(mMemberheadimg)){
+                    DialogUtils.showPrompt(this, "请上传商品照片", "知道了");
                 }
-                if (mSendAddress.getText().toString() == null) {
-                    DialogUtils.showPrompt(this, "暂无可提现余额", "确定");
+                if (mPlaceAddress.getVisibility()== View.VISIBLE && mPlaTv.getText().toString().equals("全国包回邮")&&TextUtils.isEmpty(mAddressName.getText().toString())) {
+                    DialogUtils.showPrompt(this, "请选择收货地址", "知道了");
+                }else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("上门取送")&&TextUtils.isEmpty(mAddressName.getText().toString())){
+                    DialogUtils.showPrompt(this, "请选择上门地址", "知道了");
                 }
+                else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mSendAddress.getText().toString())){
+                    DialogUtils.showPrompt(this, "请选择门店地址", "知道了");
+                }
+                if (mPlaceSend.getVisibility()== View.VISIBLE&&TextUtils.isEmpty(mSendAddress.getText().toString())) {
+                    DialogUtils.showPrompt(this, "请选择寄送地址", "知道了");
+                }
+                if (mTime.getVisibility()== View.VISIBLE&& mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mAddTime.getText().toString())) {
+                    DialogUtils.showPrompt(this, "请选择上门时间", "知道了");
+                }
+
+
+
                 if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
-                    DialogUtils.showPrompt(this, "暂无可提现余额", "确定");
+                    DialogUtils.showPrompt(this, "请选择支付方式", "知道了");
                 } else {
                     reqPay();//去支付
                 }
@@ -268,6 +294,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         tList.add(takeEntity.get(0).getDis_type_name());
         tList.add(takeEntity.get(1).getDis_type_name());
         tList.add(takeEntity.get(2).getDis_type_name());
+//        for(int i = 0;i<takeEntity.size();i++){
+//            LogUtils.e("takeEntity----"+takeEntity.size());
+//            LogUtils.e("takeEntity----tttt"+takeEntity.get(i).getDis_type_name());
+//            tiList.add(takeEntity.get(i).getDis_type_name());
+//            LogUtils.e("tiList----tttt"+tiList);
+//        }
         OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
         tipPopup.setPicker(tList);//设置里面list
         tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
@@ -279,7 +311,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mPlaceAddress.setVisibility(View.VISIBLE);
                     mPlaceSend.setVisibility(View.VISIBLE);
                     mTvAddress.setText("收货地址:");
-                    mPlaTvAdd.setText("");
+                    mAddressName.setText("");
+                    mAddressCity.setText("");
+                    mAddressAdd.setText("");
+                    rturn = takeEntity.get(0).getDis_type_code();
 
                 } else if("上门取送".equals(tList.get(options1))){
                     mPlaTv.setText("上门取送");
@@ -288,18 +323,24 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mPlaceSend.setVisibility(View.GONE);
                     mTvTime.setText("预约上门时间：");
                     mTvAddress.setText("上门地址:");
-                    mPlaTvAdd.setText("");
+                    mAddressName.setText("");
+                    mAddressCity.setText("");
+                    mAddressAdd.setText("");
+                    rturn = takeEntity.get(1).getDis_type_code();
 
                 }
                 else if("自送门店".equals(tList.get(options1))){
                     mPlaTv.setText("自送门店");
                     mTime.setVisibility(View.VISIBLE);
-                    mPlaceAddress.setVisibility(View.VISIBLE);
-                    mPlaceSend.setVisibility(View.GONE);
+                    mPlaceAddress.setVisibility(View.GONE);
+                    mPlaceSend.setVisibility(View.VISIBLE);
                     mTvAddress.setText("选择门店：");
                     mTvTime.setText("门店工作时间：");
                     mAddTime.setText("10:00 - 18:00");
-                    mPlaTvAdd.setText("");
+                    mAddressName.setText("");
+                    mAddressCity.setText("");
+                    mAddressAdd.setText("");
+                    rturn = takeEntity.get(2).getDis_type_code();
 
                 }
 
@@ -395,7 +436,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         });
     }
 
-    List<TakeEntity> qusongList = new ArrayList<>();
 
     private void reqTake() {
         TakeDTO dto = new TakeDTO();
@@ -430,9 +470,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setComOnlyCode(mCode);
         dto.setOrderMoney(mPlaceTotal.getText().toString());
         dto.setComCount("1");
-        dto.setCouponPrice("1");
-        dto.setMemberIDCoupon("1");
-        dto.setCouponCode("1");
+        dto.setCouponPrice(mPlaceCoupon.getText().toString());
+        dto.setMemberIDCoupon("");
+        dto.setCouponCode("");
         dto.setMemMobile(AppContext.get("mobileNum", ""));
         dto.setOrderType("养护");
 
@@ -449,8 +489,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         }
 
 
-
-
         if (mCbWx.isChecked()) {
             dto.setApplyType("微信");
         } else if (mCbZhi.isChecked()) {
@@ -458,9 +496,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         } else {
             dto.setApplyType("会员");
         }
-        dto.setServiceMoney("1");
-        dto.setReqType("服务");
-        dto.setOldOrderNum("1");
+        dto.setServiceMoney("");
+        dto.setReqType("service");
+        dto.setOldOrderNum("");
         dto.setShoudamoney(mPrice);
         dto.setBase64string(mMemberheadimg);
         dto.setServerName(mProductDetails.getSellSort());
@@ -471,6 +509,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onSuccess(PayResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("去支付成功");
+                    IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
 
                 }
 
@@ -504,8 +543,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
         switch (requestCode) {
             case UIHelper.SEND_REQUEST:
-                mSendAddress.setText(AppContext.get("Dis_province_send", ""));//寄送地址
-                AppContext.set("Dis_province_send", "");
+                mSendAddress.setText(AppContext.get("Dis_province_name","")+AppContext.get("Dis_province_phone",""));
+                mSendVity.setText(AppContext.get("Dis_province_city",""));
+                mSendAdd.setText(AppContext.get("Dis_province_area",""));
+                AppContext.set("Dis_province_name", "");
+                AppContext.set("Dis_province_city", "");
+                AppContext.set("Dis_province_area", "");
                 break;
 
             case CODE_CAMERA_REQUEST:
@@ -520,7 +563,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mMemberheadimg = ImageLoaderUtils.imgToBase64(mImg, bitmap, null);
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(bitmap);
                     cropRawPhoto(uri);
                 } else {
                     Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
@@ -536,8 +579,20 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 break;
             case UIHelper.SELECT_REQUEST:
                 if(consignee!=null){
-                    mPlaTvAdd.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile()
-                            + consignee.getProvincialCity() + consignee.getAddressInDetail());
+                    LogUtils.e("consignee---if",consignee+"");
+                    mAddressName.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile());
+                    mAddressCity.setText(consignee.getProvincialCity());
+                    mAddressAdd.setText(consignee.getAddressInDetail());
+                    consignee.setConsigneeName("");
+                    consignee.setDeliveredMobile("");
+                    consignee.setProvincialCity("");
+                    consignee.setAddressInDetail("");
+
+                }else {
+                    LogUtils.e("consignee---else",consignee+"");
+                    mAddressName.setText("");
+                    mAddressCity.setText("");
+                    mAddressAdd.setText("");
                 }
 
                 break;

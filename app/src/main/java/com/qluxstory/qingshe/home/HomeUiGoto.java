@@ -30,12 +30,12 @@ public class HomeUiGoto {
 
     /**
      * 跳转到选择省，市页
-     * @param context
+     * @param act
      */
-
-    public static void city(Context context){
-        Intent intent = new Intent(context, ChoiceCityActivity.class);
-        context.startActivity(intent);
+    public static final int CITY_REQUEST = 0201;
+    public static void city(Activity act){
+        Intent intent = new Intent(act, ChoiceCityActivity.class);
+        act.startActivityForResult(intent,CITY_REQUEST);
     }
 
     /**

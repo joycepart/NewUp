@@ -55,7 +55,7 @@ public class IssueUiGoto {
      * @param context
      */
 
-    public static void payment(Context context) {
+    public static void payment(Activity context) {
         Intent intent = new Intent(context, PaymentSuccessActivity.class);
         context.startActivity(intent);
     }

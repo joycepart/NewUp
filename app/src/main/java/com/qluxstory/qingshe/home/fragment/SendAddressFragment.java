@@ -74,8 +74,10 @@ public class SendAddressFragment extends BasePullFragment {
             public void onItemClick(View itemView, Object itemBean, int position) {
                 SendEntity sendEntity = (SendEntity) itemBean;
                 mSendCk.setChecked(true);
-                AppContext.set("Dis_province_send",sendEntity.getSto_name()+sendEntity.getSto_phone()+
-                        sendEntity.getDis_province()+sendEntity.getDis_city()+sendEntity.getDis_area());
+                AppContext.set("Dis_province_name",sendEntity.getSto_name());
+                AppContext.set("Dis_province_phone",sendEntity.getSto_phone());
+                AppContext.set("Dis_province_city",sendEntity.getDis_city());
+                AppContext.set("Dis_province_area",sendEntity.getDis_area());
                 getActivity().finish();
 
             }
@@ -99,7 +101,7 @@ public class SendAddressFragment extends BasePullFragment {
                     List<SendEntity> sData = result.getData();
                     if(sData != null && sData.size() > 0){
                         SendEntity sendEntity=sData.get(0);
-                        if(sendEntity.getDis_address()==null) {
+                        if(null==sendEntity.getDis_address()) {
                             return;
                         }else {
                             mSendListAdapter.removeAll();

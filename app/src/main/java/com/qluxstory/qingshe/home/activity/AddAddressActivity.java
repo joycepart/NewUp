@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.home.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,6 @@ import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
-import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.dto.AddAddressDTO;
@@ -42,6 +42,7 @@ public class AddAddressActivity extends BaseTitleActivity {
     @Bind(R.id.add_Btn)
     Button mAddBtn;
     Consignee consignee;
+    private String mProvince,mCity,mArea;
 
     @Override
     protected int getContentResId() {
@@ -96,8 +97,6 @@ public class AddAddressActivity extends BaseTitleActivity {
 
     private void reqAdd() {
         AddAddressDTO dto = new AddAddressDTO();
-        LogUtils.e("未加密前的----", TimeUtils.getSignTime()+AppConfig.SIGN_1);
-        LogUtils.e("加密后的---", SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));
         dto.setSign(AppConfig.SIGN_1);
         dto.setTimestamp(TimeUtils.getSignTime());
         dto.setMembermob(AppContext.get("mobileNum",""));
@@ -120,5 +119,21 @@ public class AddAddressActivity extends BaseTitleActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case HomeUiGoto.CITY_REQUEST:
+                mProvince = data.getStringExtra("mCurrentProviceName");
+                mCity = data.getStringExtra("mCurrentCityName");
+                mArea = data.getStringExtra("mCurrentDistrictName");
+                mEtCity.setText(mProvince+mCity+mArea);
+                break;
+            default:
+                break;
+
+        }
     }
 }

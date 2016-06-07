@@ -74,7 +74,7 @@ public class ImageLoaderUtils {
 
     public static String bitmaptoString(Bitmap bitmap) {
 
-        // 将Bitmap转换成字符串
+        // 将Bitmap转换成base64字符串
 
         String string = null;
 
