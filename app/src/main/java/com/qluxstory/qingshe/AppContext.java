@@ -18,6 +18,7 @@ import java.io.StreamCorruptedException;
 /**
  */
 public class AppContext  extends BaseApplication {
+
     private static AppContext instance;
     public static final String USER = "user";
     private static User mUser = null;
@@ -187,10 +188,6 @@ public class AppContext  extends BaseApplication {
      */
     public static final String SP_NAME = "qingshe_app";
 
-//    public AppContext(Context mContext) {
-//        this.sp = mContext.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
-//        this.editor = this.sp.edit();
-//    }
 
     @Override
     public void onCreate() {

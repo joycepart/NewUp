@@ -5,12 +5,15 @@
     android:id="@+id/indiana_win_plo"
     android:orientation="vertical">
 
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_30"
+    android:background="@color/color_cc"/>
 
         <RelativeLayout
             android:id="@+id/win_rel"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_250">
+            android:layout_height="@dimen/ds_240">
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -29,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ds_20"
+            android:layout_marginTop="@dimen/ds_40"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/indiana_add"
             android:gravity="center"
@@ -61,6 +64,7 @@
         </RelativeLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/win_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_20"
-                android:text="@string/address_cities"
+                android:text=""
                 android:gravity="center"
                 android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_00"/>
@@ -109,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_20"
-                android:text="@string/address_cities"
+                android:text=""
                 android:gravity="center"
                 android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_00"/>

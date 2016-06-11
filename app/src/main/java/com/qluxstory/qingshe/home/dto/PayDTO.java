@@ -16,7 +16,7 @@ public class PayDTO extends BaseDTO {
     private String ComCount;
     private String CouponPrice;
     private String MemberIDCoupon;
-    private String CouponCode;
+
     private String memMobile;
     private String OrderType;
     private String ApplyType;
@@ -29,6 +29,17 @@ public class PayDTO extends BaseDTO {
     private String ServerName;
     private String ServerYJCode;
     private String OrderMoney;
+    private String couponcode;
+
+    public String getCouponcode() {
+        return couponcode;
+    }
+
+    public void setCouponcode(String couponcode) {
+        this.couponcode = couponcode;
+    }
+
+
 
     public String getOrderMoney() {
         return OrderMoney;
@@ -104,13 +115,7 @@ public class PayDTO extends BaseDTO {
         ConsigneeType = consigneeType;
     }
 
-    public String getCouponCode() {
-        return CouponCode;
-    }
 
-    public void setCouponCode(String couponCode) {
-        CouponCode = couponCode;
-    }
 
     public String getCouponPrice() {
         return CouponPrice;

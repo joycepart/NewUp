@@ -217,6 +217,8 @@ public class UserInformationActivity extends BaseTitleActivity {
                             LogUtils.e("Uri--------------", uri + "");
                             mImg = PhotoSystemUtils.getRealFilePath(this,uri);
                             LogUtils.e("mImg--------------", mImg + "");
+                            ImageLoader.getInstance().displayImage("file:///" + mImg,
+                                    mUserImg, ImageLoaderUtils.getAvatarOptions());
                             try {
                                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                             } catch (IOException e) {

@@ -54,7 +54,7 @@ public class ToAnnounceFragment extends BaseListFragment<ToAnnounceEntity> {
                     LogUtils.e("往期揭晓成功");
                     mErrorLayout.setErrorMessage("暂无交易明细记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getBat_code()==null){
+                    if(null==result.getData()){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         requestDataSuccess(result);

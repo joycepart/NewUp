@@ -2,17 +2,19 @@ package com.qluxstory.qingshe.me.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
-import com.qluxstory.qingshe.issue.activity.SettlementActivity;
+import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
 
@@ -36,13 +38,14 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
 
     @Override
     public void bindData(final BaseRecyclerViewHolder holder, final RecordsEntity recordsEntity, int position) {
+            issueProduct = AppContext.getInstance().getIssueProduct();
             mTerm = recordsEntity.getRec_term();
             mTitle = recordsEntity.getSna_title();
             mBalance = recordsEntity.getRec_pay_balance();
             mPic = recordsEntity.getPic_url();
             mRec = recordsEntity.getRec_code();
-            mBat = recordsEntity.getRec_code();
-            mSna = recordsEntity.getRec_code();
+            mBat = recordsEntity.getBat_code();
+            mSna = recordsEntity.getSna_code();
 
             btn = holder.getView(R.id.records_btn);
              LogUtils.e("recordsEntity.getRec_state()---",recordsEntity.getRec_state());
@@ -80,7 +83,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
           holder.setText(R.id.records_my,mBalance);
           ImageView mRecordsImg=holder.getView( R.id.records_img);
           ImageLoaderUtils.displayImage(mPic, mRecordsImg);
-           btn.setOnClickListener(new View.OnClickListener() {
+          btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button mBtn = (Button) v;
@@ -97,8 +100,9 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                     issueProduct.setmSnaTitle(mTitle);
                     issueProduct.setmSnaTerm(mTerm);
                     issueProduct.setmPicUrl(mPic);
-                    Intent intent = new Intent(mContext, SettlementActivity.class);
-                    mContext.startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mBalance",mBalance);
+                    IssueUiGoto.settlement(mContext,bundle);//结算
                 }
 
 

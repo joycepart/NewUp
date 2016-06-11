@@ -148,13 +148,17 @@ public class MainActivity extends BaseTitleActivity {
     protected void onNewIntent(Intent intent) {
         LogUtils.e("intent-----",intent+"");
         if(intent != null) {
-            int tag = intent.getExtras().getInt("tag");
-            LogUtils.e("tag-----",tag+"");
-            if(Integer.valueOf(tag)!=null){
+            if(intent.getExtras()!=null){
+                int tag = intent.getExtras().getInt("tag");
+                LogUtils.e("tag-----",tag+"");
                 showTab(tag);
-            }else {
-                return;
             }
+
+//            if(Integer.valueOf(tag)!=null){
+//                showTab(tag);
+//            }else {
+//                return;
+//            }
 
 
         }
@@ -265,5 +269,13 @@ public class MainActivity extends BaseTitleActivity {
             MeFragment meFragment = (MeFragment)fragmentManager.findFragmentByTag("tag4");
             meFragment.initView(null);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if((AppContext.get("isLogin","")).equals("true")){
+            AppContext.get("isLogin","false");
+        };
     }
 }

@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/ds_550"
+    android:id="@+id/fre_lin"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:background="@color/color_ff"
+
         android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_300"
+        android:layout_height="@dimen/ds_250"
         android:layout_marginTop="@dimen/ds_30">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_marginLeft="@dimen/ds_40"
             android:textSize="@dimen/fs_65"
             android:gravity="center"
             android:textColor="@color/color_00"
@@ -74,9 +76,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_150"
-        android:layout_marginTop="@dimen/ds_110"
+        android:layout_marginTop="@dimen/ds_30"
         android:orientation="horizontal">
         <Button
+            android:clickable="false"
             android:id="@+id/five"
             android:layout_width="@dimen/ds_60"
             android:layout_height="match_parent"
@@ -85,6 +88,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/five"
+            android:onClick="false"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_65"/>
         <Button
@@ -97,9 +101,11 @@
             android:gravity="center"
             android:text="@string/ten"
             android:textColor="@color/color_00"
+            android:clickable="false"
             android:textSize="@dimen/fs_65"/>
         <Button
             android:id="@+id/ttew"
+            android:clickable="false"
             android:layout_width="@dimen/ds_40"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/ds_50"
@@ -115,7 +121,7 @@
     <Button
         android:id="@+id/fre_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/ds_180"
         android:layout_marginTop="@dimen/ds_60"
         android:layout_marginLeft="@dimen/ds_30"
         android:layout_marginRight="@dimen/ds_30"
@@ -123,6 +129,5 @@
         android:text="@string/dialog_prompt_yes"
         android:textSize="@dimen/fs_65"
         android:textColor="@color/color_ff"/>
-
     </LinearLayout>
 </RelativeLayout>

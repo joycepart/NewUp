@@ -41,13 +41,14 @@
                 android:text="@string/issue_random"
                 android:textColor="@color/color_c0"
                 android:textSize="@dimen/fs_55"/>
-            <ImageView
+            <ProgressBar
+                android:id="@+id/product_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
+                style="@style/IssueProgressBarStyle"
                 android:layout_marginRight="@dimen/ds_30"
-                android:background="@drawable/work_bottom"/>
+                android:layout_marginLeft="@dimen/ds_30"
+                android:max="100"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_100">

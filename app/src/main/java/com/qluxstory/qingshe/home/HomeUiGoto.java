@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.home.activity.AddAddressActivity;
 import com.qluxstory.qingshe.home.activity.CuringActivity;
@@ -25,6 +26,16 @@ public class HomeUiGoto {
 
     public static void curing(Context context){
         Intent intent = new Intent(context, CuringActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到main
+     * @param context
+     */
+
+    public static void gotoMain(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
 

@@ -83,9 +83,6 @@ public class SelectFragment extends BasePullFragment {
                 consignee.setDeliveredMobile(selectEntity.getDelivMobile());
                 consignee.setProvincialCity(selectEntity.getProvinCity());
                 consignee.setItem(position);
-
-//                AppContext.set("Dis_province_select",selectEntity.getConName()+selectEntity.getDelivMobile()+
-//                        selectEntity.getProvinCity()+selectEntity.getAddreDetail());
                 getActivity().finish();
 
             }

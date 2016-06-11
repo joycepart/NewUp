@@ -3,6 +3,7 @@ package com.qluxstory.qingshe.issue.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.bean.ViewFlowBean;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
@@ -72,6 +74,8 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     TextView mProData;
     @Bind(R.id.issue_tv_yn)
     TextView mTvYn;
+    @Bind(R.id.issue_tran_img)
+    ImageView mTranImg;
     @Bind(R.id.issue_calculation)
     TextView mCalculation;
     @Bind(R.id.past_product_lin)
@@ -172,11 +176,13 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     }
 
     private void bind(List<AnnouncedEntity> data) {
-        mBat = data.get(0).getBat_code();
-        mTvLucky = data.get(0).getSna_lucky_num();
+        AnnouncedEntity entity = data.get(0);
+        mBat = entity.getBat_code();
+        mTvLucky = entity.getSna_lucky_num();
         mTvCity.setText(mTvLucky);
-        mTvUser.setText(data.get(0).getSna_lucky_people());
-        mTvData.setText(data.get(0).getParticipate_date());
+        mTvUser.setText(entity.getSna_lucky_people());
+        mTvData.setText(entity.getParticipate_date());
+        ImageLoaderUtils.displayAvatarImage(entity.getHeadImg(),mTranImg);
     }
 
     private void reqQecord() {
@@ -189,8 +195,12 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
             public void onSuccess(RecordIndianaResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝详情之夺宝记录成功");
-                    mTranAdapter.removeAll();
-                    mTranAdapter.append(result.getData());
+                    if(null==result.getData()){
+                        return;
+                    }else {
+                        mTranAdapter.removeAll();
+                        mTranAdapter.append(result.getData());
+                    }
 
                 }
 
@@ -232,7 +242,12 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
             public void onSuccess(TranResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("夺宝往期详情成功");
-                    bindData(result.getData());
+                    if(null==result.getData()){
+                        return;
+                    }else {
+                        bindData(result.getData());
+                    }
+
                 }
             }
         });

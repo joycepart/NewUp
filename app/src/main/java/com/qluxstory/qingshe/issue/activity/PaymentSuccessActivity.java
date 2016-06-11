@@ -10,7 +10,7 @@ import com.qluxstory.qingshe.issue.IssueUiGoto;
 import butterknife.Bind;
 
 /**
- * Created by lenovo on 2016/6/6.
+ * 支付成功界面
  */
 public class PaymentSuccessActivity extends BaseTitleActivity {
     @Bind(R.id.payment_tv)

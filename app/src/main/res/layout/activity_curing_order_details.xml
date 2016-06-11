@@ -14,13 +14,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/details_tit_img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_500"
                 android:scaleType="centerCrop" />
             <TextView
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ds_30"
@@ -29,7 +27,6 @@
                 android:textSize="@dimen/fs_60"
                 android:textColor="@color/color_00"/>
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_90"
                 android:layout_marginTop="@dimen/ds_30"
@@ -59,7 +56,6 @@
                 android:layout_marginLeft="@dimen/ds_370"
                 android:background="@color/color_cc"/>
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_90"
                 android:layout_marginTop="@dimen/ds_30"

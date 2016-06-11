@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -72,6 +73,8 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     TextView mProductData;
     @Bind(R.id.product_participate)
     TextView mParticipate;
+    @Bind(R.id.product_progress)
+    ProgressBar mGrogress;
     BaseSimpleRecyclerAdapter mIssuelListAdapter;
     IndianaListEntity indiana;
     private String mSnaCode;
@@ -99,6 +102,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         }else{
             return;
         }
+        mGrogress.setProgress(80);
         mIt.setOnClickListener(this);
         mPast.setOnClickListener(this);
 

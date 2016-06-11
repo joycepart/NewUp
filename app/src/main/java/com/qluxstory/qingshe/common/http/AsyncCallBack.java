@@ -40,7 +40,7 @@ public class AsyncCallBack<T> implements Callback {
 
 	@Override
 	public void onFailure(Call call, IOException e) {
-		LogUtils.i("request failed "+e+ "   e.msg:"+e.getMessage());
+		LogUtils.e("request failed "+e+ "   e.msg:"+e.getMessage());
 		if(!TDevice.hasInternet(context)){
 			EventBus.getDefault().post(
 					new ErrorEvent(AppConfig.ERROR_NONET,
@@ -92,7 +92,7 @@ public class AsyncCallBack<T> implements Callback {
 			EventBus.getDefault().post(
 					new ErrorEvent(AppConfig.ERROR_IO,
 							AppConfig.ERROR_IO_MSG, tag));
-			LogUtils.e("response is not Successful "+response);
+//			LogUtils.e("response is not Successful "+response);
 		}
 	}
 

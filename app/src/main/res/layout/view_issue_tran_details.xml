@@ -83,8 +83,8 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_c0"
+        android:layout_height="@dimen/ds_530"
+        android:background="@drawable/past_text"
         android:layout_marginRight="@dimen/ds_30"
         android:layout_marginLeft="@dimen/ds_30"
         android:layout_marginTop="@dimen/ds_60"
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ds_180"
-            android:layout_marginTop="@dimen/ds_80"
+            android:layout_marginTop="@dimen/ds_160"
             android:paddingBottom="@dimen/ds_10"
             android:paddingTop="@dimen/ds_10"
             android:orientation="horizontal">
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_20"
-                android:text="@string/address_cities"
+                android:text=""
                 android:textSize="@dimen/fs_60"
                 android:textColor="@color/color_f0"/>
         </LinearLayout>
@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_20"
-                android:text="@string/address_cities"
+                android:text=""
                 android:textSize="@dimen/fs_40"
                 android:textColor="@color/color_ff"/>
         </LinearLayout>
@@ -150,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_20"
-                android:text="@string/address_cities"
+                android:text=""
                 android:textSize="@dimen/fs_40"
                 android:textColor="@color/color_ff"/>
         </LinearLayout>
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/ds_20"
-                android:text="@string/address_cities"
+                android:text=""
                 android:textSize="@dimen/fs_40"
                 android:textColor="@color/color_ff"/>
         </LinearLayout>
@@ -198,14 +198,15 @@
         </RelativeLayout>
     </LinearLayout>
     <ImageView
-        android:layout_width="@dimen/ds_220"
-        android:layout_height="@dimen/ds_220"
+        android:layout_width="@dimen/ds_400"
+        android:layout_height="@dimen/ds_300"
         android:src="@drawable/zhongjiangzhe"
         android:layout_gravity="center_horizontal"
         />
     <ImageView
-        android:layout_width="@dimen/ds_100"
-        android:layout_height="@dimen/ds_100"
+        android:id="@+id/issue_tran_img"
+        android:layout_width="@dimen/ds_150"
+        android:layout_height="@dimen/ds_150"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/logo"/>
 </FrameLayout>

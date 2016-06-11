@@ -10,8 +10,6 @@ public class PayEntity extends BaseEntity {
     private String OrderNum;
     /*支付方式*/
     private String ApplyType;
-    /*1完成返回首页，0按支付方式跳转*/
-    private String status;
 
     public String getApplyType() {
         return ApplyType;
@@ -27,16 +25,6 @@ public class PayEntity extends BaseEntity {
 
     public void setOrderNum(String orderNum) {
         OrderNum = orderNum;
-    }
-
-    @Override
-    public String getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 

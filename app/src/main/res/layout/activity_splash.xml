@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:gravity="center" >
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ad_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/ad_viewgroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/ad_tv"
+        android:layout_width="@dimen/ds_135"
+        android:layout_height="@dimen/ds_135"
+        android:layout_marginTop="@dimen/ds_90"
+        android:layout_marginRight="@dimen/ds_30"
+        android:layout_gravity="right"
+        android:background="@drawable/common_ad_tiaozhuan"
+        android:textColor="@color/color_ff"
+        android:textSize="@dimen/fs_42" />
+    <LinearLayout
+        android:id="@+id/common_splash_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/start_up"
+        android:gravity="center"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</FrameLayout>

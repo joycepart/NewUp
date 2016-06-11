@@ -18,6 +18,7 @@ import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
@@ -30,10 +31,14 @@ import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
 import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
+import com.qluxstory.qingshe.me.dto.UpDTO;
+import com.qluxstory.qingshe.me.dto.UpInformationDTO;
 import com.qluxstory.qingshe.me.entity.NumResult;
 import com.qluxstory.qingshe.me.entity.RecordIndianaEntity;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
+import com.qluxstory.qingshe.me.entity.UpDataEntity;
+import com.qluxstory.qingshe.me.entity.UpDataResult;
 
 import java.util.List;
 
@@ -103,6 +108,8 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     LinearLayout mPay;
     @Bind(R.id.indiana_win_plo)
     LinearLayout mWin;
+    @Bind(R.id.order_code)
+    LinearLayout mOrderCode;
     private String mCode,mTitle,mPic,mTerm,mBalance,mSnaCode,mBnt,mRecCode,mTotal,mCount;
     Consignee consignee;
 
@@ -114,6 +121,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("夺宝详情");
+        consignee = AppContext.getInstance().getConsignee();
         Intent mIntent = getIntent();
         if(mIntent!=null){
             RecordsEntity entity = (RecordsEntity) mIntent.getBundleExtra("itemBean").getSerializable("entity");
@@ -155,7 +163,6 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("2")){
                 LogUtils.e("entity.getRec_state()2",""+entity.getRec_state());
                 mRecordsStatu.setText("已中奖");
-                mInBtn.setText("继续夺宝");
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
                 mIndianaAnn.setVisibility(View.VISIBLE);
@@ -168,7 +175,6 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("3")){
                 LogUtils.e("entity.getRec_state()3",""+entity.getRec_state());
                 mRecordsStatu.setText("未抢中");
-                mInBtn.setText("继续夺宝");
                 mPay.setVisibility(View.VISIBLE);
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
@@ -180,13 +186,16 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("4")){
                 LogUtils.e("entity.getRec_state()4",""+entity.getRec_state());
                 mRecordsStatu.setText("派奖中");
-                mInBtn.setText("继续夺宝");
-                mLinDetInf.setVisibility(View.VISIBLE);
                 mIndianaText.setVisibility(View.GONE);
-                mIndianaAnn.setVisibility(View.GONE);
+                mLinDetInf.setVisibility(View.VISIBLE);
+                mIndianaAnn.setVisibility(View.VISIBLE);
+                mInfWining.setVisibility(View.VISIBLE);
                 mPay.setVisibility(View.VISIBLE);
                 mWin.setVisibility(View.VISIBLE);
-                mInBtn.setVisibility(View.VISIBLE);
+                mInBtn.setVisibility(View.GONE);
+                mWinBtn.setText("确认收货");
+                reqAnn();
+                reqUpdate();
             }
             else if(entity.getRec_state().equals("5")){
                 LogUtils.e("entity.getRec_state()5",""+entity.getRec_state());
@@ -207,6 +216,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                 mIndianaText.setVisibility(View.VISIBLE);
                 mWin.setVisibility(View.GONE);
                 mInBtn.setVisibility(View.VISIBLE);
+                mOrderCode.setVisibility(View.GONE);
                 reqAnn();
             }
 
@@ -231,6 +241,38 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     }
 
+    private void reqUpdate() {
+        UpDTO gdto=new UpDTO();
+        gdto.setRec_code(mRecCode);
+        gdto.setUserPhone(AppContext.get("mobileNum",""));
+        CommonApiClient.upData(this, gdto, new CallBack<UpDataResult>() {
+            @Override
+            public void onSuccess(UpDataResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("更新收货人信息成功");
+                    if(null == result.getData()){
+                        return;
+                    }else {
+                        bindUpdate(result.getData());
+                    }
+
+                }
+
+            }
+        });
+    }
+
+    private void bindUpdate(List<UpDataEntity> data) {
+        UpDataEntity entity = data.get(0);
+        mWinRel.setVisibility(View.GONE);
+        mWinLin.setVisibility(View.VISIBLE);
+        mWinPloTv.setText(entity.getCon_name()+" "+entity.getCon_phone());
+        mWinNumTime.setText(entity.getCon_privince()+" "+entity.getCon_address());
+        mDataUser.setText(entity.getOrder_name());
+        mDataNm.setText(entity.getOrder_code());
+
+    }
+
     @Override
     public void initData() {
         reqIndianaDetails();//夺宝详情
@@ -247,7 +289,11 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             public void onSuccess(ToAnnounceResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("往期揭晓成功");
-                    bindResult(result.getData());
+                    if(null == result.getData()){
+                        return;
+                    }else {
+                        bindResult(result.getData());
+                    }
 
                 }
 
@@ -275,10 +321,15 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             public void onSuccess(RecordIndianaResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝详情成功");
-                    RecordIndianaEntity record = result.getData().get(0);
-                    mDetInf.setText(record.getRec_phone());
-                    mDetNum.setText(record.getRec_participate_count()+"次");
-                    mDetData.setText(record.getRec_participate_date());
+                    if(null == result.getData()){
+                        return;
+                    }else {
+                        RecordIndianaEntity record = result.getData().get(0);
+                        mDetInf.setText(record.getRec_phone());
+                        mDetNum.setText(record.getRec_participate_count()+"次");
+                        mDetData.setText(record.getRec_participate_date());
+                    }
+
                 }
 
             }
@@ -292,7 +343,12 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                 reqNum();//参与信息
                 break;
             case R.id.win_btn:
-                if(TextUtils.isEmpty(mWinPloTv.getText().toString())&&TextUtils.isEmpty(mWinNumTime.getText().toString())){
+                if(TextUtils.isEmpty(mWinPloTv.getText().toString())||TextUtils.isEmpty(mWinNumTime.getText().toString())){
+                    DialogUtils.showPrompt(this, "请选择收货地址", "知道了");
+                }else if(mRecordsStatu.getText().toString().equals("已中奖")){
+                    reqUpInfomation();//更新中奖人信息
+                }
+                else if(mRecordsStatu.getText().toString().equals("派奖中")){
                     reqConfirm();//确认收货地址
                 }
                 break;
@@ -310,7 +366,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                     b.putString("mBnt",mBnt);
                     b.putString("mRecCode",mRecCode);
                     b.putString("mTerm",mTerm);
-                    IssueUiGoto.settlement(this,b);
+                    IssueUiGoto.settlement(this,b);//结算
 
                 }else {
                     Intent intent = new Intent(this, MainActivity.class);
@@ -324,6 +380,29 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
         super.onClick(v);
     }
 
+    private void reqUpInfomation() {
+        UpInformationDTO dto=new UpInformationDTO();
+        dto.setTime(TimeUtils.getSignTime());
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setRec_phone(AppContext.get("mobileNum",""));
+        dto.setRec_code(mCode);
+        dto.setCon_address(consignee.getAddressInDetail());
+        dto.setCon_name(consignee.getConsigneeName());
+        dto.setCon_phone(consignee.getDeliveredMobile());
+        dto.setCon_privince(consignee.getProvincialCity());
+        CommonApiClient.upInformation(this, dto, new CallBack<NumResult>() {
+            @Override
+            public void onSuccess(NumResult result) {
+                if(AppConfig.SUCCESS.equals(result.getStatus())){
+                    LogUtils.e("更新中奖人信息成功");
+                    mWinBtn.setText("暂未发货");
+
+                }
+
+            }
+        });
+    }
+
     private void reqConfirm() {
         ConfirmDTO dto=new ConfirmDTO();
         dto.setTime(TimeUtils.getSignTime());
@@ -334,8 +413,9 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(NumResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.e("参与信息成功");
-                    mWinBtn.setText("等待发货");
+                    LogUtils.e("确认收货成功");
+                    mWinBtn.setText("订单已完成");
+                    mRecordsStatu.setText("已完结");
 
                 }
 

@@ -14,11 +14,13 @@ import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
+import com.qluxstory.qingshe.home.entity.BalanceResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.dto.SettlementDTO;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
@@ -32,6 +34,8 @@ import butterknife.Bind;
 public class SettlementActivity extends BaseTitleActivity {
     @Bind(R.id.set_ed)
     TextView mInBtn;
+    @Bind(R.id.settlement_balance)
+    TextView mSetBalance;
     @Bind(R.id.set_cb_wx)
     CheckBox mSetWx;
     @Bind(R.id.set_cb_zhi)
@@ -95,7 +99,6 @@ public class SettlementActivity extends BaseTitleActivity {
         mTerm.setText("第"+mCaTerm+"期");
         mPlaceNm.setText(mBalance);
         ImageLoaderUtils.displayImage(mPic,mImg);
-
         Intent intent = getIntent();
         if(intent!=null){
             mBalance = intent.getBundleExtra("bundle").getString("mBalance");
@@ -104,6 +107,7 @@ public class SettlementActivity extends BaseTitleActivity {
 
 
         mInBtn.setText(AppContext.get("mobileNum",""));
+
         mPayBtn.setOnClickListener(this);
         mPayWx.setOnClickListener(this);
         mPayAlipay.setOnClickListener(this);
@@ -126,7 +130,7 @@ public class SettlementActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
+        reqBalance();//会员余额
     }
 
     @Override
@@ -158,6 +162,24 @@ public class SettlementActivity extends BaseTitleActivity {
         super.onClick(v);
     }
 
+    private void reqBalance() {
+        BaseDTO dto = new BaseDTO();
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setTimestamp(TimeUtils.getSignTime());
+        dto.setMembermob(AppContext.get("mobileNum", ""));
+        CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
+            @Override
+            public void onSuccess(BalanceResult result) {
+                if (AppConfig.SUCCESS.equals(result.getStatus())) {
+                    LogUtils.e("会员余额成功");
+                    mSetBalance.setText(result.getData().get(0).getCashAmountMoney());
+
+                }
+
+            }
+        });
+    }
+
     private void settlement() {
         SettlementDTO gdto=new SettlementDTO();
         if(mSetWx.isChecked()){
@@ -187,7 +209,6 @@ public class SettlementActivity extends BaseTitleActivity {
             public void onSuccess(SettlementResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("结算成功");
-
                 }
                 IssueUiGoto.payment(SettlementActivity.this);//支付结果页
             }

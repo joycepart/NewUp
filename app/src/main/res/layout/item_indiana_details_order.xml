@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/order_code"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_130"
         android:layout_marginTop="@dimen/ds_15"

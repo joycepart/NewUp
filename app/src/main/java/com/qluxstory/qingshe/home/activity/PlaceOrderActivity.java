@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPopupWindow;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
@@ -72,6 +73,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     RelativeLayout mRelTotal;
     @Bind(R.id.pla_tv)
     TextView mPlaTv;
+    @Bind(R.id.place_send_tv)
+    TextView mSendTv;
     @Bind(R.id.place_send_tv_name)
     TextView mSendAddress;
     @Bind(R.id.place_titlt)
@@ -122,6 +125,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mSendVity;
     @Bind(R.id.place_send_tv_add)
     TextView mSendAdd;
+    @Bind(R.id.place_send_tv_ipone)
+    TextView mSendIpone;
     @Bind(R.id.place_tv_address_name)
     TextView mAddressName;
     @Bind(R.id.place_tv_address_city)
@@ -149,7 +154,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     List<TimeEntity> timeEntity ;
     ProductDetails mProductDetails;
     Bitmap bitmap;
-    private String mMemberheadimg;
+    private String mMemberheadimg,mConName,mConMobile,mConCity,mConAddress;
 
 
     @Override
@@ -184,6 +189,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         mPayWx.setOnClickListener(this);
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
+        mTime.setOnClickListener(this);
     }
 
     @Override
@@ -202,7 +208,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 break;
             case R.id.place_address_time:
                 if(mTvTime.getText().toString().equals("预约上门时间：")){
-                    showTimePop();
+                    reqTime();//获取后十五天时间
+                    LogUtils.e("reqTime---","先");
+
                 }
                 break;
 
@@ -239,24 +247,22 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if(TextUtils.isEmpty(mMemberheadimg)){
                     DialogUtils.showPrompt(this, "请上传商品照片", "知道了");
                 }
-                if (mPlaceAddress.getVisibility()== View.VISIBLE && mPlaTv.getText().toString().equals("全国包回邮")&&TextUtils.isEmpty(mAddressName.getText().toString())) {
+                else if (mPlaceAddress.getVisibility()== View.VISIBLE && mPlaTv.getText().toString().equals("全国包回邮")&&TextUtils.isEmpty(mAddressName.getText().toString())) {
                     DialogUtils.showPrompt(this, "请选择收货地址", "知道了");
-                }else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("上门取送")&&TextUtils.isEmpty(mAddressName.getText().toString())){
+                }
+                else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("上门取送")&&TextUtils.isEmpty(mAddressName.getText().toString())){
                     DialogUtils.showPrompt(this, "请选择上门地址", "知道了");
                 }
                 else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mSendAddress.getText().toString())){
                     DialogUtils.showPrompt(this, "请选择门店地址", "知道了");
                 }
-                if (mPlaceSend.getVisibility()== View.VISIBLE&&TextUtils.isEmpty(mSendAddress.getText().toString())) {
+                else if (mPlaceSend.getVisibility()== View.VISIBLE&&TextUtils.isEmpty(mSendAddress.getText().toString())) {
                     DialogUtils.showPrompt(this, "请选择寄送地址", "知道了");
                 }
-                if (mTime.getVisibility()== View.VISIBLE&& mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mAddTime.getText().toString())) {
+                else if (mTime.getVisibility()== View.VISIBLE&& mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mAddTime.getText().toString())) {
                     DialogUtils.showPrompt(this, "请选择上门时间", "知道了");
                 }
-
-
-
-                if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
+                else if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
                     DialogUtils.showPrompt(this, "请选择支付方式", "知道了");
                 } else {
                     reqPay();//去支付
@@ -334,12 +340,13 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mTime.setVisibility(View.VISIBLE);
                     mPlaceAddress.setVisibility(View.GONE);
                     mPlaceSend.setVisibility(View.VISIBLE);
-                    mTvAddress.setText("选择门店：");
+                    mSendTv.setText("选择门店：");
                     mTvTime.setText("门店工作时间：");
                     mAddTime.setText("10:00 - 18:00");
-                    mAddressName.setText("");
-                    mAddressCity.setText("");
-                    mAddressAdd.setText("");
+                    mSendAddress.setText("");
+                    mSendVity.setText("");
+                    mSendAdd.setText("");
+                    mSendIpone.setText("");
                     rturn = takeEntity.get(2).getDis_type_code();
 
                 }
@@ -376,12 +383,28 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     }
 
     ArrayList<String>  tiList ;
+
     private void showTimePop() {
-        reqTime();//获取后十五天时间
         tList = new ArrayList<>();
-        for(int i = 0;i<timeEntity.size();i++){
-            tiList.add(timeEntity.get(i).getTime());
-        }
+        tiList.add(timeEntity.get(0).getTime());
+        tiList.add(timeEntity.get(1).getTime());
+        tiList.add(timeEntity.get(2).getTime());
+        tiList.add(timeEntity.get(3).getTime());
+        tiList.add(timeEntity.get(4).getTime());
+        tiList.add(timeEntity.get(5).getTime());
+        tiList.add(timeEntity.get(6).getTime());
+        tiList.add(timeEntity.get(7).getTime());
+        tiList.add(timeEntity.get(8).getTime());
+        tiList.add(timeEntity.get(9).getTime());
+        tiList.add(timeEntity.get(10).getTime());
+        tiList.add(timeEntity.get(11).getTime());
+        tiList.add(timeEntity.get(12).getTime());
+        tiList.add(timeEntity.get(13).getTime());
+        tiList.add(timeEntity.get(14).getTime());
+
+//        for(int i = 0;i<timeEntity.size();i++){
+//            tiList.add(timeEntity.get(i).getTime());
+//        }
         OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
         tipPopup.setPicker(tiList);//设置里面list
         tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
@@ -411,6 +434,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("获取后十五天成功");
                     timeEntity = result.getData();
+                    LogUtils.e("timeEntity----",""+timeEntity);
+                    LogUtils.e("timeEntity--；；；；；；",""+timeEntity.get(0).getTime());
+                    showTimePop();
+                    LogUtils.e("showTimePop---","hou");
 
                 }
 
@@ -463,16 +490,16 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         PayDTO dto = new PayDTO();
         dto.setConsigneeType(mPlaTv.getText().toString());
         dto.setConsigneeCode(consignee.getConsigneeCode());
-        dto.setConsigneeName(consignee.getConsigneeName());
-        dto.setDeliveredMobile(consignee.getDeliveredMobile());
-        dto.setProvincialCity(consignee.getProvincialCity());
-        dto.setAddressInDetail(consignee.getAddressInDetail());
+        dto.setConsigneeName(mConName);
+        dto.setDeliveredMobile(mConMobile);
+        dto.setProvincialCity(mConCity);
+        dto.setAddressInDetail(mConAddress);
         dto.setComOnlyCode(mCode);
         dto.setOrderMoney(mPlaceTotal.getText().toString());
         dto.setComCount("1");
         dto.setCouponPrice(mPlaceCoupon.getText().toString());
         dto.setMemberIDCoupon("");
-        dto.setCouponCode("");
+        dto.setCouponcode("");
         dto.setMemMobile(AppContext.get("mobileNum", ""));
         dto.setOrderType("养护");
 
@@ -500,9 +527,11 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setReqType("service");
         dto.setOldOrderNum("");
         dto.setShoudamoney(mPrice);
-        dto.setBase64string(mMemberheadimg);
+//        dto.setBase64string(mMemberheadimg);
+        dto.setBase64string("");
         dto.setServerName(mProductDetails.getSellSort());
         dto.setSign(AppConfig.SIGN_1);
+//        dto.setSign("");
         dto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.pay(this, dto, new CallBack<PayResult>() {
             @Override
@@ -543,12 +572,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
         switch (requestCode) {
             case UIHelper.SEND_REQUEST:
-                mSendAddress.setText(AppContext.get("Dis_province_name","")+AppContext.get("Dis_province_phone",""));
+                mSendAddress.setText(AppContext.get("Dis_province_name",""));
+                mSendIpone.setText(AppContext.get("Dis_province_phone",""));
                 mSendVity.setText(AppContext.get("Dis_province_city",""));
                 mSendAdd.setText(AppContext.get("Dis_province_area",""));
                 AppContext.set("Dis_province_name", "");
                 AppContext.set("Dis_province_city", "");
                 AppContext.set("Dis_province_area", "");
+                AppContext.set("Dis_province_phone", "");
                 break;
 
             case CODE_CAMERA_REQUEST:
@@ -557,14 +588,28 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                             Environment.getExternalStorageDirectory(),
                             IMAGE_FILE_NAME);
                     Uri uri = Uri.fromFile(tempFile);
+                    LogUtils.e("uri------------",""+uri);
                     String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
+                    LogUtils.e("mImg------------",""+mImg);
+                    if(mImg!=null){
+                        mLrderLin.setVisibility(View.GONE);
+                        mImgPon.setVisibility(View.VISIBLE);
+                        ImageLoader.getInstance().displayImage("file:///" + mImg,
+                                mImgPon, ImageLoaderUtils.getDefaultOptions());
+                    }else {
+                        mLrderLin.setVisibility(View.VISIBLE);
+                        mImgPon.setVisibility(View.GONE);
+                    }
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                        LogUtils.e("bitmap",""+bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(bitmap);
-                    cropRawPhoto(uri);
+                    Bitmap bit = PhotoSystemUtils.comp(bitmap);
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+                    LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
+//                    cropRawPhoto(uri);
                 } else {
                     Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
                             .show();
@@ -580,9 +625,13 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             case UIHelper.SELECT_REQUEST:
                 if(consignee!=null){
                     LogUtils.e("consignee---if",consignee+"");
-                    mAddressName.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile());
-                    mAddressCity.setText(consignee.getProvincialCity());
-                    mAddressAdd.setText(consignee.getAddressInDetail());
+                    mConName = consignee.getConsigneeName();
+                    mConMobile = consignee.getDeliveredMobile().trim();
+                    mConCity = consignee.getProvincialCity();
+                    mConAddress = consignee.getAddressInDetail();
+                    mAddressName.setText(mConName + mConMobile);
+                    mAddressCity.setText(mConCity);
+                    mAddressAdd.setText(mConAddress);
                     consignee.setConsigneeName("");
                     consignee.setDeliveredMobile("");
                     consignee.setProvincialCity("");

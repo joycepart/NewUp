@@ -1,14 +1,18 @@
 package com.qluxstory.qingshe.issue.fragment;
 
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
@@ -28,6 +32,7 @@ public class ProductDetailsFragment extends BaseFragment {
     private EditText mNum;
     private Button mFreBtn,mFive,mTen,mTtew;
     private String mNumber;
+    Dialog dialog;
 
     @Override
     protected void retry() {
@@ -60,7 +65,7 @@ public class ProductDetailsFragment extends BaseFragment {
 
     private void showPop() {
         final View view = LayoutInflater.from(getActivity()).inflate(R.layout.popup_frequency, null);
-        final Dialog dialog = DialogUtils.showDialog(getActivity(), view);
+        dialog = DialogUtils.showDialog(getActivity(), view);
         mReduce = (TextView) view
                 .findViewById(R.id.reduce);
         mNum = (EditText) view
@@ -75,9 +80,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 .findViewById(R.id.ttew);
         mFreBtn = (Button) view
                 .findViewById(R.id.fre_btn);
-
         mReduce.setOnClickListener(this);
-        mNum.setOnClickListener(this);
         mPlus.setOnClickListener(this);
         mFive.setOnClickListener(this);
         mTen.setOnClickListener(this);
@@ -89,14 +92,13 @@ public class ProductDetailsFragment extends BaseFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.in_btn:
-                showPop();
+                showPopWin(getActivity());
+//                showPop();
                 break;
             case R.id.reduce:
                 int rnum = Integer.valueOf(mNum.getText().toString());
-                rnum++;
+                rnum--;
                 mNum.setText(Integer.toString(rnum));
-                break;
-            case R.id.num:
                 break;
             case R.id.plus:
                 int pnum = Integer.valueOf(mNum.getText().toString());
@@ -105,23 +107,23 @@ public class ProductDetailsFragment extends BaseFragment {
                 break;
             case R.id.five:
                 mNum.setText("5");
-                mFive.setFocusable(true);
-                mTen.setFocusable(false);
-                mTtew.setFocusable(false);
+                mFive.setEnabled(true);
+                mTen.setEnabled(false);
+                mTtew.setEnabled(false);
                 mFive.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.ten:
                 mNum.setText("10");
-                mFive.setFocusable(false);
+                mFive.setEnabled(false);
+                mTen.setEnabled(true);
+                mTtew.setEnabled(false);
                 mTen.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
-                mTen.setFocusable(true);
-                mTtew.setFocusable(false);
                 break;
             case R.id.ttew:
                 mNum.setText("20");
-                mFive.setFocusable(false);
-                mTen.setFocusable(false);
-                mTtew.setFocusable(true);
+                mFive.setEnabled(false);
+                mTen.setEnabled(false);
+                mTtew.setEnabled(true);
                 mTtew.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.fre_btn:
@@ -129,23 +131,65 @@ public class ProductDetailsFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("mBalance",mNumber);
                 IssueUiGoto.settlement(getActivity(),bundle);//结算
-
                 break;
         }
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == IssueUiGoto.POPUP_REQUEST){
-//            String num = data.getStringExtra("num");
-//            Bundle bd = new Bundle();
-//            bd.putString("mBalance",num);
-//            bd.putString("mPic",mUrl);
-//            bd.putString("mTerm",mTerm);
-//            bd.putString("mTitle",mTitle);
-//
-        }
+    private PopupWindow popMenus;
+    View.OnClickListener myOnClick;
+
+    private void showPopWin(Context context) {
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.from(getActivity()).inflate(R.layout.popup_frequency, null);
+//        popMenus = new Popup(view,300,300,true);
+        final PopupWindow popWindow = new PopupWindow(view,WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+        // 需要设置一下此参数，点击外边可消失
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击窗口外边窗口消失
+        popWindow.setOutsideTouchable(true);
+        // 设置此参数获得焦点，否则无法点击
+        popWindow.setFocusable(true);
+        backgroundAlpha(1f);
+//        popWindow.showAsDropDown(view);
+        mReduce = (TextView) view
+                .findViewById(R.id.reduce);
+        mNum = (EditText) view
+                .findViewById(R.id.num);
+        mPlus = (TextView) view
+                .findViewById(R.id.plus);
+        mFive = (Button) view
+                .findViewById(R.id.five);
+        mTen = (Button) view
+                .findViewById(R.id.ten);
+        mTtew = (Button) view
+                .findViewById(R.id.ttew);
+        mFreBtn = (Button) view
+                .findViewById(R.id.fre_btn);
+        mReduce.setOnClickListener(this);
+        mPlus.setOnClickListener(this);
+        mFive.setOnClickListener(this);
+        mTen.setOnClickListener(this);
+        mTtew.setOnClickListener(this);
+        mFreBtn.setOnClickListener(this);
+        //防止虚拟软键盘被弹出菜单遮住
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        View parent = getActivity().getWindow().getDecorView();//高度为手机实际的像素高度
+        popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
     }
+
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.7f; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
+    }
+
+
 }

@@ -11,6 +11,7 @@ import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
@@ -18,10 +19,11 @@ import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.dto.PayDTO;
+import com.qluxstory.qingshe.home.entity.BalanceResult;
 import com.qluxstory.qingshe.home.entity.PayResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
-import com.qluxstory.qingshe.me.entity.CuringOrderDetailsEntity;
+import com.qluxstory.qingshe.me.entity.CuringOrderListEntity;
 import com.qluxstory.qingshe.me.entity.PaymentOrderEntity;
 import com.qluxstory.qingshe.me.entity.PaymentOrderResult;
 
@@ -37,6 +39,8 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     ImageView mPayImg;
     @Bind(R.id.pay_tv_get)
     TextView mPayGet;
+    @Bind(R.id.tv_balance)
+    TextView mTvBalance;
     @Bind(R.id.pay_tv_address)
     TextView mPayAddress;
     @Bind(R.id.pay_tv_pri)
@@ -67,6 +71,8 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     LinearLayout mPayAlipay;
     @Bind(R.id.palce_pay_balance)
     LinearLayout mPayBalance;
+    @Bind(R.id.place_address_time)
+    LinearLayout mPlaceAddressTime;
     @Bind(R.id.place_cb_wx)
     CheckBox mCbWx;
     @Bind(R.id.place_cb_zhi)
@@ -79,9 +85,9 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     TextView mCoupon;
     @Bind(R.id.pay_tv_btn)
     TextView mPayTvBtn;
-    PaymentOrderEntity payEntity;
+    PaymentOrderEntity paymentEntity;
 
-    CuringOrderDetailsEntity entity;
+    CuringOrderListEntity entity;
     @Override
     protected int getContentResId() {
         return R.layout.activity_paymentorder;
@@ -92,19 +98,38 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         setTitleText("支付订单");
         Intent intent = getIntent();
         if(intent!=null){
-            entity = (CuringOrderDetailsEntity) intent.getBundleExtra("bundle").getSerializable("entitiy");
+            entity = (CuringOrderListEntity) intent.getBundleExtra("bundle").getSerializable("entitiy");
         }
         mPayWx.setOnClickListener(this);
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
         mPayTvBtn.setOnClickListener(this);
+        mPlaceAddressTime.setOnClickListener(this);
 
     }
 
     @Override
     public void initData() {
         reqCuringOrderDetails();//养护订单详情
+        reqBalance();//会员余额
 
+    }
+    private void reqBalance() {
+        BaseDTO dto = new BaseDTO();
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setTimestamp(TimeUtils.getSignTime());
+        dto.setMembermob(AppContext.get("mobileNum", ""));
+        CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
+            @Override
+            public void onSuccess(BalanceResult result) {
+                if (AppConfig.SUCCESS.equals(result.getStatus())) {
+                    LogUtils.e("会员余额成功");
+                    mTvBalance.setText(result.getData().get(0).getCashAmountMoney());
+
+                }
+
+            }
+        });
     }
     private void reqCuringOrderDetails() {
         CuringOrderDetailsDTO cdto = new CuringOrderDetailsDTO();
@@ -124,43 +149,43 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         });
     }
     private void bindResult(List<PaymentOrderEntity> data) {
-        payEntity = data.get(0);
-        mPayGet.setText(payEntity.getConsigneeType());
-        if(payEntity.getConsigneeType().equals("全国包回邮")){
+        paymentEntity = data.get(0);
+        mPayGet.setText(paymentEntity.getConsigneeType());
+        if(paymentEntity.getConsigneeType().equals("全国包回邮")){
             mPayMode.setText("收货地址");
             mPaySend.setText("寄送地址：");
-            mPayAddress.setText(payEntity.getConsigneeName()+payEntity.getDeliveredMobile());
-            mPayPri.setText(payEntity.getProvincialCity());
-            mPayDetails.setText(payEntity.getAddressInDetail());
-            mPayTvSend.setText(payEntity.getSto_name()+payEntity.getSto_phone());
-            mPayCity.setText(payEntity.getDis_cityAddress());
+            mPayAddress.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
+            mPayPri.setText(paymentEntity.getProvincialCity());
+            mPayDetails.setText(paymentEntity.getAddressInDetail());
+            mPayTvSend.setText(paymentEntity.getSto_name()+ paymentEntity.getSto_phone());
+            mPayCity.setText(paymentEntity.getDis_cityAddress());
 
-        }else if(payEntity.getConsigneeType().equals("上门取送")){
+        }else if(paymentEntity.getConsigneeType().equals("上门取送")){
             mPayMode.setText("上门地址");
             mPaySend.setText("预约上门时间：");
-            mPayAddress.setText(payEntity.getConsigneeName()+payEntity.getDeliveredMobile());
-            mPayPri.setText(payEntity.getProvincialCity());
-            mPayDetails.setText(payEntity.getAddressInDetail());
-            mPayTvSend.setText(payEntity.getOrderSingleTime()+"10:00 - 18:00");
+            mPayAddress.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
+            mPayPri.setText(paymentEntity.getProvincialCity());
+            mPayDetails.setText(paymentEntity.getAddressInDetail());
+            mPayTvSend.setText(paymentEntity.getOrderSingleTime()+"10:00 - 18:00");
 
-        }else if(payEntity.getConsigneeType().equals("自送门店")){
+        }else if(paymentEntity.getConsigneeType().equals("自送门店")){
             mPayMode.setText("门店地址");
             mPaySend.setText("门店工作时间：");
-            mPayTvSend.setText(payEntity.getConsigneeName()+payEntity.getDeliveredMobile());
-            mPayCity.setText(payEntity.getProvincialCity());
+            mPayTvSend.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
+            mPayCity.setText(paymentEntity.getProvincialCity());
 
         }
-        mPayTv1.setText(payEntity.getComName());
-        mPayTv2.setText("¥"+payEntity.getComPrice()+"*1="+payEntity.getComPrice());
-        mPayTv3.setText("¥"+payEntity.getComPrice());
-        mPayTv.setText(payEntity.getOrderMoney());
-        mCoupon.setText(payEntity.getCouponPrice());
-        mPayTotal.setText(payEntity.getOrderMoney());
-        mPayTv.setText("¥"+payEntity.getOrderMoney());
-        LogUtils.e("curingOrderListEntity.getServerKHImg()----",payEntity.getServerKHImg());
-        LogUtils.e("curingOrderListEntity.getApp_show_pic()()----",payEntity.getApp_show_pic());
-        ImageLoaderUtils.displayImage(payEntity.getServerKHImg(),mPayImg);
-        ImageLoaderUtils.displayImage(payEntity.getApp_show_pic(),mPayCuringImg);
+        mPayTv1.setText(paymentEntity.getComName());
+        mPayTv2.setText("¥"+ paymentEntity.getComPrice()+"*1="+ paymentEntity.getComPrice());
+        mPayTv3.setText("¥"+ paymentEntity.getComPrice());
+        mPayTv.setText(paymentEntity.getOrderMoney());
+        mCoupon.setText(paymentEntity.getCouponPrice());
+        mPayTotal.setText(paymentEntity.getOrderMoney());
+        mPayTv.setText("¥"+ paymentEntity.getOrderMoney());
+        LogUtils.e("curingOrderListEntity.getServerKHImg()----", paymentEntity.getServerKHImg());
+        LogUtils.e("curingOrderListEntity.getApp_show_pic()()----", paymentEntity.getApp_show_pic());
+        ImageLoaderUtils.displayImage(paymentEntity.getServerKHImg(),mPayImg);
+        ImageLoaderUtils.displayImage(paymentEntity.getApp_show_pic(),mPayCuringImg);
     }
 
     @Override
@@ -198,22 +223,22 @@ public class PaymentOrderActivity extends BaseTitleActivity {
 
     private void reqPay() {
         PayDTO dto = new PayDTO();
-        dto.setConsigneeType(payEntity.getConsigneeType());
-        dto.setConsigneeCode(payEntity.getConsigneeCode());
-        dto.setConsigneeName(payEntity.getConsigneeName());
-        dto.setDeliveredMobile(payEntity.getDeliveredMobile());
-        dto.setProvincialCity(payEntity.getProvincialCity());
-        dto.setAddressInDetail(payEntity.getAddressInDetail());
-        dto.setComOnlyCode(payEntity.getComOnlyCode());
-        dto.setOrderMoney(payEntity.getOrderMoney());
-        dto.setComCount(payEntity.getComCount());
-        dto.setCouponPrice(payEntity.getCouponPrice());
-        dto.setMemberIDCoupon(payEntity.getMemberIDCoupon());
-        dto.setCouponCode(payEntity.getUserCouponCode());
+        dto.setConsigneeType(paymentEntity.getConsigneeType());
+        dto.setConsigneeCode(paymentEntity.getConsigneeCode());
+        dto.setConsigneeName(paymentEntity.getConsigneeName());
+        dto.setDeliveredMobile(paymentEntity.getDeliveredMobile());
+        dto.setProvincialCity(paymentEntity.getProvincialCity());
+        dto.setAddressInDetail(paymentEntity.getAddressInDetail());
+        dto.setComOnlyCode(paymentEntity.getComOnlyCode());
+        dto.setOrderMoney(paymentEntity.getOrderMoney());
+        dto.setComCount(paymentEntity.getComCount());
+        dto.setCouponPrice(paymentEntity.getCouponPrice());
+        dto.setMemberIDCoupon(paymentEntity.getMemberIDCoupon());
+        dto.setCouponcode(paymentEntity.getUserCouponCode());
         dto.setMemMobile(AppContext.get("mobileNum", ""));
         dto.setOrderType("养护");
-        dto.setTimeToAppointmen(payEntity.getTimeToAppointmen());
-        dto.setServerYJCode(payEntity.getServerYJCode());
+        dto.setTimeToAppointmen(paymentEntity.getTimeToAppointmen());
+        dto.setServerYJCode(paymentEntity.getServerYJCode());
         if (mCbWx.isChecked()) {
             dto.setApplyType("微信");
         } else if (mCbZhi.isChecked()) {
@@ -221,13 +246,13 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         } else {
             dto.setApplyType("会员");
         }
-        dto.setServiceMoney(payEntity.getServiceMoney());
+        dto.setServiceMoney(paymentEntity.getServiceMoney());
         dto.setReqType("service");
-        dto.setOldOrderNum(payEntity.getOrderManCode());
-        dto.setShoudamoney(payEntity.getShoudanMoney());
-        String base64 = payEntity.getServerKHImg();
+        dto.setOldOrderNum(paymentEntity.getOrderManCode());
+        dto.setShoudamoney(paymentEntity.getShoudanMoney());
+        String base64 = paymentEntity.getServerKHImg();
         dto.setBase64string(ImageLoaderUtils.imgToBase64(base64,null,null));
-        dto.setServerName(payEntity.getServerName());
+        dto.setServerName(paymentEntity.getServerName());
         dto.setSign(AppConfig.SIGN_1);
         dto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.pay(this, dto, new CallBack<PayResult>() {

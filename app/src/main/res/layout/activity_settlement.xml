@@ -56,11 +56,14 @@
             android:text="@string/ipone"
             android:textSize="@dimen/fs_55"
             android:textColor="@color/color_00"/>
-        <TextView
+        <EditText
             android:id="@+id/set_ed"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:background="@drawable/prompt_box_no"
+            android:paddingLeft="@dimen/ds_10"
             android:layout_marginLeft="@dimen/ds_40"
             android:layout_marginRight="@dimen/ds_40"
             android:layout_marginTop="@dimen/ds_30"
@@ -186,6 +189,15 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_member"
+            android:textSize="@dimen/fs_65"
+            android:textColor="@color/color_00"/>
+        <TextView
+            android:id="@+id/settlement_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:text=""
             android:textSize="@dimen/fs_65"
             android:textColor="@color/color_00"/>
     </LinearLayout>

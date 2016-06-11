@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 import com.qluxstory.qingshe.common.dto.BaseDTO;
+import com.qluxstory.qingshe.common.entity.AdsResult;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 import com.qluxstory.qingshe.home.dto.AddAddressDTO;
 import com.qluxstory.qingshe.home.dto.CuringDTO;
@@ -56,6 +57,8 @@ import com.qluxstory.qingshe.me.dto.ModifyDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
 import com.qluxstory.qingshe.me.dto.ObtainDTO;
 import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
+import com.qluxstory.qingshe.me.dto.UpDTO;
+import com.qluxstory.qingshe.me.dto.UpInformationDTO;
 import com.qluxstory.qingshe.me.dto.UserPicDTO;
 import com.qluxstory.qingshe.me.dto.WithdrawalsDTO;
 import com.qluxstory.qingshe.me.entity.CuringOrderDetailsResult;
@@ -70,6 +73,7 @@ import com.qluxstory.qingshe.me.entity.PaymentOrderResult;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 import com.qluxstory.qingshe.me.entity.RecordsResult;
 import com.qluxstory.qingshe.me.entity.TransactionResult;
+import com.qluxstory.qingshe.me.entity.UpDataResult;
 import com.qluxstory.qingshe.me.entity.UserPicResult;
 import com.qluxstory.qingshe.unused.entity.HotTopResult;
 
@@ -84,6 +88,19 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<BaseEntity> callback) {
         AsyncCallBack<BaseEntity> asyncCallBack = new AsyncCallBack<>(
                 act, callback, BaseEntity.class);
+        post(getAbsoluteUrl("/API/WsMember.asmx/ResSendSmsCodeApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 获取启动页图片
+     * @param dto
+     * @param callback
+     */
+    public static void getImgs(Activity act, BaseDTO
+            dto, CallBack<AdsResult> callback) {
+        AsyncCallBack<AdsResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback, AdsResult.class);
         post(getAbsoluteUrl("/API/WsMember.asmx/ResSendSmsCodeApi"), dto,
                 asyncCallBack);
     }
@@ -253,6 +270,19 @@ public class CommonApiClient extends BaseApiClient {
         get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetOldTimeSnatch"), dto,
                 asyncCallBack);
     }
+
+    /**
+     * 更新收货人信息
+     * @param dto
+     * @param callback
+     */
+    public static void upData(Activity act, UpDTO
+            dto, CallBack<UpDataResult> callback) {
+        AsyncCallBack<UpDataResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,UpDataResult.class);
+        get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetConAndOrderInfo"), dto,
+                asyncCallBack);
+    }
     /**
      * 热门专题
      * @param dto
@@ -349,6 +379,19 @@ public class CommonApiClient extends BaseApiClient {
      * @param callback
      */
     public static void comfirm(Activity act, ConfirmDTO
+            dto, CallBack<NumResult> callback) {
+        AsyncCallBack<NumResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,NumResult.class);
+        post(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/ReceiveConsigneeCode"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 更新中奖人信息
+     * @param dto
+     * @param callback
+     */
+    public static void upInformation(Activity act, UpInformationDTO
             dto, CallBack<NumResult> callback) {
         AsyncCallBack<NumResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,NumResult.class);

@@ -8,13 +8,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.DisplayMetrics;
 
-import com.qluxstory.qingshe.common.cache.DiskLruCacheHelper;
-import com.qluxstory.qingshe.common.utils.StringUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.qluxstory.qingshe.common.cache.DiskLruCacheHelper;
+import com.qluxstory.qingshe.common.utils.StringUtils;
 
 import java.io.IOException;
 
@@ -22,6 +22,16 @@ import java.io.IOException;
 
  */
 public class BaseApplication  extends Application{
+
+//    PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+//    //微信 appid appsecret
+//    PlatformConfig.setSinaWeibo("3921700954","04b48b094faeb16683c32669824ebdad");
+//    //新浪微博 appkey appsecret
+//
+//    JPushInterface.setDebugMode(true);
+//    JPushInterface.init(this);
+
+
     private static String PREF_NAME = "qingshe_app.pref";
     private static String LAST_REFRESH_TIME = "last_refresh_time.pref";
     static Context _context;
