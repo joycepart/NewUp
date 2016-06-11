@@ -50,7 +50,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 支付宝支付 start-->
+        <activity
+            android:name="com.alipay.android.app.sdk.WapPayActivity"
+            android:screenOrientation="portrait"/>
 
+        <!-- 支付宝支付 end-->
 
         <!-- 友盟分享 start-->
         <activity
@@ -173,19 +178,19 @@
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <!--<receiver-->
-            <!--android:name="com.example.jpushdemo.MyReceiver"-->
-            <!--android:exported="false"-->
-            <!--android:enabled="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="cn.jpush.android.intent.REGISTRATION" /> &lt;!&ndash;Required  用户注册SDK的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.UNREGISTRATION" />-->
-                <!--<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> &lt;!&ndash;Required  用户接收SDK消息的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> &lt;!&ndash;Required  用户接收SDK通知栏信息的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> &lt;!&ndash;Required  用户打开自定义通知栏的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> &lt;!&ndash;Optional 用户接受Rich Push Javascript 回调函数的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.CONNECTION" />&lt;!&ndash; 接收网络变化 连接/断开 since 1.6.3 &ndash;&gt;-->
-                <!--<category android:name="您应用的包名" />-->
-            <!--</intent-filter>-->
+        <!--android:name="com.example.jpushdemo.MyReceiver"-->
+        <!--android:exported="false"-->
+        <!--android:enabled="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="cn.jpush.android.intent.REGISTRATION" /> &lt;!&ndash;Required  用户注册SDK的intent&ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.UNREGISTRATION" />-->
+        <!--<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> &lt;!&ndash;Required  用户接收SDK消息的intent&ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> &lt;!&ndash;Required  用户接收SDK通知栏信息的intent&ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> &lt;!&ndash;Required  用户打开自定义通知栏的intent&ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> &lt;!&ndash;Optional 用户接受Rich Push Javascript 回调函数的intent&ndash;&gt;-->
+        <!--<action android:name="cn.jpush.android.intent.CONNECTION" />&lt;!&ndash; 接收网络变化 连接/断开 since 1.6.3 &ndash;&gt;-->
+        <!--<category android:name="您应用的包名" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
 
 
@@ -196,12 +201,6 @@
         <!-- 极光推送 end-->
 
 
-        <!-- 支付宝支付 start-->
-        <activity
-            android:name="com.alipay.android.app.sdk.WapPayActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- 支付宝支付 end-->
         <activity
             android:name="com.qluxstory.qingshe.common.base.SimpleActivity"
             android:screenOrientation="portrait" />

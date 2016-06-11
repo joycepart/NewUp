@@ -12,7 +12,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/placeorder_lin"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_600"
@@ -49,7 +48,6 @@
                 android:background="@color/color_cc" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/place_take_delivery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

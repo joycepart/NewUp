@@ -385,26 +385,11 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     ArrayList<String>  tiList ;
 
     private void showTimePop() {
-        tList = new ArrayList<>();
-        tiList.add(timeEntity.get(0).getTime());
-        tiList.add(timeEntity.get(1).getTime());
-        tiList.add(timeEntity.get(2).getTime());
-        tiList.add(timeEntity.get(3).getTime());
-        tiList.add(timeEntity.get(4).getTime());
-        tiList.add(timeEntity.get(5).getTime());
-        tiList.add(timeEntity.get(6).getTime());
-        tiList.add(timeEntity.get(7).getTime());
-        tiList.add(timeEntity.get(8).getTime());
-        tiList.add(timeEntity.get(9).getTime());
-        tiList.add(timeEntity.get(10).getTime());
-        tiList.add(timeEntity.get(11).getTime());
-        tiList.add(timeEntity.get(12).getTime());
-        tiList.add(timeEntity.get(13).getTime());
-        tiList.add(timeEntity.get(14).getTime());
+        tiList = new ArrayList<>();
+        for(int i = 0;i<timeEntity.size();i++){
+            tiList.add(timeEntity.get(i).getTime());
+        }
 
-//        for(int i = 0;i<timeEntity.size();i++){
-//            tiList.add(timeEntity.get(i).getTime());
-//        }
         OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
         tipPopup.setPicker(tiList);//设置里面list
         tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
@@ -434,10 +419,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("获取后十五天成功");
                     timeEntity = result.getData();
-                    LogUtils.e("timeEntity----",""+timeEntity);
-                    LogUtils.e("timeEntity--；；；；；；",""+timeEntity.get(0).getTime());
                     showTimePop();
-                    LogUtils.e("showTimePop---","hou");
 
                 }
 

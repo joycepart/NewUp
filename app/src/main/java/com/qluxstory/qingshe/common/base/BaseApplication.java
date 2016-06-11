@@ -15,21 +15,18 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qluxstory.qingshe.common.cache.DiskLruCacheHelper;
 import com.qluxstory.qingshe.common.utils.StringUtils;
+import com.umeng.socialize.PlatformConfig;
 
 import java.io.IOException;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
 
  */
 public class BaseApplication  extends Application{
 
-//    PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
-//    //微信 appid appsecret
-//    PlatformConfig.setSinaWeibo("3921700954","04b48b094faeb16683c32669824ebdad");
-//    //新浪微博 appkey appsecret
-//
-//    JPushInterface.setDebugMode(true);
-//    JPushInterface.init(this);
+
 
 
     private static String PREF_NAME = "qingshe_app.pref";
@@ -50,6 +47,13 @@ public class BaseApplication  extends Application{
         super.onCreate();
         _context = getApplicationContext();
         initImageLoader(this);
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        //微信 appid appsecret
+        PlatformConfig.setSinaWeibo("3921700954","04b48b094faeb16683c32669824ebdad");
+        //新浪微博 appkey appsecret
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         try {
             helper=new DiskLruCacheHelper(_context);
         } catch (IOException e) {
