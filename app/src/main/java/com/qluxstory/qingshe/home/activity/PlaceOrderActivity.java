@@ -1,12 +1,15 @@
 package com.qluxstory.qingshe.home.activity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,11 +22,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
+import com.qluxstory.qingshe.alipay.Keys;
+import com.qluxstory.qingshe.alipay.Rsa;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
@@ -33,13 +39,16 @@ import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.PhotoSystemUtils;
+import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.dto.PayDTO;
 import com.qluxstory.qingshe.home.dto.TakeDTO;
 import com.qluxstory.qingshe.home.entity.Address;
+import com.qluxstory.qingshe.home.entity.AliPayResult;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
 import com.qluxstory.qingshe.home.entity.Consignee;
+import com.qluxstory.qingshe.home.entity.PayEntity;
 import com.qluxstory.qingshe.home.entity.PayResult;
 import com.qluxstory.qingshe.home.entity.ProductDetails;
 import com.qluxstory.qingshe.home.entity.TakeEntity;
@@ -47,11 +56,21 @@ import com.qluxstory.qingshe.home.entity.TakeResult;
 import com.qluxstory.qingshe.home.entity.TimeEntity;
 import com.qluxstory.qingshe.home.entity.TimeResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import butterknife.Bind;
 
@@ -153,8 +172,17 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     List<TakeEntity> takeEntity ;
     List<TimeEntity> timeEntity ;
     ProductDetails mProductDetails;
-    Bitmap bitmap;
-    private String mMemberheadimg,mConName,mConMobile,mConCity,mConAddress;
+    Bitmap myBitmap;
+    Uri uri;
+    private byte[] mContent;
+    private String mMemberheadimg;
+    private String mConName;
+    private String mConMobile;
+    private String mConCity;
+    private String mConAddress;
+    private static String mWxKey;
+    TextView mBaseEnsure;
+    private static final String FILE_PATH = "/sdcard/syscamera.jpg";
 
 
     @Override
@@ -165,6 +193,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         mProductDetails = AppContext.getInstance().getProductDetails();
         consignee = AppContext.getInstance().getConsignee();
         mPrice = mProductDetails.getSellPrice();
@@ -222,14 +252,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 Bundle b = new Bundle();
                 b.putString("rturn", rturn);
                 UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
-//                if(mTvAddress.getText().toString().equals("选择门店：")){
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("rturn", rturn);
-//                    UIHelper.showRorStoreFragment(this, SimplePage.STORE,bundle);//选择门店
-//                }else {
-//                    UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址或上门地址
-//                }
-
 
                 break;
             case R.id.place_send:
@@ -266,6 +288,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     DialogUtils.showPrompt(this, "请选择支付方式", "知道了");
                 } else {
                     reqPay();//去支付
+
                 }
 
 
@@ -294,18 +317,19 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         super.onClick(v);
     }
 
+    private static final int RQF_PAY = 1;
+
+    private static final int RQF_LOGIN = 2;
+
+
+
+
     ArrayList<String>  tList ;
     private void showTakePop() {
         tList = new ArrayList<>();
-        tList.add(takeEntity.get(0).getDis_type_name());
-        tList.add(takeEntity.get(1).getDis_type_name());
-        tList.add(takeEntity.get(2).getDis_type_name());
-//        for(int i = 0;i<takeEntity.size();i++){
-//            LogUtils.e("takeEntity----"+takeEntity.size());
-//            LogUtils.e("takeEntity----tttt"+takeEntity.get(i).getDis_type_name());
-//            tiList.add(takeEntity.get(i).getDis_type_name());
-//            LogUtils.e("tiList----tttt"+tiList);
-//        }
+        for(int i = 0;i<takeEntity.size();i++){
+            tList.add(takeEntity.get(i).getDis_type_name());
+        }
         OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
         tipPopup.setPicker(tList);//设置里面list
         tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
@@ -509,43 +533,261 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setReqType("service");
         dto.setOldOrderNum("");
         dto.setShoudamoney(mPrice);
-//        dto.setBase64string(mMemberheadimg);
-        dto.setBase64string("");
+        dto.setBase64string(mMemberheadimg);
         dto.setServerName(mProductDetails.getSellSort());
         dto.setSign(AppConfig.SIGN_1);
-//        dto.setSign("");
         dto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.pay(this, dto, new CallBack<PayResult>() {
             @Override
             public void onSuccess(PayResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("去支付成功");
-                    IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
+                    if(result.getData().get(0).getApplyType().equals("支付宝")){
+                        LogUtils.e("支付宝----",""+result.getData().get(0).getApplyType());
+                        reqAlipayPay(result.getData());
+                    }else if(result.getData().get(0).getApplyType().equals("微信")){
+                        LogUtils.e("微信----",""+result.getData().get(0).getApplyType());
+                        reqWx(result.getData());
+
+                    }else {
+                        IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
+                    }
+
+
+
+
 
                 }
 
             }
         });
     }
+    IWXAPI msgApi;
+    private void reqWx(List<PayEntity> data) {
+        msgApi = WXAPIFactory.createWXAPI(this, AppConfig.Wx_App_Id);
+        msgApi.registerApp(AppConfig.Wx_App_Id);
+        if (msgApi != null) {
+            if (msgApi.isWXAppInstalled()) {
+                String characterEncoding = "UTF-8";
+                mWxKey = data.get(0).getPrivateKey();
+                PayReq req = new PayReq();
+                req.appId = AppConfig.Wx_App_Id;
+                req.partnerId = data.get(0).getPartnerID();
+                req.prepayId = data.get(0).getPrepayid();
+                req.packageValue = "Sign=WXPay";
+                req.nonceStr = TimeUtils.getSignTime();
+                req.timeStamp = TimeUtils.getSignTime();
+                String str = "appid="+AppConfig.Wx_App_Id+"&nonceStr="+TimeUtils.getSignTime()+"&packageValue="+"Sign=WXPay"+"&partnerId="+data.get(0).getPartnerID()+
+                        "&prepayId="+data.get(0).getPrepayid();
+                String sing = str.trim()+"&key="+mWxKey;
+                SortedMap<Object,Object> parameters = new TreeMap<Object,Object>();
+//                parameters.put("appid", req.appId);
+//                parameters.put("noncestr", req.nonceStr);
+//                parameters.put("package", req.packageValue);
+//                parameters.put("prepayid", req.prepayId);
+//                parameters.put("timestamp", req.timeStamp);
+//                req.sign = createSign(characterEncoding,parameters);
+                req.sign = SecurityUtils.MD5Encode(sing.toString(), characterEncoding).toUpperCase();
+                LogUtils.e("appId",AppConfig.Wx_App_Id);
+                LogUtils.e("partnerId",data.get(0).getPartnerID());
+                LogUtils.e("prepayId",data.get(0).getPrepayid());
+                LogUtils.e("packageValue","Sign=WXPay");
+                LogUtils.e("nonceStr",TimeUtils.getSignTime());
+                LogUtils.e("timeStamp",TimeUtils.getSignTime());
+                LogUtils.e("sign",SecurityUtils.MD5Encode(sing.toString(), characterEncoding).toUpperCase());
+                msgApi.sendReq(req);
+            }
+        }
+
+    }
+
+    public static String createSign(String characterEncoding,SortedMap<Object,Object> parameters){
+        StringBuffer sb = new StringBuffer();
+        Set es = parameters.entrySet();//所有参与传参的参数按照accsii排序（升序）
+        Iterator it = es.iterator();
+        while(it.hasNext()) {
+            Map.Entry entry = (Map.Entry)it.next();
+            String k = (String)entry.getKey();
+            Object v = entry.getValue();
+            if(null != v && !"".equals(v)
+                    && !"sign".equals(k) && !"key".equals(k)) {
+                sb.append(k + "=" + v + "&");
+            }
+        }
+        sb.append("key=" + mWxKey);
+        String sign = SecurityUtils.MD5Encode(sb.toString(), characterEncoding).toUpperCase();
+        return sign;
+    }
+
+    private void reqAlipayPay(List<PayEntity> data) {
+        String info = getNewOrderInfo(data);//这个是订单信息
+        // 这里根据签名方式对订单信息进行签名
+        LogUtils.e("data.get(0).getPrivateKey().toString()---",data.get(0).getPrivateKey());
+        LogUtils.e("Keys.PRIVATE----",Keys.PRIVATE);
+        String strsign = Rsa.sign(info, Keys.PRIVATE);
+//        String strsign = Rsa.sign(info,Keys.PRIVATE);
+        LogUtils.e("strsign----",""+strsign);
+        try {
+            // 仅需对sign 做URL编码
+            strsign = URLEncoder.encode(strsign, "UTF-8");
+            LogUtils.e("strsign----utf8",""+strsign);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        // 组装好参数
+        final String orderInfo = info + "&sign=\"" +strsign + "\"&" + getSignType();
+        LogUtils.e("orderInfo----",""+orderInfo);
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(PlaceOrderActivity.this);//支付宝接口了，支付宝现在把很多功能都封装
+                String result = alipay.pay(orderInfo,true);//返回的结果
+                LogUtils.e("result-----------", "result = " + result);
+                Message msg = new Message();
+                msg.what = RQF_PAY;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+
+    }
+
+    Handler mHandler = new Handler() {
+
+        public void handleMessage(android.os.Message msg) {
+
+            AliPayResult payResult = new AliPayResult((String) msg.obj);
+            /**
+             * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+             * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+             * docType=1) 建议商户依赖异步通知
+             */
+            LogUtils.e("payResult---",""+payResult);
+            String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+
+            String resultStatus = payResult.getResultStatus();
+            Log.e("resultStatus----",""+resultStatus);
+            // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+            switch (msg.what) {
+                case RQF_PAY:
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        Toast.makeText(PlaceOrderActivity.this, "支付成功",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 判断resultStatus 为非“9000”则代表可能支付失败
+                        // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(PlaceOrderActivity.this, "支付结果确认中",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(PlaceOrderActivity.this, "支付失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        };
+    };
+    private String getSignType() {
+        return "sign_type=\"RSA\"";
+    }
+
+    //获得订单信息的方法
+    private String getNewOrderInfo(List<PayEntity> data) {
+
+
+        // 签约合作者身份ID
+        String orderInfo = "partner=" + "\"" + "2088901684011695" + "\"";
+
+        // 签约卖家支付宝账号
+        orderInfo += "&seller_id=" + "\"" + "mail@wmqt.net"+ "\"";
+
+        // 商户网站唯一订单号
+        orderInfo += "&out_trade_no=" + "\"" + data.get(0).getOrderNum() + "\"";
+
+        // 商品名称
+        orderInfo += "&subject=" + "\"" + data.get(0).getProductName() + "\"";
+
+        // 商品详情
+        orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
+
+        // 商品金额
+        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+
+        // 服务器异步通知页面路径
+        orderInfo += "&kAliPayNotifyURL=" + "\"" + AppConfig.BASE_URL+"/notify_url.aspx" + "\"";
+        // 服务接口名称， 固定值
+        orderInfo += "&service=\"mobile.securitypay.pay\"";
+
+        // 支付类型， 固定值
+        orderInfo += "&payment_type=\"1\"";
+
+        // 参数编码， 固定值
+        orderInfo += "&_input_charset=\"utf-8\"";
+
+        // 设置未付款交易的超时时间
+        // 默认30分钟，一旦超时，该笔交易就会自动被关闭。
+        // 取值范围：1m～15d。
+        // m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点关闭）。
+        // 该参数数值不接受小数点，如1.5h，可转换为90m。
+        orderInfo += "&it_b_pay=\"30m\"";
+
+        // extern_token为经过快登授权获取到的alipay_open_id,带上此参数用户将使用授权的账户进行支付
+        // orderInfo += "&extern_token=" + "\"" + extern_token + "\"";
+
+        // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
+        orderInfo += "&return_url=\"m.alipay.com\"";
+
+        // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
+        // orderInfo += "&paymethod=\"expressGateway\"";
+
+        return orderInfo;
+    }
+
 
     // 启动手机相机拍摄照片作为头像
     private void choseHeadImageFromCameraCapture() {
-        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent = null;
+        intent = new Intent();
+        // 指定开启系统相机的Action
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        // 根据文件地址创建文件
+        File file = new File(FILE_PATH);
+        if (file.exists())
+        {
+            file.delete();
+        }
+        // 把文件地址转换成Uri格式
+        Uri uri = Uri.fromFile(file);
+        // 设置系统相机拍摄照片完成后图片文件的存放地址
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 
         // 判断存储卡是否可用，存储照片文件
-        if (PhotoSystemUtils.hasSdcard()) {
-            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-                    .fromFile(new File(Environment
-                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-        }
+//        if (PhotoSystemUtils.hasSdcard()) {
+//            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+//                    .fromFile(new File(Environment
+//                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+//        }
 
-        startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+        startActivityForResult(intent, CODE_CAMERA_REQUEST);
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ContentResolver resolver = getContentResolver();
         // 用户没有进行有效的设置操作，返回
 //        if (resultCode == RESULT_CANCELED) {
 //            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
@@ -565,50 +807,97 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 break;
 
             case CODE_CAMERA_REQUEST:
-                if (PhotoSystemUtils.hasSdcard()) {
-                    File tempFile = new File(
-                            Environment.getExternalStorageDirectory(),
-                            IMAGE_FILE_NAME);
-                    Uri uri = Uri.fromFile(tempFile);
-                    LogUtils.e("uri------------",""+uri);
-                    String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
-                    LogUtils.e("mImg------------",""+mImg);
-                    if(mImg!=null){
-                        mLrderLin.setVisibility(View.GONE);
-                        mImgPon.setVisibility(View.VISIBLE);
-                        ImageLoader.getInstance().displayImage("file:///" + mImg,
-                                mImgPon, ImageLoaderUtils.getDefaultOptions());
-                    }else {
-                        mLrderLin.setVisibility(View.VISIBLE);
-                        mImgPon.setVisibility(View.GONE);
-                    }
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                        LogUtils.e("bitmap",""+bitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Bitmap bit = PhotoSystemUtils.comp(bitmap);
-                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
-                    LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
-//                    cropRawPhoto(uri);
+                File file = new File(FILE_PATH);
+                Uri uri = Uri.fromFile(file);
+                LogUtils.e("uri------------if", "" + uri);
+                String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
+                LogUtils.e("mImg------------if", "" + mImg);
+                if (mImg != null) {
+                    mLrderLin.setVisibility(View.GONE);
+                    mImgPon.setVisibility(View.VISIBLE);
+                    ImageLoader.getInstance().displayImage("file:///" + mImg,
+                            mImgPon, ImageLoaderUtils.getDefaultOptions());
                 } else {
-                    Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
-                            .show();
+                    mLrderLin.setVisibility(View.VISIBLE);
+                    mImgPon.setVisibility(View.GONE);
                 }
+                try {
+                    myBitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
+                    LogUtils.e("bitmap-----MediaStore",""+myBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Bitmap bit = PhotoSystemUtils.comp(myBitmap);
+                mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+                LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
+
+
+//                if (data != null) {
+//                    uri = data.getData();
+////                    File tempFile = new File(
+////                            Environment.getExternalStorageDirectory(),
+////                            IMAGE_FILE_NAME);
+////                    uri = Uri.fromFile(tempFile);
+//                    LogUtils.e("uri------------if", "" + uri);
+//                    String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
+//                    LogUtils.e("mImg------------if", "" + mImg);
+//                    if (mImg != null) {
+//                        mLrderLin.setVisibility(View.GONE);
+//                        mImgPon.setVisibility(View.VISIBLE);
+//                        ImageLoader.getInstance().displayImage("file:///" + mImg,
+//                                mImgPon, ImageLoaderUtils.getDefaultOptions());
+//                    } else {
+//                        mLrderLin.setVisibility(View.VISIBLE);
+//                        mImgPon.setVisibility(View.GONE);
+//                    }
+//
+//
+//                }else {
+//                    Bundle extras = data.getExtras();
+//                    //获取相机返回的数据，并转换为图片格式
+//                    Bitmap bitmap = (Bitmap)extras.get("data");
+//                    LogUtils.e("bitmap------------else", "" + bitmap);
+//                    uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null,null));
+//                    String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
+//                    LogUtils.e("mImg------------else", "" + mImg);
+//                    if (mImg != null) {
+//                        mLrderLin.setVisibility(View.GONE);
+//                        mImgPon.setVisibility(View.VISIBLE);
+//                        ImageLoader.getInstance().displayImage("file:///" + mImg,
+//                                mImgPon, ImageLoaderUtils.getDefaultOptions());
+//                    } else {
+//                        mLrderLin.setVisibility(View.VISIBLE);
+//                        mImgPon.setVisibility(View.GONE);
+//                    }
+
+//                }
+
+//                try {
+//                        myBitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
+//                        LogUtils.e("bitmap-----MediaStore",""+myBitmap);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    Bitmap bit = PhotoSystemUtils.comp(myBitmap);
+//                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+//                    LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
+//                    cropRawPhoto(uri);
+
 
                 break;
 
             case CODE_RESULT_REQUEST:
-                if (intent != null) {
-                    setImageToHeadView(intent);
+                if (data != null) {
+                    setImageToHeadView(data);
                 }
                 break;
             case UIHelper.SELECT_REQUEST:
-                if(consignee!=null){
+                if(!TextUtils.isEmpty(consignee.getDeliveredMobile())){
                     LogUtils.e("consignee---if",consignee+"");
                     mConName = consignee.getConsigneeName();
-                    mConMobile = consignee.getDeliveredMobile().trim();
+                    mConMobile = consignee.getDeliveredMobile();
                     mConCity = consignee.getProvincialCity();
                     mConAddress = consignee.getAddressInDetail();
                     mAddressName.setText(mConName + mConMobile);

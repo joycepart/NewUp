@@ -72,7 +72,7 @@ public class SettlementActivity extends BaseTitleActivity {
     String mBatCode;
     String mSnaCode  ;
     IssueProduct issueProduct;
-
+    TextView mBaseEnsure;
     @Override
     protected int getContentResId() {
         return R.layout.activity_settlement;
@@ -81,6 +81,8 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("结算");
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         issueProduct = AppContext.getInstance().getIssueProduct();
         mCaTerm = issueProduct.getmSnaTerm();
         mCaTitle = issueProduct.getmSnaTitle();

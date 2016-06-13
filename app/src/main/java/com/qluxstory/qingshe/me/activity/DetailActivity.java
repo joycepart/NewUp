@@ -40,6 +40,7 @@ public class DetailActivity extends BaseTitleActivity {
     @Bind(R.id.details_rel_money)
     RelativeLayout mRelMoney;
     TransactionEntity entity;
+    TextView mBaseEnsure;
 
     @Override
     protected int getContentResId() {
@@ -49,6 +50,8 @@ public class DetailActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("明细详情");
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         Intent intent = getIntent();
         if(intent!=null){
             entity = (TransactionEntity) intent.getBundleExtra("bundle").getSerializable("entity");

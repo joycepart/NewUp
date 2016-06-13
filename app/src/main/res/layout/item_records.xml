@@ -13,7 +13,7 @@
             android:text="@string/issue_records"
             android:layout_marginLeft="@dimen/ds_30"
             android:gravity="center"
-            android:textSize="@dimen/fs_45"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
         <TextView
             android:id="@+id/records_payment"
@@ -23,7 +23,7 @@
             android:gravity="center"
             android:layout_marginRight="@dimen/ds_30"
             android:text="@string/address_cities"
-            android:textSize="@dimen/fs_35"
+            android:textSize="@dimen/fs_45"
             android:textColor="@color/color_c0"/>
     </RelativeLayout>
     <View
@@ -55,13 +55,13 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="123445678888"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/records_term"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:text="123445678888"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/real_payment"
                 android:gravity="center"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/records_my"
@@ -97,13 +97,13 @@
                 android:text="@string/real_payment"
                 android:layout_marginLeft="@dimen/ds_20"
                 android:gravity="center"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
 
         </LinearLayout>
         <Button
             android:id="@+id/records_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ds_300"
             android:layout_height="match_parent"
             android:padding="@dimen/ds_15"
             android:layout_marginTop="@dimen/ds_20"
@@ -111,7 +111,7 @@
             android:layout_marginRight="@dimen/ds_30"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_while"
-            android:text=""
+            android:text="继续夺宝"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_50" />
     </RelativeLayout>

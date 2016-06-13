@@ -16,8 +16,13 @@
             android:text="@string/indiana_infor"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/ds_30"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:background="@color/color_cc"
+            android:layout_marginLeft="@dimen/ds_30"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +35,7 @@
                 android:text="@string/ipone_dian"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_inf"
@@ -39,7 +44,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
         <LinearLayout
@@ -53,7 +58,7 @@
                 android:text="@string/indiana_frequency"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_num"
@@ -62,7 +67,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
         <LinearLayout
@@ -76,7 +81,7 @@
                 android:text="@string/indiana_time"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_data"
@@ -85,7 +90,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
 
@@ -102,7 +107,7 @@
                 android:text="@string/indiana_num"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
 
             <LinearLayout
@@ -117,7 +122,7 @@
                     android:layout_marginLeft="@dimen/ds_20"
                     android:text="@string/indiana_look"
                     android:gravity="center"
-                    android:textSize="@dimen/fs_55"
+                    android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"/>
                 <ImageView
                     android:id="@+id/rl_img"
@@ -129,6 +134,7 @@
             </LinearLayout>
         </RelativeLayout>
         <TextView
+            android:visibility="gone"
             android:id="@+id/inf_wining"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_150"

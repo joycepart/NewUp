@@ -19,8 +19,13 @@
             android:text="@string/issut_inf"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/ds_30"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:background="@color/color_cc"
+            android:layout_marginLeft="@dimen/ds_30"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +38,7 @@
                 android:text="@string/issut_num"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_inf_num"
@@ -42,7 +47,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
         <LinearLayout
@@ -56,7 +61,7 @@
                 android:text="@string/issu_time"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_num_time"
@@ -65,7 +70,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
         <LinearLayout
@@ -79,7 +84,7 @@
                 android:text="@string/issu_user"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_data_user"
@@ -88,7 +93,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
 
@@ -103,7 +108,7 @@
                 android:text="@string/issue_nm"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_data_nm"
@@ -112,7 +117,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/address_cities"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
         </LinearLayout>
     </LinearLayout>

@@ -20,7 +20,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="第11期"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/iss_pro_tv_name"
                     android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="第11期 Apple SE 16g"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/iss_pro_tv_random"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="@dimen/ds_30"
                 android:text="@string/issue_random"
                 android:textColor="@color/color_c0"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <ProgressBar
                 android:id="@+id/product_progress"
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                     android:layout_marginTop="@dimen/ds_30"
                     android:text="总需要人数3288人次"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/iss_pro_peo"
                     android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
                     android:layout_marginRight="@dimen/ds_30"
                     android:text="距离揭晓还需288人次"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/ds_30"
             android:gravity="center"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"
             android:text="@string/issue_no_activity"/>
 
@@ -121,7 +121,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/product_num"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/product_participate_num"
                     android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/color_c0"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -137,7 +137,7 @@
                 android:gravity="center"
                 android:text="@string/product_text"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
@@ -170,7 +170,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/issue_imagetext"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -178,7 +178,7 @@
                     android:gravity="center"
                     android:text="@string/issue_wifi"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -212,7 +212,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/issue_announce"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
 
 
             </RelativeLayout>

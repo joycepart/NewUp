@@ -36,7 +36,7 @@ public class CuringOrderActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("养护订单列表");
-
+        mBaseTitlebarEnsure.setVisibility(View.GONE);
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(CuringOrderListFragment.newInstance(TAB_A));
         fragmentList.add(CuringOrderListFragment.newInstance(TAB_B));

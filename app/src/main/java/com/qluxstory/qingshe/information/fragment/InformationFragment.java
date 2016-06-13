@@ -16,6 +16,7 @@ import com.qluxstory.qingshe.information.adapter.InformationAdapter;
 import com.qluxstory.qingshe.information.dto.InformationDTO;
 import com.qluxstory.qingshe.information.entity.InformationEntity;
 import com.qluxstory.qingshe.information.entity.InformationResult;
+import com.qluxstory.qingshe.me.MeUiGoto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +35,10 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
     @Override
     public void initView(View view) {
         super.initView(view);
+        Boolean bool= AppContext.get("isLogin",true);
+        if(bool!=true){
+            MeUiGoto.login(getActivity());//登录
+        }
 
     }
 
@@ -95,7 +100,7 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
     public void onItemClick(View itemView, Object itemBean, int position) {
         mNewsBigTitle =mInforData.get(position).getNews_big_title();
         mNewsCode = mInforData.get(position).getNews_code();
-        mUrl= AppConfig.News_Html+mNewsCode;
+        mUrl= AppConfig.BASE_URL+AppConfig.News_Html+mNewsCode;
         InformationUiGoto.newsDetail(getActivity(),mNewsBigTitle,mUrl);//新闻详情页，h5页面
         super.onItemClick(itemView, itemBean, position);
 

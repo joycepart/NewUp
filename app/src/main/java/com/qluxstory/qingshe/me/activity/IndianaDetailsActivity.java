@@ -112,6 +112,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     LinearLayout mOrderCode;
     private String mCode,mTitle,mPic,mTerm,mBalance,mSnaCode,mBnt,mRecCode,mTotal,mCount;
     Consignee consignee;
+    TextView mBaseEnsure;
 
     @Override
     protected int getContentResId() {
@@ -121,6 +122,8 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("夺宝详情");
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         consignee = AppContext.getInstance().getConsignee();
         Intent mIntent = getIntent();
         if(mIntent!=null){

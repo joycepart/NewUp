@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.LogUtils;
@@ -23,6 +24,7 @@ public class SimpleActivity extends BaseTitleActivity {
     protected int mPageValue = -1;
     private FragmentManager fragmentManager;
     SimplePage page;
+    TextView mBaseEnsure;
 
 
     @Override
@@ -33,6 +35,8 @@ public class SimpleActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         if (mPageValue == -1) {
             mPageValue = getIntent().getIntExtra(BUNDLE_KEY_PAGE, 0);
         }

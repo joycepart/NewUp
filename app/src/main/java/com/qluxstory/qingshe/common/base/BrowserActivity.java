@@ -1,10 +1,12 @@
 package com.qluxstory.qingshe.common.base;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -16,9 +18,16 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qluxstory.qingshe.R;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.widget.ProgressWebView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 
 /**
@@ -31,12 +40,18 @@ public class BrowserActivity extends BaseTitleActivity {
     protected String strUrl;
     protected String title;
     private ImageView weixin,friend,weibo;
+    String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
+
+    UMImage image = new UMImage(BrowserActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityCompat.requestPermissions(BrowserActivity.this,mPermissionList, 100);
         Intent mIntent = getIntent();
         if (mIntent != null) {
             strUrl = mIntent.getStringExtra("url");
             title = mIntent.getStringExtra("title");
+            LogUtils.e("strUrl------------",strUrl);
+
         }
         super.onCreate(savedInstanceState);
         if (!TextUtils.isEmpty(title)) {
@@ -48,11 +63,10 @@ public class BrowserActivity extends BaseTitleActivity {
     public void initView() {
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         mBaseEnsure.setOnClickListener(this);
-
-
 //        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.detaile_share,
 //                R.dimen.common_titlebar_icon_width,
 //                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_RIGHT);
+
         mWebView = (ProgressWebView) findViewById(R.id.browser_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setOnReceivedTitleListener(new ProgressWebView.onReceivedTitleListener() {
@@ -69,7 +83,6 @@ public class BrowserActivity extends BaseTitleActivity {
     @Override
     public void initData() {
         mWebView.loadUrl(strUrl);
-//        mWebView.setWebViewClient("");
     }
 
     @Override
@@ -89,8 +102,6 @@ public class BrowserActivity extends BaseTitleActivity {
     @Override
     protected void baseGoEnsure() {
         showPopShare();
-
-
     }
 
     private void showPopShare() {
@@ -119,20 +130,67 @@ public class BrowserActivity extends BaseTitleActivity {
         weibo.setOnClickListener(this);
         View parent = getWindow().getDecorView();//高度为手机实际的像素高度
         popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(0f);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
+            case R.id.base_titlebar_ensure:
+                showPopShare();
+//                baseGoEnsure();
+                break;
             case R.id.share_weixin:
+                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withText("hello umeng")
+                        .withMedia(image)
+                        .withTargetUrl("http://www.umeng.com")
+                        .share();
                 break;
             case R.id.share_friend:
+                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withText("this is description")
+                        .withMedia(image)
+                        .withTargetUrl("http://www.baidu.com")
+                        .share();
                 break;
             case R.id.share_weibo:
+                new ShareAction(this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+                        .withText("Umeng Share")
+                        .withTitle("this is title")
+                        .withMedia(image)
+                        .share();;
                 break;
         }
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            LogUtils.d("plat","platform"+platform);
+            if(platform.name().equals("WEIXIN_FAVORITE")){
+                Toast.makeText(BrowserActivity.this,platform + " 收藏成功啦",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(BrowserActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(BrowserActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(BrowserActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     /**
      * 设置添加屏幕的背景透明度
@@ -171,6 +229,8 @@ public class BrowserActivity extends BaseTitleActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        LogUtils.e("result","onActivityResult");
     }
 
 }

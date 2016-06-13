@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:text="用户名"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_60"/>
+            android:textSize="@dimen/fs_50"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
     <LinearLayout
         android:id="@+id/user_information"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_200"
+        android:layout_height="@dimen/ds_160"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/me_name"
-            android:textSize="@dimen/fs_60"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/me_name"
-                    android:textSize="@dimen/fs_60"
+                    android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/ds_40"
@@ -80,7 +80,7 @@
     <LinearLayout
         android:id="@+id/userinformation_num"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_200"
+        android:layout_height="@dimen/ds_160"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/me_phone_number"
-                android:textSize="@dimen/fs_60"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"
                 android:gravity="center"
                 android:layout_marginLeft="@dimen/ds_40"
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/me_phone_number"
-                    android:textSize="@dimen/fs_60"
+                    android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"
                     android:gravity="center"
                     android:layout_marginRight="@dimen/ds_80"

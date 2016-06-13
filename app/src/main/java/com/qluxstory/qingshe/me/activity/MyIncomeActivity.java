@@ -2,12 +2,13 @@ package com.qluxstory.qingshe.me.activity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.base.BaseActivity;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -28,14 +29,17 @@ import butterknife.OnClick;
 /**
  * 我的收入主页面
  */
-public class MyIncomeActivity extends BaseTitleActivity {
+public class MyIncomeActivity extends BaseActivity {
     @Bind(R.id.myincome_withdrawals)
     TextView mWithdrawals;
     @Bind(R.id.myincome_accumulate)
     TextView mAccumulate;
     @Bind(R.id.income_Btn)
     Button mIncomeBtn;
-    TextView mBaseEnsure;
+    @Bind(R.id.top_myincome_img)
+    ImageView mMyincomeImg;
+    @Bind(R.id.top_myincome_tv_detailed)
+    TextView mMyincomeTv;
 
     private String strPhoneNum;
     /**
@@ -48,16 +52,17 @@ public class MyIncomeActivity extends BaseTitleActivity {
     private String mAccumuLatedMoney;
 
 
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_me_myincome;
+    }
+
     @Override
     public void initView() {
-        setTitleText("我的收入");
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
-        setEnsureText("交易明细");
-        if(!AppContext.get("mobileNum","").isEmpty()){
-            strPhoneNum = AppContext.get("mobileNum","");
-        }else {
-            MeUiGoto.login(this);//登录
-        }
+        mMyincomeImg.setOnClickListener(this);
+        mMyincomeTv.setOnClickListener(this);
+        strPhoneNum = AppContext.get("mobileNum","");
 
     }
 
@@ -92,7 +97,7 @@ public class MyIncomeActivity extends BaseTitleActivity {
     }
 
 
-    @OnClick({ R.id.income_Btn,R.id.base_titlebar_ensure,R.id.base_titlebar_back})
+    @OnClick({ R.id.income_Btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.income_Btn:
@@ -108,20 +113,14 @@ public class MyIncomeActivity extends BaseTitleActivity {
                 }
                 break;
 
-            case R.id.base_titlebar_ensure:
-//                String s = "我的优惠劵";
-//                Bundle b = new Bundle();
-//                b.putString("s",s);
+            case R.id.top_myincome_tv_detailed:
                 UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//交易明细
                 break;
-            case R.id.base_titlebar_back:
-                baseGoBack();
+            case R.id.top_myincome_img:
+                finish();
                 break;
         }
     }
 
-    @Override
-    protected int getContentResId() {
-        return R.layout.activity_me_myincome;
-    }
+
 }

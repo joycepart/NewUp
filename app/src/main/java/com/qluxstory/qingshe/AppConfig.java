@@ -34,10 +34,11 @@ public class AppConfig {
 
 
 	public static final String BASE_URL="http://60.205.4.101:8099";
-	public static final String News_Html="SMSBase/ReturnApp/NewsHtml.aspx?id=";
-	public static final String Server_Html="SMSBase/ReturnApp/ServerHtml.aspx?id=";
-	public static final String Server_SnatchCommodity="SMSBase/ReturnApp/SnatchCommodityHtml.aspx?id=";
-	public static final String Server_Special="SMSBase/ReturnApp/SpecialHtml.aspx?id=";
+	public static final String News_Html="/SMSBase/ReturnApp/NewsHtml.aspx?id=";
+	public static final String Server_Html="/SMSBase/ReturnApp/ServerHtml.aspx?id=";
+	public static final String Server_SnatchCommodity="/SMSBase/ReturnApp/SnatchCommodityHtml.aspx?id=";
+	public static final String Server_Special="/SMSBase/ReturnApp/SpecialHtml.aspx?id=";
 	public static final String RegisterFrom = "android";
+	public static final String Wx_App_Id = "wxfd04ee1c78a46319";
 
 }

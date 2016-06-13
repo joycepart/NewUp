@@ -21,7 +21,7 @@
             android:paddingLeft="@dimen/ds_50"
             android:paddingTop="@dimen/ds_10"
             android:paddingBottom="@dimen/ds_10"
-            android:phoneNumber="true"
+            android:inputType="number"
             android:textColor="@color/color_00"
             android:textColorHint="@color/color_cc"
             android:textSize="@dimen/fs_60" />
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:padding="@dimen/ds_20"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:text="@string/me_exchange"/>
 
 

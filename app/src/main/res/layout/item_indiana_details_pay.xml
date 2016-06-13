@@ -22,7 +22,7 @@
                 android:text="@string/indiana_paytype"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
 
 
@@ -34,7 +34,7 @@
                 android:layout_alignParentRight="true"
                 android:text="@string/indiana_balance"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
 
         </RelativeLayout>
@@ -49,7 +49,7 @@
                 android:text="@string/indiana_total"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_money"
@@ -59,7 +59,7 @@
                 android:layout_alignParentRight="true"
                 android:text="@string/indiana_look"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_c0"/>
             <TextView
                 android:id="@+id/det_fh"
@@ -68,7 +68,7 @@
                 android:layout_toLeftOf="@+id/det_money"
                 android:text="@string/me_income_meney"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_c0"/>
         </RelativeLayout>
         <View
@@ -90,7 +90,7 @@
             android:layout_alignParentRight="true"
             android:text="@string/indiana_look"
             android:gravity="center"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_65"
             android:textColor="@color/color_00"/>
 
         <TextView
@@ -100,7 +100,7 @@
             android:text="@string/real_payment"
             android:layout_marginLeft="@dimen/ds_30"
             android:gravity="center"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_65"
             android:textColor="@color/color_00"/>
     </RelativeLayout>
     <RelativeLayout
@@ -116,7 +116,7 @@
             android:layout_alignParentRight="true"
             android:text="@string/indiana_look"
             android:gravity="center"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_45"
             android:textColor="@color/color_00"/>
         <TextView
             android:layout_width="wrap_content"
@@ -125,7 +125,7 @@
             android:text="@string/indiana_place"
             android:layout_marginLeft="@dimen/ds_30"
             android:gravity="center"
-            android:textSize="@dimen/fs_40"
+            android:textSize="@dimen/fs_45"
             android:textColor="@color/color_00"/>
     </RelativeLayout>
 </LinearLayout>

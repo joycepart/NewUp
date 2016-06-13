@@ -93,7 +93,6 @@ public class ProductDetailsFragment extends BaseFragment {
         switch (v.getId()){
             case R.id.in_btn:
                 showPopWin(getActivity());
-//                showPop();
                 break;
             case R.id.reduce:
                 int rnum = Integer.valueOf(mNum.getText().toString());
@@ -110,21 +109,21 @@ public class ProductDetailsFragment extends BaseFragment {
                 mFive.setEnabled(true);
                 mTen.setEnabled(false);
                 mTtew.setEnabled(false);
-                mFive.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
+//                mFive.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.ten:
                 mNum.setText("10");
                 mFive.setEnabled(false);
                 mTen.setEnabled(true);
                 mTtew.setEnabled(false);
-                mTen.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
+//                mTen.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.ttew:
                 mNum.setText("20");
                 mFive.setEnabled(false);
                 mTen.setEnabled(false);
                 mTtew.setEnabled(true);
-                mTtew.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
+//                mTtew.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.fre_btn:
                 mNumber = mNum.getText().toString();
@@ -136,14 +135,11 @@ public class ProductDetailsFragment extends BaseFragment {
 
     }
 
-    private PopupWindow popMenus;
-    View.OnClickListener myOnClick;
 
     private void showPopWin(Context context) {
         LayoutInflater inflater = (LayoutInflater)
                 getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.from(getActivity()).inflate(R.layout.popup_frequency, null);
-//        popMenus = new Popup(view,300,300,true);
         final PopupWindow popWindow = new PopupWindow(view,WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
         // 需要设置一下此参数，点击外边可消失
         popWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -151,8 +147,7 @@ public class ProductDetailsFragment extends BaseFragment {
         popWindow.setOutsideTouchable(true);
         // 设置此参数获得焦点，否则无法点击
         popWindow.setFocusable(true);
-        backgroundAlpha(1f);
-//        popWindow.showAsDropDown(view);
+        backgroundAlpha(0.7f);
         mReduce = (TextView) view
                 .findViewById(R.id.reduce);
         mNum = (EditText) view
@@ -177,6 +172,12 @@ public class ProductDetailsFragment extends BaseFragment {
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         View parent = getActivity().getWindow().getDecorView();//高度为手机实际的像素高度
         popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(0f);
+            }
+        });
     }
 
 
@@ -187,7 +188,7 @@ public class ProductDetailsFragment extends BaseFragment {
     public void backgroundAlpha(float bgAlpha)
     {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 0.7f; //0.0-1.0
+        lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);
     }
 

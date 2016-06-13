@@ -154,12 +154,6 @@ public class MainActivity extends BaseTitleActivity {
                 showTab(tag);
             }
 
-//            if(Integer.valueOf(tag)!=null){
-//                showTab(tag);
-//            }else {
-//                return;
-//            }
-
 
         }
     }
@@ -274,8 +268,10 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if((AppContext.get("isLogin","")).equals("true")){
-            AppContext.get("isLogin","false");
+        Boolean bool = AppContext.get("isLogin",true);
+        if(bool=true){
+            AppContext.get("isLogin",false);
+            LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
         };
     }
 }

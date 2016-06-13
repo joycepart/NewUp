@@ -54,6 +54,7 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     Button mWBtn;
     private String strPhoneNum,mMon,mUs,mNm,mIpone,mWTv,mBank;
     private ArrayList<String> sList;
+    TextView mBaseEnsure;
 
     @Override
     protected int getContentResId() {
@@ -63,6 +64,8 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("提现");
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         mWTv = mWithdTv.getText().toString();
         if(mWTv.equals("支付宝")){
             mLinBank.setVisibility(View.GONE);

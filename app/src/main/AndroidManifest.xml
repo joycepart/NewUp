@@ -50,12 +50,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 支付宝支付 start-->
-        <activity
-            android:name="com.alipay.android.app.sdk.WapPayActivity"
-            android:screenOrientation="portrait"/>
 
-        <!-- 支付宝支付 end-->
+        <!-- 支付开始 start -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <!-- 支付结束 end-->
+
+        <!--微信支付 start-->
+        <activity
+            android:name="com.qluxstory.qingshe.wxapi.WXPayEntryActivity"
+            android:label="微信支付">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wxfd04ee1c78a46319" />
+            </intent-filter>
+        </activity>
+        <!-- 微信支付 end-->
+
 
         <!-- 友盟分享 start-->
         <activity
@@ -67,14 +89,14 @@
             android:name="UMENG_APPKEY"
             android:value="5754f42067e58ebba800196a" >
         </meta-data>
-
+        <!-- 微信分享 -->
         <activity
-            android:name="com.qluxstory.qingshe.share.WXEntryActivity"
+            android:name="com.qluxstory.qingshe.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+        <!-- 新浪微博分享 -->
         <activity
             android:name="com.qluxstory.qingshe.share.WBShareActivity"
             android:configChanges="keyboardHidden|orientation"

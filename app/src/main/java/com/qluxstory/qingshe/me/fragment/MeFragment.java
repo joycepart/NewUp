@@ -15,12 +15,8 @@ import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
-import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.me.MeUiGoto;
-import com.qluxstory.qingshe.me.entity.Bank;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -72,6 +68,7 @@ public class MeFragment extends BaseFragment {
     private String mInformationTitle;
     private String userName;
     private String pictruePath;
+    Boolean bool;
 
     @Override
     protected int getLayoutResId() {
@@ -85,15 +82,13 @@ public class MeFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        Boolean bool = AppContext.get("isLogin",true);
+        bool = AppContext.get("isLogin",true);
         if(bool=true){
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
             mMeLlClose.setVisibility(View.VISIBLE);
             userName = AppContext.get("mUserName","");
             pictruePath = AppContext.get("mPictruePath","");
-            LogUtils.e("userName-----",userName);
-            LogUtils.e("mPictruePath-----",pictruePath);
             mLoingTvName.setText(userName);
             ImageLoaderUtils.displayAvatarImage(pictruePath,
                     mLoginImgPic);
@@ -120,16 +115,36 @@ public class MeFragment extends BaseFragment {
                 MeUiGoto.userInformation(getActivity());//用户信息
                 break;
             case R.id.user_ll_curing:
-                MeUiGoto.maintenanceOrder(getActivity());//养护订单
+                if(bool!=true){
+                    MeUiGoto.login(getActivity());//登录
+                }else {
+                    MeUiGoto.maintenanceOrder(getActivity());//养护订单
+                }
+
                 break;
             case R.id.user_ll_indiana:
-                UIHelper.showFragment(getActivity(), SimplePage.INDIANA_RECORDS);//夺宝记录
+                if(bool!=true){
+                    MeUiGoto.login(getActivity());//登录
+                }else {
+                    UIHelper.showFragment(getActivity(), SimplePage.INDIANA_RECORDS);//夺宝记录
+                }
+
                 break;
             case R.id.user_ll_coupon:
-                UIHelper.showFragment(getActivity(), SimplePage.MY_COUPON);//我的优惠劵
+                if(bool!=true){
+                    MeUiGoto.login(getActivity());//登录
+                }else {
+                    UIHelper.showFragment(getActivity(), SimplePage.MY_COUPON);//我的优惠劵
+                }
+
                 break;
             case R.id.user_ll_income:
-                MeUiGoto.myIncome(getActivity());//我的收入
+                if(bool!=true){
+                    MeUiGoto.login(getActivity());//登录
+                }else {
+                    MeUiGoto.myIncome(getActivity());//我的收入
+                }
+
                 break;
             case R.id.user_ll_about:
                 mUrlUs = AppConfig.URL_ABOUT_US;
@@ -150,12 +165,10 @@ public class MeFragment extends BaseFragment {
                 startActivity(intent); //电话客服
                 break;
             case R.id.user_ll_qq:
-                showPop(new ArrayList<Bank>());
 
-
-//                mUrlQq = AppConfig.URL_QQ;
-//                mQqTitle = "官方QQ群 - 倾奢";
-//                MeUiGoto.qq(getActivity(), mUrlQq, mQqTitle);//官方QQ群
+                mUrlQq = AppConfig.URL_QQ;
+                mQqTitle = "官方QQ群 - 倾奢";
+                MeUiGoto.qq(getActivity(), mUrlQq, mQqTitle);//官方QQ群
                 break;
             case R.id.user_ll_inf:
                 mUrlInformation = AppConfig.URL_INFORMATION;
@@ -171,9 +184,6 @@ public class MeFragment extends BaseFragment {
         }
     }
 
-    private void showPop(ArrayList<Bank> banks) {
-//        DialogUtils.showDialog(new ArrayList<Bank>());
-    }
 
 
 }

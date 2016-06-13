@@ -10,7 +10,7 @@
             android:layout_marginLeft="@dimen/ds_50"
             android:gravity="center"
             android:text="@string/me_income_meney"
-            android:textSize="@dimen/fs_70"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
         <TextView
             android:id="@+id/placeorder_tv"
@@ -19,7 +19,7 @@
             android:layout_marginLeft="@dimen/ds_20"
             android:gravity="center"
             android:text="199.00"
-            android:textSize="@dimen/fs_70"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
     <LinearLayout
         android:id="@+id/pro_bottom_kf"
@@ -53,5 +53,5 @@
             android:background="@drawable/btn_click"
             android:text="@string/order_immediate"
             android:textColor="@color/color_ff"
-            android:textSize="@dimen/fs_70" />
+            android:textSize="@dimen/fs_60" />
 </LinearLayout>

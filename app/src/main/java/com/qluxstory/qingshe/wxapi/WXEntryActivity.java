@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.share;
+package com.qluxstory.qingshe.wxapi;
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
 

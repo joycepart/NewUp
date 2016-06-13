@@ -29,7 +29,7 @@
                     android:gravity="center"
                     android:text="@string/tab_me_no"
                     android:textColor="@color/color_25"
-                    android:textSize="@dimen/fs_55" />
+                    android:textSize="@dimen/fs_50" />
 
                 <Button
                     android:id="@+id/user_btn"
@@ -69,7 +69,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:layout_marginTop="@dimen/ds_30"
-                        android:text="用户名"
+                        android:text=""
                         android:textSize="@dimen/fs_55"
                         android:textColor="@color/color_00"/>
 
@@ -115,7 +115,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_d"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -160,7 +160,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_n"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -204,7 +204,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_f"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -249,7 +249,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_g"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -295,7 +295,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_h"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -339,7 +339,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_i"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -383,7 +383,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_j"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -427,7 +427,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_kefu"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -471,7 +471,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_l"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"
@@ -515,7 +515,7 @@
                         android:gravity="center"
                         android:paddingLeft="@dimen/ds_40"
                         android:text="@string/tab_me_m"
-                        android:textSize="@dimen/fs_50" />
+                        android:textSize="@dimen/fs_48" />
 
                     <ImageView
                         android:layout_width="@dimen/ds_80"

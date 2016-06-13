@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/detail_suc"
-                android:textSize="@dimen/fs_65"
+                android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_00"/>
                 <LinearLayout
                     android:id="@+id/details_lin"
@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/ds_10"
                     android:text="@string/detail_suc"
-                    android:textSize="@dimen/fs_65"
+                    android:textSize="@dimen/fs_55"
                     android:textColor="@color/color_c0"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/detail_suc"
-                    android:textSize="@dimen/fs_65"
+                    android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"/>
                 <TextView
                     android:id="@+id/tran_detail_time"
@@ -73,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/detail_data"
-                    android:textSize="@dimen/fs_55"
+                    android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"/>
 
             </LinearLayout>
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detail_expenditure"
-                android:textSize="@dimen/fs_65"
+                android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_c0"/>
             <TextView
                 android:id="@+id/tran_detail_money"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/ds_40"
                 android:text="@string/detail_money"
-                android:textSize="@dimen/fs_65"
+                android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_c0"/>
         </LinearLayout>
     </RelativeLayout>

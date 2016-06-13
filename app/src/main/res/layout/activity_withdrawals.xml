@@ -21,7 +21,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_mode"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <TextView
                 android:id="@+id/withd_tv_md"
                 android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_zhi"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <ImageView
                 android:layout_width="@dimen/ds_90"
                 android:layout_height="@dimen/ds_90"
@@ -64,7 +64,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_money"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
 
             <EditText
                 android:id="@+id/withd_mon"
@@ -102,7 +102,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_user"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <EditText
                 android:id="@+id/withd_us"
                 android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_name"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <EditText
                 android:id="@+id/withd_nm"
                 android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_num"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <EditText
                 android:id="@+id/withd_ipone"
                 android:layout_width="wrap_content"
@@ -216,7 +216,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/withdrawals_bankname"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_50"/>
             <EditText
                 android:id="@+id/withd_bank"
                 android:layout_width="wrap_content"
@@ -252,10 +252,10 @@
         android:layout_height="@dimen/ds_150"
         android:gravity="center"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/ds_450"
+        android:layout_marginTop="@dimen/ds_500"
         android:layout_marginRight="@dimen/ds_50"
         android:layout_marginLeft="@dimen/ds_50"
-        android:background="@drawable/btn_login_selector"
+        android:background="@drawable/btn_login_selected"
         android:text="@string/withdrawals_apply"
         android:textColor="@color/color_ff"
         android:textSize="@dimen/fs_60" />

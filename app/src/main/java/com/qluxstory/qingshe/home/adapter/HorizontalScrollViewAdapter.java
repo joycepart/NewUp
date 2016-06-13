@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
@@ -80,12 +81,18 @@ public class HorizontalScrollViewAdapter
 		viewHolder.mItemRel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Bundle b = new Bundle();
-				String bat = getItem(position).getBat_code();
-				String sna = getItem(position).getSna_code();
-				b.putString("bat",bat);
-				b.putString("sna",sna);
-				UIHelper.showFragment(mContext, SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
+				Boolean bool= AppContext.get("isLogin",true);
+				if(bool!=true){
+//					MeUiGoto.login(mContext);//登录
+				}{
+					Bundle b = new Bundle();
+					String bat = getItem(position).getBat_code();
+					String sna = getItem(position).getSna_code();
+					b.putString("bat",bat);
+					b.putString("sna",sna);
+					UIHelper.showFragment(mContext, SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
+				}
+
 			}
 		});
 		return convertView;

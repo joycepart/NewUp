@@ -5,7 +5,7 @@
 
     <stroke
         android:width="@dimen/ds_3"
-        android:color="@color/color_00" />
+        android:color="@color/color_ff" />
 
     <padding
         android:bottom="@dimen/fs_15"

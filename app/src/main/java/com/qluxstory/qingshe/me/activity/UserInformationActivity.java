@@ -2,15 +2,21 @@ package com.qluxstory.qingshe.me.activity;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +27,6 @@ import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
-import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.PhotoSystemUtils;
@@ -64,6 +69,8 @@ public class UserInformationActivity extends BaseTitleActivity {
     private static final int CODE_GALLERY_REQUEST = 0xa0;
     private static final int CODE_CAMERA_REQUEST = 0xa1;
     private static final int CODE_RESULT_REQUEST = 0xa2;
+    TextView mBaseEnsure;
+    PopupWindow popWindow;
 
     @Override
     protected int getContentResId() {
@@ -72,6 +79,8 @@ public class UserInformationActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         mUserName.setText(AppContext.get("mUserName",""));
         mTvName.setText(AppContext.get("mUserName",""));
         mTvNum.setText(AppContext.get("mobileNum",""));
@@ -98,11 +107,11 @@ public class UserInformationActivity extends BaseTitleActivity {
                 MeUiGoto.modifyUser(this);//修改用户名
                 break;
             case R.id.base_titlebar_back:
-                baseGoBack();
+//                finish();
             case R.id.btn_alter_pic_camera:
 
-                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 // 判断存储卡是否可用，存储照片文件
                 if (PhotoSystemUtils.hasSdcard()) {
                     intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
@@ -111,23 +120,6 @@ public class UserInformationActivity extends BaseTitleActivity {
                 }
 
                 startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
-
-
-//                try {
-//                    //拍照我们用Action为MediaStore.ACTION_IMAGE_CAPTURE，
-//                    //有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    // 判断存储卡是否可用，存储照片文件
-//                    if (PhotoSystemUtils.hasSdcard()) {
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-//                                .fromFile(new File(Environment
-//                                        .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-//                    }
-//                    startActivityForResult(intent, 1);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
                 break;
             case R.id.btn_alter_pic_photo:
                 try {
@@ -142,7 +134,8 @@ public class UserInformationActivity extends BaseTitleActivity {
                 }
                 break;
             case R.id.btn_alter_exit:
-                finish();
+                backgroundAlpha(1f);
+                popWindow.dismiss();
                 break;
             default:
                 break;
@@ -150,14 +143,43 @@ public class UserInformationActivity extends BaseTitleActivity {
     }
 
     private void showPicPop() {
-        final View view = LayoutInflater.from(this).inflate(R.layout.popup_pic, null);
-        dialog = DialogUtils.showDialog(this, view);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.from(this).inflate(R.layout.popup_pic, null);
+        popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+        // 需要设置一下此参数，点击外边可消失
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击窗口外边窗口消失
+        popWindow.setOutsideTouchable(true);
+        // 设置此参数获得焦点，否则无法点击
+        popWindow.setFocusable(true);
+        backgroundAlpha(0.7f);
+        //防止虚拟软键盘被弹出菜单遮住
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        View parent = getWindow().getDecorView();//高度为手机实际的像素高度
+        popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
         mCamera = (TextView) view.findViewById(R.id.btn_alter_pic_camera);
         mPhoto = (TextView) view.findViewById(R.id.btn_alter_pic_photo);
         mExit = (TextView) view.findViewById(R.id.btn_alter_exit);
         mCamera.setOnClickListener(this);
         mPhoto.setOnClickListener(this);
         mExit.setOnClickListener(this);
+        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                popWindow.dismiss();
+                backgroundAlpha(0f);
+            }
+        });
+    }
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
     }
 
 
@@ -219,11 +241,13 @@ public class UserInformationActivity extends BaseTitleActivity {
                             LogUtils.e("mImg--------------", mImg + "");
                             ImageLoader.getInstance().displayImage("file:///" + mImg,
                                     mUserImg, ImageLoaderUtils.getAvatarOptions());
-                            try {
-                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//
+////                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+//                                LogUtils.e("image--------------", image + "");
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
 
                         } else {
                             Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
@@ -231,8 +255,12 @@ public class UserInformationActivity extends BaseTitleActivity {
                         }
 
                         }
-                    mMemberheadimg = ImageLoaderUtils.imgToBase64(mImg,image,null);
-                    dialog.dismiss();
+                    Bundle b = data.getExtras();
+                    image = b.getParcelable("data");
+                    Bitmap bit = PhotoSystemUtils.comp(image);
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+                    popWindow.dismiss();
+                    backgroundAlpha(0f);
                     reqUserPic();//修改用户图像
 
 

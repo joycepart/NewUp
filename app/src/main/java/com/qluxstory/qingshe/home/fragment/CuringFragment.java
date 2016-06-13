@@ -90,7 +90,8 @@ public class CuringFragment extends BasePullFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 CuringEntity curingEntity = (CuringEntity) itemBean;
-                mUrl= AppConfig.Server_Html+curingEntity.getSell_only_code();
+                mUrl= AppConfig.BASE_URL+AppConfig.Server_Html+curingEntity.getSell_only_code();
+                LogUtils.e("mUrl----",mUrl);
                 mProductDetails.setSellName(curingEntity.getSell_name());
                 mProductDetails.setSellOnlyCode(curingEntity.getSell_only_code());
                 mProductDetails.setSellPrice(curingEntity.getSell_price());

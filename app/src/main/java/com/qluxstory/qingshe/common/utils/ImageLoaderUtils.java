@@ -11,8 +11,13 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.R;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 
 
 public class ImageLoaderUtils {
@@ -134,5 +139,76 @@ public class ImageLoaderUtils {
         }
 
     }
+
+    public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+        if (bytes != null)
+            if (opts != null)
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
+            else
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return null;
+    }
+
+    public static byte[] readStream(InputStream inStream) throws Exception {
+        byte[] buffer = new byte[1024];
+        int len = -1;
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        while ((len = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+        byte[] data = outStream.toByteArray();
+        outStream.close();
+        inStream.close();
+        return data;
+
+    }
+
+
+    /**
+     * 得到本地或者网络上的bitmap url - 网络或者本地图片的绝对路径,比如:
+     *
+     * A.网络路径: url="http://blog.foreverlove.us/girl2.png" ;
+     *
+     * B.本地路径:url="file://mnt/sdcard/photo/image.png";
+     *
+     * C.支持的图片格式 ,png, jpg,bmp,gif等等
+     *
+     * @param url
+     * @return
+     */
+    public static Bitmap GetLocalOrNetBitmap(String url)
+    {
+        Bitmap bitmap = null;
+        InputStream in = null;
+        BufferedOutputStream out = null;
+        try
+        {
+            in = new BufferedInputStream(new URL(url).openStream(), 2*1024);
+            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            out = new BufferedOutputStream(dataStream, 2*1024);
+            copy(in, out);
+            out.flush();
+            byte[] data = dataStream.toByteArray();
+            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            data = null;
+            return bitmap;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void copy(InputStream in, OutputStream out)
+            throws IOException {
+        byte[] b = new byte[2*1024];
+        int read;
+        while ((read = in.read(b)) != -1) {
+            out.write(b, 0, read);
+        }
+    }
+
+
 
 }

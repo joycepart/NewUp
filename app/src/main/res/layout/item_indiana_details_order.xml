@@ -16,7 +16,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/indiana_order"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
         <TextView
             android:id="@+id/indiana_code"
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="123445678888"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
 
     </LinearLayout>
@@ -61,20 +61,20 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="123445678888"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/records_term"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:text="123445678888"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/records_statu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/fs_45"
+                android:textSize="@dimen/fs_50"
                 android:text="123445678888"
                 android:textColor="@color/color_c0"/>
         </LinearLayout>

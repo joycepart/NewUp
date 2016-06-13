@@ -25,7 +25,7 @@
                 android:gravity="center"
                 android:text="2016-05-12 18：25:24"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_45"/>
+                android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/product_begin"
                     android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
                     android:gravity="center"
                     android:text="@string/issue_begin"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_45"/>
+                    android:textSize="@dimen/fs_50"/>
 
             </LinearLayout>
 

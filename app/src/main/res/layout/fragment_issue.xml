@@ -11,7 +11,7 @@
             android:id="@+id/issue_top_img"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
-            android:layout_height="@dimen/ds_600"
+            android:layout_height="wrap_content"
             />
         <View
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ds_120">
+                    android:layout_height="match_parent">
                     <LinearLayout
                         android:id="@+id/ll_text1"
                         android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                             android:gravity="center_vertical"
                             android:maxLines="1"
                             android:ellipsize="end"
-                            android:text=""
+                            android:text="dddddddddd"
                             android:textColor="@color/color_00"
                             android:textSize="@dimen/fs_45" />
                     </LinearLayout>
@@ -93,7 +93,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_3"
+            android:layout_height="@dimen/ds_30"
             android:background="@color/color_cc"/>
     </LinearLayout>
     <LinearLayout

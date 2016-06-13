@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/ds_30"
-                    android:textSize="@dimen/fs_55"
+                    android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_f5"
                     android:text="@string/order_one"/>
             </LinearLayout>
@@ -60,7 +60,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/order_take_method"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/pla_tv"
                     android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text=""
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
                 <ImageView
                     android:layout_width="@dimen/ds_90"
                     android:layout_height="@dimen/ds_90"
@@ -88,16 +88,9 @@
                 android:layout_marginTop="@dimen/ds_20"
                 android:background="@color/color_cc" />
             <include layout="@layout/item_placeorder_receipt"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_3"
-                android:layout_marginTop="@dimen/ds_20"
-                android:background="@color/color_cc" />
+
             <include layout="@layout/item_placeorder_send"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_3"
-                android:background="@color/color_cc" />
+
 
             <RelativeLayout
                 android:visibility="gone"
@@ -114,7 +107,7 @@
                     android:layout_marginBottom="@dimen/ds_80"
                     android:text="@string/order_receipt_address_time"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/pla_tv_add_time"
                     android:layout_width="wrap_content"
@@ -124,7 +117,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text=""
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_45"/>
                 <ImageView
                     android:layout_width="@dimen/ds_90"
                     android:layout_height="@dimen/ds_90"

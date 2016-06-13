@@ -24,7 +24,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:layout_marginTop="@dimen/ds_30"
                 android:text="@string/curing_inf"
-                android:textSize="@dimen/fs_60"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <LinearLayout
                 android:layout_width="match_parent"

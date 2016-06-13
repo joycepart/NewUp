@@ -29,6 +29,10 @@
 
 </LinearLayout>
     </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/color_ff"/>
 
     <include layout="@layout/item_indiana_productdetail_bottom"/>
 </LinearLayout>

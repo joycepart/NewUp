@@ -79,6 +79,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
     LinearLayout mOrderLin;
     CuringOrderListEntity entity;
     CuringOrderDetailsEntity curingOrderDetails;
+    TextView mBaseEnsure;
 
     @Override
     protected int getContentResId() {
@@ -88,6 +89,8 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("养护订单详情");
+        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        mBaseEnsure.setVisibility(View.GONE);
         Intent intent = getIntent();
         if(intent!=null){
             entity = (CuringOrderListEntity) intent.getBundleExtra("bundle").getSerializable("entitiy");

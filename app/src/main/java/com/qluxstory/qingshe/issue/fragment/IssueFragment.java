@@ -33,6 +33,7 @@ import com.qluxstory.qingshe.issue.entity.IndianaListResult;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.WinningEntity;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
+import com.qluxstory.qingshe.me.MeUiGoto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
                 }
                 int mTotal = Integer.parseInt(indianaListEntity.getSna_total_count());
                 String mStr = String.valueOf(mSell*100/mTotal);
+                LogUtils.e("mStr----",""+mStr);
                 holder.setText(R.id.issue_tv3,mStr+"%");
                 ImageView iv=holder.getView(R.id.issue_img);
                 ImageLoaderUtils.displayImage(indianaListEntity.getPic_url(),iv);
@@ -104,16 +106,22 @@ public class IssueFragment extends BasePullScrollViewFragment {
         mIssueAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
-                Bundle b = new Bundle();
-                IndianaListEntity entity=(IndianaListEntity)itemBean;
-                issueProduct.setmPicUrl(entity.getPic_url());
-                String bat = entity.getBat_code();
-                String sna = entity.getSna_code();
-                String url = entity.getPic_url();
-                b.putString("bat",bat);
-                b.putString("sna",sna);
-                b.putString("mPic",url);
-                UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
+                Boolean bool= AppContext.get("isLogin",true);
+                if(bool!=true){
+                    MeUiGoto.login(getActivity());//登录
+                }else {
+                    Bundle b = new Bundle();
+                    IndianaListEntity entity=(IndianaListEntity)itemBean;
+                    issueProduct.setmPicUrl(entity.getPic_url());
+                    String bat = entity.getBat_code();
+                    String sna = entity.getSna_code();
+                    String url = entity.getPic_url();
+                    b.putString("bat",bat);
+                    b.putString("sna",sna);
+                    b.putString("mPic",url);
+                    UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
+                }
+
             }
         });
 

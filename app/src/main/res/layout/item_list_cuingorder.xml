@@ -17,7 +17,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/curing_number"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_45"/>
+                android:textSize="@dimen/fs_50"/>
             <TextView
                 android:id="@+id/order_num"
                 android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
                 android:gravity="center"
                 android:text="12455556677778888"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_45"/>
+                android:textSize="@dimen/fs_50"/>
         </LinearLayout>
         <TextView
             android:id="@+id/order_data"
@@ -75,7 +75,7 @@
                     android:gravity="center"
                     android:text="@string/app_day"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/list_curing_tv2"
                     android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
                     android:layout_marginRight="@dimen/ds_20"
                     android:text="@string/app_day"
                     android:textColor="@color/color_c0"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                     android:gravity="center"
                     android:text="@string/curing_money"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/list_curing_tv4"
                     android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
                     android:layout_marginLeft="@dimen/ds_10"
                     android:text="@string/app_day"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                     android:gravity="center"
                     android:text="@string/curing_nm"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
                 <TextView
                     android:id="@+id/curing_vp_tv"
                     android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
                     android:gravity="center"
                     android:text="199"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_55"/>
+                    android:textSize="@dimen/fs_50"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

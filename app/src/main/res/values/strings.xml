@@ -17,7 +17,7 @@
     <string name="app_day">每日推荐</string>
     <string name="hot_special">热门专题</string>
     <string name="tab_home_door">线下门店</string>
-    <string name="tab_unused">闲置</string>
+    <string name="tab_unused">专题</string>
     <string name="tab_issue">夺宝岛</string>
     <string name="tab_information">消息</string>
     <string name="tab_mine">我的</string>
@@ -146,7 +146,7 @@
     <string name="withdrawals_bank">例： 中国农业银行</string>
     <string name="detail_data">2016-6-6 14:23:23</string>
     <string name="detail_money">1000</string>
-    <string name="detail_expenditure">支持 ¥ </string>
+    <string name="detail_expenditure">支出 ¥ </string>
     <string name="detail_suc">成功</string>
     <string name="place_send">寄送地址：</string>
     <string name="place_send_province">省</string>
