@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.common.widget.SelectPicPopup;
+import com.qluxstory.qingshe.me.activity.ConversationActivity;
 import com.qluxstory.qingshe.me.activity.CuringOrderActivity;
 import com.qluxstory.qingshe.me.activity.CuringOrderDetailsActivity;
 import com.qluxstory.qingshe.me.activity.DetailActivity;
@@ -157,6 +158,17 @@ public class MeUiGoto {
         Intent intent = new Intent(context, BrowserActivity.class);
         intent.putExtra("url", mUrlUs);
         intent.putExtra("title", mUsTitle);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到客服页
+     *
+     * @param context
+     */
+
+    public static void serviceRoyun(Context context){
+        Intent intent = new Intent(context, ConversationActivity.class);
         context.startActivity(intent);
     }
     /**

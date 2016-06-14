@@ -102,9 +102,10 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         }else{
             return;
         }
-        mGrogress.setProgress(80);
+
         mIt.setOnClickListener(this);
         mPast.setOnClickListener(this);
+        mProductLin.setOnClickListener(this);
 
     }
 
@@ -154,6 +155,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
                         mParticipate.setText("您未参与本次夺宝活动");
                     }else {
                         mProductLin.setVisibility(View.VISIBLE);
+
                         mParticipate.setVisibility(View.GONE);
                         mParticipateNum.setText(result.getData().get(0).getReceive_ran_num());
                     }
@@ -205,6 +207,10 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         mName.setText(mTitle);
         mRandom.setText(detailEntity.getSna_remark());
         mPeople.setText("总需"+detailEntity.getSna_total_count()+"人次");
+        int  mSell =Integer.parseInt(detailEntity.getSna_total_count());
+        int  mCount = Integer.parseInt(detailEntity.getSna_sell_out());
+        LogUtils.e("setProgress----",""+mSell*100/mCount);
+        mGrogress.setProgress(mSell*100/mCount);
 //        int value1 = Integer.valueOf(detailEntity.getSna_total_count());
 //        int value2 = Integer.valueOf(detailEntity.getSna_sell_out());
 //        int result = value1-value2;
@@ -269,6 +275,9 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
                 Bundle b = new Bundle();
                 b.putString("mSnaCode",mSnaCode);
                 UIHelper.showFragment(getActivity(), SimplePage.TOANNOUNCE,b);//往期揭晓
+                break;
+            case R.id.issue_product_lin:
+                
                 break;
 
         }

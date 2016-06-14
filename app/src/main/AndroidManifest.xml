@@ -223,6 +223,22 @@
         <!-- 极光推送 end-->
 
 
+        <!-- 融云 start-->
+        <activity android:name="com.qluxstory.qingshe.me.activity.ConversationActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+
+            <data
+                android:host="com.qluxstory.qingshe"
+                android:pathPrefix="/conversation/"
+                android:scheme="rong" />
+        </intent-filter>
+    </activity>
+    <!-- 融云 end-->
+
+
         <activity
             android:name="com.qluxstory.qingshe.common.base.SimpleActivity"
             android:screenOrientation="portrait" />

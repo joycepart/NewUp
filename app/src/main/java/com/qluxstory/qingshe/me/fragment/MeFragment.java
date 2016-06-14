@@ -12,14 +12,18 @@ import android.widget.TextView;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
+import com.qluxstory.qingshe.common.base.BaseApplication;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.me.MeUiGoto;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 
 public class MeFragment extends BaseFragment {
@@ -68,7 +72,7 @@ public class MeFragment extends BaseFragment {
     private String mInformationTitle;
     private String userName;
     private String pictruePath;
-    Boolean bool;
+    boolean bool;
 
     @Override
     protected int getLayoutResId() {
@@ -82,7 +86,10 @@ public class MeFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        bool = AppContext.get("isLogin",true);
+        LogUtils.e("bool----1",""+AppContext.get("isLogin",false));
+        LogUtils.e("bool----2",""+AppContext.get("isLogin",true));
+        bool = AppContext.get("isLogin",false);
+        LogUtils.e("bool----3",""+AppContext.get("isLogin",false));
         if(bool=true){
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
@@ -157,6 +164,7 @@ public class MeFragment extends BaseFragment {
                 MeUiGoto.rturn(getActivity(), mUrlReturn, mReturnTitle);//关于退货
                 break;
             case R.id.user_ll_service:
+                service();
                 break;
             case R.id.user_ll_ipone:
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
@@ -184,6 +192,62 @@ public class MeFragment extends BaseFragment {
         }
     }
 
+    private void service() {
+        if (getActivity().getApplicationInfo().packageName
+                .equals(BaseApplication.getCurProcessName(getActivity().getApplicationContext()))) {
+                        /*IMKit SDK调用第二步, 建立与服务器的连接*/
+            RongIM.connect(AppContext.get("mRongyunToken", ""), new RongIMClient.ConnectCallback() {
+                /*  *
+                  *
+                  Token 错误
+                  ，
+                  在线上环境下主要是因为 Token
+                  已经过期，
+                  您需要向 App
+                  Server 重新请求一个新的
+                  Token*/
+                @Override
+                public void onTokenIncorrect() {
+                    LogUtils.e("", "--onTokenIncorrect");
+                }
+
+                /**
+                 *连接融云成功
+                 *
+                 @param
+                 userid 当前
+                 token*/
+                @Override
+                public void onSuccess(String userid) {
+                    LogUtils.e("", "--onSuccess" + userid);
+                    /**
+                     *启动客服聊天界面。
+                     *
+                     *@param context 应用上下文。
+                     *@param conversationType 开启会话类型。
+                     *@param targetId 客服 Id。
+                     *@param title 客服标题。*/
+                    RongIM.getInstance().startConversation(getActivity(),
+                            io.rong.imlib.model.Conversation.ConversationType.APP_PUBLIC_SERVICE,
+                            "KEFU146286266367373", "客服");
+                }
+
+                /*  *
+                  *连接融云失败
+                  @param
+                  errorCode 错误码
+                  可到官网 查看错误码对应的注释*/
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogUtils.e("", "--onError" + errorCode);
+                }
+            });
+        }
+        MeUiGoto.serviceRoyun(getActivity());//客服
+
+
+
+    }
 
 
 }

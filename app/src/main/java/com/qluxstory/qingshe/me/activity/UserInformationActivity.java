@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
+import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -71,6 +71,7 @@ public class UserInformationActivity extends BaseTitleActivity {
     private static final int CODE_RESULT_REQUEST = 0xa2;
     TextView mBaseEnsure;
     PopupWindow popWindow;
+    private static final String FILE_PATH = "/sdcard/"+ System.currentTimeMillis()+"jpg";
 
     @Override
     protected int getContentResId() {
@@ -107,17 +108,28 @@ public class UserInformationActivity extends BaseTitleActivity {
                 MeUiGoto.modifyUser(this);//修改用户名
                 break;
             case R.id.base_titlebar_back:
-//                finish();
+                LogUtils.e("base_titlebar_back----","base_titlebar_back");
+                Intent tent = new Intent(this, MainActivity.class);
+                tent.putExtra("tag",4);
+                startActivity(tent);
             case R.id.btn_alter_pic_camera:
 
 
-                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // 判断存储卡是否可用，存储照片文件
-                if (PhotoSystemUtils.hasSdcard()) {
-                    intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-                            .fromFile(new File(Environment
-                                    .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                Intent intentFromCapture = null;
+                intentFromCapture = new Intent();
+                // 指定开启系统相机的Action
+                intentFromCapture.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                intentFromCapture.addCategory(Intent.CATEGORY_DEFAULT);
+                // 根据文件地址创建文件
+                File file = new File(FILE_PATH);
+                if (file.exists())
+                {
+                    file.delete();
                 }
+                // 把文件地址转换成Uri格式
+                Uri uri = Uri.fromFile(file);
+                // 设置系统相机拍摄照片完成后图片文件的存放地址
+                intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 
                 startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
                 break;
@@ -167,7 +179,7 @@ public class UserInformationActivity extends BaseTitleActivity {
             @Override
             public void onDismiss() {
                 popWindow.dismiss();
-                backgroundAlpha(0f);
+                backgroundAlpha(1f);
             }
         });
     }
@@ -241,13 +253,12 @@ public class UserInformationActivity extends BaseTitleActivity {
                             LogUtils.e("mImg--------------", mImg + "");
                             ImageLoader.getInstance().displayImage("file:///" + mImg,
                                     mUserImg, ImageLoaderUtils.getAvatarOptions());
-//                            try {
-//
-////                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-//                                LogUtils.e("image--------------", image + "");
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
+                            try {
+                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                                LogUtils.e("image--------------", image + "");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
                         } else {
                             Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
@@ -255,12 +266,11 @@ public class UserInformationActivity extends BaseTitleActivity {
                         }
 
                         }
-                    Bundle b = data.getExtras();
-                    image = b.getParcelable("data");
+
                     Bitmap bit = PhotoSystemUtils.comp(image);
                     mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
                     popWindow.dismiss();
-                    backgroundAlpha(0f);
+                    backgroundAlpha(1f);
                     reqUserPic();//修改用户图像
 
 

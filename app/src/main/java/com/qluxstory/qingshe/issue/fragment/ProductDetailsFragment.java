@@ -106,23 +106,23 @@ public class ProductDetailsFragment extends BaseFragment {
                 break;
             case R.id.five:
                 mNum.setText("5");
-                mFive.setEnabled(true);
-                mTen.setEnabled(false);
-                mTtew.setEnabled(false);
+//                mFive.setEnabled(true);
+//                mTen.setEnabled(false);
+//                mTtew.setEnabled(false);
 //                mFive.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.ten:
                 mNum.setText("10");
-                mFive.setEnabled(false);
-                mTen.setEnabled(true);
-                mTtew.setEnabled(false);
+//                mFive.setEnabled(false);
+//                mTen.setEnabled(true);
+//                mTtew.setEnabled(false);
 //                mTen.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.ttew:
                 mNum.setText("20");
-                mFive.setEnabled(false);
-                mTen.setEnabled(false);
-                mTtew.setEnabled(true);
+//                mFive.setEnabled(false);
+//                mTen.setEnabled(false);
+//                mTtew.setEnabled(true);
 //                mTtew.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
                 break;
             case R.id.fre_btn:

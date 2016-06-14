@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#55222222"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
@@ -79,6 +80,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/pop_share_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
         android:textColor="@color/color_00"

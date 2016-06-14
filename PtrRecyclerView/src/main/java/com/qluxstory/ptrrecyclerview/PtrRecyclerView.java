@@ -23,7 +23,7 @@ import in.srain.cube.views.ptr.PtrUIHandler;
 public class PtrRecyclerView extends PtrFrameLayout {
 
     public enum RecyclerMode {
-        NONE, BOTH, TOP, BOTTOM
+        NONE, BOTH, TOP, Gravity, BOTTOM
     }
 
     private LayoutInflater inflater;

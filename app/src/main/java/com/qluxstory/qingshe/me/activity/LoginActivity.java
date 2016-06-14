@@ -134,6 +134,7 @@ public class LoginActivity extends BaseActivity {
         AppContext.set("isLogin",true);
         AppContext.set("mUserName",entity.getMembername());
         AppContext.set("mPictruePath",entity.getMemberHeadimg());
+        AppContext.set("mRongyunToken",entity.getToken());
     }
 
 

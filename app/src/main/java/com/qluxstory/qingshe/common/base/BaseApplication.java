@@ -2,6 +2,7 @@ package com.qluxstory.qingshe.common.base;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import com.umeng.socialize.PlatformConfig;
 import java.io.IOException;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 /**
 
@@ -47,9 +49,18 @@ public class BaseApplication  extends Application{
         super.onCreate();
         _context = getApplicationContext();
         initImageLoader(this);
+        /**
+         * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
+         * io.rong.push 为融云 push 进程名称，不可修改。
+         */
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))
+                || "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
+            //IMKit SDK调用第一步 初始化
+            RongIM.init(this);
+        }
         PlatformConfig.setWeixin("wxfd04ee1c78a46319", "5a28f73ee060c2544785dbe8cf586ad9");
         //微信 appid appsecret
-        PlatformConfig.setSinaWeibo("294505933","5a28f73ee060c2544785dbe8cf586ad9");
+        PlatformConfig.setSinaWeibo("294505933","a676d5473792e34bff17ab05246a08d4");
         //新浪微博 appkey appsecret
 
         JPushInterface.setDebugMode(true);
@@ -61,6 +72,28 @@ public class BaseApplication  extends Application{
         }
 
     }
+
+    /**
+     * 获得当前进程的名字
+     *
+     * @param context
+     * @return 进程号
+     */
+    public static String getCurProcessName(Context context) {
+
+        int pid = android.os.Process.myPid();
+
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+
 
     public static synchronized BaseApplication context() {
         return (BaseApplication) _context;

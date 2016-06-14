@@ -56,6 +56,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 String error = resp.errStr;
                 int errcode = resp.errCode;
                 message = "支付失败";
+                LogUtils.e("error---",""+error);
             }
             LogUtils.e("resp.errCode---",""+resp.errCode);
             //Intent intent = new Intent(WXPayEntryActivity.this, MyOrderActivity.class);

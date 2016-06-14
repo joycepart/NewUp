@@ -40,6 +40,8 @@ public class BrowserActivity extends BaseTitleActivity {
     protected String strUrl;
     protected String title;
     private ImageView weixin,friend,weibo;
+    private TextView text;
+    PopupWindow popWindow;
     String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
 
     UMImage image = new UMImage(BrowserActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
@@ -109,14 +111,14 @@ public class BrowserActivity extends BaseTitleActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.from(this).inflate(R.layout.pop_share, null);
 //        popMenus = new Popup(view,300,300,true);
-        final PopupWindow popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+        popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
         // 需要设置一下此参数，点击外边可消失
         popWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置点击窗口外边窗口消失
         popWindow.setOutsideTouchable(true);
         // 设置此参数获得焦点，否则无法点击
         popWindow.setFocusable(true);
-        backgroundAlpha(1f);
+        backgroundAlpha(0.7f);
         //防止虚拟软键盘被弹出菜单遮住
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         weixin = (ImageView) view
@@ -125,6 +127,8 @@ public class BrowserActivity extends BaseTitleActivity {
                 .findViewById(R.id.share_friend);
         weibo = (ImageView) view
                 .findViewById(R.id.share_weibo);
+        text = (TextView) view
+                .findViewById(R.id.pop_share_text);
         weixin.setOnClickListener(this);
         friend.setOnClickListener(this);
         weibo.setOnClickListener(this);
@@ -133,7 +137,8 @@ public class BrowserActivity extends BaseTitleActivity {
         popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                backgroundAlpha(0f);
+                popWindow.dismiss();
+                backgroundAlpha(1f);
             }
         });
     }
@@ -144,6 +149,17 @@ public class BrowserActivity extends BaseTitleActivity {
         switch (v.getId()){
             case R.id.base_titlebar_ensure:
                 showPopShare();
+//                final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+//                        {
+//                                SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA
+//                        };
+//                new ShareAction(this).setDisplayList( displaylist )
+//                        .withText( "呵呵" )
+//                        .withTitle("title")
+//                        .withTargetUrl("http://www.baidu.com")
+//                        .withMedia( image )
+//                        .setListenerList(umShareListener)
+//                        .open();
 //                baseGoEnsure();
                 break;
             case R.id.share_weixin:
@@ -166,6 +182,10 @@ public class BrowserActivity extends BaseTitleActivity {
                         .withTitle("this is title")
                         .withMedia(image)
                         .share();;
+                break;
+            case R.id.pop_share_text:
+                popWindow.dismiss();
+                backgroundAlpha(1f);
                 break;
         }
     }
@@ -199,7 +219,7 @@ public class BrowserActivity extends BaseTitleActivity {
     public void backgroundAlpha(float bgAlpha)
     {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 0.7f; //0.0-1.0
+        lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
 

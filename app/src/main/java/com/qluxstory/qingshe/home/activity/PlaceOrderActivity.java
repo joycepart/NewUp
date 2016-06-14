@@ -65,12 +65,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import butterknife.Bind;
 
@@ -182,7 +177,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private String mConAddress;
     private static String mWxKey;
     TextView mBaseEnsure;
-    private static final String FILE_PATH = "/sdcard/syscamera.jpg";
+    private static final String FILE_PATH = "/sdcard/"+ System.currentTimeMillis()+"jpg";
 
 
     @Override
@@ -309,6 +304,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 mVbHui.setChecked(true);
                 break;
             case R.id.place_order_img:
+//                DialogPhotoChooseView mChooseView = new DialogPhotoChooseView(this)
+//                        .setCameraListener(new TakePictureListener(this))
+//                        .setAlbumListener(new SelectPictureListener(this));
+//                DropDownList.showDialog(this, mChooseView);
                 choseHeadImageFromCameraCapture();
                 break;
             default:
@@ -493,6 +492,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
 
     private void reqPay() {
+        mSetPayBtn.setEnabled(false);
         PayDTO dto = new PayDTO();
         dto.setConsigneeType(mPlaTv.getText().toString());
         dto.setConsigneeCode(consignee.getConsigneeCode());
@@ -545,12 +545,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     if(result.getData().get(0).getApplyType().equals("支付宝")){
                         LogUtils.e("支付宝----",""+result.getData().get(0).getApplyType());
                         reqAlipayPay(result.getData());
+                        mSetPayBtn.setEnabled(true);
                     }else if(result.getData().get(0).getApplyType().equals("微信")){
                         LogUtils.e("微信----",""+result.getData().get(0).getApplyType());
                         reqWx(result.getData());
+                        mSetPayBtn.setEnabled(true);
 
                     }else {
                         IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
+                        mSetPayBtn.setEnabled(true);
                     }
 
 
@@ -576,48 +579,24 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 req.prepayId = data.get(0).getPrepayid();
                 req.packageValue = "Sign=WXPay";
                 req.nonceStr = TimeUtils.getSignTime();
-                req.timeStamp = TimeUtils.getSignTime();
-                String str = "appid="+AppConfig.Wx_App_Id+"&nonceStr="+TimeUtils.getSignTime()+"&packageValue="+"Sign=WXPay"+"&partnerId="+data.get(0).getPartnerID()+
-                        "&prepayId="+data.get(0).getPrepayid();
-                String sing = str.trim()+"&key="+mWxKey;
-                SortedMap<Object,Object> parameters = new TreeMap<Object,Object>();
-//                parameters.put("appid", req.appId);
-//                parameters.put("noncestr", req.nonceStr);
-//                parameters.put("package", req.packageValue);
-//                parameters.put("prepayid", req.prepayId);
-//                parameters.put("timestamp", req.timeStamp);
-//                req.sign = createSign(characterEncoding,parameters);
-                req.sign = SecurityUtils.MD5Encode(sing.toString(), characterEncoding).toUpperCase();
-                LogUtils.e("appId",AppConfig.Wx_App_Id);
-                LogUtils.e("partnerId",data.get(0).getPartnerID());
-                LogUtils.e("prepayId",data.get(0).getPrepayid());
-                LogUtils.e("packageValue","Sign=WXPay");
-                LogUtils.e("nonceStr",TimeUtils.getSignTime());
-                LogUtils.e("timeStamp",TimeUtils.getSignTime());
-                LogUtils.e("sign",SecurityUtils.MD5Encode(sing.toString(), characterEncoding).toUpperCase());
+                String time =  TimeUtils.getSignTime();
+                req.timeStamp = time;
+                String str = "appid="+AppConfig.Wx_App_Id
+                        +"&noncestr="+TimeUtils.getSignTime()
+                        +"&package="+"Sign=WXPay"
+                        +"&partnerid="+data.get(0).getPartnerID()
+                        +"&prepayid="+data.get(0).getPrepayid()
+                        +"&timestamp="+time;
+                String sing = str.trim().toString()+"&key="+mWxKey;
+                LogUtils.e("sing---------",sing);
+                req.sign = SecurityUtils.MD5(sing.trim().toString());
+                LogUtils.e("sign------------MD5",SecurityUtils.MD5(sing.trim().toString()));
                 msgApi.sendReq(req);
             }
         }
 
     }
 
-    public static String createSign(String characterEncoding,SortedMap<Object,Object> parameters){
-        StringBuffer sb = new StringBuffer();
-        Set es = parameters.entrySet();//所有参与传参的参数按照accsii排序（升序）
-        Iterator it = es.iterator();
-        while(it.hasNext()) {
-            Map.Entry entry = (Map.Entry)it.next();
-            String k = (String)entry.getKey();
-            Object v = entry.getValue();
-            if(null != v && !"".equals(v)
-                    && !"sign".equals(k) && !"key".equals(k)) {
-                sb.append(k + "=" + v + "&");
-            }
-        }
-        sb.append("key=" + mWxKey);
-        String sign = SecurityUtils.MD5Encode(sb.toString(), characterEncoding).toUpperCase();
-        return sign;
-    }
 
     private void reqAlipayPay(List<PayEntity> data) {
         String info = getNewOrderInfo(data);//这个是订单信息
@@ -794,6 +773,25 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 //            return;
 //        }
 
+//        switch (requestCode) {
+//            case CameraUtils.REQUEST_CODE_TAKE_PICTURE:
+//                startActivityForResult(CameraUtils.cropPicture(this,
+//                        Uri.fromFile(CameraUtils.mCurrentFile)),
+//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
+//                break;
+//            case CameraUtils.REQUEST_CODE_SELECT_PICTURE:
+//                startActivityForResult(CameraUtils.cropPicture(this,
+//                        data.getData()),
+//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
+//                break;
+//            case CameraUtils.REQUEST_CODE_CROP_PICTURE:
+//                // 上传头像
+////                uploadAvatar();
+//                break;
+//            default:
+//                break;
+//        }
+
         switch (requestCode) {
             case UIHelper.SEND_REQUEST:
                 mSendAddress.setText(AppContext.get("Dis_province_name",""));
@@ -832,67 +830,35 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
                 LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
 
-
-//                if (data != null) {
-//                    uri = data.getData();
-////                    File tempFile = new File(
-////                            Environment.getExternalStorageDirectory(),
-////                            IMAGE_FILE_NAME);
-////                    uri = Uri.fromFile(tempFile);
-//                    LogUtils.e("uri------------if", "" + uri);
-//                    String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
-//                    LogUtils.e("mImg------------if", "" + mImg);
-//                    if (mImg != null) {
-//                        mLrderLin.setVisibility(View.GONE);
-//                        mImgPon.setVisibility(View.VISIBLE);
-//                        ImageLoader.getInstance().displayImage("file:///" + mImg,
-//                                mImgPon, ImageLoaderUtils.getDefaultOptions());
-//                    } else {
-//                        mLrderLin.setVisibility(View.VISIBLE);
-//                        mImgPon.setVisibility(View.GONE);
-//                    }
-//
-//
-//                }else {
-//                    Bundle extras = data.getExtras();
-//                    //获取相机返回的数据，并转换为图片格式
-//                    Bitmap bitmap = (Bitmap)extras.get("data");
-//                    LogUtils.e("bitmap------------else", "" + bitmap);
-//                    uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null,null));
-//                    String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
-//                    LogUtils.e("mImg------------else", "" + mImg);
-//                    if (mImg != null) {
-//                        mLrderLin.setVisibility(View.GONE);
-//                        mImgPon.setVisibility(View.VISIBLE);
-//                        ImageLoader.getInstance().displayImage("file:///" + mImg,
-//                                mImgPon, ImageLoaderUtils.getDefaultOptions());
-//                    } else {
-//                        mLrderLin.setVisibility(View.VISIBLE);
-//                        mImgPon.setVisibility(View.GONE);
-//                    }
-
-//                }
-
-//                try {
-//                        myBitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-//                        LogUtils.e("bitmap-----MediaStore",""+myBitmap);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    Bitmap bit = PhotoSystemUtils.comp(myBitmap);
-//                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
-//                    LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
-//                    cropRawPhoto(uri);
-
-
-                break;
-
             case CODE_RESULT_REQUEST:
                 if (data != null) {
                     setImageToHeadView(data);
                 }
                 break;
+
+//            case CameraUtils.REQUEST_CODE_TAKE_PICTURE:
+//                startActivityForResult(CameraUtils.cropPicture(this,
+//                        Uri.fromFile(CameraUtils.mCurrentFile)),
+//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
+//                break;
+//            case CameraUtils.REQUEST_CODE_SELECT_PICTURE:
+//                startActivityForResult(CameraUtils.cropPicture(this,
+//                        data.getData()),
+//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
+//                break;
+//            case CameraUtils.REQUEST_CODE_CROP_PICTURE:
+//                // 上传头像
+//                String content = "";
+//                try {
+//                    content = FileUtils.encodeBase64File(CameraUtils.mCurrentFile);
+//                    mMemberheadimg = content;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+
+
+
+
             case UIHelper.SELECT_REQUEST:
                 if(!TextUtils.isEmpty(consignee.getDeliveredMobile())){
                     LogUtils.e("consignee---if",consignee+"");
@@ -923,6 +889,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         }
 
     }
+
+
 
     /**
      * 裁剪原始的图片

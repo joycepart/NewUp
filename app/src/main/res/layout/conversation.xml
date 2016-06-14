@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_cc">
+
+        <ImageButton
+            android:id="@+id/CommodityActivity_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@color/color_cc"
+            android:onClick="clickButton"
+            android:src="@drawable/home_left_arrow_icon" />
+
+        <TextView
+            android:id="@+id/OtherActivity_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="客服"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <!-- 会话页面 Fragment -->
+
+    <fragment
+        android:id="@+id/img_home_kefu_oter"
+        android:name="io.rong.imkit.fragment.ConversationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

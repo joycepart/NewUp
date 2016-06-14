@@ -9,6 +9,7 @@ public class LoginDTO extends BaseDTO {
     private String memberverifycode;
     private String registerFrom ;
 
+
     public String getRegisterFrom() {
         return registerFrom;
     }

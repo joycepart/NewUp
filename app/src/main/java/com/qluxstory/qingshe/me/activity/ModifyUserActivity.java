@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
@@ -30,7 +31,7 @@ public class ModifyUserActivity extends BaseTitleActivity {
     @Bind(R.id.modify_img)
     ImageView mModifyImg;
     @Bind(R.id.base_titlebar_ensure)
-    ImageView mEnsure;
+    TextView mEnsure;
     private String mNewName;
 
     @Override

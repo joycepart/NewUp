@@ -82,7 +82,7 @@
                             android:gravity="center_vertical"
                             android:maxLines="1"
                             android:ellipsize="end"
-                            android:text="dddddddddd"
+                            android:text=""
                             android:textColor="@color/color_00"
                             android:textSize="@dimen/fs_45" />
                     </LinearLayout>
