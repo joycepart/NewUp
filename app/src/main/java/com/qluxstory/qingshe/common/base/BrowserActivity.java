@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.widget.ProgressWebView;
@@ -46,6 +47,7 @@ public class BrowserActivity extends BaseTitleActivity {
     String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
 
     UMImage image = new UMImage(BrowserActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
+    String mUrl = AppConfig.BASE_URL+"//JTh5/fenxiang.html?action=001&type=0/1&serveroid=2016052513592768928";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActivityCompat.requestPermissions(BrowserActivity.this,mPermissionList, 100);
@@ -66,10 +68,6 @@ public class BrowserActivity extends BaseTitleActivity {
     public void initView() {
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         mBaseEnsure.setOnClickListener(this);
-//        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.detaile_share,
-//                R.dimen.common_titlebar_icon_width,
-//                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_RIGHT);
-
         mWebView = (ProgressWebView) findViewById(R.id.browser_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setOnReceivedTitleListener(new ProgressWebView.onReceivedTitleListener() {
@@ -119,10 +117,11 @@ public class BrowserActivity extends BaseTitleActivity {
         popWindow.setOutsideTouchable(true);
         // 设置此参数获得焦点，否则无法点击
         popWindow.setFocusable(true);
+        backgroundAlpha(0.7f);
         //防止虚拟软键盘被弹出菜单遮住
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        mView = (View) view
-                .findViewById(R.id.pap_share_view);
+//        mView = (View) view
+//                .findViewById(R.id.pap_share_view);
         weixin = (ImageView) view
                 .findViewById(R.id.share_weixin);
         friend = (ImageView) view
@@ -131,12 +130,23 @@ public class BrowserActivity extends BaseTitleActivity {
                 .findViewById(R.id.share_weibo);
         text = (TextView) view
                 .findViewById(R.id.pop_share_text);
-        mView.setOnClickListener(this);
+//        mView.setOnClickListener(this);
         weixin.setOnClickListener(this);
         friend.setOnClickListener(this);
         weibo.setOnClickListener(this);
         View parent = getWindow().getDecorView();//高度为手机实际的像素高度
         popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        //添加pop窗口关闭事件
+        popWindow.setOnDismissListener(new poponDismissListener());
+
+    }
+    public  class poponDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            LogUtils.e("List_noteTypeActivity:", "我是关闭事件");
+            backgroundAlpha(1f);
+        }
 
     }
 
@@ -163,14 +173,14 @@ public class BrowserActivity extends BaseTitleActivity {
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                         .withText("hello umeng")
                         .withMedia(image)
-                        .withTargetUrl("http://www.umeng.com")
+                        .withTargetUrl(mUrl)
                         .share();
                 break;
             case R.id.share_friend:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withText("this is description")
                         .withMedia(image)
-                        .withTargetUrl("http://www.baidu.com")
+                        .withTargetUrl(mUrl)
                         .share();
                 break;
             case R.id.share_weibo:
@@ -183,9 +193,9 @@ public class BrowserActivity extends BaseTitleActivity {
             case R.id.pop_share_text:
                 popWindow.dismiss();
                 break;
-            case R.id.pap_share_view:
-                popWindow.dismiss();
-                break;
+//            case R.id.pap_share_view:
+//                popWindow.dismiss();
+//                break;
         }
     }
 

@@ -8,6 +8,17 @@ import com.qluxstory.qingshe.common.dto.BaseDTO;
 public class LanderInDTO extends BaseDTO {
     private String bat_code;
     private String sna_code;
+    private String userPhone ;
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+
 
     public String getBat_code() {
         return bat_code;

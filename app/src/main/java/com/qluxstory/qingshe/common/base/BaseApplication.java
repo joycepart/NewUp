@@ -60,7 +60,7 @@ public class BaseApplication  extends Application{
         }
         PlatformConfig.setWeixin("wxfd04ee1c78a46319", "5a28f73ee060c2544785dbe8cf586ad9");
         //微信 appid appsecret
-        PlatformConfig.setSinaWeibo("294505933","a676d5473792e34bff17ab05246a08d4");
+        PlatformConfig.setSinaWeibo("294505933","5a28f73ee060c2544785dbe8cf586ad9");
         //新浪微博 appkey appsecret
 
         JPushInterface.setDebugMode(true);

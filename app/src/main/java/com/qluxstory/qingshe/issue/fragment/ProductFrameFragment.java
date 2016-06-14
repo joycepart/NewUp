@@ -1,9 +1,15 @@
 package com.qluxstory.qingshe.issue.fragment;
 
+import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,6 +26,7 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
+import com.qluxstory.qingshe.common.widget.FullyGridLayoutManager;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
@@ -30,6 +37,7 @@ import com.qluxstory.qingshe.issue.entity.IndianaListEntity;
 import com.qluxstory.qingshe.issue.entity.IssDetailsEntity;
 import com.qluxstory.qingshe.issue.entity.IssDetailsResult;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
+import com.qluxstory.qingshe.issue.entity.LanderInEntity;
 import com.qluxstory.qingshe.issue.entity.LanderInResult;
 import com.qluxstory.qingshe.issue.entity.PicEntity;
 import com.qluxstory.qingshe.issue.entity.PicResult;
@@ -85,6 +93,9 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     private String mSna;
     private String mUrl;
     IssueProduct issueProduct;
+    BaseSimpleRecyclerAdapter mNumListAdapter;
+    private String total;
+    List<LanderInEntity> mLanderInEntity;
 
     @Override
     protected int getLayoutResId() {
@@ -93,6 +104,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
 
     @Override
     public void initView(View view) {
+        super.initView(view);
         issueProduct = AppContext.getInstance().getIssueProduct();
         Bundle b  = getArguments();
         if(b!=null){
@@ -141,7 +153,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         LanderInDTO dto=new LanderInDTO();
         dto.setSign(AppConfig.SIGN_1);
         dto.setTime(TimeUtils.getSignTime());
-        dto.setMembermob(AppContext.get("mobileNum",""));
+        dto.setUserPhone(AppContext.get("mobileNum",""));
         dto.setSna_code(mSna);
         dto.setBat_code(mBat);
         CommonApiClient.landerIn(this, dto, new CallBack<LanderInResult>() {
@@ -154,10 +166,11 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
                         mParticipate.setVisibility(View.VISIBLE);
                         mParticipate.setText("您未参与本次夺宝活动");
                     }else {
+                        mLanderInEntity = result.getData();
+                        total = result.getPage_total();
                         mProductLin.setVisibility(View.VISIBLE);
-
                         mParticipate.setVisibility(View.GONE);
-                        mParticipateNum.setText(result.getData().get(0).getReceive_ran_num());
+                        mParticipateNum.setText(total);
                     }
 
                 }
@@ -207,14 +220,16 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         mName.setText(mTitle);
         mRandom.setText(detailEntity.getSna_remark());
         mPeople.setText("总需"+detailEntity.getSna_total_count()+"人次");
-        int  mSell =Integer.parseInt(detailEntity.getSna_total_count());
-        int  mCount = Integer.parseInt(detailEntity.getSna_sell_out());
-        LogUtils.e("setProgress----",""+mSell*100/mCount);
+        int  mCount =Integer.parseInt(detailEntity.getSna_total_count());
+        LogUtils.e("setProgress----",""+mCount);
+        int  mSell = Integer.parseInt(detailEntity.getSna_sell_out());
+        LogUtils.e("setProgress----",""+mSell);
         mGrogress.setProgress(mSell*100/mCount);
-//        int value1 = Integer.valueOf(detailEntity.getSna_total_count());
-//        int value2 = Integer.valueOf(detailEntity.getSna_sell_out());
-//        int result = value1-value2;
-//        mPeo.setText("距离揭晓还需"+result+"人次");
+        LogUtils.e("setProgress----",""+mSell*100/mCount);
+        int value1 = Integer.valueOf(detailEntity.getSna_total_count());
+        int value2 = Integer.valueOf(detailEntity.getSna_sell_out());
+        int result = value1-value2;
+        mPeo.setText("距离揭晓还需"+result+"人次");
         mProductData.setText(detailEntity.getSna_begin_date());
     }
 
@@ -277,11 +292,51 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
                 UIHelper.showFragment(getActivity(), SimplePage.TOANNOUNCE,b);//往期揭晓
                 break;
             case R.id.issue_product_lin:
-                
+                LogUtils.e("issue_product_lin---","issue_product_lin");
+                showPopNum();
                 break;
 
         }
         super.onClick(v);
     }
+
+    private void showPopNum() {
+        LogUtils.e("showPopNum---","showPopNum");
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.from(getActivity()).inflate(R.layout.pop_num, null);
+        final PopupWindow popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+
+        RecyclerView mNumList = (RecyclerView) view.findViewById(R.id.num_rcy_list);
+        FullyGridLayoutManager manager = new FullyGridLayoutManager(getActivity(), 3);
+        mNumList.setLayoutManager(manager);
+
+        // 需要设置一下此参数，点击外边可消失
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击窗口外边窗口消失
+        popWindow.setOutsideTouchable(true);
+        // 设置此参数获得焦点，否则无法点击
+        popWindow.setFocusable(true);
+        View parent = getActivity().getWindow().getDecorView();//高度为手机实际的像素高度
+        popWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        LogUtils.e("popWindow----------","popWindow");
+        mNumListAdapter=new BaseSimpleRecyclerAdapter<LanderInEntity>() {
+            @Override
+            public int getItemViewLayoutId() {
+                return R.layout.item_pop_num;
+            }
+
+            @Override
+            public void bindData(BaseRecyclerViewHolder holder, LanderInEntity landerInEntity, int position) {
+                holder.setText(R.id.pop_num_text,landerInEntity.getReceive_ran_num());
+            }
+
+
+        };
+        mNumList.setAdapter(mNumListAdapter);
+
+
+    }
+
 
 }

@@ -268,13 +268,7 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppContext.set("isLogin",false);
-        LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
-//        LogUtils.e("AppContext------",""+AppContext.set("isLogin",false));
-//        boolean bool = AppContext.get("isLogin",false);
-//        if(bool=true){
-//            AppContext.set("isLogin",false);
-//            LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
-//        };
+//        AppContext.set("isLogin",false);
+//        LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
     }
 }

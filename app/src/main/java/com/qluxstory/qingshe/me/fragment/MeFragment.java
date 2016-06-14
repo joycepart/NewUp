@@ -86,11 +86,9 @@ public class MeFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        LogUtils.e("bool----1",""+AppContext.get("isLogin",false));
-        LogUtils.e("bool----2",""+AppContext.get("isLogin",true));
         bool = AppContext.get("isLogin",false);
         LogUtils.e("bool----3",""+AppContext.get("isLogin",false));
-        if(bool=true){
+        if(bool){
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
             mMeLlClose.setVisibility(View.VISIBLE);
@@ -104,6 +102,7 @@ public class MeFragment extends BaseFragment {
             mLoginLl.setVisibility(View.VISIBLE);
             mLoingSuc.setVisibility(View.GONE);
             mMeLlClose.setVisibility(View.GONE);
+
         }
 
     }
@@ -130,7 +129,7 @@ public class MeFragment extends BaseFragment {
 
                 break;
             case R.id.user_ll_indiana:
-                if(bool!=true){
+                if(!bool){
                     MeUiGoto.login(getActivity());//登录
                 }else {
                     UIHelper.showFragment(getActivity(), SimplePage.INDIANA_RECORDS);//夺宝记录
@@ -138,7 +137,7 @@ public class MeFragment extends BaseFragment {
 
                 break;
             case R.id.user_ll_coupon:
-                if(bool!=true){
+                if(!bool){
                     MeUiGoto.login(getActivity());//登录
                 }else {
                     UIHelper.showFragment(getActivity(), SimplePage.MY_COUPON);//我的优惠劵
@@ -146,7 +145,7 @@ public class MeFragment extends BaseFragment {
 
                 break;
             case R.id.user_ll_income:
-                if(bool!=true){
+                if(!bool){
                     MeUiGoto.login(getActivity());//登录
                 }else {
                     MeUiGoto.myIncome(getActivity());//我的收入
@@ -196,6 +195,7 @@ public class MeFragment extends BaseFragment {
         if (getActivity().getApplicationInfo().packageName
                 .equals(BaseApplication.getCurProcessName(getActivity().getApplicationContext()))) {
                         /*IMKit SDK调用第二步, 建立与服务器的连接*/
+            LogUtils.e("mRongyunToken",""+AppContext.get("mRongyunToken", ""));
             RongIM.connect(AppContext.get("mRongyunToken", ""), new RongIMClient.ConnectCallback() {
                 /*  *
                   *
@@ -219,7 +219,7 @@ public class MeFragment extends BaseFragment {
                  token*/
                 @Override
                 public void onSuccess(String userid) {
-                    LogUtils.e("", "--onSuccess" + userid);
+                    LogUtils.e("--onSuccess", "--onSuccess" + userid);
                     /**
                      *启动客服聊天界面。
                      *
@@ -229,7 +229,7 @@ public class MeFragment extends BaseFragment {
                      *@param title 客服标题。*/
                     RongIM.getInstance().startConversation(getActivity(),
                             io.rong.imlib.model.Conversation.ConversationType.APP_PUBLIC_SERVICE,
-                            "25wehl3uwcuuw", "客服");
+                            "KEFU146286268172386", "客服");
                 }
 
                 /*  *
@@ -239,11 +239,11 @@ public class MeFragment extends BaseFragment {
                   可到官网 查看错误码对应的注释*/
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    LogUtils.e("", "--onError" + errorCode);
+                    LogUtils.e("--onError", "--onError" + errorCode);
                 }
             });
         }
-        MeUiGoto.serviceRoyun(getActivity());//客服
+//        MeUiGoto.serviceRoyun(getActivity());//客服
 
 
 

@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.share;
+package com.qluxstory.qingshe;
 
 import com.umeng.socialize.media.WBShareCallBackActivity;
 

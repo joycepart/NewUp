@@ -95,7 +95,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
                 int mTotal = Integer.parseInt(indianaListEntity.getSna_total_count());
                 String mStr = String.valueOf(mSell*100/mTotal);
                 LogUtils.e("mStr----",""+mStr);
-                holder.setText(R.id.issue_tv3,mStr+"%");
+                holder.setText(R.id.issue_tv3,mStr);
                 ImageView iv=holder.getView(R.id.issue_img);
                 ImageLoaderUtils.displayImage(indianaListEntity.getPic_url(),iv);
             }

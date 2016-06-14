@@ -26,6 +26,7 @@ import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.entity.AliPayResult;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
@@ -231,7 +232,6 @@ public class SettlementActivity extends BaseTitleActivity {
             public void onSuccess(SettlementResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("结算成功");
-                    mPayBtn.setEnabled(true);
                 }
 
                 if(mSetZhi.isChecked()){
@@ -257,25 +257,25 @@ public class SettlementActivity extends BaseTitleActivity {
         if (msgApi != null) {
             if (msgApi.isWXAppInstalled()) {
                 String characterEncoding = "UTF-8";
-//                mWxKey = data.get(0).getPrivateKey();
+                String mWxKey = data.get(0).getPrivateKey();
                 PayReq req = new PayReq();
                 req.appId = AppConfig.Wx_App_Id;
-//                req.partnerId = data.get(0).getPartnerID();
-//                req.prepayId = data.get(0).getPrepayid();
+                req.partnerId = data.get(0).getPartnerID();
+                req.prepayId = data.get(0).getPrepayid();
                 req.packageValue = "Sign=WXPay";
                 req.nonceStr = TimeUtils.getSignTime();
                 String time =  TimeUtils.getSignTime();
                 req.timeStamp = time;
-//                String str = "appid="+AppConfig.Wx_App_Id
-//                        +"&noncestr="+TimeUtils.getSignTime()
-//                        +"&package="+"Sign=WXPay"
-//                        +"&partnerid="+data.get(0).getPartnerID()
-//                        +"&prepayid="+data.get(0).getPrepayid()
-//                        +"&timestamp="+time;
-//                String sing = str.trim().toString()+"&key="+mWxKey;
-//                LogUtils.e("sing---------",sing);
-//                req.sign = SecurityUtils.MD5(sing.trim().toString());
-//                LogUtils.e("sign------------MD5",SecurityUtils.MD5(sing.trim().toString()));
+                String str = "appid="+AppConfig.Wx_App_Id
+                        +"&noncestr="+TimeUtils.getSignTime()
+                        +"&package="+"Sign=WXPay"
+                        +"&partnerid="+data.get(0).getPartnerID()
+                        +"&prepayid="+data.get(0).getPrepayid()
+                        +"&timestamp="+time;
+                String sing = str.trim().toString()+"&key="+mWxKey;
+                LogUtils.e("sing---------",sing);
+                req.sign = SecurityUtils.MD5(sing.trim().toString());
+                LogUtils.e("sign------------MD5",SecurityUtils.MD5(sing.trim().toString()));
                 msgApi.sendReq(req);
             }
         }
@@ -286,7 +286,6 @@ public class SettlementActivity extends BaseTitleActivity {
         // 这里根据签名方式对订单信息进行签名
         LogUtils.e("Keys.PRIVATE----", Keys.PRIVATE);
         String strsign = Rsa.sign(info, Keys.PRIVATE);
-//        String strsign = Rsa.sign(info,Keys.PRIVATE);
         LogUtils.e("strsign----",""+strsign);
         try {
             // 仅需对sign 做URL编码
@@ -337,8 +336,7 @@ public class SettlementActivity extends BaseTitleActivity {
             switch (msg.what) {
                 case RQF_PAY:
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(SettlementActivity.this, "支付成功",
-                                Toast.LENGTH_SHORT).show();
+                        IssueUiGoto.payment(SettlementActivity.this);//支付结果页
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -367,22 +365,22 @@ public class SettlementActivity extends BaseTitleActivity {
 
 
         // 签约合作者身份ID
-        String orderInfo = "partner=" + "\"" + "2088901684011695" + "\"";
+        String orderInfo = "partner=" + "\"" + data.get(0).getPartnerID() + "\"";
 
         // 签约卖家支付宝账号
-        orderInfo += "&seller_id=" + "\"" + "mail@wmqt.net"+ "\"";
+        orderInfo += "&seller_id=" + "\"" + data.get(0).getSellerAccount()+ "\"";
 
-        // 商户网站唯一订单号
-//        orderInfo += "&out_trade_no=" + "\"" + data.get(0).getOrderNum() + "\"";
-//
-//        // 商品名称
-//        orderInfo += "&subject=" + "\"" + data.get(0).getProductName() + "\"";
-//
-//        // 商品详情
-//        orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
-//
-//        // 商品金额
-//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+         //商户网站唯一订单号
+        orderInfo += "&out_trade_no=" + "\"" + data.get(0).getOrderNum() + "\"";
+
+        // 商品名称
+        orderInfo += "&subject=" + "\"" + data.get(0).getProductName() + "\"";
+
+        // 商品详情
+        orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
+
+        // 商品金额
+        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
 
         // 服务器异步通知页面路径
         orderInfo += "&kAliPayNotifyURL=" + "\"" + AppConfig.BASE_URL+"/dbnotify_url.aspx" + "\"";

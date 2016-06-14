@@ -98,7 +98,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 新浪微博分享 -->
         <activity
-            android:name="com.qluxstory.qingshe.share.WBShareActivity"
+            android:name="com.qluxstory.qingshe.WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" >
             <intent-filter>
