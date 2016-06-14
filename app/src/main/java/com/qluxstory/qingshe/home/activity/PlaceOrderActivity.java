@@ -686,10 +686,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
 
         // 签约合作者身份ID
-        String orderInfo = "partner=" + "\"" + "2088901684011695" + "\"";
+        String orderInfo = "partner=" + "\"" + data.get(0).getPartnerID() + "\"";
 
         // 签约卖家支付宝账号
-        orderInfo += "&seller_id=" + "\"" + "mail@wmqt.net"+ "\"";
+        orderInfo += "&seller_id=" + "\"" + data.get(0).getSellerAccount()+ "\"";
 
         // 商户网站唯一订单号
         orderInfo += "&out_trade_no=" + "\"" + data.get(0).getOrderNum() + "\"";

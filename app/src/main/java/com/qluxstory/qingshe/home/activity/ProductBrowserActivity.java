@@ -17,7 +17,6 @@ import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.widget.ProgressWebView;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.entity.ProductDetails;
-import com.qluxstory.qingshe.me.MeUiGoto;
 
 import butterknife.Bind;
 
@@ -75,11 +74,12 @@ public class ProductBrowserActivity extends BaseTitleActivity {
                 break;
             case R.id.place_btn:
                 Boolean bool= AppContext.get("isLogin",true);
-                if(bool!=true){
-                    MeUiGoto.login(this);//登录
-                }else {
-                    HomeUiGoto.placeOrder(this);//提交订单
-                }
+                HomeUiGoto.placeOrder(this);//提交订单
+//                if(bool!=true){
+//                    MeUiGoto.login(this);//登录
+//                }else {
+//                    HomeUiGoto.placeOrder(this);//提交订单
+//                }
                 break;
             default:
                 break;

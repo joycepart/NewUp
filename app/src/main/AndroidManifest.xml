@@ -224,7 +224,10 @@
 
 
         <!-- 融云 start-->
-        <activity android:name="com.qluxstory.qingshe.me.activity.ConversationActivity">
+        <activity android:name="com.qluxstory.qingshe.me.activity.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+             >
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
 

@@ -229,7 +229,7 @@ public class MeFragment extends BaseFragment {
                      *@param title 客服标题。*/
                     RongIM.getInstance().startConversation(getActivity(),
                             io.rong.imlib.model.Conversation.ConversationType.APP_PUBLIC_SERVICE,
-                            "KEFU146286266367373", "客服");
+                            "25wehl3uwcuuw", "客服");
                 }
 
                 /*  *

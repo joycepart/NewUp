@@ -41,6 +41,7 @@ public class BrowserActivity extends BaseTitleActivity {
     protected String title;
     private ImageView weixin,friend,weibo;
     private TextView text;
+    private View mView;
     PopupWindow popWindow;
     String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
 
@@ -118,9 +119,10 @@ public class BrowserActivity extends BaseTitleActivity {
         popWindow.setOutsideTouchable(true);
         // 设置此参数获得焦点，否则无法点击
         popWindow.setFocusable(true);
-        backgroundAlpha(0.7f);
         //防止虚拟软键盘被弹出菜单遮住
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        mView = (View) view
+                .findViewById(R.id.pap_share_view);
         weixin = (ImageView) view
                 .findViewById(R.id.share_weixin);
         friend = (ImageView) view
@@ -129,18 +131,13 @@ public class BrowserActivity extends BaseTitleActivity {
                 .findViewById(R.id.share_weibo);
         text = (TextView) view
                 .findViewById(R.id.pop_share_text);
+        mView.setOnClickListener(this);
         weixin.setOnClickListener(this);
         friend.setOnClickListener(this);
         weibo.setOnClickListener(this);
         View parent = getWindow().getDecorView();//高度为手机实际的像素高度
         popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
-        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                popWindow.dismiss();
-                backgroundAlpha(1f);
-            }
-        });
+
     }
 
     @Override
@@ -185,7 +182,9 @@ public class BrowserActivity extends BaseTitleActivity {
                 break;
             case R.id.pop_share_text:
                 popWindow.dismiss();
-                backgroundAlpha(1f);
+                break;
+            case R.id.pap_share_view:
+                popWindow.dismiss();
                 break;
         }
     }

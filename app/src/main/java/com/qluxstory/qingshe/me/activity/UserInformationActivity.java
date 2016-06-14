@@ -112,6 +112,7 @@ public class UserInformationActivity extends BaseTitleActivity {
                 Intent tent = new Intent(this, MainActivity.class);
                 tent.putExtra("tag",4);
                 startActivity(tent);
+                break;
             case R.id.btn_alter_pic_camera:
 
 

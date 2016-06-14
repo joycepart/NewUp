@@ -71,8 +71,6 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     LinearLayout mPayAlipay;
     @Bind(R.id.palce_pay_balance)
     LinearLayout mPayBalance;
-    @Bind(R.id.place_address_time)
-    LinearLayout mPlaceAddressTime;
     @Bind(R.id.place_cb_wx)
     CheckBox mCbWx;
     @Bind(R.id.place_cb_zhi)
@@ -104,7 +102,6 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
         mPayTvBtn.setOnClickListener(this);
-        mPlaceAddressTime.setOnClickListener(this);
 
     }
 

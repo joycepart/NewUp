@@ -1,13 +1,22 @@
 package com.qluxstory.qingshe.common.base;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
+import com.qluxstory.qingshe.common.utils.ToastUtils;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 /**
  * 带有标题的的基类
@@ -17,6 +26,10 @@ public abstract class BaseTitleActivity extends BaseActivity {
     private View mTitleLayout;
     protected int mCurrentPage = 1;
     protected final static int PAGE_SIZE = 6;
+    private ImageView weixin,friend,weibo;
+    private TextView text;
+    private View mView;
+    PopupWindow popWindow;
 
 
     protected void onAfterSetContentLayout() {
@@ -68,11 +81,75 @@ public abstract class BaseTitleActivity extends BaseActivity {
             case R.id.base_titlebar_ensure:
                 baseGoEnsure();
                 break;
+//            case R.id.base_titlebar_ensure:
+//                showPopShare();
+////                final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+////                        {
+////                                SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA
+////                        };
+////                new ShareAction(this).setDisplayList( displaylist )
+////                        .withText( "呵呵" )
+////                        .withTitle("title")
+////                        .withTargetUrl("http://www.baidu.com")
+////                        .withMedia( image )
+////                        .setListenerList(umShareListener)
+////                        .open();
+////                baseGoEnsure();
+//                break;
+//            case R.id.share_weixin:
+//                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+//                        .withText("hello umeng")
+//                        .withMedia(image)
+//                        .withTargetUrl("http://www.umeng.com")
+//                        .share();
+//                break;
+//            case R.id.share_friend:
+//                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+//                        .withText("this is description")
+//                        .withMedia(image)
+//                        .withTargetUrl("http://www.baidu.com")
+//                        .share();
+//                break;
+//            case R.id.share_weibo:
+//                new ShareAction(this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+//                        .withText("Umeng Share")
+//                        .withTitle("this is title")
+//                        .withMedia(image)
+//                        .share();;
+//                break;
+//            case R.id.pop_share_text:
+//                popWindow.dismiss();
+//                break;
+//            case R.id.pap_share_view:
+//                popWindow.dismiss();
+//                break;
             default:
                 break;
         }
         super.onClick(v);
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            LogUtils.d("plat","platform"+platform);
+            if(platform.name().equals("WEIXIN_FAVORITE")){
+                ToastUtils.showShort(BaseTitleActivity.this," 收藏成功啦");
+            }else{
+                ToastUtils.showShort(BaseTitleActivity.this," 分享成功啦");
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtils.showShort(BaseTitleActivity.this," 分享失败啦");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtils.showShort(BaseTitleActivity.this," 分享取消了");
+        }
+    };
 
     /**
      * 设置标题文字
@@ -145,6 +222,39 @@ public abstract class BaseTitleActivity extends BaseActivity {
      * 右侧的按钮事件
      */
     protected void baseGoEnsure() {
+        showPopShare();
+    }
+
+    private void showPopShare() {
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.from(this).inflate(R.layout.pop_share, null);
+//        popMenus = new Popup(view,300,300,true);
+        popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+        // 需要设置一下此参数，点击外边可消失
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击窗口外边窗口消失
+        popWindow.setOutsideTouchable(true);
+        // 设置此参数获得焦点，否则无法点击
+        popWindow.setFocusable(true);
+        //防止虚拟软键盘被弹出菜单遮住
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        mView = (View) view
+                .findViewById(R.id.pap_share_view);
+        weixin = (ImageView) view
+                .findViewById(R.id.share_weixin);
+        friend = (ImageView) view
+                .findViewById(R.id.share_friend);
+        weibo = (ImageView) view
+                .findViewById(R.id.share_weibo);
+        text = (TextView) view
+                .findViewById(R.id.pop_share_text);
+        mView.setOnClickListener(this);
+        weixin.setOnClickListener(this);
+        friend.setOnClickListener(this);
+        weibo.setOnClickListener(this);
+        View parent = getWindow().getDecorView();//高度为手机实际的像素高度
+        popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 
     }
 

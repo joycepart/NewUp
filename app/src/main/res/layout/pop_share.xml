@@ -4,6 +4,16 @@
     android:layout_height="wrap_content"
     android:background="#55222222"
     android:orientation="vertical">
+    <View
+        android:id="@+id/pap_share_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ff"
+        android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,8 +98,10 @@
         android:layout_marginTop="@dimen/ds_60"
         android:layout_marginLeft="@dimen/ds_30"
         android:layout_marginRight="@dimen/ds_30"
+        android:layout_marginBottom="@dimen/ds_30"
         android:gravity="center"
         android:textSize="@dimen/fs_45"
         android:text="@string/photo_cancel"/>
+    </LinearLayout>
 
 </LinearLayout>
