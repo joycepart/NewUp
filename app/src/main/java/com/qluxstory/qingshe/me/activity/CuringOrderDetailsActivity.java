@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
+import com.qluxstory.qingshe.common.base.BaseApplication;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
@@ -26,6 +27,8 @@ import com.qluxstory.qingshe.me.entity.CuringOrderListEntity;
 import java.util.List;
 
 import butterknife.Bind;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * 养护订单详情
@@ -80,6 +83,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
     CuringOrderListEntity entity;
     CuringOrderDetailsEntity curingOrderDetails;
     TextView mBaseEnsure;
+    private String mOrdNum;
 
     @Override
     protected int getContentResId() {
@@ -94,6 +98,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
         Intent intent = getIntent();
         if(intent!=null){
             entity = (CuringOrderListEntity) intent.getBundleExtra("bundle").getSerializable("entitiy");
+            LogUtils.e("entity----",entity.getOrderNum());
         }
         mDetailsIpone.setOnClickListener(this);
         mDetailsOn.setOnClickListener(this);
@@ -117,7 +122,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(CuringOrderDetailsResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
-                    LogUtils.d("养护订单成功");
+                    LogUtils.d("养护订单详情成功");
                     bindResult(result.getData());
                 }
 
@@ -127,6 +132,8 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
 
     private void bindResult(List<CuringOrderDetailsEntity> data) {
         curingOrderDetails = data.get(0);
+        mOrdNum = curingOrderDetails.getOrderNum();
+        LogUtils.e("bindResult----",mOrdNum);
         mDetailsTvNum.setText(curingOrderDetails.getOrderNum());
         mDetailsTvData.setText(curingOrderDetails.getOrderSingleTime());
         mDetailsTvMoney.setText(curingOrderDetails.getComPrice());
@@ -227,12 +234,67 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
                 break;
             case R.id.order_details_tv:
                 Bundle b = new Bundle();
-                b.putSerializable("entitiy",curingOrderDetails);
+                b.putString("mOrdNum",mOrdNum);
                 MeUiGoto.payment(mContext,b);//支付订单详情
                 break;
             case R.id.ipone_zx:
+                service();//在线客服
                 break;
 
+        }
+    }
+
+    private void service() {
+        if (getApplicationInfo().packageName
+                .equals(BaseApplication.getCurProcessName(getApplicationContext()))) {
+                        /*IMKit SDK调用第二步, 建立与服务器的连接*/
+            LogUtils.e("mRongyunToken", "" + AppContext.get("mRongyunToken", ""));
+            RongIM.connect(AppContext.get("mRongyunToken", ""), new RongIMClient.ConnectCallback() {
+                /*  *
+                  *
+                  Token 错误
+                  ，
+                  在线上环境下主要是因为 Token
+                  已经过期，
+                  您需要向 App
+                  Server 重新请求一个新的
+                  Token*/
+                @Override
+                public void onTokenIncorrect() {
+                    LogUtils.e("", "--onTokenIncorrect");
+                }
+
+                /**
+                 * 连接融云成功
+                 *
+                 * @param userid 当前
+                 *               token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    LogUtils.e("--onSuccess", "--onSuccess" + userid);
+                    /**
+                     *启动客服聊天界面。
+                     *
+                     *@param context 应用上下文。
+                     *@param conversationType 开启会话类型。
+                     *@param targetId 客服 Id。
+                     *@param title 客服标题。*/
+                    RongIM.getInstance().startConversation(CuringOrderDetailsActivity.this,
+                            io.rong.imlib.model.Conversation.ConversationType.APP_PUBLIC_SERVICE,
+                            "KEFU146286268172386", "客服");
+                }
+
+                /*  *
+                  *连接融云失败
+                  @param
+                  errorCode 错误码
+                  可到官网 查看错误码对应的注释*/
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogUtils.e("--onError", "--onError" + errorCode);
+                }
+            });
         }
     }
 }

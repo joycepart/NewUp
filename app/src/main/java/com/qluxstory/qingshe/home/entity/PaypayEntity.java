@@ -3,12 +3,10 @@ package com.qluxstory.qingshe.home.entity;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 
 /**
- * Created by lenovo on 2016/5/28.
+ * Created by lenovo on 2016/6/15.
  */
-public class PayEntity extends BaseEntity {
-    /*本地交易号*/
+public class PaypayEntity extends BaseEntity{
     private String OrderNum;
-    /*支付方式*/
     private String ApplyType;
     private String productName;
     private String partnerID;
@@ -18,6 +16,22 @@ public class PayEntity extends BaseEntity {
     private String amount;
     private String privateKey;
     private String prepayid;
+
+    public String getOrderNum() {
+        return OrderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        OrderNum = orderNum;
+    }
+
+    public String getApplyType() {
+        return ApplyType;
+    }
+
+    public void setApplyType(String applyType) {
+        ApplyType = applyType;
+    }
 
     public String getProductName() {
         return productName;
@@ -81,24 +95,6 @@ public class PayEntity extends BaseEntity {
 
     public void setPrepayid(String prepayid) {
         this.prepayid = prepayid;
-    }
-
-
-
-    public String getApplyType() {
-        return ApplyType;
-    }
-
-    public void setApplyType(String applyType) {
-        ApplyType = applyType;
-    }
-
-    public String getOrderNum() {
-        return OrderNum;
-    }
-
-    public void setOrderNum(String orderNum) {
-        OrderNum = orderNum;
     }
 
 

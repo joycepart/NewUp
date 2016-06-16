@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +18,7 @@ import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.alipay.Keys;
+import com.qluxstory.qingshe.alipay.PayResult;
 import com.qluxstory.qingshe.alipay.Rsa;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
@@ -28,13 +28,13 @@ import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
-import com.qluxstory.qingshe.home.entity.AliPayResult;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.dto.SettlementDTO;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.SettlementEntity;
 import com.qluxstory.qingshe.issue.entity.SettlementResult;
+import com.qluxstory.qingshe.me.entity.RecordsEntity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -91,8 +91,10 @@ public class SettlementActivity extends BaseTitleActivity {
     IssueProduct issueProduct;
     TextView mBaseEnsure;
     private static final int RQF_PAY = 1;
-
     private static final int RQF_LOGIN = 2;
+    RecordsEntity entity;
+
+
     @Override
     protected int getContentResId() {
         return R.layout.activity_settlement;
@@ -101,9 +103,30 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("结算");
+//        Intent intent = getIntent();
+//        Bundle b = intent.getBundleExtra("bundle");
+//        entity = (RecordsEntity) b.getSerializable("entity");
+
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         mBaseEnsure.setVisibility(View.GONE);
+
         issueProduct = AppContext.getInstance().getIssueProduct();
+
+//        mCaTerm = entity.getRec_term();
+//        mCaTitle = entity.getSna_title();
+//        mPic = entity.getPic_url();
+//        mTotalVount = entity.getSna_total_count();
+//        mParticipate = entity.getRec_participate_count();
+//        mBatCode = entity.getBat_code();
+//        mSnaCode = entity.getSna_code();
+//        mBalance = entity.getRec_pay_balance();
+//        if(!TextUtils.isEmpty(issueProduct.getmRecCode())){
+//            mRecCode = entity.getRec_code();
+//        }else {
+//            mRecCode = "";
+//        }
+
+
         mCaTerm = issueProduct.getmSnaTerm();
         mCaTitle = issueProduct.getmSnaTitle();
         mPic = issueProduct.getmPicUrl();
@@ -120,6 +143,8 @@ public class SettlementActivity extends BaseTitleActivity {
         mTitle.setText(mCaTitle);
         mTerm.setText("第"+mCaTerm+"期");
         mPlaceNm.setText(mBalance);
+//        mBalance = intent.getBundleExtra("bundle").getString("mBalance");
+//        mPlaceNm.setText(mBalance);
         ImageLoaderUtils.displayImage(mPic,mImg);
         Intent intent = getIntent();
         if(intent!=null){
@@ -284,7 +309,6 @@ public class SettlementActivity extends BaseTitleActivity {
     private void reqAlipayPay(List<SettlementEntity> data) {
         String info = getNewOrderInfo(data);//这个是订单信息
         // 这里根据签名方式对订单信息进行签名
-        LogUtils.e("Keys.PRIVATE----", Keys.PRIVATE);
         String strsign = Rsa.sign(info, Keys.PRIVATE);
         LogUtils.e("strsign----",""+strsign);
         try {
@@ -321,7 +345,7 @@ public class SettlementActivity extends BaseTitleActivity {
 
         public void handleMessage(android.os.Message msg) {
 
-            AliPayResult payResult = new AliPayResult((String) msg.obj);
+            PayResult payResult = new PayResult((String) msg.obj);
             /**
              * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
              * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
@@ -329,13 +353,14 @@ public class SettlementActivity extends BaseTitleActivity {
              */
             LogUtils.e("payResult---",""+payResult);
             String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-
+            LogUtils.e("resultInfo---",""+resultInfo);
             String resultStatus = payResult.getResultStatus();
-            Log.e("resultStatus----",""+resultStatus);
+            LogUtils.e("resultStatus----",""+resultStatus);
             // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
             switch (msg.what) {
                 case RQF_PAY:
                     if (TextUtils.equals(resultStatus, "9000")) {
+                        LogUtils.e("RQF_PAY----","9000");
                         IssueUiGoto.payment(SettlementActivity.this);//支付结果页
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
@@ -343,9 +368,20 @@ public class SettlementActivity extends BaseTitleActivity {
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(SettlementActivity.this, "支付结果确认中",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(TextUtils.equals(resultStatus, "6001")){
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(SettlementActivity.this, "支付失败",
+                            Toast.makeText(SettlementActivity.this, "用户取消订单",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else if(TextUtils.equals(resultStatus, "6002")){
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(SettlementActivity.this, "网络连接错误",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else if(TextUtils.equals(resultStatus, "4000")){
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(SettlementActivity.this, "订单支付失败",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -380,10 +416,12 @@ public class SettlementActivity extends BaseTitleActivity {
         orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
 
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+        // 商品金额
+        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&kAliPayNotifyURL=" + "\"" + AppConfig.BASE_URL+"/dbnotify_url.aspx" + "\"";
+        orderInfo += "&notify_url=" + "\"" + AppConfig.BASE_URL+"/dbnotify_url.aspx" + "\"";
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";
 

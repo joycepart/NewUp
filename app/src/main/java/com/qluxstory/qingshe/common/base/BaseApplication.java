@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qluxstory.qingshe.common.cache.DiskLruCacheHelper;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.StringUtils;
 import com.umeng.socialize.PlatformConfig;
 
@@ -63,8 +64,10 @@ public class BaseApplication  extends Application{
         PlatformConfig.setSinaWeibo("294505933","5a28f73ee060c2544785dbe8cf586ad9");
         //新浪微博 appkey appsecret
 
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
+        LogUtils.e("TAG", "[ExampleApplication] onCreate");
+
         try {
             helper=new DiskLruCacheHelper(_context);
         } catch (IOException e) {

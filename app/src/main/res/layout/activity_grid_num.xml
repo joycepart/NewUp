@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ff"
+    android:layout_marginTop="@dimen/ds_300"
+    android:layout_marginBottom="@dimen/ds_200"
+    android:layout_marginRight="@dimen/ds_30"
+    android:layout_marginLeft="@dimen/ds_30"
+    android:orientation="vertical">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_110"
+    android:textColor="@color/color_00"
+    android:gravity="center"
+    android:textSize="@dimen/fs_45"
+    android:text="@string/indiana_num_pr"/>
+
+    <GridView
+        android:id="@+id/grid_num"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:columnWidth="@dimen/ds_50"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/ds_10"
+        android:horizontalSpacing="@dimen/ds_10"
+        android:numColumns="3"
+        android:gravity="center"
+        ></GridView>
+
+    <TextView
+        android:id="@+id/grid_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_110"
+        android:textColor="@color/color_00"
+        android:background="@drawable/btn_while"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/ds_20"
+        android:layout_marginLeft="@dimen/ds_40"
+        android:layout_marginRight="@dimen/ds_40"
+        android:textSize="@dimen/fs_45"
+        android:text="@string/pop_grid"/>
+
+</LinearLayout>

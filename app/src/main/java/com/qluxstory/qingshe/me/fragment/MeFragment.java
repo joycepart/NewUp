@@ -243,8 +243,6 @@ public class MeFragment extends BaseFragment {
                 }
             });
         }
-//        MeUiGoto.serviceRoyun(getActivity());//客服
-
 
 
     }

@@ -26,19 +26,20 @@
 
     <TextView
         android:id="@+id/ad_tv"
-        android:layout_width="@dimen/ds_135"
-        android:layout_height="@dimen/ds_135"
+        style="@style/UserBtSendStyle"
+        android:layout_width="@dimen/ds_290"
+        android:layout_height="@dimen/ds_110"
         android:layout_marginTop="@dimen/ds_90"
         android:layout_marginRight="@dimen/ds_30"
+        android:gravity="center"
         android:layout_gravity="right"
-        android:background="@drawable/common_ad_tiaozhuan"
-        android:textColor="@color/color_ff"
-        android:textSize="@dimen/fs_42" />
+        android:textColor="@color/color_00"
+        android:textSize="@dimen/fs_45" />
+
     <LinearLayout
         android:id="@+id/common_splash_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/start_up"
         android:gravity="center"
         android:orientation="vertical" >
     </LinearLayout>

@@ -1,10 +1,14 @@
 package com.qluxstory.qingshe;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -73,6 +77,7 @@ public class MainActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        registerMessageReceiver();  // used for receive msg
         fragmentManager = getSupportFragmentManager();
         mTabViews[0] = mTvTabHome;
         mTabViews[1] = mTvTabUnused;
@@ -266,9 +271,63 @@ public class MainActivity extends BaseTitleActivity {
     }
 
     @Override
+    protected void onResume() {
+        isForeground = true;
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(mMessageReceiver);
 //        AppContext.set("isLogin",false);
 //        LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
     }
+
+    public static boolean isForeground = false;
+    //for receive customer msg from jpush server
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                String messge = intent.getStringExtra(KEY_MESSAGE);
+                String extras = intent.getStringExtra(KEY_EXTRAS);
+                StringBuilder showMsg = new StringBuilder();
+                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                if (!TextUtils.isEmpty(extras)) {
+                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                }
+//                setCostomMsg(showMsg.toString());
+            }
+        }
+    }
+
+//    private void setCostomMsg(String msg){
+//        if (null != msgText) {
+//            msgText.setText(msg);
+//            msgText.setVisibility(android.view.View.VISIBLE);
+//        }
+//    }
 }

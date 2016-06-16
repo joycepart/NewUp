@@ -17,13 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.common.base.BaseActivity;
-import com.qluxstory.qingshe.common.dto.BaseDTO;
-import com.qluxstory.qingshe.common.entity.AdsResult;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.HomeUiGoto;
+import com.qluxstory.qingshe.home.dto.SplashDTO;
+import com.qluxstory.qingshe.home.entity.SplashResult;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by lenovo on 2016/6/10.
@@ -37,11 +40,16 @@ public class SplashActivity extends BaseActivity {
     ViewPager mViewPager;
     ViewGroup mViewGroup;
     TextView mText;
-//    private int[] tips = {R.drawable.imag1,R.drawable.imag2,R.drawable.imag3,R.drawable.imag4};
     private String[] imgIdArray;
     private ImageView[] tips;
     public static final int ANIM_END = 10;
     public static final int ANIM_END_NO = 11;
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_splash;
+    }
+
     @Override
     public void initView() {
         gestureDetector = new GestureDetector(new GuideViewTouch());
@@ -56,31 +64,34 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initData() {
-//        int userIdentity = PrefUtils.getInstance(this).getMember().getUserIdentity();
-//        if(userIdentity != 1){
-//            PrefUtils.getInstance(this).setToken("");
-//            PrefUtils.getInstance(this).setIsLogin(false);
-//        }
         mViewGroup = (ViewGroup) findViewById(R.id.ad_viewgroup);
         mViewPager = (ViewPager) findViewById(R.id.ad_viewpager);
         mText = (TextView) findViewById(R.id.ad_tv);
         mText.setVisibility(View.GONE);
-        reqImgs();
+        reqImgs();//启动页图片
 
     }
 
     private void reqImgs() {
-        BaseDTO dto = new BaseDTO();
-        CommonApiClient.getImgs(this, dto, new CallBack<AdsResult>() {
+        // 获取屏幕宽高（方法1）
+//        int screenWidth = getWindowManager().getDefaultDisplay().getWidth(); // 屏幕宽（像素，如：480px）
+//        int screenHeight = getWindowManager().getDefaultDisplay().getHeight(); // 屏幕高（像素，如：800p）
+        SplashDTO dto = new SplashDTO();
+        dto.setDevicetype("2");
+        dto.setPheight("1920");
+        dto.setPwidth("1080");
+        dto.setSign(AppConfig.SIGN_1);
+        dto.setTimestamp(TimeUtils.getSignTime());
+        CommonApiClient.getImgs(this, dto, new CallBack<SplashResult>() {
             @Override
-            public void onSuccess(AdsResult result) {
+            public void onSuccess(SplashResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("启动页图片成功");
                     if (result.getData().size() > 0 && result.getData() != null) {
-//                        imgIdArray = new String[result.getData().size()];
-//                        for (int i = 0; i < result.getData().size(); i++) {
-////                            imgIdArray[i] = result.getData().get(i).getImgUrl();
-//                        }
+                        imgIdArray = new String[result.getData().size()];
+                        for (int i = 0; i < result.getData().size(); i++) {
+                            imgIdArray[i] = result.getData().get(i).getPicturesUrl();
+                        }
                         tips = new ImageView[imgIdArray.length];
                         if (tips.length > 1) {
                             for (int i = 0; i < tips.length; i++) {
@@ -326,4 +337,15 @@ public class SplashActivity extends BaseActivity {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 }

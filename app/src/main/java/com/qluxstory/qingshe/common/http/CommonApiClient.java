@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 
 import com.qluxstory.qingshe.common.dto.BaseDTO;
-import com.qluxstory.qingshe.common.entity.AdsResult;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 import com.qluxstory.qingshe.home.dto.AddAddressDTO;
 import com.qluxstory.qingshe.home.dto.CuringDTO;
@@ -20,9 +19,10 @@ import com.qluxstory.qingshe.home.entity.CuringResult;
 import com.qluxstory.qingshe.home.entity.HomeAdcerResult;
 import com.qluxstory.qingshe.home.entity.HomeRecomendResult;
 import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
-import com.qluxstory.qingshe.home.entity.PayResult;
+import com.qluxstory.qingshe.home.entity.PaypayResult;
 import com.qluxstory.qingshe.home.entity.SelectResult;
 import com.qluxstory.qingshe.home.entity.SendResult;
+import com.qluxstory.qingshe.home.entity.SplashResult;
 import com.qluxstory.qingshe.home.entity.StoreResult;
 import com.qluxstory.qingshe.home.entity.TakeResult;
 import com.qluxstory.qingshe.home.entity.TimeResult;
@@ -98,10 +98,10 @@ public class CommonApiClient extends BaseApiClient {
      * @param callback
      */
     public static void getImgs(Activity act, BaseDTO
-            dto, CallBack<AdsResult> callback) {
-        AsyncCallBack<AdsResult> asyncCallBack = new AsyncCallBack<>(
-                act, callback, AdsResult.class);
-        post(getAbsoluteUrl("/API/WsMember.asmx/ResSendSmsCodeApi"), dto,
+            dto, CallBack<SplashResult> callback) {
+        AsyncCallBack<SplashResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback, SplashResult.class);
+        post(getAbsoluteUrl("/API/WsMember.asmx/ResBrwPicHrefApi"), dto,
                 asyncCallBack);
     }
     /**
@@ -524,9 +524,9 @@ public class CommonApiClient extends BaseApiClient {
      * @param callback
      */
     public static void pay(Activity act, PayDTO
-            dto, CallBack<PayResult> callback) {
-        AsyncCallBack<PayResult> asyncCallBack = new AsyncCallBack<>(
-                act, callback,PayResult.class);
+            dto, CallBack<PaypayResult> callback) {
+        AsyncCallBack<PaypayResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,PaypayResult.class);
         post(getAbsoluteUrl("/API/WsPlaceOrder.asmx/AddJsonOrderCommServiceApplyApi"), dto,
                 asyncCallBack);
     }

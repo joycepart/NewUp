@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.alipay.Keys;
+import com.qluxstory.qingshe.alipay.PayResult;
 import com.qluxstory.qingshe.alipay.Rsa;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
@@ -28,13 +28,11 @@ import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.dto.PayDTO;
-import com.qluxstory.qingshe.home.entity.AliPayResult;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
-import com.qluxstory.qingshe.home.entity.PayEntity;
-import com.qluxstory.qingshe.home.entity.PayResult;
+import com.qluxstory.qingshe.home.entity.PaypayEntity;
+import com.qluxstory.qingshe.home.entity.PaypayResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
-import com.qluxstory.qingshe.me.entity.CuringOrderListEntity;
 import com.qluxstory.qingshe.me.entity.PaymentOrderEntity;
 import com.qluxstory.qingshe.me.entity.PaymentOrderResult;
 import com.tencent.mm.sdk.modelpay.PayReq;
@@ -100,8 +98,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     @Bind(R.id.pay_tv_btn)
     TextView mPayTvBtn;
     PaymentOrderEntity paymentEntity;
-
-    CuringOrderListEntity entity;
+    private String mOrdNum;
     private static final int RQF_PAY = 1;
     @Override
     protected int getContentResId() {
@@ -113,7 +110,8 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         setTitleText("支付订单");
         Intent intent = getIntent();
         if(intent!=null){
-            entity = (CuringOrderListEntity) intent.getBundleExtra("bundle").getSerializable("entitiy");
+            mOrdNum = intent.getBundleExtra("bundle").getString("mOrdNum");
+            LogUtils.e("mOrdNum----",mOrdNum);
         }
         mPayWx.setOnClickListener(this);
         mPayAlipay.setOnClickListener(this);
@@ -148,14 +146,14 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     private void reqCuringOrderDetails() {
         CuringOrderDetailsDTO cdto = new CuringOrderDetailsDTO();
         cdto.setMembermob(AppContext.get("mobileNum", ""));
-        cdto.setOrderNum(entity.getOrderNum());
+        cdto.setOrderNum(mOrdNum);
         cdto.setSign(AppConfig.SIGN_1);
         cdto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.curingOrderPays(this, cdto, new CallBack<PaymentOrderResult>() {
             @Override
             public void onSuccess(PaymentOrderResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
-                    LogUtils.d("养护订单详情成功");
+                    LogUtils.d("支付订单成功");
                     bindResult(result.getData());
                 }
 
@@ -212,8 +210,6 @@ public class PaymentOrderActivity extends BaseTitleActivity {
                 } else {
                     reqPay();//去支付
                 }
-
-
                 break;
             case R.id.palce_pay_wx:
                 mCbWx.setChecked(true);
@@ -270,13 +266,11 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         dto.setServerName(paymentEntity.getServerName());
         dto.setSign(AppConfig.SIGN_1);
         dto.setTimestamp(TimeUtils.getSignTime());
-        CommonApiClient.pay(this, dto, new CallBack<PayResult>() {
+        CommonApiClient.pay(this, dto, new CallBack<PaypayResult>() {
             @Override
-            public void onSuccess(PayResult result) {
+            public void onSuccess(PaypayResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("去支付成功");
-                    IssueUiGoto.payment(PaymentOrderActivity.this);//支付结果页
-
                 }
 
                 if(mCbZhi.isChecked()){
@@ -295,7 +289,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         });
     }
     IWXAPI msgApi;
-    private void reqWx(List<PayEntity> data) {
+    private void reqWx(List<PaypayEntity> data) {
         msgApi = WXAPIFactory.createWXAPI(this, AppConfig.Wx_App_Id);
         msgApi.registerApp(AppConfig.Wx_App_Id);
         if (msgApi != null) {
@@ -325,10 +319,9 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         }
     }
 
-    private void reqAlipayPay(List<PayEntity> data) {
+    private void reqAlipayPay(List<PaypayEntity> data) {
         String info = getNewOrderInfo(data);//这个是订单信息
         // 这里根据签名方式对订单信息进行签名
-        LogUtils.e("Keys.PRIVATE----", Keys.PRIVATE);
         String strsign = Rsa.sign(info, Keys.PRIVATE);
         LogUtils.e("strsign----",""+strsign);
         try {
@@ -364,7 +357,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
 
         public void handleMessage(android.os.Message msg) {
 
-            AliPayResult payResult = new AliPayResult((String) msg.obj);
+            PayResult payResult = new PayResult((String) msg.obj);
             /**
              * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
              * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
@@ -372,13 +365,14 @@ public class PaymentOrderActivity extends BaseTitleActivity {
              */
             LogUtils.e("payResult---",""+payResult);
             String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-
+            LogUtils.e("resultInfo---",""+resultInfo);
             String resultStatus = payResult.getResultStatus();
-            Log.e("resultStatus----",""+resultStatus);
+            LogUtils.e("resultStatus----",""+resultStatus);
             // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
             switch (msg.what) {
                 case RQF_PAY:
                     if (TextUtils.equals(resultStatus, "9000")) {
+                        LogUtils.e("RQF_PAY----","9000");
                         IssueUiGoto.payment(PaymentOrderActivity.this);//支付结果页
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
@@ -386,9 +380,20 @@ public class PaymentOrderActivity extends BaseTitleActivity {
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(PaymentOrderActivity.this, "支付结果确认中",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(TextUtils.equals(resultStatus, "6001")){
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(PaymentOrderActivity.this, "支付失败",
+                            Toast.makeText(PaymentOrderActivity.this, "用户取消订单",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else if(TextUtils.equals(resultStatus, "6002")){
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(PaymentOrderActivity.this, "网络连接错误",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else if(TextUtils.equals(resultStatus, "4000")){
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(PaymentOrderActivity.this, "订单支付失败",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -404,7 +409,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     }
 
     //获得订单信息的方法
-    private String getNewOrderInfo(List<PayEntity> data) {
+    private String getNewOrderInfo(List<PaypayEntity> data) {
 
 
         // 签约合作者身份ID
@@ -414,7 +419,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         orderInfo += "&seller_id=" + "\"" + data.get(0).getSellerAccount()+ "\"";
 
          //商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + data.get(0).getOrderNum() + "\"";
+        orderInfo += "&out_trade_no=" + "\"" + mOrdNum + "\"";
 
         // 商品名称
         orderInfo += "&subject=" + "\"" + data.get(0).getProductName() + "\"";
@@ -423,10 +428,12 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
 
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+        // 商品金额
+        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&kAliPayNotifyURL=" + "\"" + AppConfig.BASE_URL+"/dbnotify_url.aspx" + "\"";
+        orderInfo += "&notify_url=" + "\"" + AppConfig.BASE_URL+"/notify_url.aspx" + "\"";
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";
 

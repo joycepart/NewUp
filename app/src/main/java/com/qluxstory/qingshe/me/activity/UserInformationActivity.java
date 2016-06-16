@@ -2,6 +2,7 @@ package com.qluxstory.qingshe.me.activity;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,7 +23,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
-import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -64,11 +64,12 @@ public class UserInformationActivity extends BaseTitleActivity {
     private String mImg;
     TextView mCamera,mPhoto,mExit;
     private Intent intent;
+    Bitmap myBitmap;
     Dialog dialog;
     /* 请求识别码 */
     private static final int CODE_GALLERY_REQUEST = 0xa0;
     private static final int CODE_CAMERA_REQUEST = 0xa1;
-    private static final int CODE_RESULT_REQUEST = 0xa2;
+    private static final int CODE_PHOTO_REQUEST = 0xa2;
     TextView mBaseEnsure;
     PopupWindow popWindow;
     private static final String FILE_PATH = "/sdcard/"+ System.currentTimeMillis()+"jpg";
@@ -107,15 +108,7 @@ public class UserInformationActivity extends BaseTitleActivity {
             case R.id.user_information:
                 MeUiGoto.modifyUser(this);//修改用户名
                 break;
-            case R.id.base_titlebar_back:
-                LogUtils.e("base_titlebar_back----","base_titlebar_back");
-                Intent tent = new Intent(this, MainActivity.class);
-                tent.putExtra("tag",4);
-                startActivity(tent);
-                break;
             case R.id.btn_alter_pic_camera:
-
-
                 Intent intentFromCapture = null;
                 intentFromCapture = new Intent();
                 // 指定开启系统相机的Action
@@ -131,7 +124,6 @@ public class UserInformationActivity extends BaseTitleActivity {
                 Uri uri = Uri.fromFile(file);
                 // 设置系统相机拍摄照片完成后图片文件的存放地址
                 intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
                 startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
                 break;
             case R.id.btn_alter_pic_photo:
@@ -141,14 +133,19 @@ public class UserInformationActivity extends BaseTitleActivity {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, CODE_CAMERA_REQUEST);
+                    startActivityForResult(intent, CODE_PHOTO_REQUEST);
                 } catch (ActivityNotFoundException e) {
 
                 }
                 break;
             case R.id.btn_alter_exit:
+                LogUtils.e("btn_alter_exit","exit关闭");
                 backgroundAlpha(1f);
                 popWindow.dismiss();
+                LogUtils.e("btn_alter_exit","dismiss");
+                break;
+            case R.id.base_titlebar_back:
+                baseGoBack();
                 break;
             default:
                 break;
@@ -159,6 +156,7 @@ public class UserInformationActivity extends BaseTitleActivity {
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.from(this).inflate(R.layout.popup_pic, null);
         popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+
         // 需要设置一下此参数，点击外边可消失
         popWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置点击窗口外边窗口消失
@@ -168,21 +166,30 @@ public class UserInformationActivity extends BaseTitleActivity {
         backgroundAlpha(0.7f);
         //防止虚拟软键盘被弹出菜单遮住
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        View parent = getWindow().getDecorView();//高度为手机实际的像素高度
-        popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+
         mCamera = (TextView) view.findViewById(R.id.btn_alter_pic_camera);
         mPhoto = (TextView) view.findViewById(R.id.btn_alter_pic_photo);
         mExit = (TextView) view.findViewById(R.id.btn_alter_exit);
         mCamera.setOnClickListener(this);
         mPhoto.setOnClickListener(this);
         mExit.setOnClickListener(this);
-        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                popWindow.dismiss();
-                backgroundAlpha(1f);
-            }
-        });
+
+        View parent = getWindow().getDecorView();//高度为手机实际的像素高度
+        popWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
+        //添加pop窗口关闭事件
+        popWindow.setOnDismissListener(new poponDismissListener());
+    }
+
+
+    public class poponDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            LogUtils.e("List_noteTypeActivity:", "我是关闭事件");
+            backgroundAlpha(1f);
+            popWindow.dismiss();
+        }
+
     }
     /**
      * 设置添加屏幕的背景透明度
@@ -222,9 +229,35 @@ public class UserInformationActivity extends BaseTitleActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        ContentResolver resolver = getContentResolver();
         LogUtils.e("data--------",""+data);
         switch (requestCode) {
             case CODE_CAMERA_REQUEST:
+                File file = new File(FILE_PATH);
+                Uri uri = Uri.fromFile(file);
+                LogUtils.e("uri------------if", "" + uri);
+                String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
+                LogUtils.e("mImg------------if", "" + mImg);
+                try {
+                    myBitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
+                    LogUtils.e("bitmap-----MediaStore",""+myBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Bitmap bit = PhotoSystemUtils.comp(myBitmap);
+                mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+                LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
+                popWindow.dismiss();
+                backgroundAlpha(1f);
+                reqUserPic();//修改用户图像
+                if (mImg != null) {
+                    ImageLoader.getInstance().displayImage("file:///" + mImg,
+                            mUserImg, ImageLoaderUtils.getDefaultOptions());
+                    LogUtils.e("ImageLoader------------if", "file:///" + mImg);
+                } else {
+                }
+            case CODE_PHOTO_REQUEST:
                 if (data != null) {
                     //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
                     Uri mImageCaptureUri = data.getData();
@@ -248,14 +281,14 @@ public class UserInformationActivity extends BaseTitleActivity {
                             File tempFile = new File(
                                     Environment.getExternalStorageDirectory(),
                                     IMAGE_FILE_NAME);
-                            Uri uri = Uri.fromFile(tempFile);
-                            LogUtils.e("Uri--------------", uri + "");
-                            mImg = PhotoSystemUtils.getRealFilePath(this,uri);
+                            Uri uriPhptp = Uri.fromFile(tempFile);
+                            LogUtils.e("Uri--------------", uriPhptp + "");
+                            mImg = PhotoSystemUtils.getRealFilePath(this,uriPhptp);
                             LogUtils.e("mImg--------------", mImg + "");
                             ImageLoader.getInstance().displayImage("file:///" + mImg,
                                     mUserImg, ImageLoaderUtils.getAvatarOptions());
                             try {
-                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriPhptp);
                                 LogUtils.e("image--------------", image + "");
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -268,8 +301,8 @@ public class UserInformationActivity extends BaseTitleActivity {
 
                         }
 
-                    Bitmap bit = PhotoSystemUtils.comp(image);
-                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+                    Bitmap bitmap = PhotoSystemUtils.comp(image);
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bitmap));
                     popWindow.dismiss();
                     backgroundAlpha(1f);
                     reqUserPic();//修改用户图像

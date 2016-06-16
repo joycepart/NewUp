@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,12 +22,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.alipay.Keys;
+import com.qluxstory.qingshe.alipay.PayResult;
 import com.qluxstory.qingshe.alipay.Rsa;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.base.SimplePage;
@@ -39,17 +43,17 @@ import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.PhotoSystemUtils;
+import com.qluxstory.qingshe.common.utils.RandomUtils;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.dto.PayDTO;
 import com.qluxstory.qingshe.home.dto.TakeDTO;
 import com.qluxstory.qingshe.home.entity.Address;
-import com.qluxstory.qingshe.home.entity.AliPayResult;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
 import com.qluxstory.qingshe.home.entity.Consignee;
-import com.qluxstory.qingshe.home.entity.PayEntity;
-import com.qluxstory.qingshe.home.entity.PayResult;
+import com.qluxstory.qingshe.home.entity.PaypayEntity;
+import com.qluxstory.qingshe.home.entity.PaypayResult;
 import com.qluxstory.qingshe.home.entity.ProductDetails;
 import com.qluxstory.qingshe.home.entity.TakeEntity;
 import com.qluxstory.qingshe.home.entity.TakeResult;
@@ -178,6 +182,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private static String mWxKey;
     TextView mBaseEnsure;
     private static final String FILE_PATH = "/sdcard/"+ System.currentTimeMillis()+"jpg";
+    public LocationClient mLocationClient = null;
+    private String mCity;
 
 
     @Override
@@ -219,9 +225,44 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
+        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);        //是否打开GPS
+        option.setCoorType("bd09ll");       //设置返回值的坐标类型。
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+        option.setProdName("LocationDemo"); //设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
         reqTake();//取送方式
         reqBalance();//会员余额
 
+    }
+
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            if (location == null) {
+                LogUtils.e("location_failed----","location_failed");
+                return;
+            } else {
+                int locType = location.getLocType();
+                LogUtils.i("locType:",""+locType);
+                LogUtils.i("province:","" + location.getProvince());
+                LogUtils.i("city:" ,""+ location.getCity());
+                LogUtils.i("district:" ,""+ location.getDistrict());
+                LogUtils.i("AddrStr:" ,""+ location.getAddrStr());
+                String city = location.getCity();
+                if (TextUtils.isEmpty(city)) {
+                    LogUtils.e("locType----","定位失败");
+                    mLocationClient.start();
+                } else {
+                    mCity = city;
+                }
+            }
+            mLocationClient.stop();
+        }
     }
 
 
@@ -235,7 +276,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if(mTvTime.getText().toString().equals("预约上门时间：")){
                     reqTime();//获取后十五天时间
                     LogUtils.e("reqTime---","先");
-
                 }
                 break;
 
@@ -285,8 +325,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     reqPay();//去支付
 
                 }
-
-
                 break;
             case R.id.palce_pay_wx:
                 mCbWx.setChecked(true);
@@ -471,7 +509,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqTake() {
         TakeDTO dto = new TakeDTO();
-        dto.setCity("北京市");
+        if(TextUtils.isEmpty(mCity)){
+            dto.setCity("北京");
+            LogUtils.e("dto.setCity---","定位失败");
+        }else {
+            dto.setCity(mCity);
+            LogUtils.e("dto.setCity---","定位成功"+mCity);
+        }
+
         CommonApiClient.take(this, dto, new CallBack<TakeResult>() {
             @Override
             public void onSuccess(TakeResult result) {
@@ -508,10 +553,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setCouponcode("");
         dto.setMemMobile(AppContext.get("mobileNum", ""));
         dto.setOrderType("养护");
-
-
         if (mPlaTv.getText().toString().equals("上门取送")) {
-            dto.setTimeToAppointmen("2016-06-07 10:00 - 18:00");
+            dto.setTimeToAppointmen(mAddTime.getText().toString());
         } else {
             dto.setTimeToAppointmen("");
         }
@@ -520,8 +563,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         } else {
             dto.setServerYJCode("");
         }
-
-
         if (mCbWx.isChecked()) {
             dto.setApplyType("微信");
         } else if (mCbZhi.isChecked()) {
@@ -537,21 +578,23 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setServerName(mProductDetails.getSellSort());
         dto.setSign(AppConfig.SIGN_1);
         dto.setTimestamp(TimeUtils.getSignTime());
-        CommonApiClient.pay(this, dto, new CallBack<PayResult>() {
+        CommonApiClient.pay(this, dto, new CallBack<PaypayResult>() {
             @Override
-            public void onSuccess(PayResult result) {
+            public void onSuccess(PaypayResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("去支付成功");
                     if(result.getData().get(0).getApplyType().equals("支付宝")){
-                        LogUtils.e("支付宝----",""+result.getData().get(0).getApplyType());
                         reqAlipayPay(result.getData());
                         mSetPayBtn.setEnabled(true);
+                        LogUtils.e("getApplyType---1","支付宝支付成功");
+
                     }else if(result.getData().get(0).getApplyType().equals("微信")){
-                        LogUtils.e("微信----",""+result.getData().get(0).getApplyType());
                         reqWx(result.getData());
                         mSetPayBtn.setEnabled(true);
+                        LogUtils.e("getApplyType---2","微信支付成功");
 
                     }else {
+                        LogUtils.e("getApplyType---3",result.getData().get(0).getApplyType());
                         IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
                         mSetPayBtn.setEnabled(true);
                     }
@@ -566,7 +609,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         });
     }
     IWXAPI msgApi;
-    private void reqWx(List<PayEntity> data) {
+    private void reqWx(List<PaypayEntity> data) {
         msgApi = WXAPIFactory.createWXAPI(this, AppConfig.Wx_App_Id);
         msgApi.registerApp(AppConfig.Wx_App_Id);
         if (msgApi != null) {
@@ -578,11 +621,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 req.partnerId = data.get(0).getPartnerID();
                 req.prepayId = data.get(0).getPrepayid();
                 req.packageValue = "Sign=WXPay";
-                req.nonceStr = TimeUtils.getSignTime();
-                String time =  TimeUtils.getSignTime();
+                String time =  TimeUtils.genTimeStamp();
+                String nonceStr = RandomUtils.generateString(10);
+                req.nonceStr = nonceStr;;
                 req.timeStamp = time;
                 String str = "appid="+AppConfig.Wx_App_Id
-                        +"&noncestr="+TimeUtils.getSignTime()
+                        +"&noncestr="+nonceStr
                         +"&package="+"Sign=WXPay"
                         +"&partnerid="+data.get(0).getPartnerID()
                         +"&prepayid="+data.get(0).getPrepayid()
@@ -598,13 +642,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     }
 
 
-    private void reqAlipayPay(List<PayEntity> data) {
+    private void reqAlipayPay(List<PaypayEntity> data) {
         String info = getNewOrderInfo(data);//这个是订单信息
         // 这里根据签名方式对订单信息进行签名
-        LogUtils.e("data.get(0).getPrivateKey().toString()---",data.get(0).getPrivateKey());
-        LogUtils.e("Keys.PRIVATE----",Keys.PRIVATE);
         String strsign = Rsa.sign(info, Keys.PRIVATE);
-//        String strsign = Rsa.sign(info,Keys.PRIVATE);
         LogUtils.e("strsign----",""+strsign);
         try {
             // 仅需对sign 做URL编码
@@ -624,6 +665,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 // 构造PayTask 对象
                 PayTask alipay = new PayTask(PlaceOrderActivity.this);//支付宝接口了，支付宝现在把很多功能都封装
                 String result = alipay.pay(orderInfo,true);//返回的结果
+                mSetPayBtn.setEnabled(true);
                 LogUtils.e("result-----------", "result = " + result);
                 Message msg = new Message();
                 msg.what = RQF_PAY;
@@ -641,7 +683,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
         public void handleMessage(android.os.Message msg) {
 
-            AliPayResult payResult = new AliPayResult((String) msg.obj);
+            PayResult payResult = new PayResult((String) msg.obj);
             /**
              * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
              * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
@@ -649,24 +691,35 @@ public class PlaceOrderActivity extends BaseTitleActivity {
              */
             LogUtils.e("payResult---",""+payResult);
             String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-
+            LogUtils.e("resultInfo---",""+resultInfo);
             String resultStatus = payResult.getResultStatus();
-            Log.e("resultStatus----",""+resultStatus);
+            LogUtils.e("resultStatus----",""+resultStatus);
             // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
             switch (msg.what) {
                 case RQF_PAY:
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(PlaceOrderActivity.this, "支付成功",
-                                Toast.LENGTH_SHORT).show();
+                        LogUtils.e("RQF_PAY---","9000");
+                        IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(PlaceOrderActivity.this, "支付结果确认中",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+                        else if(TextUtils.equals(resultStatus, "6001")){
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(PlaceOrderActivity.this, "支付失败",
+                            Toast.makeText(PlaceOrderActivity.this, "用户取消订单",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else if(TextUtils.equals(resultStatus, "6002")){
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(PlaceOrderActivity.this, "网络连接错误",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else if(TextUtils.equals(resultStatus, "4000")){
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(PlaceOrderActivity.this, "订单支付失败",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -682,7 +735,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     }
 
     //获得订单信息的方法
-    private String getNewOrderInfo(List<PayEntity> data) {
+    private String getNewOrderInfo(List<PaypayEntity> data) {
 
 
         // 签约合作者身份ID
@@ -700,11 +753,13 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         // 商品详情
         orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
 
+//        // 商品金额
+//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&kAliPayNotifyURL=" + "\"" + AppConfig.BASE_URL+"/notify_url.aspx" + "\"";
+        orderInfo += "&notify_url=" + "\"" + AppConfig.BASE_URL+"/notify_url.aspx" + "\"";
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";
 
@@ -751,14 +806,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         Uri uri = Uri.fromFile(file);
         // 设置系统相机拍摄照片完成后图片文件的存放地址
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
-        // 判断存储卡是否可用，存储照片文件
-//        if (PhotoSystemUtils.hasSdcard()) {
-//            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-//                    .fromFile(new File(Environment
-//                            .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-//        }
-
         startActivityForResult(intent, CODE_CAMERA_REQUEST);
     }
 
@@ -815,6 +862,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mImgPon.setVisibility(View.VISIBLE);
                     ImageLoader.getInstance().displayImage("file:///" + mImg,
                             mImgPon, ImageLoaderUtils.getDefaultOptions());
+                    LogUtils.e("ImageLoader------------if", "file:///" + mImg);
                 } else {
                     mLrderLin.setVisibility(View.VISIBLE);
                     mImgPon.setVisibility(View.GONE);
@@ -829,6 +877,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 Bitmap bit = PhotoSystemUtils.comp(myBitmap);
                 mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
                 LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
+                break;
 
             case CODE_RESULT_REQUEST:
                 if (data != null) {
@@ -931,6 +980,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 mImgPon.setVisibility(View.GONE);
             }
 
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mLocationClient != null && mLocationClient.isStarted()) {
+            mLocationClient.stop();
+            mLocationClient = null;
         }
     }
 }

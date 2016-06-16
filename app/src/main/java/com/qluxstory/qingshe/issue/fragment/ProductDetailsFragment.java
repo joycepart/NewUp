@@ -33,6 +33,7 @@ public class ProductDetailsFragment extends BaseFragment {
     private Button mFreBtn,mFive,mTen,mTtew;
     private String mNumber;
     Dialog dialog;
+    PopupWindow popWindow;
 
     @Override
     protected void retry() {
@@ -130,6 +131,8 @@ public class ProductDetailsFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("mBalance",mNumber);
                 IssueUiGoto.settlement(getActivity(),bundle);//结算
+                backgroundAlpha(1f);
+                popWindow.dismiss();
                 break;
         }
 
@@ -140,7 +143,7 @@ public class ProductDetailsFragment extends BaseFragment {
         LayoutInflater inflater = (LayoutInflater)
                 getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.from(getActivity()).inflate(R.layout.popup_frequency, null);
-        final PopupWindow popWindow = new PopupWindow(view,WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+        popWindow = new PopupWindow(view,WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
         // 需要设置一下此参数，点击外边可消失
         popWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置点击窗口外边窗口消失
@@ -175,7 +178,8 @@ public class ProductDetailsFragment extends BaseFragment {
         popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                backgroundAlpha(0f);
+                backgroundAlpha(1f);
+                popWindow.dismiss();
             }
         });
     }

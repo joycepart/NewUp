@@ -44,7 +44,8 @@
             <ProgressBar
                 android:id="@+id/product_progress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@color/color_ff"
+                android:layout_height="@dimen/ds_100"
                 style="@style/IssueProgressBarStyle"
                 android:layout_marginRight="@dimen/ds_30"
                 android:layout_marginLeft="@dimen/ds_30"
@@ -101,7 +102,7 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/ds_150"
         >
             <ImageView
                 android:layout_width="@dimen/ds_90"
@@ -114,7 +115,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:gravity="center"
                 android:layout_marginLeft="@dimen/ds_260"
                 android:orientation="horizontal">
             <TextView
@@ -173,7 +175,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/issue_imagetext"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_40"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -181,7 +183,7 @@
                     android:gravity="center"
                     android:text="@string/issue_wifi"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_40"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -215,7 +217,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/issue_announce"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_40"/>
 
 
             </RelativeLayout>

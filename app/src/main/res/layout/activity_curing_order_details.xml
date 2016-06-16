@@ -7,6 +7,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_cc"
         android:layout_weight="1">
 
         <LinearLayout
@@ -16,20 +17,25 @@
             <ImageView
                 android:id="@+id/details_tit_img"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_500"
+                android:layout_height="@dimen/ds_600"
                 android:scaleType="centerCrop" />
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_30"
+                android:background="@color/color_ff"
+                android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_100"
                 android:layout_marginTop="@dimen/ds_30"
+                android:paddingLeft="@dimen/ds_30"
+                android:gravity="center_vertical"
                 android:text="@string/curing_inf"
                 android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_90"
-                android:layout_marginTop="@dimen/ds_30"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="@dimen/ds_300"
@@ -370,7 +376,7 @@
                             android:gravity="center"
                             android:text="@string/app_day"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_55"/>
+                            android:textSize="@dimen/fs_50"/>
 
                     </RelativeLayout>
                     <LinearLayout
@@ -383,7 +389,7 @@
                             android:gravity="center"
                             android:text="@string/curing_money"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_55"/>
+                            android:textSize="@dimen/fs_50"/>
                         <TextView
                             android:id="@+id/details_curing_tv2"
                             android:layout_width="wrap_content"
@@ -392,7 +398,7 @@
                             android:layout_marginLeft="@dimen/ds_10"
                             android:text="@string/app_day"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_55"/>
+                            android:textSize="@dimen/fs_50"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -404,7 +410,7 @@
                             android:gravity="center"
                             android:text="@string/curing_nm"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_55"/>
+                            android:textSize="@dimen/fs_50"/>
                         <TextView
                             android:id="@+id/details_curing_tv3"
                             android:layout_width="wrap_content"
@@ -412,7 +418,7 @@
                             android:gravity="center"
                             android:text="199"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_55"/>
+                            android:textSize="@dimen/fs_50"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -426,11 +432,11 @@
                 android:layout_marginLeft="@dimen/ds_50"
                 android:gravity="center"
                 android:text="@string/choise_pay"
-                android:textSize="@dimen/fs_65"
+                android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_ff"
                 android:background="@drawable/prompt_box"/>
         </LinearLayout>
-
+        </LinearLayout>
 
     </ScrollView>
     <View

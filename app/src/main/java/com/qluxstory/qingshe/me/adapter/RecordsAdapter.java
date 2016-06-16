@@ -26,6 +26,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     private Button btn;
     private String mTerm,mTitle,mBalance,mPic,mRec,mBat,mSna;
     IssueProduct issueProduct;
+    RecordsEntity entity;
 
     public RecordsAdapter (Context context) {
         mContext = context;
@@ -37,8 +38,9 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     }
 
     @Override
-    public void bindData(final BaseRecyclerViewHolder holder, final RecordsEntity recordsEntity, int position) {
+    public void bindData(final BaseRecyclerViewHolder holder, final RecordsEntity recordsEntity, final int position) {
             issueProduct = AppContext.getInstance().getIssueProduct();
+            entity = recordsEntity;
             mTerm = recordsEntity.getRec_term();
             mTitle = recordsEntity.getSna_title();
             mBalance = recordsEntity.getRec_pay_balance();
@@ -46,6 +48,8 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
             mRec = recordsEntity.getRec_code();
             mBat = recordsEntity.getBat_code();
             mSna = recordsEntity.getSna_code();
+            LogUtils.e("bindData--------",""+position);
+            LogUtils.e("mPic--------",""+mPic);
 
             btn = holder.getView(R.id.records_btn);
              LogUtils.e("recordsEntity.getRec_state()---",recordsEntity.getRec_state());
@@ -94,6 +98,8 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                     intent.putExtra("tag",2);
                     mContext.startActivity(intent);
                 }else if(mBtn.getText().toString().equals("去支付")){
+                    LogUtils.e("mBtn--------",""+position);
+                    LogUtils.e("mBtn--mPic--------",""+mPic);
                     issueProduct.setmRecCode(mRec);
                     issueProduct.setmBatCode(mBat);
                     issueProduct.setmSnaCode(mSna);
@@ -101,6 +107,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                     issueProduct.setmSnaTerm(mTerm);
                     issueProduct.setmPicUrl(mPic);
                     Bundle bundle = new Bundle();
+//                    bundle.putSerializable("entity",entity);
                     bundle.putString("mBalance",mBalance);
                     IssueUiGoto.settlement(mContext,bundle);//结算
                 }

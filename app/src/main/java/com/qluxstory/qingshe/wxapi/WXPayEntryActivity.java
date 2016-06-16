@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -47,20 +48,16 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            // Toast.makeText(getApplicationContext(), resp.errCode,
-            // Toast.LENGTH_SHORT).show();
             String message = "";
             if (resp.errCode == 0) {
                 message = "支付成功";
+                IssueUiGoto.payment(WXPayEntryActivity.this);//支付结果页
             } else {
                 String error = resp.errStr;
                 int errcode = resp.errCode;
                 message = "支付失败";
-                LogUtils.e("error---",""+error);
+                LogUtils.e("支付失败---","error----"+error+"errcode----"+errcode);
             }
-            LogUtils.e("resp.errCode---",""+resp.errCode);
-            //Intent intent = new Intent(WXPayEntryActivity.this, MyOrderActivity.class);
-            //startActivity(intent);
             WXPayEntryActivity.this.finish();
             Toast.makeText(WXPayEntryActivity.this, message, Toast.LENGTH_SHORT).show();
 

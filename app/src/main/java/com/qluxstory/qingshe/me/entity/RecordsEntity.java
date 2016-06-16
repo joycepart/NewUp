@@ -58,6 +58,20 @@ public class RecordsEntity extends BaseEntity {
                  图片地址
                    */
     private String pic_url ;
+    /*
+                     参与人数
+                       */
+    private String sna_total_count ;
+
+    public String getSna_total_count() {
+        return sna_total_count;
+    }
+
+    public void setSna_total_count(String sna_total_count) {
+        this.sna_total_count = sna_total_count;
+    }
+
+
 
     public String getBat_code() {
         return bat_code;

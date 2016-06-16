@@ -166,6 +166,7 @@
     <string name="details_frequency">参与次数</string>
     <string name="indiana_time">参与时间：</string>
     <string name="indiana_num">参与号码：</string>
+    <string name="indiana_num_pr">参与号码</string>
     <string name="indiana_look">点击查看</string>
     <string name="indiana_paytype">支付方式：</string>
     <string name="indiana_total">商品总额：</string>
@@ -241,6 +242,7 @@
     <string name="pop_weixin">微信好友</string>
     <string name="pop_friend">朋友圈</string>
     <string name="pop_weibo">新浪微博</string>
+    <string name="pop_grid">知道了</string>
 
 
 
