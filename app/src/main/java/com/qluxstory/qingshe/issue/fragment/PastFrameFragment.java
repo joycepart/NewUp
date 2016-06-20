@@ -100,6 +100,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     String mBatCode;
     String mBat;
     String mTvLucky;
+    String mCode;
     List<LanderInEntity> mLanderInEntity;
     PopupWindow popGridWindow;
     @Override
@@ -127,7 +128,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, RecordIndianaEntity recordIndianaEntity, int position) {
-                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone());
+                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone().substring(0,3)+"******"+recordIndianaEntity.getRec_phone().substring(9,recordIndianaEntity.getRec_phone().length()));
                 holder.setText(R.id.product_tv2,recordIndianaEntity.getRec_participate_count());
                 holder.setText(R.id.product_tv3,recordIndianaEntity.getRec_participate_date());
             }
@@ -196,7 +197,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
         mBat = entity.getBat_code();
         mTvLucky = entity.getSna_lucky_num();
         mTvCity.setText(mTvLucky);
-        mTvUser.setText(entity.getSna_lucky_people());
+        mTvUser.setText(entity.getSna_lucky_people().substring(0,3)+"******"+entity.getSna_lucky_people().substring(9,entity.getSna_lucky_people().length()));
         mTvData.setText(entity.getParticipate_date());
         ImageLoaderUtils.displayAvatarImage(entity.getHeadImg(),mTranImg);
     }
@@ -277,6 +278,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
         mPle.setText("总需"+data.get(0).getSna_total_count()+"人次");
         mTvPle.setText(data.get(0).getSna_sell_out());
         mProData.setText(data.get(0).getSna_begin_date());
+        mCode = data.get(0).getSna_code();
     }
 
     @Override
@@ -295,7 +297,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
                 UIHelper.showFragment(getActivity(), SimplePage.CALULATION,b);//计算详情
                 break;
             case R.id.issue_product_it:
-                IssueUiGoto.graphicDetails(getActivity(),AppConfig.URL_TEMPLATE,"图文详情");
+                IssueUiGoto.graphicDetails(getActivity(),AppConfig.BASE_URL+AppConfig.Server_SnatchCommodity+mCode,"图文详情");
                 break;
         }
         super.onClick(v);

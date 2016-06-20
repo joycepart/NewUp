@@ -73,9 +73,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LogUtils.e("onCreate---","onCreate");
-        super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(ProductBrowserActivity.this,mPermissionList, 100);
-
         Intent mIntent = getIntent();
         if (mIntent != null) {
             mPic = mIntent.getStringExtra("pic");
@@ -90,17 +88,17 @@ public class ProductBrowserActivity extends BaseTitleActivity {
             LogUtils.e("mTargetUrl---",""+mTargetUrl);
 
         }
-        setTitleText("商品详情");
-
+        super.onCreate(savedInstanceState);
 
     }
 
     @Override
     public void initView() {
         LogUtils.e("initView---","initView");
+        setTitleText("商品详情");
         mWebView = (ProgressWebView) findViewById(R.id.browser_product_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(mUrl);
+
 
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         mBaseEnsure.setVisibility(View.VISIBLE);
@@ -111,6 +109,13 @@ public class ProductBrowserActivity extends BaseTitleActivity {
 
         mProBottom.setOnClickListener(this);
         mPlace.setOnClickListener(this);
+    }
+
+    @Override
+    public void initData() {
+        LogUtils.e("initData---","initData");
+        mWebView.loadUrl(mUrl);
+
     }
 
     @Override
@@ -239,11 +244,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
         }
     }
 
-    @Override
-    public void initData() {
-        LogUtils.e("initData---","initData");
 
-    }
 
     @Override
     protected void baseGoBack() {

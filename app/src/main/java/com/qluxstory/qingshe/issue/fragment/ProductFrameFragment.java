@@ -141,7 +141,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, RecordIndianaEntity recordIndianaEntity, int position) {
-                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone());
+                holder.setText(R.id.product_tv1,recordIndianaEntity.getRec_phone().substring(0,3)+"******"+recordIndianaEntity.getRec_phone().substring(9,recordIndianaEntity.getRec_phone().length()));
                 holder.setText(R.id.product_tv2,recordIndianaEntity.getRec_participate_count());
                 holder.setText(R.id.product_tv3,recordIndianaEntity.getRec_participate_date());
             }
@@ -292,7 +292,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.issue_product_it:
-                IssueUiGoto.graphicDetails(getActivity(),AppConfig.URL_TEMPLATE,"图文详情");
+                IssueUiGoto.graphicDetails(getActivity(),AppConfig.BASE_URL+AppConfig.Server_SnatchCommodity+mSnaCode,"图文详情");
                 break;
             case R.id.issue_product_past:
                 Bundle b = new Bundle();

@@ -159,7 +159,7 @@ public class SettlementActivity extends BaseTitleActivity {
                 baseGoBack();
                 break;
             case R.id.set_tv:
-                IssueUiGoto.special(this,AppConfig.Server_Html+"");
+                IssueUiGoto.special(this,AppConfig.SERVICE_AGREEMENT);
                 break;
             case R.id.set_pay_Btn:
                 settlement();//下单并开奖

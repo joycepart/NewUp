@@ -183,7 +183,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
         iList = new ArrayList<>();
         pList = new ArrayList<>();
         for(int i = 0;i<data.size();i++){
-            iList.add(data.get(i).getSna_lucky_people());
+            iList.add(data.get(i).getSna_lucky_people().substring(0,3)+"******"+data.get(i).getSna_lucky_people().substring(9,data.get(i).getSna_lucky_people().length()));
         }
         for(int i = 0;i<data.size();i++){
             pList.add(data.get(i).getSna_title());

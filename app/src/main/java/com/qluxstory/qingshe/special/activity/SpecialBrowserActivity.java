@@ -51,7 +51,7 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
     String mTargetUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        LogUtils.e("onCreate---1","onCreate1");
         ActivityCompat.requestPermissions(SpecialBrowserActivity.this,mPermissionList, 100);
 
         image = new UMImage(SpecialBrowserActivity.this, R.drawable.logo);
@@ -65,16 +65,20 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
             mTargetUrl =  AppConfig.BASE_URL+"/JTh5/Zhuanti.html?specialid="+id;
 
         }
+        super.onCreate(savedInstanceState);
         if (!TextUtils.isEmpty(title)) {
             setTitleText(title);
         }
+        LogUtils.e("onCreate---2","onCreate2");
+
     }
 
     @Override
     public void initView() {
+        LogUtils.e("initView---","initView");
         mWebView = (ProgressWebView) findViewById(R.id.browser_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(strUrl);
+
 
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         //初始化分享按钮图片大小
@@ -87,11 +91,13 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
+        LogUtils.e("initData---","initData");
+        mWebView.loadUrl(strUrl);
     }
 
     @Override
     protected int getContentResId() {
+        LogUtils.e("getContentResId---","getContentResId");
         return R.layout.browser;
     }
 

@@ -55,7 +55,7 @@
                 android:id="@+id/product_progress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_35"
-                android:layout_marginTop="@dimen/ds_20"
+                android:layout_marginTop="@dimen/ds_19"
                 style="@style/ProgressBar_Mini"
                 android:layout_marginRight="@dimen/ds_40"
                 android:layout_marginLeft="@dimen/ds_40"

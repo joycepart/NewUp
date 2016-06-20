@@ -18,18 +18,19 @@ public class AppConfig {
 	public static final String ERROR_REQ_MSG="请求失败";
 
 	public static final String SUCCESS="1";
-	public static final String URL_ABOUT_RETURN="http://103.10.84.186:8099/JTh5/About_return.html";
-	public static final String URL_ABOUT_US="http://103.10.84.186:8099/JTh5/About_us.html";
-	public static final String URL_AGREEMENT="http://103.10.84.186:8099/JTh5/Agreement.html";
-	public static final String URL_INFORMATION="http://103.10.84.186:8099/JTh5/Copyright_Information.html";
-	public static final String URL_TEMPLATE="http://103.10.84.186:8099/JTh5/FocusMapClickTemplate.html";
-	public static final String URL_INTRODUCE="http://103.10.84.186:8099/JTh5/Introduce.html";
-	public static final String URL_OFFLINE="http://103.10.84.186:8099/JTh5/Offline_store.html";
-	public static final String URL_QQ="http://103.10.84.186:8099/JTh5/QQ_group.html";
-	public static final String URL_SPECIAL="http://103.10.84.186:8099/JTh5/Special_details.html";
-	public static final String URL_TRANSACTION="http://103.10.84.186:8099/JTh5/Transaction_help.html";
-	public static final String URL_XUIZHI="http://103.10.84.186:8099/JTh5/xuizhi.html";
-	public static final String URL_APPXZ="http://103.10.84.186:8099/JTh5/App_XZ.html";
+	public static final String URL_ABOUT_RETURN="http://60.205.4.101:8099/JTh5/About_return.html";
+	public static final String URL_ABOUT_US="http://60.205.4.101:8099/JTh5/About_us.html";
+	public static final String URL_AGREEMENT="http://60.205.4.101:8099/JTh5/Agreement.html";
+	public static final String URL_INFORMATION="http://60.205.4.101:8099/JTh5/Copyright_Information.html";
+	public static final String URL_TEMPLATE="http://60.205.4.101:8099/JTh5/FocusMapClickTemplate.html";
+	public static final String URL_INTRODUCE="http://60.205.4.101:8099/JTh5/Introduce.html";
+	public static final String URL_OFFLINE="http://60.205.4.101:8099/JTh5/Offline_store.html";
+	public static final String URL_QQ="http://60.205.4.101:8099/JTh5/QQ_group.html";
+	public static final String URL_SPECIAL="http://60.205.4.101:8099/JTh5/Special_details.html";
+	public static final String URL_TRANSACTION="http://60.205.4.101:8099/JTh5/Transaction_help.html";
+	public static final String URL_XUIZHI="http://60.205.4.101:8099/JTh5/xuizhi.html";
+	public static final String URL_APPXZ="http://60.205.4.101:8099/JTh5/App_XZ.html";
+	public static final String SERVICE_AGREEMENT="http://60.205.4.101:8099/JTh5/yiyuan.html";
 	public static final String SIGN_1="ForMyLifeIwillOverxs";
 
 

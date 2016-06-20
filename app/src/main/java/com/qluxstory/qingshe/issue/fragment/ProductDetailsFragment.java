@@ -132,11 +132,30 @@ public class ProductDetailsFragment extends BaseFragment {
                 break;
             case R.id.fre_btn:
                 mNumber = mNum.getText().toString();
-                Bundle bundle = new Bundle();
-                issueProduct.setmBalance(mNumber);
-                IssueUiGoto.settlement(getActivity(),bundle);//结算
-                backgroundAlpha(1f);
-                popWindow.dismiss();
+                int nm = Integer.valueOf(mNumber);
+                int total = Integer.valueOf(issueProduct.getmTotalCount());
+                if(nm>total){
+                    DialogUtils.showPrompt(getActivity(),"参与人次不能大于揭晓所需人次","知道了");
+                    backgroundAlpha(1f);
+                    popWindow.dismiss();
+                }
+                else if(nm == 0){
+                    mNum.setText("1");
+                    mNumber = "1";
+                    Bundle bundle = new Bundle();
+                    issueProduct.setmBalance(mNumber);
+                    IssueUiGoto.settlement(getActivity(),bundle);//结算
+                    backgroundAlpha(1f);
+                    popWindow.dismiss();
+                }
+                else {
+                    Bundle bundle = new Bundle();
+                    issueProduct.setmBalance(mNumber);
+                    IssueUiGoto.settlement(getActivity(),bundle);//结算
+                    backgroundAlpha(1f);
+                    popWindow.dismiss();
+                }
+
                 break;
         }
 

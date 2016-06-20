@@ -24,14 +24,13 @@ public class BrowserActivity extends BaseTitleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         LogUtils.e("onCreate---","onCreate");
         Intent mIntent = getIntent();
-
         if (mIntent != null) {
             strUrl = mIntent.getStringExtra("url");
             title = mIntent.getStringExtra("title");
             LogUtils.e("strUrl------------",strUrl);
-
 
         }
         super.onCreate(savedInstanceState);
@@ -45,13 +44,14 @@ public class BrowserActivity extends BaseTitleActivity {
         LogUtils.e("initView---","initView");
         mWebView = (ProgressWebView) findViewById(R.id.browser_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(strUrl);
+
 
     }
 
     @Override
     public void initData() {
         LogUtils.e("initData---","initData");
+        mWebView.loadUrl(strUrl);
 
     }
 

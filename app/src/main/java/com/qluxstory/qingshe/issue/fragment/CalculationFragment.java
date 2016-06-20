@@ -28,6 +28,8 @@ public class CalculationFragment extends BasePullScrollViewFragment {
     RecyclerView mCalculationList;
     @Bind(R.id.cal_tv_lucky)
     TextView mCalTvLucky;
+    @Bind(R.id.calcul_num_total)
+    TextView mTotal;
     BaseSimpleRecyclerAdapter mCalculationAdapter;
     String mBatCode;
     String mTvLucky;
@@ -54,7 +56,7 @@ public class CalculationFragment extends BasePullScrollViewFragment {
             public void bindData(BaseRecyclerViewHolder holder, CalculationEntity calculationEntity, int position) {
                 holder.setText(R.id.list_tv1,calculationEntity.getCalc_date());
                 holder.setText(R.id.list_tv3,calculationEntity.getCalc_number());
-                holder.setText(R.id.list_tv4,calculationEntity.getCalc_people());
+                holder.setText(R.id.list_tv4,calculationEntity.getCalc_people().substring(0,3)+"******"+calculationEntity.getCalc_people().substring(9,calculationEntity.getCalc_people().length()));
 
             }
 
@@ -77,6 +79,7 @@ public class CalculationFragment extends BasePullScrollViewFragment {
             public void onSuccess(CalculationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("计算详情成功");
+                    mTotal.setText(result.getData().get(0).getSna_calc());
                     mCalculationAdapter.removeAll();
                     mCalculationAdapter.append(result.getData());
                 }
