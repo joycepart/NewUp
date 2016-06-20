@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/place_address"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ds_200"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_80"
+                android:layout_marginTop="@dimen/ds_30"
+                >
+                <TextView
+                    android:id="@+id/place_tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text="@string/order_receipt_address"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_45"/>
+                <TextView
+                    android:id="@+id/place_tv_address_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:text="111"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_40"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_80"
+                android:layout_marginTop="@dimen/ds_10"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/place_tv_address_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_45"/>
+                <TextView
+                    android:id="@+id/place_tv_address_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:text=""
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_45"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/color_cc"/>
+
+</LinearLayout>

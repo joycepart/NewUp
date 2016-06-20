@@ -15,10 +15,10 @@ import java.util.List;
 /**
  * Created by lenovo on 2016/6/15.
  */
-public class GridAdapter extends BaseAdapter {
+public class GridProductAdapter extends BaseAdapter {
     private final List<LanderInEntity> mEntity;
     private Context mContext;
-    public GridAdapter(Context context, List<LanderInEntity> mLanderInEntity) {
+    public GridProductAdapter(Context context, List<LanderInEntity> mLanderInEntity) {
         this.mContext = context;
         this.mEntity = mLanderInEntity;
 

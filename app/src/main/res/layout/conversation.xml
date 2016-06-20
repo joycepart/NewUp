@@ -7,17 +7,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_cc">
+        android:background="@color/color_ff">
 
         <ImageButton
             android:id="@+id/CommodityActivity_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/ds_80"
+            android:layout_height="@dimen/ds_80"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@color/color_cc"
             android:onClick="clickButton"
-            android:src="@drawable/home_left_arrow_icon" />
+            android:background="@drawable/back"
+           />
 
         <TextView
             android:id="@+id/OtherActivity_Title"
@@ -25,8 +25,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="客服"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textColor="@color/color_00"
+            android:textSize="@dimen/fs_50" />
+        <ImageView
+            android:id="@+id/conver_img"
+            android:layout_width="@dimen/ds_80"
+            android:layout_height="@dimen/ds_80"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/me_icon8"/>
     </RelativeLayout>
     <!-- 会话页面 Fragment -->
 

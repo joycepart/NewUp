@@ -1,10 +1,18 @@
 package com.qluxstory.qingshe.issue.fragment;
 
+import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -27,11 +35,13 @@ import com.qluxstory.qingshe.home.dto.TranDTO;
 import com.qluxstory.qingshe.home.entity.TranEntity;
 import com.qluxstory.qingshe.home.entity.TranResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
+import com.qluxstory.qingshe.issue.adapter.GridProductAdapter;
 import com.qluxstory.qingshe.issue.dto.AnnouncedDTO;
 import com.qluxstory.qingshe.issue.dto.LanderInDTO;
 import com.qluxstory.qingshe.issue.dto.PicDTO;
 import com.qluxstory.qingshe.issue.entity.AnnouncedEntity;
 import com.qluxstory.qingshe.issue.entity.AnnouncedResult;
+import com.qluxstory.qingshe.issue.entity.LanderInEntity;
 import com.qluxstory.qingshe.issue.entity.LanderInResult;
 import com.qluxstory.qingshe.issue.entity.PicEntity;
 import com.qluxstory.qingshe.issue.entity.PicResult;
@@ -68,26 +78,30 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     TextView mTvPle;
     @Bind(R.id.ple)
     TextView mPle;
-    @Bind(R.id.tarn_tv_num)
-    TextView mTvNum;
     @Bind(R.id.product_data)
     TextView mProData;
-    @Bind(R.id.issue_tv_yn)
-    TextView mTvYn;
     @Bind(R.id.issue_tran_img)
     ImageView mTranImg;
     @Bind(R.id.issue_calculation)
     TextView mCalculation;
-    @Bind(R.id.past_product_lin)
-    LinearLayout mProductLin;
     @Bind(R.id.issue_product_it)
     LinearLayout mProductIt;
+    @Bind(R.id.tran_progress)
+    ProgressBar mProgress;
+    @Bind(R.id.tran_participate)
+    TextView mTranPate;
+    @Bind(R.id.tran_lin)
+    LinearLayout mTranLin;
+    @Bind(R.id.tran_num)
+    TextView mTranNum;
 
     BaseSimpleRecyclerAdapter mTranAdapter;
     String mSnaCode;
     String mBatCode;
     String mBat;
     String mTvLucky;
+    List<LanderInEntity> mLanderInEntity;
+    PopupWindow popGridWindow;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_past_frame;
@@ -95,11 +109,13 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
+        mProgress.setProgress(100);
         Bundle b  = getArguments();
         if(b!=null){
             mSnaCode = b.getString("mSna");
             mBatCode = b.getString("mBat");
         }
+        mTranLin.setOnClickListener(this);
         mCalculation.setOnClickListener(this);
         mProductIt.setOnClickListener(this);
         mPtdList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
@@ -142,14 +158,14 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
             public void onSuccess(LanderInResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("登陆者参与的次数成功");
-                    if(null==result.getData()){
-                        mProductLin.setVisibility(View.GONE);
-                        mTvYn.setVisibility(View.VISIBLE);
-                        mTvYn.setText("您未参与本次夺宝活动");
+                    if(result.getData()==null||result.getData().size()==0){
+                        mTranLin.setVisibility(View.GONE);
+                        mTranPate.setVisibility(View.VISIBLE);
                     }else {
-                        mProductLin.setVisibility(View.VISIBLE);
-                        mTvYn.setVisibility(View.GONE);
-                        mTvNum.setText(result.getData().get(0).getReceive_ran_num());
+                        mLanderInEntity = result.getData();
+                        mTranLin.setVisibility(View.VISIBLE);
+                        mTranPate.setVisibility(View.GONE);
+                        mTranNum.setText(result.getPage_total());
                     }
 
                 }
@@ -189,7 +205,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
         RecordIndianaDTO dto=new RecordIndianaDTO();
         dto.setBat_code(mBatCode);
         dto.setPageSize(PAGE_SIZE);
-        dto.setPageIndex(mCurrentPage);
+        dto.setPageIndex(PAGE_INDEX);
         CommonApiClient.recordsDetails(getActivity(), dto, new CallBack<RecordIndianaResult>() {
             @Override
             public void onSuccess(RecordIndianaResult result) {
@@ -266,8 +282,12 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.in_btn:
+            case R.id.tran_lin:
+                showPopNm(mLanderInEntity);
                 break;
+            case R.id.grid_tv:
+                backgroundAlpha(1f);
+                popGridWindow.dismiss();
             case R.id.issue_calculation:
                 Bundle b = new Bundle();
                 b.putString("mBat",mBat);
@@ -279,6 +299,52 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
                 break;
         }
         super.onClick(v);
+    }
+
+    private void showPopNm(List<LanderInEntity> mLanderInEntity) {
+        LogUtils.e("showPopNm---","showPopNm");
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.from(getActivity()).inflate(R.layout.activity_grid_num, null);
+        popGridWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+
+        backgroundAlpha(0.7f);
+        // 需要设置一下此参数，点击外边可消失
+        popGridWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击窗口外边窗口消失
+        popGridWindow.setOutsideTouchable(true);
+        // 设置此参数获得焦点，否则无法点击
+        popGridWindow.setFocusable(false);
+        TextView girdTv= (TextView) view.findViewById(R.id.grid_tv);
+        girdTv.setOnClickListener(this);
+        GridView girdView= (GridView) view.findViewById(R.id.grid_num);
+        girdView.setAdapter(new GridProductAdapter(getActivity(), mLanderInEntity));
+        View parent = getActivity().getWindow().getDecorView();//高度为手机实际的像素高度
+        popGridWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        //添加pop窗口关闭事件
+        popGridWindow.setOnDismissListener(new poponDismissListener());
+    }
+
+    public class poponDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            LogUtils.e("List_noteTypeActivity:", "我是关闭事件");
+            backgroundAlpha(1f);
+            popGridWindow.dismiss();
+        }
+
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.unused.adapter;
+package com.qluxstory.qingshe.special.adapter;
 
 import android.widget.ImageView;
 
@@ -6,7 +6,7 @@ import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
-import com.qluxstory.qingshe.unused.entity.HotTopEntity;
+import com.qluxstory.qingshe.special.entity.HotTopEntity;
 
 /**
  * Created by lenovo on 2016/5/13.

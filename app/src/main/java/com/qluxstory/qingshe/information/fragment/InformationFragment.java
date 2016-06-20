@@ -30,15 +30,13 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
     private String mNewsBigTitle;
     private String mNewsCode;
     private String mUrl;
+    InformationEntity entity;
 
 
     @Override
     public void initView(View view) {
         super.initView(view);
-        Boolean bool= AppContext.get("isLogin",true);
-        if(bool!=true){
-            MeUiGoto.login(getActivity());//登录
-        }
+        LogUtils.e("initView-----","initView");
 
     }
 
@@ -59,6 +57,12 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     protected void sendRequestData() {
+
+        boolean bool= AppContext.get("isLogin",false);
+        LogUtils.e("sendRequestData-----",""+bool);
+        if(bool!=true){
+            MeUiGoto.login(getActivity());//登录
+        }
         InformationDTO gdto=new InformationDTO();
         gdto.setUserPhone(AppContext.get("mobileNum",""));
         gdto.setPageSize(PAGE_SIZE);
@@ -98,8 +102,9 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
-        mNewsBigTitle =mInforData.get(position).getNews_big_title();
-        mNewsCode = mInforData.get(position).getNews_code();
+        entity = (InformationEntity) itemBean;
+        mNewsBigTitle =entity.getNews_big_title();
+        mNewsCode = entity.getNews_code();
         mUrl= AppConfig.BASE_URL+AppConfig.News_Html+mNewsCode;
         InformationUiGoto.newsDetail(getActivity(),mNewsBigTitle,mUrl);//新闻详情页，h5页面
         super.onItemClick(itemView, itemBean, position);

@@ -47,6 +47,7 @@ import com.qluxstory.qingshe.issue.entity.PicResult;
 import com.qluxstory.qingshe.issue.entity.SettlementResult;
 import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
+import com.qluxstory.qingshe.me.dto.CancelDTO;
 import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
@@ -75,7 +76,7 @@ import com.qluxstory.qingshe.me.entity.RecordsResult;
 import com.qluxstory.qingshe.me.entity.TransactionResult;
 import com.qluxstory.qingshe.me.entity.UpDataResult;
 import com.qluxstory.qingshe.me.entity.UserPicResult;
-import com.qluxstory.qingshe.unused.entity.HotTopResult;
+import com.qluxstory.qingshe.special.entity.HotTopResult;
 
 public class CommonApiClient extends BaseApiClient {
 
@@ -630,6 +631,20 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<CuringOrderListResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback,CuringOrderListResult.class);
         post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResDtByJsonOrderCuringApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 取消订单
+     * @param activity
+     * @param dto
+     * @param callback
+     */
+    public static void cancel(Activity activity, CancelDTO
+            dto, CallBack<CuringOrderListResult> callback) {
+        AsyncCallBack<CuringOrderListResult> asyncCallBack = new AsyncCallBack<>(
+                activity, callback,CuringOrderListResult.class);
+        post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResEdtOrderJsonCancelPaymentApi"), dto,
                 asyncCallBack);
     }
 

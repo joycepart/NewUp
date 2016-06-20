@@ -14,6 +14,7 @@ import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.cache.CacheManager;
 import com.qluxstory.qingshe.common.entity.BaseEntity;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.StringUtils;
 import com.qluxstory.qingshe.common.utils.TDevice;
 import com.qluxstory.qingshe.common.widget.EmptyLayout;
@@ -274,6 +275,8 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
         @Override
         protected Void doInBackground(Void... params) {
             if (mContext == null) return null;
+            LogUtils.e("seri---",""+seri);
+            LogUtils.e("key---",""+key);
             CacheManager.saveObject(seri, key);
             return null;
         }

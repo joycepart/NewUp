@@ -45,13 +45,13 @@ public class AppContext  extends BaseApplication {
         this.editor.putString(ISSUEPROUDCTD, str);
         this.editor.commit();
         mIssueProduct = issueProduct;
-    }
+   }
 
     public IssueProduct getIssueProduct() {
         if (mIssueProduct == null) {
             mIssueProduct = new IssueProduct();
-            // 获取序列化的数据
-            String str = this.sp.getString(ISSUEPROUDCTD, "");
+           // 获取序列化的数据
+           String str = this.sp.getString(ISSUEPROUDCTD, "");
 
             try {
                 Object obj = SerializableUtils.str2Obj(str);
@@ -59,13 +59,13 @@ public class AppContext  extends BaseApplication {
                     mIssueProduct = (IssueProduct) obj;
                 }
 
-            } catch (StreamCorruptedException e) {
+           } catch (StreamCorruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return mIssueProduct;
+       return mIssueProduct;
     }
     /**
      * 专业养护之商品信息

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/ds_200"
-    android:orientation="horizontal">
+    android:layout_height="@dimen/ds_180"
+   >
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -12,6 +16,7 @@
             android:text="@string/me_income_meney"
             android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
+
         <TextView
             android:id="@+id/placeorder_tv"
             android:layout_width="wrap_content"
@@ -21,37 +26,51 @@
             android:text="199.00"
             android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
+    </LinearLayout>
     <LinearLayout
-        android:id="@+id/pro_bottom_kf"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/ds_60">
-            <ImageView
+
+        <LinearLayout
+            android:id="@+id/pro_btn_kf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+        <ImageView
                 android:layout_width="@dimen/ds_100"
                 android:layout_height="@dimen/ds_100"
                 android:layout_gravity="center"
-                android:background="@drawable/detaile_talk"/>
+                android:background="@drawable/lianxiakefu"/>
         <TextView
-            android:layout_width="@dimen/ds_140"
+            android:layout_width="@dimen/ds_80"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:maxLines="2"
             android:layout_marginLeft="@dimen/ds_10"
+            android:layout_marginRight="@dimen/ds_50"
             android:text="@string/order_contact"
-            android:textSize="@dimen/fs_50"
+            android:textSize="@dimen/fs_30"
             android:textColor="@color/color_00"/>
-    </LinearLayout>
+        </LinearLayout>
         <Button
             android:id="@+id/place_btn"
             android:layout_width="@dimen/ds_400"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginLeft="@dimen/ds_70"
+            android:layout_marginBottom="@dimen/ds_30"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_marginTop="@dimen/ds_30"
             android:background="@drawable/btn_click"
             android:text="@string/order_immediate"
             android:textColor="@color/color_ff"
             android:textSize="@dimen/fs_60" />
-</LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

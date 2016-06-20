@@ -28,10 +28,6 @@ import io.rong.imkit.RongIM;
 
  */
 public class BaseApplication  extends Application{
-
-
-
-
     private static String PREF_NAME = "qingshe_app.pref";
     private static String LAST_REFRESH_TIME = "last_refresh_time.pref";
     static Context _context;
@@ -68,6 +64,7 @@ public class BaseApplication  extends Application{
         JPushInterface.init(this);     		// 初始化 JPush
         LogUtils.e("TAG", "[ExampleApplication] onCreate");
 
+
         try {
             helper=new DiskLruCacheHelper(_context);
         } catch (IOException e) {
@@ -75,6 +72,8 @@ public class BaseApplication  extends Application{
         }
 
     }
+
+
 
     /**
      * 获得当前进程的名字
@@ -223,4 +222,5 @@ public class BaseApplication  extends Application{
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
     }
+
 }

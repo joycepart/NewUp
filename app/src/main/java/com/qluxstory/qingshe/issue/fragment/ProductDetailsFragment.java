@@ -15,10 +15,12 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 
 import butterknife.Bind;
 
@@ -34,6 +36,7 @@ public class ProductDetailsFragment extends BaseFragment {
     private String mNumber;
     Dialog dialog;
     PopupWindow popWindow;
+    IssueProduct issueProduct;
 
     @Override
     protected void retry() {
@@ -48,6 +51,7 @@ public class ProductDetailsFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
+        issueProduct = AppContext.getInstance().getIssueProduct();
         ProductFrameFragment frameFragment = new ProductFrameFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -129,7 +133,7 @@ public class ProductDetailsFragment extends BaseFragment {
             case R.id.fre_btn:
                 mNumber = mNum.getText().toString();
                 Bundle bundle = new Bundle();
-                bundle.putString("mBalance",mNumber);
+                issueProduct.setmBalance(mNumber);
                 IssueUiGoto.settlement(getActivity(),bundle);//结算
                 backgroundAlpha(1f);
                 popWindow.dismiss();

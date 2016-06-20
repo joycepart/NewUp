@@ -58,6 +58,7 @@
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/ds_30"
                     android:text="@string/me_name"
                     android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"
@@ -65,11 +66,11 @@
                     android:layout_marginLeft="@dimen/ds_40"
                     />
                 <ImageView
-                    android:layout_width="@dimen/ds_100"
-                    android:layout_height="@dimen/ds_100"
+                    android:layout_width="@dimen/ds_50"
+                    android:layout_height="@dimen/ds_80"
                     android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/ds_20"
-                    android:background="@drawable/home_right_arrow_icon"/>
+                    android:layout_marginRight="@dimen/ds_40"
+                    android:background="@drawable/me_arrow2"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
@@ -108,7 +109,7 @@
                     android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"
                     android:gravity="center"
-                    android:layout_marginRight="@dimen/ds_80"
+                    android:layout_marginRight="@dimen/ds_120"
                     android:layout_marginLeft="@dimen/ds_40"
                     />
 

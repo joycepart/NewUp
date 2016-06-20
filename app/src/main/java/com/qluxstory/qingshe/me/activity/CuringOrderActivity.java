@@ -3,13 +3,12 @@ package com.qluxstory.qingshe.me.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.adapter.TabListAdapter;
-import com.qluxstory.qingshe.me.fragment.CuringOrderListFragment;
+import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.widget.SlidingTabLayout;
+import com.qluxstory.qingshe.me.fragment.CuringOrderListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,6 @@ public class CuringOrderActivity extends BaseTitleActivity {
     public static final int TAB_B = 2;
     public static final int TAB_C = 3;
     public static final int TAB_D = 4;
-    @Bind(R.id.base_titlebar_ensure)
-    TextView mBaseTitlebarEnsure;
     @Bind(R.id.curing_tab)
     SlidingTabLayout mCuringTab;
     @Bind(R.id.curing_content)
@@ -36,7 +33,6 @@ public class CuringOrderActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("养护订单列表");
-        mBaseTitlebarEnsure.setVisibility(View.GONE);
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(CuringOrderListFragment.newInstance(TAB_A));
         fragmentList.add(CuringOrderListFragment.newInstance(TAB_B));

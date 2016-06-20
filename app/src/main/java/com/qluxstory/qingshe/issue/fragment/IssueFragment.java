@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
@@ -48,6 +49,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
     RecyclerView mIssuelList;
     @Bind(R.id.ll_text1)
     LinearLayout mLlText1;
+    ProgressBar mProgress;
     @Bind(R.id.ll_text2)
     LinearLayout mLlText2;
     @Bind(R.id.ll_text1_tv)
@@ -57,11 +59,12 @@ public class IssueFragment extends BasePullScrollViewFragment {
     @Bind(R.id.issue_top_img)
     ImageView mIssueTopImg;
     BaseSimpleRecyclerAdapter mIssueAdapter;
-    IssueProduct issueProduct;
     private int flag=0;//0代表 text1 out
     private int index=2;
     Animation in,out;
     Handler mHandler=new Handler();
+    private String code;
+    IssueProduct issueProduct;
 
 
     @Override
@@ -84,6 +87,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, IndianaListEntity indianaListEntity, int position) {
+                mProgress = holder.getView(R.id.issue_progress);
                 holder.setText(R.id.issue_tv1,"第"+indianaListEntity.getSna_term()+"期");
                 holder.setText(R.id.issue_tv2,indianaListEntity.getSna_title());
                 int mSell;
@@ -98,6 +102,9 @@ public class IssueFragment extends BasePullScrollViewFragment {
                 holder.setText(R.id.issue_tv3,mStr);
                 ImageView iv=holder.getView(R.id.issue_img);
                 ImageLoaderUtils.displayImage(indianaListEntity.getPic_url(),iv);
+                LogUtils.e("setmPicUrl----",""+indianaListEntity.getPic_url());
+//                issueProduct.setmPicUrl(indianaListEntity.getPic_url());
+                mProgress.setProgress(mSell*100/mTotal);
             }
 
 
@@ -106,13 +113,12 @@ public class IssueFragment extends BasePullScrollViewFragment {
         mIssueAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
-                Boolean bool= AppContext.get("isLogin",true);
-                if(bool!=true){
-                    MeUiGoto.login(getActivity());//登录
-                }else {
+                boolean bool= AppContext.get("isLogin",false);
+                if(bool=true){
                     Bundle b = new Bundle();
                     IndianaListEntity entity=(IndianaListEntity)itemBean;
                     issueProduct.setmPicUrl(entity.getPic_url());
+                    LogUtils.e("setmPicUrl----",""+entity.getPic_url());
                     String bat = entity.getBat_code();
                     String sna = entity.getSna_code();
                     String url = entity.getPic_url();
@@ -120,6 +126,9 @@ public class IssueFragment extends BasePullScrollViewFragment {
                     b.putString("sna",sna);
                     b.putString("mPic",url);
                     UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
+
+                }else {
+                    MeUiGoto.login(getActivity());//登录
                 }
 
             }
@@ -179,7 +188,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
         for(int i = 0;i<data.size();i++){
             pList.add(data.get(i).getSna_title());
         }
-        mHandler.postDelayed(runnable,5000);
+        mHandler.postDelayed(runnable,2000);
     }
 
 
@@ -190,6 +199,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onSuccess(AdvertisingResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("广告图片成功");
+                    code = result.getData().get(0).getID();
                     ImageLoaderUtils.displayImage(result.getData().get(0).getSpec_pic(),mIssueTopImg);
 
                 }
@@ -207,15 +217,16 @@ public class IssueFragment extends BasePullScrollViewFragment {
     private void reqList() {
         BaseDTO dto=new BaseDTO();
         dto.setPageSize(PAGE_SIZE);
-        dto.setPageIndex(mCurrentPage);
+        dto.setPageIndex(PAGE_INDEX);
         CommonApiClient.indianaList(this, dto, new CallBack<IndianaListResult>() {
 
             @Override
             public void onSuccess(IndianaListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝列表成功");
+                    mIssueAdapter.removeAll();
                     mIssueAdapter.append(result.getData());
-//                    refreshComplete();
+                    refreshComplete();
 
                 }
             }
@@ -228,7 +239,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.issue_top_img:
-                IssueUiGoto.special(getActivity(),AppConfig.URL_SPECIAL);
+                IssueUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_SnatchCommodity+code);
                 break;
 
         }

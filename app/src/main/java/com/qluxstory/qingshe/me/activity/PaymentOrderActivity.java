@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,36 +50,55 @@ import butterknife.Bind;
  * 支付订单页面
  */
 public class PaymentOrderActivity extends BaseTitleActivity {
+    @Bind(R.id.placement_address_time)
+    RelativeLayout mTime;
+    @Bind(R.id.placement_delivery)
+    LinearLayout mPlaceTake;
+
+    @Bind(R.id.place_address)
+    LinearLayout mPlaceAddress;
+    @Bind(R.id.place_send)
+    LinearLayout mPlaceSend;
+
+    @Bind(R.id.placement_tv)
+    TextView mPlaTv;
+    @Bind(R.id.placement_tv1)
+    TextView mPlaTv1;
+
+    @Bind(R.id.place_tv_address)
+    TextView mTvAddress;
+    @Bind(R.id.place_tv_address_name)
+    TextView mAddressName;
+    @Bind(R.id.place_tv_address_city)
+    TextView mAddressCity;
+    @Bind(R.id.place_tv_address_add)
+    TextView mAddressAdd;
+    @Bind(R.id.place_send_tv)
+    TextView mPlaceSendTv;
+    @Bind(R.id.place_send_num)
+    TextView mSendAddress;
+    @Bind(R.id.place_send_tv_city)
+    TextView mSendVity;
+    @Bind(R.id.place_send_tv_add)
+    TextView mSendAdd;
+    @Bind(R.id.placement_tv_address_time)
+    TextView mPlacementTime;
+    @Bind(R.id.placement_tv_add_time)
+    TextView mAddTime;
     @Bind(R.id.pay_tit_img)
     ImageView mPayImg;
-    @Bind(R.id.pay_tv_get)
-    TextView mPayGet;
+    @Bind(R.id.pay_curing_img)
+    ImageView mImg;
     @Bind(R.id.tv_balance)
     TextView mTvBalance;
-    @Bind(R.id.pay_tv_address)
-    TextView mPayAddress;
-    @Bind(R.id.pay_tv_pri)
-    TextView mPayPri;
-    @Bind(R.id.pay_tv_details)
-    TextView mPayDetails;
-    @Bind(R.id.pay_tv_send)
-    TextView mPayTvSend;
-    @Bind(R.id.pay_tv_city)
-    TextView mPayCity;
-    @Bind(R.id.pay_curing_img)
-    ImageView mPayCuringImg;
+    @Bind(R.id.pay_total)
+    TextView mPayTotal;
     @Bind(R.id.pay_curing_tv1)
     TextView mPayTv1;
     @Bind(R.id.pay_tv2)
     TextView mPayTv2;
-    @Bind(R.id.pay_mode)
-    TextView mPayMode;
     @Bind(R.id.pay_curing_tv3)
     TextView mPayTv3;
-    @Bind(R.id.pay_send)
-    TextView mPaySend;
-    @Bind(R.id.pay_total)
-    TextView mPayTotal;
     @Bind(R.id.palce_pay_wx)
     LinearLayout mPayWx;
     @Bind(R.id.palce_pay_alipay)
@@ -162,29 +182,39 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     }
     private void bindResult(List<PaymentOrderEntity> data) {
         paymentEntity = data.get(0);
-        mPayGet.setText(paymentEntity.getConsigneeType());
+        mPlaTv.setText(paymentEntity.getConsigneeType());
         if(paymentEntity.getConsigneeType().equals("全国包回邮")){
-            mPayMode.setText("收货地址");
-            mPaySend.setText("寄送地址：");
-            mPayAddress.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
-            mPayPri.setText(paymentEntity.getProvincialCity());
-            mPayDetails.setText(paymentEntity.getAddressInDetail());
-            mPayTvSend.setText(paymentEntity.getSto_name()+ paymentEntity.getSto_phone());
-            mPayCity.setText(paymentEntity.getDis_cityAddress());
+            mPlaceAddress.setVisibility(View.VISIBLE);
+            mPlaceSend.setVisibility(View.VISIBLE);
+            mTime.setVisibility(View.GONE);
+            mTvAddress.setText("收货地址");
+            mPlaceSendTv.setText("寄送地址：");
+            mAddressName.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
+            mAddressCity.setText(paymentEntity.getProvincialCity());
+            mAddressAdd.setText(paymentEntity.getAddressInDetail());
+            mSendAddress.setText(paymentEntity.getSto_name()+ paymentEntity.getSto_phone());
+            mSendVity.setText(paymentEntity.getDis_cityAddress());
 
         }else if(paymentEntity.getConsigneeType().equals("上门取送")){
-            mPayMode.setText("上门地址");
-            mPaySend.setText("预约上门时间：");
-            mPayAddress.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
-            mPayPri.setText(paymentEntity.getProvincialCity());
-            mPayDetails.setText(paymentEntity.getAddressInDetail());
-            mPayTvSend.setText(paymentEntity.getOrderSingleTime()+"10:00 - 18:00");
+            mPlaceAddress.setVisibility(View.VISIBLE);
+            mPlaceSend.setVisibility(View.GONE);
+            mTime.setVisibility(View.VISIBLE);
+            mTvAddress.setText("上门地址");
+            mPlacementTime.setText("预约上门时间：");
+            mAddressName.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
+            mAddressCity.setText(paymentEntity.getProvincialCity());
+            mAddressAdd.setText(paymentEntity.getAddressInDetail());
+            mAddTime.setText(paymentEntity.getOrderSingleTime()+"10:00 - 18:00");
 
         }else if(paymentEntity.getConsigneeType().equals("自送门店")){
-            mPayMode.setText("门店地址");
-            mPaySend.setText("门店工作时间：");
-            mPayTvSend.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
-            mPayCity.setText(paymentEntity.getProvincialCity());
+            mPlaceAddress.setVisibility(View.GONE);
+            mPlaceSend.setVisibility(View.VISIBLE);
+            mTime.setVisibility(View.VISIBLE);
+            mPlaceSendTv.setText("门店地址");
+            mPlacementTime.setText("门店工作时间：");
+            mSendAddress.setText(paymentEntity.getConsigneeName()+ paymentEntity.getDeliveredMobile());
+            mSendVity.setText(paymentEntity.getProvincialCity());
+            mAddTime.setText("10:00 - 18:00");
 
         }
         mPayTv1.setText(paymentEntity.getComName());
@@ -197,7 +227,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         LogUtils.e("curingOrderListEntity.getServerKHImg()----", paymentEntity.getServerKHImg());
         LogUtils.e("curingOrderListEntity.getApp_show_pic()()----", paymentEntity.getApp_show_pic());
         ImageLoaderUtils.displayImage(paymentEntity.getServerKHImg(),mPayImg);
-        ImageLoaderUtils.displayImage(paymentEntity.getApp_show_pic(),mPayCuringImg);
+        ImageLoaderUtils.displayImage(paymentEntity.getApp_show_pic(),mImg);
     }
 
     @Override

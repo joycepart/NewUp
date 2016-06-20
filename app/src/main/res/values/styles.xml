@@ -80,6 +80,15 @@
         <item name="android:maxHeight">20dip</item>
     </style>
 
+    <style name="ProgressBar_Mini" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">50dip</item>
+        <item name="android:minHeight">8dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:progressDrawable">@drawable/progressbar_mini</item>
+    </style>
+
+
     <!-- 夺宝岛中的进度条 -->
     <style name="IssueProgressBarStyle" parent="@android:style/Widget.SeekBar">
         <item name="android:indeterminateOnly">false</item>

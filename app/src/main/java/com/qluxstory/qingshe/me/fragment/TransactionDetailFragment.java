@@ -59,8 +59,8 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
             public void onSuccess(TransactionResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("交易明细成功");
-                    mErrorLayout.setErrorMessage("暂无交易明细记录",mErrorLayout.FLAG_NODATA);
-                    mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorMessage("暂无明细记录",mErrorLayout.FLAG_NODATA);
+                    mErrorLayout.setErrorImag(R.drawable.siaieless2,mErrorLayout.FLAG_NODATA);
                     if(result.getData().get(0).getComTradingTime()==null){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {

@@ -14,6 +14,7 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/login_ll"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_560"
@@ -70,14 +71,14 @@
                         android:ellipsize="end"
                         android:layout_marginTop="@dimen/ds_30"
                         android:text=""
-                        android:textSize="@dimen/fs_55"
+                        android:textSize="@dimen/fs_50"
                         android:textColor="@color/color_00"/>
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="@dimen/ds_70"
-                    android:layout_height="@dimen/ds_70"
+                    android:layout_width="@dimen/ds_50"
+                    android:layout_height="@dimen/ds_80"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/ds_50"
@@ -439,49 +440,6 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_3"
-                android:layout_marginLeft="@dimen/ds_180"
-                android:background="@color/color_cc" />
-            <LinearLayout
-                android:id="@+id/user_ll_qq"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" >
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" >
-
-                    <ImageView
-                        android:id="@+id/qq_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
-                        android:paddingLeft="@dimen/ds_50"
-                        android:src="@drawable/me_icon_qq" />
-
-                    <TextView
-                        android:id="@+id/user_tv10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/qq_iv"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/ds_40"
-                        android:text="@string/tab_me_l"
-                        android:textSize="@dimen/fs_48" />
-
-                    <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/ds_10"
-                        android:src="@drawable/me_icon0" />
-                </RelativeLayout>
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

@@ -3,13 +3,12 @@ package com.qluxstory.qingshe.home.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.adapter.TabListAdapter;
-import com.qluxstory.qingshe.home.fragment.CuringFragment;
+import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.widget.SlidingTabLayout;
+import com.qluxstory.qingshe.home.fragment.CuringFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +22,6 @@ public class CuringActivity extends BaseTitleActivity {
     public static final int TAB_A = 1;
     public static final int TAB_B = 2;
     public static final int TAB_C = 3;
-    @Bind(R.id.base_titlebar_ensure)
-    TextView mBaseTitlebarEnsure;
     @Bind(R.id.cur_tab)
     SlidingTabLayout mCurTab;
     @Bind(R.id.cur_content)
@@ -36,7 +33,6 @@ public class CuringActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("专业养护");
-        mBaseTitlebarEnsure.setVisibility(View.GONE);
 
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(CuringFragment.newInstance(TAB_A));
@@ -61,7 +57,7 @@ public class CuringActivity extends BaseTitleActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.base_titlebar_back:
-                baseGoBack();
+//                baseGoBack();
                 break;
             default:
                 break;

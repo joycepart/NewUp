@@ -1,13 +1,19 @@
 package com.qluxstory.qingshe.home.activity;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,10 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
@@ -68,6 +70,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,8 +96,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mPlaTv;
     @Bind(R.id.place_send_tv)
     TextView mSendTv;
-    @Bind(R.id.place_send_tv_name)
-    TextView mSendAddress;
     @Bind(R.id.place_titlt)
     TextView mPlaceTitlt;
     @Bind(R.id.placord_dan)
@@ -139,12 +140,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mTvAddress;
     @Bind(R.id.pla_tv_add_time)
     TextView mAddTime;
+    @Bind(R.id.place_send_num)
+    TextView mSendAddress;
     @Bind(R.id.place_send_tv_city)
     TextView mSendVity;
     @Bind(R.id.place_send_tv_add)
     TextView mSendAdd;
-    @Bind(R.id.place_send_tv_ipone)
-    TextView mSendIpone;
     @Bind(R.id.place_tv_address_name)
     TextView mAddressName;
     @Bind(R.id.place_tv_address_city)
@@ -181,10 +182,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private String mConAddress;
     private static String mWxKey;
     TextView mBaseEnsure;
-    private static final String FILE_PATH = "/sdcard/"+ System.currentTimeMillis()+"jpg";
-    public LocationClient mLocationClient = null;
+    private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/1234.jpg";
     private String mCity;
-
+    private String mCouponType,mDiscountNumber,mCouponMoneyEqual,mCouponmoney,mCoupon;
 
     @Override
     protected int getContentResId() {
@@ -194,8 +194,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
-        mBaseEnsure.setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT >= 23) {
+            int readSDPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+            if (readSDPermission != PackageManager.PERMISSION_GRANTED) {
+                LogUtils.e("readSDPermission",""+readSDPermission);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        123);
+            }
+        }
         mProductDetails = AppContext.getInstance().getProductDetails();
         consignee = AppContext.getInstance().getConsignee();
         mPrice = mProductDetails.getSellPrice();
@@ -203,8 +209,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         mPic = mProductDetails.getSellPic();
         mCode = mProductDetails.getSellOnlyCode();
         mPlaceTitlt.setText(mName);
-        mPlacordDan.setText("¥ " + mPrice + "*1=" + mPrice);
-        mDanNum.setText("¥ " + mPrice);
+        mPlacordDan.setText("¥ " + mPrice.replace(".00","") + "*1=" + mPrice.replace(".00",""));
+        mDanNum.setText("¥ " + mPrice.replace(".00",""));
         mPlaceTotal.setText(mPrice);
         mTv.setText("¥ ");
         mTvNm.setText(mPrice);
@@ -225,44 +231,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
-        LocationClientOption option = new LocationClientOption();
-        option.setOpenGps(true);        //是否打开GPS
-        option.setCoorType("bd09ll");       //设置返回值的坐标类型。
-        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-        option.setProdName("LocationDemo"); //设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
-        mLocationClient.setLocOption(option);
-        mLocationClient.start();
         reqTake();//取送方式
         reqBalance();//会员余额
-
-    }
-
-    class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            if (location == null) {
-                LogUtils.e("location_failed----","location_failed");
-                return;
-            } else {
-                int locType = location.getLocType();
-                LogUtils.i("locType:",""+locType);
-                LogUtils.i("province:","" + location.getProvince());
-                LogUtils.i("city:" ,""+ location.getCity());
-                LogUtils.i("district:" ,""+ location.getDistrict());
-                LogUtils.i("AddrStr:" ,""+ location.getAddrStr());
-                String city = location.getCity();
-                if (TextUtils.isEmpty(city)) {
-                    LogUtils.e("locType----","定位失败");
-                    mLocationClient.start();
-                } else {
-                    mCity = city;
-                }
-            }
-            mLocationClient.stop();
-        }
     }
 
 
@@ -316,7 +286,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 else if (mPlaceSend.getVisibility()== View.VISIBLE&&TextUtils.isEmpty(mSendAddress.getText().toString())) {
                     DialogUtils.showPrompt(this, "请选择寄送地址", "知道了");
                 }
-                else if (mTime.getVisibility()== View.VISIBLE&& mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mAddTime.getText().toString())) {
+                else if (mTime.getVisibility()== View.VISIBLE&& mPlaTv.getText().toString().equals("上门取送")&&TextUtils.isEmpty(mAddTime.getText().toString())) {
                     DialogUtils.showPrompt(this, "请选择上门时间", "知道了");
                 }
                 else if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
@@ -381,33 +351,37 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mAddressName.setText("");
                     mAddressCity.setText("");
                     mAddressAdd.setText("");
+                    mSendTv.setText("寄送地址:");
+                    mSendAddress.setText("");
+                    mSendVity.setText("");
+                    mSendAdd.setText("");
                     rturn = takeEntity.get(0).getDis_type_code();
 
                 } else if("上门取送".equals(tList.get(options1))){
                     mPlaTv.setText("上门取送");
-                    mTime.setVisibility(View.VISIBLE);
                     mPlaceAddress.setVisibility(View.VISIBLE);
                     mPlaceSend.setVisibility(View.GONE);
-                    mTvTime.setText("预约上门时间：");
+                    mTime.setVisibility(View.VISIBLE);
                     mTvAddress.setText("上门地址:");
                     mAddressName.setText("");
                     mAddressCity.setText("");
                     mAddressAdd.setText("");
+                    mTvTime.setText("预约上门时间：");
+                    mAddTime.setText("");
                     rturn = takeEntity.get(1).getDis_type_code();
 
                 }
                 else if("自送门店".equals(tList.get(options1))){
                     mPlaTv.setText("自送门店");
-                    mTime.setVisibility(View.VISIBLE);
                     mPlaceAddress.setVisibility(View.GONE);
                     mPlaceSend.setVisibility(View.VISIBLE);
+                    mTime.setVisibility(View.VISIBLE);
                     mSendTv.setText("选择门店：");
                     mTvTime.setText("门店工作时间：");
                     mAddTime.setText("10:00 - 18:00");
                     mSendAddress.setText("");
                     mSendVity.setText("");
                     mSendAdd.setText("");
-                    mSendIpone.setText("");
                     rturn = takeEntity.get(2).getDis_type_code();
 
                 }
@@ -509,6 +483,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqTake() {
         TakeDTO dto = new TakeDTO();
+        String mCity = AppContext.get("mCity","");
         if(TextUtils.isEmpty(mCity)){
             dto.setCity("北京");
             LogUtils.e("dto.setCity---","定位失败");
@@ -528,8 +503,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                         rturn = takeEntity.get(0).getDis_type_code();
                     }
 
-
-
                 }
             }
         });
@@ -548,7 +521,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setComOnlyCode(mCode);
         dto.setOrderMoney(mPlaceTotal.getText().toString());
         dto.setComCount("1");
-        dto.setCouponPrice(mPlaceCoupon.getText().toString());
+        if(TextUtils.isEmpty(mPlaceCoupon.getText().toString())){
+            dto.setCouponPrice("0");
+        }else {
+            dto.setCouponPrice(mCoupon);
+        }
+
         dto.setMemberIDCoupon("");
         dto.setCouponcode("");
         dto.setMemMobile(AppContext.get("mobileNum", ""));
@@ -556,12 +534,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         if (mPlaTv.getText().toString().equals("上门取送")) {
             dto.setTimeToAppointmen(mAddTime.getText().toString());
         } else {
-            dto.setTimeToAppointmen("");
+            dto.setTimeToAppointmen("null");
         }
         if (mPlaTv.getText().toString().equals("全国包回邮")) {
             dto.setServerYJCode(mSendAddress.getText().toString());
         } else {
-            dto.setServerYJCode("");
+            dto.setServerYJCode("null");
         }
         if (mCbWx.isChecked()) {
             dto.setApplyType("微信");
@@ -841,8 +819,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
         switch (requestCode) {
             case UIHelper.SEND_REQUEST:
-                mSendAddress.setText(AppContext.get("Dis_province_name",""));
-                mSendIpone.setText(AppContext.get("Dis_province_phone",""));
+                mSendAddress.setText(AppContext.get("Dis_province_name","")+AppContext.get("Dis_province_phone",""));
                 mSendVity.setText(AppContext.get("Dis_province_city",""));
                 mSendAdd.setText(AppContext.get("Dis_province_area",""));
                 AppContext.set("Dis_province_name", "");
@@ -932,8 +909,69 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
                 break;
             case UIHelper.COUPON_REQUEST:
-                mPlaceCoupon.setText(AppContext.get("vouchers", ""));//代金劵
-                AppContext.set("vouchers", "");
+                if(TextUtils.isEmpty(AppContext.get("CouponType",""))){
+
+                }else {
+                    mPlaceCoupon.setText(AppContext.get("Novice", ""));//代金劵
+
+                    mCouponType = AppContext.get("CouponType", "");
+                    mDiscountNumber = AppContext.get("DiscountNumber", "");
+                    mCouponMoneyEqual = AppContext.get("CouponMoneyEqual", "");
+                    mCouponmoney = AppContext.get("Couponmoney", "");
+                    if (mCouponType.equals("1001")) {
+                        DecimalFormat df = new DecimalFormat("######0.00");
+                        double pirce = Double.parseDouble(mPrice.replace(".00",""));
+                        double number = Double.parseDouble(mDiscountNumber.replace(".00",""));
+                        double toal = (number / 10) * pirce;
+                        String total = df.format(toal);
+                        String cou = df.format(pirce - toal);
+                        mPlaceTotal.setText(total);
+                        mTvNm.setText(total);
+                        mCoupon = cou;
+                    }
+                    else if (mCouponType.equals("1002")) {
+                        int price = Integer.valueOf(mPrice.replace(".00",""));
+                        int equal = Integer.valueOf(mCouponMoneyEqual.replace(".00",""));
+                        int toa = price - equal;
+                        mPlaceTotal.setText(String.valueOf(toa)+".00");
+                        mTvNm.setText(String.valueOf(toa)+".00");
+                        mCoupon = mCouponMoneyEqual;
+                    }
+                    else if (mCouponType.equals("1003")) {
+                        mPlaceTotal.setText("0");
+                        mTvNm.setText("0");
+                        mCoupon = mPrice;
+                    }
+                    else if (mCouponType.equals("1004")) {
+                        int price = Integer.valueOf(mPrice.replace(".00",""));
+                        int equal = Integer.valueOf(mCouponMoneyEqual);
+                        if (price < equal) {
+                            mPlaceTotal.setText("0");
+                            mTvNm.setText("0");
+
+                        } else {
+                            int pri = price - equal;
+                            mPlaceTotal.setText(String.valueOf(pri));
+                            mTvNm.setText(String.valueOf(pri));
+                        }
+                        mCoupon = mCouponMoneyEqual;
+                    }
+                    else if (mCouponType.equals("1005")) {
+                        int money = Integer.valueOf(mCouponmoney.replace(".00",""));
+                        int equal = Integer.valueOf(mCouponMoneyEqual.replace(".00",""));
+                        int toal = money - equal;
+                        mPlaceTotal.setText(mCouponMoneyEqual);
+                        mTvNm.setText(mCouponMoneyEqual);
+                        mCoupon = String.valueOf(toal);
+                    }
+
+                }
+
+                AppContext.set("Novice", "");
+                AppContext.set("CouponType", "");
+                AppContext.set("DiscountNumber", "");
+                AppContext.set("CouponMoneyEqual", "");
+                AppContext.set("Couponmoney", "");
                 break;
         }
 
@@ -986,9 +1024,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (mLocationClient != null && mLocationClient.isStarted()) {
-            mLocationClient.stop();
-            mLocationClient = null;
-        }
+
     }
 }

@@ -87,6 +87,10 @@ public class SplashActivity extends BaseActivity {
             public void onSuccess(SplashResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("启动页图片成功");
+                    if (null == result.getData()) {
+                        HomeUiGoto.gotoMain(SplashActivity.this);
+                    }
+                    else {
                     if (result.getData().size() > 0 && result.getData() != null) {
                         imgIdArray = new String[result.getData().size()];
                         for (int i = 0; i < result.getData().size(); i++) {
@@ -181,6 +185,7 @@ public class SplashActivity extends BaseActivity {
                             }
                         });
                     }
+                }
 
                 }
 

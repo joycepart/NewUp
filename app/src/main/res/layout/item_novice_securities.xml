@@ -8,12 +8,12 @@
     android:layout_marginRight="@dimen/ds_40"
     android:orientation="horizontal">
     <LinearLayout
-        android:layout_width="@dimen/ds_250"
+        android:layout_width="@dimen/ds_300"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/ds_30"
         android:layout_marginLeft="@dimen/ds_30"
         android:layout_marginBottom="@dimen/ds_30"
-        android:layout_weight="1"
+
         android:orientation="vertical"
         android:background="@drawable/ticket_bj_n">
         <TextView
@@ -24,9 +24,9 @@
             android:layout_marginTop="@dimen/ds_15"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text=""
+            android:text="1"
             android:textColor="@color/color_ff"
-            android:textSize="@dimen/fs_50"/>
+            android:textSize="@dimen/fs_35"/>
 
         <TextView
             android:id="@+id/coupon_vt"
@@ -34,22 +34,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/ds_30"
+            android:layout_marginBottom="@dimen/ds_10"
             android:text="@string/me_coupon"
             android:textColor="@color/color_ff"
             android:textSize="@dimen/fs_40"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
             android:id="@+id/item_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ds_30"
             android:layout_marginLeft="@dimen/ds_40"
-            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="@string/me_registered"
             android:textColor="@color/color_00"
             android:textSize="@dimen/fs_45"/>
@@ -65,7 +67,7 @@
             android:layout_height="match_parent"
             android:text="@string/me_data"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_45"/>
+            android:textSize="@dimen/fs_35"/>
             <TextView
                 android:id="@+id/tv_data"
                 android:layout_width="wrap_content"
@@ -73,12 +75,12 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/me_overdue"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_45"/>
+                android:textSize="@dimen/fs_35"/>
         </LinearLayout>
     </LinearLayout>
     <ImageView
         android:id="@+id/coupon_img"
-        android:layout_width="@dimen/ds_200"
+        android:layout_width="@dimen/ds_180"
         android:layout_height="match_parent"
         android:background="@drawable/ticket_n"/>
 

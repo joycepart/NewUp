@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.unused.entity;
+package com.qluxstory.qingshe.special.entity;
 
 import com.qluxstory.qingshe.common.entity.BaseEntity;
 

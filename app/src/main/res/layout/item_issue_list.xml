@@ -13,6 +13,7 @@
         android:id="@+id/issue_img"
         android:layout_width="@dimen/ds_250"
         android:layout_height="@dimen/ds_250"
+        android:background="@drawable/btn_while"
         android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/ds_50"
         />
@@ -43,6 +44,9 @@
                 android:textColor="@color/color_00"
                 android:textSize="@dimen/fs_50"/>
         </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:layout_width="@dimen/ds_400"
             android:layout_height="@dimen/ds_100"
@@ -50,6 +54,16 @@
             android:scaleType="centerCrop"
             android:layout_marginLeft="@dimen/ds_30"
             android:background="@drawable/qiang"/>
+            <ProgressBar
+                android:id="@+id/issue_progress"
+                android:layout_marginTop="@dimen/ds_80"
+                android:layout_width="@dimen/ds_260"
+                android:layout_height="@dimen/ds_25"
+                style="@style/ProgressBar_Mini"
+                android:layout_marginRight="@dimen/ds_30"
+                android:layout_marginLeft="@dimen/ds_50"
+                android:max="50" />
+        </FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/issue_progress"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/fs_70"/>
+                android:textSize="@dimen/fs_45"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

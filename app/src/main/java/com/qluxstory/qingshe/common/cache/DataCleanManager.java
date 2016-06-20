@@ -7,8 +7,6 @@ import java.io.File;
 
 /**
  * 数据删除工具类
- * @author FireAnt（http://my.oschina.net/LittleDY）
- * @version 创建时间：2014年10月27日 上午10:18:22
  * 
  */
 public class DataCleanManager {

@@ -11,9 +11,8 @@ import com.qluxstory.qingshe.home.activity.AddAddressActivity;
 import com.qluxstory.qingshe.home.activity.CuringActivity;
 import com.qluxstory.qingshe.home.activity.PlaceOrderActivity;
 import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
-import com.qluxstory.qingshe.home.activity.TestActivity;
 import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
-import com.qluxstory.qingshe.home.activity.VerticalScrollTextActivity;
+import com.qluxstory.qingshe.special.activity.SpecialBrowserActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -47,25 +46,6 @@ public class HomeUiGoto {
     public static void city(Activity act){
         Intent intent = new Intent(act, ChoiceCityActivity.class);
         act.startActivityForResult(intent,CITY_REQUEST);
-    }
-
-    /**
-     * 测试页
-     * @param context
-     */
-
-    public static void test(Context context){
-        Intent intent = new Intent(context, TestActivity.class);
-        context.startActivity(intent);
-    }
-    /**
-     * 测试页
-     * @param context
-     */
-
-    public static void testOne(Context context){
-        Intent intent = new Intent(context, VerticalScrollTextActivity.class);
-        context.startActivity(intent);
     }
 
 
@@ -107,26 +87,34 @@ public class HomeUiGoto {
 
     /**
      * 跳转到专题/广告详情页（加载h5页面）
-     *
      * @param context
      * @param mSpecSrc
+     * @param mTitle
+     * @param mId
      */
 
-    public static void special(Context context, String mSpecSrc){
-        Intent intent = new Intent(context, BrowserActivity.class);
+    public static void special(Context context, String mSpecSrc, String mTitle, String mId){
+        Intent intent = new Intent(context, SpecialBrowserActivity.class);
         intent.putExtra("url", mSpecSrc);
+        intent.putExtra("title", mTitle);
         context.startActivity(intent);
     }
 
     /**
      * 跳转到专业养护之商品详情页（加载h5页面）
      * @param context
-     * @param mUrl
+     * @param url
+     * @param sell_pic
+     * @param code
+     * @param sell_name
      */
 
-    public static void curingProductDetails(Context context, String mUrl){
+    public static void curingProductDetails(Context context, String url, String sell_pic, String code, String sell_name){
         Intent intent = new Intent(context, ProductBrowserActivity.class);
-        intent.putExtra("mUrl", mUrl);
+        intent.putExtra("mUrl", url);
+        intent.putExtra("pic", sell_pic);
+        intent.putExtra("code", code);
+        intent.putExtra("name", sell_name);
         context.startActivity(intent);
     }
     /**

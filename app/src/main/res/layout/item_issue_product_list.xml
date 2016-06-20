@@ -23,9 +23,9 @@
                 android:layout_marginRight="@dimen/ds_10"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="2016-05-12 18：25:24"
+                android:text=""
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_50"/>
+                android:textSize="@dimen/fs_45"/>
                 <TextView
                     android:id="@+id/product_begin"
                     android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
                     android:gravity="center"
                     android:text="@string/issue_begin"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
 
             </LinearLayout>
 
@@ -51,7 +51,7 @@
                     android:gravity="center"
                     android:text="@string/issue_record"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
 
             </LinearLayout>
         </RelativeLayout>
@@ -59,6 +59,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_1"
+        android:layout_marginLeft="@dimen/ds_30"
         android:background="@color/color_cc"/>
 
 </LinearLayout>

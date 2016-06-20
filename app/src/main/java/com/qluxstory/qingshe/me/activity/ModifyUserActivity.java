@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
@@ -30,8 +29,6 @@ public class ModifyUserActivity extends BaseTitleActivity {
     Button mModifyBtn;
     @Bind(R.id.modify_img)
     ImageView mModifyImg;
-    @Bind(R.id.base_titlebar_ensure)
-    TextView mEnsure;
     private String mNewName;
 
     @Override
@@ -42,7 +39,6 @@ public class ModifyUserActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("修改用户名");
-        mEnsure.setVisibility(View.GONE);
         mModifyEt.setText(AppContext.get("mUserName",""));
         mModifyImg.setOnClickListener(this);
         mModifyBtn.setOnClickListener(this);

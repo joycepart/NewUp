@@ -1,11 +1,15 @@
 package com.qluxstory.qingshe.me.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.qluxstory.qingshe.R;
 
@@ -34,14 +38,27 @@ public class ConversationActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation);
+        ImageButton btn = (ImageButton) findViewById(R.id.CommodityActivity_back);
+        ImageView img = (ImageView) findViewById(R.id.conver_img);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
+                        + getString(R.string.common_service_phone)));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent); //电话客服
+            }
+        });
     }
+
 
     public void clickButton(View view) {
         switch (view.getId()) {
             case R.id.CommodityActivity_back:
                 finish();
                 break;
-
+            case R.id.conver_img:
+                break;
             default:
                 break;
         }

@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/ds_30"
             android:text="第11期"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_55"/>
+            android:textSize="@dimen/fs_45"/>
             <TextView
                 android:id="@+id/tran_title"
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/ds_30"
                 android:text="Apple SE 16g "
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_45"/>
         </LinearLayout>
         <TextView
             android:id="@+id/tran_rad"
@@ -44,14 +44,27 @@
             android:layout_marginTop="@dimen/ds_30"
             android:text="@string/issue_random"
             android:textColor="@color/color_c0"
-            android:textSize="@dimen/fs_55"/>
-        <ImageView
+            android:textSize="@dimen/fs_45"/>
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ds_30"
-            android:layout_marginTop="@dimen/ds_30"
-            android:layout_marginRight="@dimen/ds_30"
-            android:background="@drawable/work_bottom"/>
+            android:layout_marginTop="@dimen/ds_30">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_70"
+                android:layout_marginRight="@dimen/ds_30"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:background="@drawable/btn_progree"/>
+            <ProgressBar
+                android:id="@+id/tran_progress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_35"
+                android:layout_marginTop="@dimen/ds_20"
+                style="@style/ProgressBar_Mini"
+                android:layout_marginRight="@dimen/ds_40"
+                android:layout_marginLeft="@dimen/ds_40"
+                android:max="100"/>
+        </FrameLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_100">
@@ -63,7 +76,7 @@
                 android:layout_marginTop="@dimen/ds_30"
                 android:text="总需要人数3288人次"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_45"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -72,7 +85,7 @@
                 android:layout_marginRight="@dimen/ds_30"
                 android:text="@string/tran_details"
                 android:textColor="@color/color_c0"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_45"/>
 
         </RelativeLayout>
     </LinearLayout>
@@ -83,7 +96,7 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_530"
+        android:layout_height="@dimen/ds_570"
         android:background="@drawable/past_text"
         android:layout_marginRight="@dimen/ds_30"
         android:layout_marginLeft="@dimen/ds_30"
@@ -208,31 +221,37 @@
         android:layout_width="@dimen/ds_150"
         android:layout_height="@dimen/ds_150"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/logo"/>
+        />
 </FrameLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_30"
         android:layout_marginTop="@dimen/ds_30"
         android:background="@color/color_cc"/>
-    <TextView
-        android:id="@+id/issue_tv_yn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/ds_30"
-        android:gravity="center"
-        android:textSize="@dimen/fs_65"
-        android:textColor="@color/color_00"
-        android:text="@string/issue_no_activity"/>
+
+        <TextView
+            android:id="@+id/tran_participate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/ds_30"
+            android:layout_marginBottom="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_45"
+            android:textColor="@color/color_00"
+            android:text="@string/issue_no_activity"/>
+
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_150"
+        android:layout_height="@dimen/ds_120"
+        android:id="@+id/tran_lin"
         android:gravity="center"
-        android:id="@+id/past_product_lin"
         android:orientation="horizontal">
         <RelativeLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/ds_150"
+            >
             <ImageView
                 android:layout_width="@dimen/ds_90"
                 android:layout_height="@dimen/ds_90"
@@ -244,7 +263,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:gravity="center"
+                android:layout_marginLeft="@dimen/ds_260"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -253,15 +274,15 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/product_num"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_45"/>
                 <TextView
-                    android:id="@+id/tarn_tv_num"
+                    android:id="@+id/tran_num"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="1"
+                    android:text=""
                     android:textColor="@color/color_c0"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_45"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -269,7 +290,7 @@
                     android:gravity="center"
                     android:text="@string/product_text"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_45"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
@@ -301,7 +322,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/issue_imagetext"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_45"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -309,7 +330,7 @@
                 android:gravity="center"
                 android:text="@string/issue_wifi"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_45"/>
 
         </RelativeLayout>
     </LinearLayout>

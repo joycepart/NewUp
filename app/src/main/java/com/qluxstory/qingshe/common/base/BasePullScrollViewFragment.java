@@ -14,8 +14,8 @@ import in.srain.cube.views.ptr.PtrHandler;
  * 下拉刷新的Fragment的基类（嵌入了ScrollView）,继承这个类的initview,需要在第一行手动调用super.initview（）
  */
 public abstract class BasePullScrollViewFragment extends BaseFragment {
-    protected int mCurrentPage = 1;
-    protected final static int PAGE_SIZE = 6;
+//    protected int mCurrentPage = 1;
+//    protected final static int PAGE_SIZE = 6;
 
     private  PtrClassicFrameLayout ptf;
     NestedScrollView mScrollView;

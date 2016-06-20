@@ -33,9 +33,9 @@
     <string name="tab_me_i">关于退货</string>
     <string name="tab_me_j">超级客服在线（9:00—18:00）</string>
     <string name="tab_me_n">夺宝记录</string>
-    <string name="common_service_phone">4004156156</string>
+    <string name="common_service_phone">010-57102750</string>
 
-    <string name="tab_me_kefu">客服电话：400—630—8055</string>
+    <string name="tab_me_kefu">客服电话010-57102750(9:00-18:00)</string>
     <string name="tab_me_l">官方QQ群：498262127</string>
     <string name="tab_me_m">版本信息： 1.0.0</string>
     <string name="issue_a">人品大爆发：</string>
@@ -217,7 +217,7 @@
     <string name="left">)</string>
     <string name="pop_ok">完成</string>
     <string name="product_num">您参与了</string>
-    <string name="product_text">夺宝活动</string>
+    <string name="product_text">次夺宝</string>
     <string name="issut_inf">揭晓信息</string>
     <string name="issut_num">揭晓号码:</string>
     <string name="issu_user">得宝用户:</string>
@@ -235,6 +235,7 @@
     <string name="add_confirm">确认收货地址</string>
     <string name="add_choose">请选择收货地址</string>
     <string name="home_rturn">回到首页</string>
+    <string name="home_sucess">支付成功</string>
     <string name="choise_city">请选择地区</string>
     <string name="choise_pay">立即支付</string>
     <string name="canle_pay">取消订单</string>

@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.home.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,19 +17,22 @@ import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
+import com.qluxstory.qingshe.me.MeUiGoto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HorizontalScrollViewAdapter
 {
-
+	IssueProduct issueProduct;
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private List<HomeRecommendEntity> mDatas=new ArrayList<>();
 
 	public HorizontalScrollViewAdapter(Context context)
 	{
+		issueProduct = AppContext.getInstance().getIssueProduct();
 		this.mContext = context;
 		mInflater = LayoutInflater.from(context);
 	}
@@ -81,16 +85,17 @@ public class HorizontalScrollViewAdapter
 		viewHolder.mItemRel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Boolean bool= AppContext.get("isLogin",true);
-				if(bool!=true){
-//					MeUiGoto.login(mContext);//登录
-				}{
+				boolean bool= AppContext.get("isLogin",false);
+				if(bool){
 					Bundle b = new Bundle();
 					String bat = getItem(position).getBat_code();
 					String sna = getItem(position).getSna_code();
 					b.putString("bat",bat);
 					b.putString("sna",sna);
+					issueProduct.setmPicUrl(getItem(position).getPic_url());
 					UIHelper.showFragment(mContext, SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
+				}else {
+					MeUiGoto.login((Activity) mContext);//登录
 				}
 
 			}

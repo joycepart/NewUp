@@ -5,7 +5,7 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_90">
+        android:layout_height="@dimen/ds_120">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -85,7 +85,7 @@
                     android:layout_marginRight="@dimen/ds_20"
                     android:text="@string/app_day"
                     android:textColor="@color/color_c0"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,7 +142,7 @@
         android:layout_width="match_parent"
         android:visibility="invisible"
         android:layout_height="@dimen/ds_130">
-        <TextView
+        <Button
             android:id="@+id/curingorder_canle"
             android:layout_width="@dimen/ds_250"
             android:layout_height="match_parent"

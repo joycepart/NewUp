@@ -3,14 +3,10 @@ package com.qluxstory.qingshe.home.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
-import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
@@ -73,6 +69,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
     @Bind(R.id.home_img_dian)
     ImageView mHomeImgDian;
     List<HomeRecommendEntity> entity;
+    private String mId;
+    private String mTitle;
 
 
     @Override
@@ -82,7 +80,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                HomeUiGoto.special(getActivity(),AppConfig.URL_SPECIAL);
+                HomeUiGoto.special(getActivity(),AppConfig.URL_SPECIAL, mTitle, mId);
 
             }
         });
@@ -103,6 +101,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, HomeSpecialEntity homeSpecialEntity, int position) {
+                mId = homeSpecialEntity.getID();
+                mTitle = homeSpecialEntity.getSpec_name();
                 ImageView iv=holder.getView(R.id.iv);
                 ImageLoaderUtils.displayImage(homeSpecialEntity.getSpec_pic(),iv);
             }
@@ -113,7 +113,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
         mSpecialListAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
-                HomeUiGoto.special(getActivity(),AppConfig.URL_SPECIAL);
+                HomeUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_Special+mId,mTitle,mId);
             }
         });
     }
@@ -183,8 +183,13 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 checkPullRefreshComplete();
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页专题成功");
-                    mSpecialListAdapter.removeAll();
-                    mSpecialListAdapter.append(result.getData());
+                    if(null ==result.getData()){
+                        return;
+                    }else {
+                        mSpecialListAdapter.removeAll();
+                        mSpecialListAdapter.append(result.getData());
+                    }
+
                 }
 
             }
@@ -205,12 +210,10 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 HomeUiGoto.curing(getActivity());//专业养护
                 break;
             case R.id.home_img2:
-                HomeUiGoto.testOne(getActivity());//测试
+                HomeUiGoto.OfflineStore(getActivity(),AppConfig.URL_OFFLINE,"线下门店 - 倾奢");
                 break;
             case R.id.home_img3:
-                showPop();
-
-//                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
+                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
                 break;
             case R.id.id_gallery:
                 Bundle b = new Bundle();
@@ -224,55 +227,6 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 break;
         }
         super.onClick(v);
-    }
-
-    private ArrayList<String> tipList;
-    private void showPop() {
-        tipList = new ArrayList<>();
-        tipList.add("nan");
-        tipList.add("nv");
-        OptionsPopupWindow tipPopup = new OptionsPopupWindow(getActivity());
-        tipPopup.setPicker(tipList);//设置里面list
-        tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                if ("无".equals(tipList.get(options1))) {
-                } else {
-                }
-
-            }
-        });
-        tipPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {//设置窗体消失后，屏幕恢复亮度
-            @Override
-            public void onDismiss() {
-                closePopupWindow();
-            }
-        });
-        tipPopup.showAtLocation(mHsv, Gravity.BOTTOM, 0, 0);//显示的位置
-        //弹窗后背景变暗
-        openPopupWindow();
-    }
-
-
-
-
-
-    /**
-     *  打开窗口 
-     */
-    private void openPopupWindow() {
-        WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-        params.alpha = 0.7f;
-        getActivity().getWindow().setAttributes(params);
-    }
-
-    /**
-     *  关闭窗口 
-     */
-    private void closePopupWindow() {
-        WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
-        params.alpha = 1f;
-        getActivity().getWindow().setAttributes(params);
     }
 
 

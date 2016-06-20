@@ -18,6 +18,9 @@ import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lenovo on 2016/5/26.
  */
@@ -26,7 +29,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
     private Button btn;
     private String mTerm,mTitle,mBalance,mPic,mRec,mBat,mSna;
     IssueProduct issueProduct;
-    RecordsEntity entity;
+    List<RecordsEntity> list =  new ArrayList<>();
 
     public RecordsAdapter (Context context) {
         mContext = context;
@@ -39,20 +42,17 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
 
     @Override
     public void bindData(final BaseRecyclerViewHolder holder, final RecordsEntity recordsEntity, final int position) {
-            issueProduct = AppContext.getInstance().getIssueProduct();
-            entity = recordsEntity;
             mTerm = recordsEntity.getRec_term();
             mTitle = recordsEntity.getSna_title();
             mBalance = recordsEntity.getRec_pay_balance();
             mPic = recordsEntity.getPic_url();
-            mRec = recordsEntity.getRec_code();
-            mBat = recordsEntity.getBat_code();
-            mSna = recordsEntity.getSna_code();
+
+           list.add(position,recordsEntity);
+           issueProduct = AppContext.getInstance().getIssueProduct();
             LogUtils.e("bindData--------",""+position);
             LogUtils.e("mPic--------",""+mPic);
 
             btn = holder.getView(R.id.records_btn);
-             LogUtils.e("recordsEntity.getRec_state()---",recordsEntity.getRec_state());
 
             if(recordsEntity.getRec_state().equals("0")){
                 holder.setText(R.id.records_payment,"未付款");
@@ -98,17 +98,17 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                     intent.putExtra("tag",2);
                     mContext.startActivity(intent);
                 }else if(mBtn.getText().toString().equals("去支付")){
+                    issueProduct.setmPicUrl(list.get(position).getPic_url());
+                    issueProduct.setmSnaTerm(list.get(position).getRec_term());
+                    issueProduct.setmSnaTitle(list.get(position).getSna_title());
+                    issueProduct.setmSnaCode(list.get(position).getSna_code());
+                    issueProduct.setmBatCode(list.get(position).getBat_code());
+                    issueProduct.setmRecCode(list.get(position).getRec_code());
+                    issueProduct.setmBalance(list.get(position).getRec_pay_balance());
                     LogUtils.e("mBtn--------",""+position);
-                    LogUtils.e("mBtn--mPic--------",""+mPic);
-                    issueProduct.setmRecCode(mRec);
-                    issueProduct.setmBatCode(mBat);
-                    issueProduct.setmSnaCode(mSna);
-                    issueProduct.setmSnaTitle(mTitle);
-                    issueProduct.setmSnaTerm(mTerm);
-                    issueProduct.setmPicUrl(mPic);
+                    LogUtils.e("mBtn--mPic--------",""+list.get(position).getPic_url());
+                    LogUtils.e("mBtn--getRec_code--------",""+list.get(position).getRec_code());
                     Bundle bundle = new Bundle();
-//                    bundle.putSerializable("entity",entity);
-                    bundle.putString("mBalance",mBalance);
                     IssueUiGoto.settlement(mContext,bundle);//结算
                 }
 

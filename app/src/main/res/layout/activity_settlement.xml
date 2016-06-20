@@ -5,14 +5,15 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_360"
+        android:layout_height="@dimen/ds_320"
         android:background="@color/color_ff"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/settle_img"
-            android:layout_width="@dimen/ds_250"
-            android:layout_height="@dimen/ds_250"
+            android:layout_width="@dimen/ds_220"
+            android:layout_height="@dimen/ds_220"
             android:layout_marginLeft="@dimen/ds_50"
+            android:background="@drawable/btn_while"
             android:layout_gravity="center_vertical"
            />
         <LinearLayout
@@ -26,15 +27,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123344"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_45"/>
             <TextView
                 android:id="@+id/settle_term"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123344"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_55"/>
+                android:textSize="@dimen/fs_45"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -79,6 +82,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_ff"
         android:orientation="vertical">
     <LinearLayout
         android:id="@+id/palce_pay_wx"
@@ -89,8 +93,8 @@
         <CheckBox
             android:clickable="false"
             android:id="@+id/set_cb_wx"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -99,8 +103,8 @@
             />
 
         <ImageView
-            android:layout_width="@dimen/ds_130"
-            android:layout_height="@dimen/ds_130"
+            android:layout_width="@dimen/ds_110"
+            android:layout_height="@dimen/ds_110"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/service_icon2"/>
@@ -111,7 +115,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_weixin"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_45"
             android:textColor="@color/color_00"/>
     </LinearLayout>
     <View
@@ -129,8 +133,8 @@
         <CheckBox
             android:clickable="false"
             android:id="@+id/set_cb_zhi"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -138,8 +142,8 @@
             android:checked="false"
             />
         <ImageView
-            android:layout_width="@dimen/ds_130"
-            android:layout_height="@dimen/ds_130"
+            android:layout_width="@dimen/ds_110"
+            android:layout_height="@dimen/ds_110"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/service_icon1"/>
@@ -150,7 +154,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_zhifubao"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_45"
             android:textColor="@color/color_00"/>
     </LinearLayout>
     <View
@@ -168,8 +172,8 @@
         <CheckBox
             android:clickable="false"
             android:id="@+id/set_cb_hui"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -177,8 +181,8 @@
             android:checked="false"
             />
         <ImageView
-            android:layout_width="@dimen/ds_130"
-            android:layout_height="@dimen/ds_130"
+            android:layout_width="@dimen/ds_110"
+            android:layout_height="@dimen/ds_110"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/service_icon3"/>
@@ -189,7 +193,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_member"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_45"
             android:textColor="@color/color_00"/>
         <TextView
             android:id="@+id/settlement_balance"
@@ -223,8 +227,8 @@
         android:orientation="horizontal">
         <CheckBox
             android:id="@+id/set_cb_agree"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_80"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -237,7 +241,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/color_00"
             android:layout_marginLeft="@dimen/ds_20"
-            android:textSize="@dimen/fs_50"
+            android:textSize="@dimen/fs_40"
             android:text="@string/login_tv"/>
         <TextView
             android:id="@+id/set_tv"
@@ -245,7 +249,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ds_10"
             android:textColor="@color/color_c0"
-            android:textSize="@dimen/fs_50"
+            android:textSize="@dimen/fs_40"
             android:text="@string/issue_agreement"/>
     </LinearLayout>
     </LinearLayout>

@@ -18,6 +18,7 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
+import com.qluxstory.qingshe.common.widget.EmptyLayout;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
 import com.qluxstory.qingshe.me.entity.ExchangeVoucherResult;
@@ -122,7 +123,7 @@ public class MyCouponFragment extends BasePullFragment {
                     mErrorLayout.setErrorMessage("暂无优惠劵",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
                     if(result.getData().get(0).getCouponExpirationTime()==null){
-
+                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         mMycouponListAdapter.removeAll();
                         mMycouponListAdapter.append(result.getData());

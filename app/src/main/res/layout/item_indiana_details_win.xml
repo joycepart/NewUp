@@ -27,7 +27,7 @@
             android:text="@string/indiana_plo"
             android:layout_marginLeft="@dimen/ds_30"
             android:gravity="center"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/indiana_add"
             android:gravity="center"
-            android:textSize="@dimen/fs_55"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
     </LinearLayout>
 
@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/add_choose"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
 
                 <ImageView
@@ -137,7 +137,7 @@
                 android:text="@string/indiana_mode"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_data_user"
@@ -148,7 +148,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/deliver_no"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             </RelativeLayout>
         </LinearLayout>
@@ -167,7 +167,7 @@
                 android:text="@string/indiana_numn"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             <TextView
                 android:id="@+id/det_data_nm"
@@ -178,7 +178,7 @@
                 android:layout_marginLeft="@dimen/ds_20"
                 android:text="@string/deliver_no"
                 android:gravity="center"
-                android:textSize="@dimen/fs_55"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"/>
             </RelativeLayout>
         </LinearLayout>

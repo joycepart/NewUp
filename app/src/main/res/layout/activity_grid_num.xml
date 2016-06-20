@@ -3,12 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/color_ff"
-    android:layout_marginTop="@dimen/ds_300"
-    android:layout_marginBottom="@dimen/ds_200"
-    android:layout_marginRight="@dimen/ds_30"
-    android:layout_marginLeft="@dimen/ds_30"
+    android:paddingLeft="@dimen/ds_60"
+    android:paddingRight="@dimen/ds_60"
     android:orientation="vertical">
-<TextView
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+ <TextView
     android:layout_width="match_parent"
     android:layout_height="@dimen/ds_110"
     android:textColor="@color/color_00"
@@ -19,9 +22,8 @@
     <GridView
         android:id="@+id/grid_num"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:columnWidth="@dimen/ds_50"
+        android:layout_height="270dp"
+        android:columnWidth="@dimen/ds_20"
         android:stretchMode="columnWidth"
         android:verticalSpacing="@dimen/ds_10"
         android:horizontalSpacing="@dimen/ds_10"
@@ -41,5 +43,5 @@
         android:layout_marginRight="@dimen/ds_40"
         android:textSize="@dimen/fs_45"
         android:text="@string/pop_grid"/>
-
+    </LinearLayout>
 </LinearLayout>

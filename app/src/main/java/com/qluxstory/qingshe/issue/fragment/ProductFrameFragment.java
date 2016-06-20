@@ -31,7 +31,7 @@ import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
-import com.qluxstory.qingshe.issue.adapter.GridAdapter;
+import com.qluxstory.qingshe.issue.adapter.GridProductAdapter;
 import com.qluxstory.qingshe.issue.dto.DetailsDTO;
 import com.qluxstory.qingshe.issue.dto.LanderInDTO;
 import com.qluxstory.qingshe.issue.dto.PicDTO;
@@ -95,7 +95,6 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     private String mSna;
     private String mUrl;
     IssueProduct issueProduct;
-    BaseSimpleRecyclerAdapter mNumListAdapter;
     private String total;
     List<LanderInEntity> mLanderInEntity;
     PopupWindow popGridWindow;
@@ -112,12 +111,12 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         issueProduct = AppContext.getInstance().getIssueProduct();
         Bundle b  = getArguments();
         if(b!=null){
-            mBat=  b.getString("bat");
-            mSna=  b.getString("sna");
-            mUrl = b.getString("mPic");
+                mBat=  b.getString("bat");
+                mSna=  b.getString("sna");
+//                mUrl = b.getString("mPic");
         }else{
-            return;
-        }
+                return;
+            }
 
         mIt.setOnClickListener(this);
         mPast.setOnClickListener(this);
@@ -168,7 +167,6 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
                     if(result.getData()==null||result.getData().size()==0){
                         mProductLin.setVisibility(View.GONE);
                         mParticipate.setVisibility(View.VISIBLE);
-                        mParticipate.setText("您未参与本次夺宝活动");
                     }else {
                         mLanderInEntity = result.getData();
                         total = result.getPage_total();
@@ -213,6 +211,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         IssDetailsEntity detailEntity=data.get(0);
         issueProduct.setmTotalCount(detailEntity.getSna_total_count());
         issueProduct.setmSnaOut(detailEntity.getSna_sell_out());
+        LogUtils.e("setmSnaOut----",""+detailEntity.getSna_sell_out());
         issueProduct.setmSnaTerm(detailEntity.getSna_term());
         issueProduct.setmSnaCode(detailEntity.getSna_code());
         issueProduct.setmBatCode(detailEntity.getBat_code());
@@ -303,7 +302,6 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
             case R.id.issue_product_lin:
                 LogUtils.e("issue_product_lin---","issue_product_lin");
                 showPopNm(mLanderInEntity);
-//                showPopNum();
                 break;
             case R.id.grid_tv:
                 backgroundAlpha(1f);
@@ -331,7 +329,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         TextView girdTv= (TextView) view.findViewById(R.id.grid_tv);
         girdTv.setOnClickListener(this);
         GridView girdView= (GridView) view.findViewById(R.id.grid_num);
-        girdView.setAdapter(new GridAdapter(getActivity(), mLanderInEntity));
+        girdView.setAdapter(new GridProductAdapter(getActivity(), mLanderInEntity));
         View parent = getActivity().getWindow().getDecorView();//高度为手机实际的像素高度
         popGridWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
         //添加pop窗口关闭事件

@@ -1,15 +1,20 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +25,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
@@ -70,9 +74,8 @@ public class UserInformationActivity extends BaseTitleActivity {
     private static final int CODE_GALLERY_REQUEST = 0xa0;
     private static final int CODE_CAMERA_REQUEST = 0xa1;
     private static final int CODE_PHOTO_REQUEST = 0xa2;
-    TextView mBaseEnsure;
     PopupWindow popWindow;
-    private static final String FILE_PATH = "/sdcard/"+ System.currentTimeMillis()+"jpg";
+    private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/123.jpg";
 
     @Override
     protected int getContentResId() {
@@ -81,8 +84,14 @@ public class UserInformationActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
-        mBaseEnsure.setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT >= 23) {
+            int readSDPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+            if (readSDPermission != PackageManager.PERMISSION_GRANTED) {
+                LogUtils.e("readSDPermission",""+readSDPermission);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        123);
+            }
+        }
         mUserName.setText(AppContext.get("mUserName",""));
         mTvName.setText(AppContext.get("mUserName",""));
         mTvNum.setText(AppContext.get("mobileNum",""));
@@ -108,7 +117,8 @@ public class UserInformationActivity extends BaseTitleActivity {
             case R.id.user_information:
                 MeUiGoto.modifyUser(this);//修改用户名
                 break;
-            case R.id.btn_alter_pic_camera:
+            case R.id.btn_alter_pic_camera://拍照
+
                 Intent intentFromCapture = null;
                 intentFromCapture = new Intent();
                 // 指定开启系统相机的Action
@@ -126,7 +136,7 @@ public class UserInformationActivity extends BaseTitleActivity {
                 intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
                 break;
-            case R.id.btn_alter_pic_photo:
+            case R.id.btn_alter_pic_photo://选择照片
                 try {
                     //选择照片的时候也一样，我们用Action为Intent.ACTION_GET_CONTENT，
                     //有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
@@ -139,10 +149,8 @@ public class UserInformationActivity extends BaseTitleActivity {
                 }
                 break;
             case R.id.btn_alter_exit:
-                LogUtils.e("btn_alter_exit","exit关闭");
                 backgroundAlpha(1f);
                 popWindow.dismiss();
-                LogUtils.e("btn_alter_exit","dismiss");
                 break;
             case R.id.base_titlebar_back:
                 baseGoBack();
@@ -153,6 +161,7 @@ public class UserInformationActivity extends BaseTitleActivity {
     }
 
     private void showPicPop() {
+
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.from(this).inflate(R.layout.popup_pic, null);
         popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
@@ -163,9 +172,9 @@ public class UserInformationActivity extends BaseTitleActivity {
         popWindow.setOutsideTouchable(true);
         // 设置此参数获得焦点，否则无法点击
         popWindow.setFocusable(true);
-        backgroundAlpha(0.7f);
         //防止虚拟软键盘被弹出菜单遮住
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        backgroundAlpha(0.7f);
 
         mCamera = (TextView) view.findViewById(R.id.btn_alter_pic_camera);
         mPhoto = (TextView) view.findViewById(R.id.btn_alter_pic_photo);
@@ -185,7 +194,6 @@ public class UserInformationActivity extends BaseTitleActivity {
 
         @Override
         public void onDismiss() {
-            LogUtils.e("List_noteTypeActivity:", "我是关闭事件");
             backgroundAlpha(1f);
             popWindow.dismiss();
         }
@@ -216,6 +224,8 @@ public class UserInformationActivity extends BaseTitleActivity {
                     LogUtils.d("修改用户图像成功");
                     AppContext.set("mPictruePath",result.getData().get(0).getMemberHeadimg());
                     ImageLoaderUtils.displayAvatarImage(result.getData().get(0).getMemberHeadimg(),mUserImg);
+                    popWindow.dismiss();
+                    backgroundAlpha(1f);
                 }
             }
         });
@@ -244,26 +254,26 @@ public class UserInformationActivity extends BaseTitleActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 Bitmap bit = PhotoSystemUtils.comp(myBitmap);
-                mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
+                mMemberheadimg = ImageLoaderUtils.bitmaptoString(bit);
                 LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
-                popWindow.dismiss();
-                backgroundAlpha(1f);
                 reqUserPic();//修改用户图像
-                if (mImg != null) {
-                    ImageLoader.getInstance().displayImage("file:///" + mImg,
-                            mUserImg, ImageLoaderUtils.getDefaultOptions());
-                    LogUtils.e("ImageLoader------------if", "file:///" + mImg);
-                } else {
-                }
+
+//                if (mImg != null) {
+//                    ImageLoader.getInstance().displayImage("file:///" + mImg,
+//                            mUserImg, ImageLoaderUtils.getDefaultOptions());
+//                    AppContext.set("mPictruePath","file:///" + mImg);
+//                    LogUtils.e("ImageLoader------------if", "file:///" + mImg);
+//                } else {
+//                }
+                break;
             case CODE_PHOTO_REQUEST:
                 if (data != null) {
                     //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
                     Uri mImageCaptureUri = data.getData();
-                    LogUtils.e("Uri--------------", mImageCaptureUri + "");
+                    LogUtils.e("mImageCaptureUri--------------", mImageCaptureUri + "");
                     mImg = PhotoSystemUtils.getRealFilePath(this, mImageCaptureUri);
-                    LogUtils.e("mImg--------------", mImg + "");
+                    LogUtils.e("mImg-------mImageCaptureUri", mImg + "");
                     //返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
                     if (mImageCaptureUri != null) {
                         try {
@@ -271,9 +281,9 @@ public class UserInformationActivity extends BaseTitleActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        ImageLoader.getInstance().displayImage("file:///" + mImg,
-                                mUserImg, ImageLoaderUtils.getAvatarOptions());
-
+//                        ImageLoader.getInstance().displayImage("file:///" + mImg,
+//                                mUserImg, ImageLoaderUtils.getAvatarOptions());
+//                        AppContext.set("mPictruePath","file:///" + mImg);
                     }
 
                 } else {
@@ -282,14 +292,15 @@ public class UserInformationActivity extends BaseTitleActivity {
                                     Environment.getExternalStorageDirectory(),
                                     IMAGE_FILE_NAME);
                             Uri uriPhptp = Uri.fromFile(tempFile);
-                            LogUtils.e("Uri--------------", uriPhptp + "");
-                            mImg = PhotoSystemUtils.getRealFilePath(this,uriPhptp);
-                            LogUtils.e("mImg--------------", mImg + "");
-                            ImageLoader.getInstance().displayImage("file:///" + mImg,
-                                    mUserImg, ImageLoaderUtils.getAvatarOptions());
+                            LogUtils.e("uriPhptp--------------", uriPhptp + "");
+//                            mImg = PhotoSystemUtils.getRealFilePath(this,uriPhptp);
+//                            LogUtils.e("mImg--------------", mImg + "");
+//                            ImageLoader.getInstance().displayImage("file:///" + mImg,
+//                                    mUserImg, ImageLoaderUtils.getAvatarOptions());
+//                            AppContext.set("mPictruePath","file:///" + mImg);
                             try {
                                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriPhptp);
-                                LogUtils.e("image--------------", image + "");
+                                LogUtils.e("image-----uriPhptp", image + "");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -302,11 +313,8 @@ public class UserInformationActivity extends BaseTitleActivity {
                         }
 
                     Bitmap bitmap = PhotoSystemUtils.comp(image);
-                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bitmap));
-                    popWindow.dismiss();
-                    backgroundAlpha(1f);
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(bitmap);
                     reqUserPic();//修改用户图像
-
 
                 break;
             case MeUiGoto.MODIFYUSER_REQUEST:

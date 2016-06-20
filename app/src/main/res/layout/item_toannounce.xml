@@ -18,7 +18,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/issue_stage"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
             <TextView
                 android:id="@+id/item_toan_tv"
                 android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
                 android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/ds_30"
-                android:text="2016-08-19 12:34:11"
+                android:text=""
                 android:textColor="@color/color_c0"
                 android:textSize="@dimen/fs_50"/>
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/issue_luckyuser"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
             <TextView
                 android:id="@+id/toannounce_tv3"
                 android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                 android:layout_marginRight="@dimen/ds_30"
                 android:text="@string/order_receipt_address"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/issue_luckynumber"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
             <TextView
                 android:id="@+id/toannounce_tv4"
                 android:layout_width="wrap_content"
@@ -102,10 +102,10 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/order_receipt_address"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
             <ImageView
-                android:layout_width="@dimen/ds_90"
-                android:layout_height="@dimen/ds_90"
+                android:layout_width="@dimen/ds_70"
+                android:layout_height="@dimen/ds_70"
                 android:background="@drawable/home_right_arrow_icon"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/ds_30"
@@ -130,7 +130,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/issue_participation"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
             <TextView
                 android:id="@+id/toannounce_tv5"
                 android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/order_receipt_address"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_60"/>
+                android:textSize="@dimen/fs_50"/>
         </RelativeLayout>
     </LinearLayout>
     <View

@@ -17,7 +17,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/me_name"
-                android:textSize="@dimen/fs_60"
+                android:textSize="@dimen/fs_50"
                 android:textColor="@color/color_00"
                 android:gravity="center"
                 android:layout_marginLeft="@dimen/ds_40"
@@ -35,7 +35,7 @@
                 android:padding="@dimen/ds_20"
                 android:textColor="@color/color_00"
                 android:textColorHint="@color/color_00"
-                android:textSize="@dimen/fs_60" />
+                android:textSize="@dimen/fs_50" />
                 />
                 <ImageView
                     android:id="@+id/modify_img"
@@ -56,14 +56,14 @@
     <Button
         android:id="@+id/modify_Btn"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_150"
+        android:layout_height="@dimen/ds_120"
         android:layout_marginLeft="@dimen/ds_50"
         android:layout_marginRight="@dimen/ds_50"
         android:layout_marginTop="@dimen/ds_100"
         android:background="@drawable/btn_click"
         android:text="@string/me_determine"
         android:textColor="@color/color_ff"
-        android:textSize="@dimen/fs_70" />
+        android:textSize="@dimen/fs_50" />
 
 
 

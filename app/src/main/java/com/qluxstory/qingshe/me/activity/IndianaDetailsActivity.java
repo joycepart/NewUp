@@ -1,12 +1,19 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,13 +33,16 @@ import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.entity.Consignee;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.dto.ToAnnounceDTO;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.ToAnnounceEntity;
 import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
+import com.qluxstory.qingshe.me.adapter.GridDetailsAdapter;
 import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
 import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
 import com.qluxstory.qingshe.me.dto.UpDTO;
 import com.qluxstory.qingshe.me.dto.UpInformationDTO;
+import com.qluxstory.qingshe.me.entity.NumEntity;
 import com.qluxstory.qingshe.me.entity.NumResult;
 import com.qluxstory.qingshe.me.entity.RecordIndianaEntity;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
@@ -112,7 +122,8 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     LinearLayout mOrderCode;
     private String mCode,mTitle,mPic,mTerm,mBalance,mSnaCode,mBnt,mRecCode,mTotal,mCount;
     Consignee consignee;
-    TextView mBaseEnsure;
+    IssueProduct issueProduct;
+    PopupWindow popGridWindow;
 
     @Override
     protected int getContentResId() {
@@ -122,13 +133,12 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("夺宝详情");
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
-        mBaseEnsure.setVisibility(View.GONE);
+        issueProduct = AppContext.getInstance().getIssueProduct();
         consignee = AppContext.getInstance().getConsignee();
         Intent mIntent = getIntent();
         if(mIntent!=null){
             RecordsEntity entity = (RecordsEntity) mIntent.getBundleExtra("itemBean").getSerializable("entity");
-            mCode = entity.getBat_code();
+            mCode = entity.getRec_code();
             mTitle = entity.getSna_title();
             mPic = entity.getPic_url();
             mTerm = entity.getRec_term();
@@ -166,6 +176,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("2")){
                 LogUtils.e("entity.getRec_state()2",""+entity.getRec_state());
                 mRecordsStatu.setText("已中奖");
+                mInBtn.setText("继续夺宝");
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
                 mIndianaAnn.setVisibility(View.VISIBLE);
@@ -178,6 +189,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("3")){
                 LogUtils.e("entity.getRec_state()3",""+entity.getRec_state());
                 mRecordsStatu.setText("未抢中");
+                mInBtn.setText("继续夺宝");
                 mPay.setVisibility(View.VISIBLE);
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
@@ -189,6 +201,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("4")){
                 LogUtils.e("entity.getRec_state()4",""+entity.getRec_state());
                 mRecordsStatu.setText("派奖中");
+                mInBtn.setText("继续夺宝");
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
                 mIndianaAnn.setVisibility(View.VISIBLE);
@@ -203,13 +216,15 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("5")){
                 LogUtils.e("entity.getRec_state()5",""+entity.getRec_state());
                 mRecordsStatu.setText("已完结");
-                mInBtn.setText("继续夺宝");
                 mPay.setVisibility(View.GONE);
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
                 mIndianaAnn.setVisibility(View.VISIBLE);
                 mWin.setVisibility(View.VISIBLE);
-                mInBtn.setVisibility(View.VISIBLE);
+                mInBtn.setVisibility(View.GONE);
+                mWinBtn.setText("暂未发货");
+                reqAnn();
+                reqUpdate();
             }else if(entity.getRec_state().equals("6")){
                 mRecordsStatu.setText("已取消");
                 mInBtn.setText("继续夺宝");
@@ -219,7 +234,6 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                 mIndianaText.setVisibility(View.VISIBLE);
                 mWin.setVisibility(View.GONE);
                 mInBtn.setVisibility(View.VISIBLE);
-                mOrderCode.setVisibility(View.GONE);
                 reqAnn();
             }
 
@@ -316,7 +330,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     private void reqIndianaDetails() {
         RecordIndianaDTO dto=new RecordIndianaDTO();
-        dto.setBat_code(mCode);
+        dto.setBat_code(mBnt);
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(mCurrentPage);
         CommonApiClient.recordsDetails(this, dto, new CallBack<RecordIndianaResult>() {
@@ -358,17 +372,22 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             case R.id.win_tv:
                 UIHelper.showRorSelectFragment(this, SimplePage.SELECT_ADDRESS);//收货地址
                 break;
+            case R.id.grid_tv:
+                backgroundAlpha(1f);
+                popGridWindow.dismiss();
+                break;
 
             case R.id.in_btn:
                 if(mInBtn.getText().toString().equals("去支付")){
                     Bundle b = new Bundle();
-                    b.putString("mBalance",mBalance);
-                    b.putString("mTitle",mTitle);
-                    b.putString("mPic",mPic);
-                    b.putString("mTerm",mTerm);
-                    b.putString("mBnt",mBnt);
-                    b.putString("mRecCode",mRecCode);
-                    b.putString("mTerm",mTerm);
+                    issueProduct.setmPicUrl(mPic);
+                    issueProduct.setmSnaTerm(mTerm);
+                    issueProduct.setmSnaTitle(mTitle);
+                    issueProduct.setmSnaCode(mSnaCode);
+                    issueProduct.setmBatCode(mBnt);
+                    issueProduct.setmRecCode(mRecCode);
+                    issueProduct.setmBalance(mBalance);
+                    LogUtils.e("mRecCode-----",""+mRecCode);
                     IssueUiGoto.settlement(this,b);//结算
 
                 }else {
@@ -398,7 +417,8 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             public void onSuccess(NumResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("更新中奖人信息成功");
-                    mWinBtn.setText("暂未发货");
+                    mWinBtn.setText("等待发货");
+                    mWinBtn.setEnabled(false);
 
                 }
 
@@ -437,23 +457,74 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             public void onSuccess(NumResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("参与信息成功");
-
+                    showPopNm(result.getData());
                 }
 
             }
         });
     }
 
+    private void showPopNm(List<NumEntity> mNumEntity) {
+        LogUtils.e("showPopNm---","showPopNm");
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.from(this).inflate(R.layout.activity_grid_num, null);
+        popGridWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
+
+        backgroundAlpha(0.7f);
+        // 需要设置一下此参数，点击外边可消失
+        popGridWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击窗口外边窗口消失
+        popGridWindow.setOutsideTouchable(true);
+        // 设置此参数获得焦点，否则无法点击
+        popGridWindow.setFocusable(false);
+        TextView girdTv= (TextView) view.findViewById(R.id.grid_tv);
+        girdTv.setOnClickListener(this);
+        GridView girdView= (GridView) view.findViewById(R.id.grid_num);
+        girdView.setAdapter(new GridDetailsAdapter(this, mNumEntity));
+        View parent = getWindow().getDecorView();//高度为手机实际的像素高度
+        popGridWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        //添加pop窗口关闭事件
+        popGridWindow.setOnDismissListener(new poponDismissListener());
+    }
+
+    public class poponDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            LogUtils.e("List_noteTypeActivity:", "我是关闭事件");
+            backgroundAlpha(1f);
+            popGridWindow.dismiss();
+        }
+
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case UIHelper.SELECT_REQUEST:
-                mWinRel.setVisibility(View.GONE);
-                mWinLin.setVisibility(View.VISIBLE);
-                mWinPloTv.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile());
-                mWinNumTime.setText(consignee.getProvincialCity() + consignee.getAddressInDetail());
-                break;
+                if(!TextUtils.isEmpty(consignee.getDeliveredMobile())) {
+                    mWinRel.setVisibility(View.GONE);
+                    mWinLin.setVisibility(View.VISIBLE);
+                    mWinPloTv.setText(consignee.getConsigneeName() + consignee.getDeliveredMobile());
+                    mWinNumTime.setText(consignee.getProvincialCity() + consignee.getAddressInDetail());
+                    break;
+                }else {
+                    mWinLin.setVisibility(View.GONE);
+                    mWinRel.setVisibility(View.VISIBLE);
+                }
 
         }
 

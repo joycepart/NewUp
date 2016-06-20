@@ -87,6 +87,8 @@
                 android:layout_height="@dimen/ds_3"
                 android:layout_marginTop="@dimen/ds_20"
                 android:background="@color/color_cc" />
+
+
             <include layout="@layout/item_placeorder_receipt"/>
 
             <include layout="@layout/item_placeorder_send"/>
@@ -96,43 +98,45 @@
                 android:visibility="gone"
                 android:id="@+id/place_address_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ds_30">
+                android:layout_height="@dimen/ds_120"
+                >
                 <TextView
                     android:id="@+id/place_tv_address_time"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:gravity="center"
                     android:layout_marginLeft="@dimen/ds_30"
-                    android:layout_marginBottom="@dimen/ds_80"
                     android:text="@string/order_receipt_address_time"
                     android:textColor="@color/color_00"
                     android:textSize="@dimen/fs_50"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
                 <TextView
                     android:id="@+id/pla_tv_add_time"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/place_tv_address_time"
-                    android:layout_marginLeft="@dimen/ds_30"
-                    android:text=""
+                    android:gravity="center"
+                    android:text="2016-06-16 10:00-18:00"
                     android:textColor="@color/color_00"
                     android:textSize="@dimen/fs_45"/>
                 <ImageView
                     android:layout_width="@dimen/ds_90"
                     android:layout_height="@dimen/ds_90"
                     android:background="@drawable/home_right_arrow_icon"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/ds_30"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_gravity="center_vertical"
                     />
+                </LinearLayout>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_50"
                 android:background="@color/color_cc" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,7 +164,7 @@
                         android:layout_marginLeft="@dimen/ds_30"
                         android:text=""
                         android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
+                        android:textSize="@dimen/fs_50"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -173,7 +177,7 @@
                             android:layout_marginTop="@dimen/ds_30"
                             android:text="@string/order_take_method"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_60"/>
+                            android:textSize="@dimen/fs_50"/>
                         <TextView
                             android:id="@+id/placord_dan_num"
                             android:layout_width="wrap_content"
@@ -183,7 +187,7 @@
                             android:layout_marginRight="@dimen/ds_30"
                             android:text="@string/order_take_method"
                             android:textColor="@color/color_00"
-                            android:textSize="@dimen/fs_60"/>
+                            android:textSize="@dimen/fs_50"/>
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -210,7 +214,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/order_coupon"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -226,8 +230,8 @@
                         android:textColor="@color/color_00"
                         android:textSize="@dimen/fs_60"/>
                     <ImageView
-                        android:layout_width="@dimen/ds_90"
-                        android:layout_height="@dimen/ds_90"
+                        android:layout_width="@dimen/ds_70"
+                        android:layout_height="@dimen/ds_70"
                         android:layout_centerVertical="true"
                         android:background="@drawable/home_right_arrow_icon"
                         android:layout_marginRight="@dimen/ds_30"
@@ -258,7 +262,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/order_total"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -273,7 +277,7 @@
                     android:layout_marginRight="@dimen/ds_20"
                     android:text="@string/me_income_meney"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_60"/>
+                    android:textSize="@dimen/fs_50"/>
 
                     <TextView
                         android:id="@+id/place_total"
@@ -283,7 +287,7 @@
                         android:layout_marginRight="@dimen/ds_30"
                         android:text="11111"
                         android:textColor="@color/color_00"
-                        android:textSize="@dimen/fs_60"/>
+                        android:textSize="@dimen/fs_50"/>
                 </LinearLayout>
 
             </RelativeLayout>

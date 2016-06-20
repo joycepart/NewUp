@@ -1,19 +1,30 @@
 package com.qluxstory.qingshe.me.adapter;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
+import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
+import com.qluxstory.qingshe.common.http.CallBack;
+import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.MeUiGoto;
+import com.qluxstory.qingshe.me.dto.CancelDTO;
 import com.qluxstory.qingshe.me.entity.CuringOrderListEntity;
+import com.qluxstory.qingshe.me.entity.CuringOrderListResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -21,10 +32,11 @@ import com.qluxstory.qingshe.me.entity.CuringOrderListEntity;
 public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderListEntity> {
     RelativeLayout lin;
     TextView mTv;
-    Context mContext;
+    FragmentActivity mContext;
     private String mOrdNum;
+    List<CuringOrderListEntity> list = new ArrayList<>();
 
-    public CuringOrderAdapter(Context context) {
+    public CuringOrderAdapter(FragmentActivity context) {
         mContext = context;
     }
 
@@ -34,10 +46,12 @@ public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderLis
     }
 
     @Override
-    public void bindData(BaseRecyclerViewHolder holder, final CuringOrderListEntity curingOrderListEntity, int position) {
+    public void bindData(BaseRecyclerViewHolder holder, final CuringOrderListEntity curingOrderListEntity, final int position) {
+
             mTv = holder.getView(R.id.list_curing_tv2);
             lin = holder.getView(R.id.curingorder_rel);
-            holder.setText(R.id.order_num,mOrdNum);
+            list.add(position,curingOrderListEntity);
+            holder.setText(R.id.order_num,curingOrderListEntity.getOrderNum());
             holder.setText(R.id.order_data,curingOrderListEntity.getOrderSingleTime());
             holder.setText(R.id.list_curing_tv1,curingOrderListEntity.getComName());
             holder.setText(R.id.list_curing_tv4,curingOrderListEntity.getOrderMoney());
@@ -46,13 +60,33 @@ public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderLis
                 if(curingOrderListEntity.getIsovertime().equals("0")){
                     mTv.setText("未付款");
                     lin.setVisibility(View.VISIBLE);
-                    TextView mCanle = holder.getView(R.id.curingorder_canle);
+                    Button mCanle = holder.getView(R.id.curingorder_canle);
                     mCanle.setOnClickListener(new View.OnClickListener() {
+                        RelativeLayout rel =lin;
+                        TextView tv = mTv;
                         @Override
                         public void onClick(View v) {
-                            TextView tv = (TextView) v;
-                            lin.setVisibility(View.INVISIBLE);
-                            mTv.setText("已取消");//这里应该还需要有一个请求接口
+                            LogUtils.e("mCanle---","取消订单");
+                            LogUtils.e("position---",""+position);
+                            LogUtils.e("list---",""+list.get(position).getOrderNum());
+                            CancelDTO cdto=new CancelDTO();
+                            cdto.setMembermob(AppContext.get("mobileNum",""));
+                            cdto.setSign(AppConfig.SIGN_1);
+                            cdto.setTimestamp(TimeUtils.getSignTime());
+                            cdto.setOrderNum(list.get(position).getOrderNum());
+                            CommonApiClient.cancel(mContext, cdto, new CallBack<CuringOrderListResult>() {
+                                @Override
+                                public void onSuccess(CuringOrderListResult result) {
+                                    if(AppConfig.SUCCESS.equals(result.getStatus())){
+                                        LogUtils.e("取消订单成功");
+                                        rel.setVisibility(View.INVISIBLE);
+                                        tv.setText("已取消");
+                                    }
+
+                                }
+                            });
+
+
                         }
                     });
                     TextView mPay = holder.getView(R.id.curingorder_pay);
@@ -60,9 +94,7 @@ public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderLis
                         @Override
                         public void onClick(View v) {
                             Bundle b = new Bundle();
-                            mOrdNum = curingOrderListEntity.getOrderNum();
-                            LogUtils.e("mOrdNum----",mOrdNum);
-                            b.putString("mOrdNum",mOrdNum);
+                            b.putString("mOrdNum",list.get(position).getOrderNum());
                             MeUiGoto.payment(mContext,b);//支付订单详情
 
                         }

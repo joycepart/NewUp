@@ -1,9 +1,20 @@
 package com.qluxstory.qingshe.issue.entity;
 
+import java.util.List;
+
 /**
  * Created by lenovo on 2016/6/5.
  */
 public class IssueProduct  {
+    public List<IssueProduct> getList() {
+        return list;
+    }
+
+    public void setList(List<IssueProduct> list) {
+        this.list = list;
+    }
+
+    List<IssueProduct> list;
 
     /*
                      夺宝商品编号
@@ -42,9 +53,23 @@ public class IssueProduct  {
                                  */
     private String mPicUrl;
     /*
-                               封面图片地址
+                               订单号
                                      */
     private String mRecCode;
+    /*
+                                   价格
+                                         */
+    private String mBalance;
+
+    public String getmBalance() {
+        return mBalance;
+    }
+
+    public void setmBalance(String mBalance) {
+        this.mBalance = mBalance;
+    }
+
+
 
     public String getmRecCode() {
         return mRecCode;

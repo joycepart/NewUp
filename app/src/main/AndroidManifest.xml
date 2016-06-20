@@ -44,7 +44,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.qluxstory.qingshe.SplashActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -272,6 +272,9 @@
         <activity
             android:name="com.qluxstory.qingshe.home.activity.ProductBrowserActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qluxstory.qingshe.special.activity.SpecialBrowserActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.qluxstory.qingshe.me.activity.MyIncomeActivity"
@@ -310,16 +313,6 @@
             android:name="com.qluxstory.qingshe.issue.activity.PaymentSuccessActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name="com.qluxstory.qingshe.me.activity.TransactionDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.qluxstory.qingshe.home.activity.TestActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.qluxstory.qingshe.home.activity.VerticalScrollTextActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.activity.ChoiceCityActivity"
             android:screenOrientation="portrait"/>

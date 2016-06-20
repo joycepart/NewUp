@@ -20,7 +20,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="第11期"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_50"/>
+                android:textSize="@dimen/fs_45"/>
                 <TextView
                     android:id="@+id/iss_pro_tv_name"
                     android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="第11期 Apple SE 16g"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/iss_pro_tv_random"
@@ -37,19 +37,30 @@
                 android:layout_height="match_parent"
                 android:singleLine="true"
                 android:layout_marginLeft="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_20"
                 android:text="@string/issue_random"
                 android:textColor="@color/color_c0"
-                android:textSize="@dimen/fs_50"/>
+                android:textSize="@dimen/fs_45"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ds_70"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:background="@drawable/btn_progree"/>
             <ProgressBar
                 android:id="@+id/product_progress"
                 android:layout_width="match_parent"
-                android:background="@color/color_ff"
-                android:layout_height="@dimen/ds_100"
-                style="@style/IssueProgressBarStyle"
-                android:layout_marginRight="@dimen/ds_30"
-                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_height="@dimen/ds_35"
+                android:layout_marginTop="@dimen/ds_20"
+                style="@style/ProgressBar_Mini"
+                android:layout_marginRight="@dimen/ds_40"
+                android:layout_marginLeft="@dimen/ds_40"
                 android:max="100"/>
+            </FrameLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_100">
@@ -57,11 +68,11 @@
                     android:id="@+id/iss_pro_people"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/ds_30"
+                    android:layout_marginLeft="@dimen/ds_10"
                     android:layout_marginTop="@dimen/ds_30"
-                    android:text="总需要人数3288人次"
+                    android:text="总需要人数32"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
                 <TextView
                     android:id="@+id/iss_pro_peo"
                     android:layout_width="wrap_content"
@@ -69,9 +80,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="@dimen/ds_30"
                     android:layout_marginRight="@dimen/ds_30"
-                    android:text="距离揭晓还需288人次"
+                    android:text=""
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -82,25 +93,28 @@
             android:layout_marginTop="@dimen/ds_30"
             android:background="@color/color_cc"/>
 
+
         <TextView
-            android:visibility="gone"
             android:id="@+id/product_participate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/ds_30"
             android:gravity="center"
             android:textSize="@dimen/fs_50"
+            android:layout_marginBottom="@dimen/ds_30"
             android:textColor="@color/color_00"
             android:text="@string/issue_no_activity"/>
 
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
         android:id="@+id/issue_product_lin"
         android:gravity="center"
         android:orientation="horizontal">
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_150"
         >
@@ -126,7 +140,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:text="@string/product_num"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_50"/>
+                android:textSize="@dimen/fs_45"/>
                 <TextView
                     android:id="@+id/product_participate_num"
                     android:layout_width="wrap_content"
@@ -134,7 +148,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/color_c0"
-                    android:textSize="@dimen/fs_50"/>
+                    android:textSize="@dimen/fs_45"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -142,14 +156,13 @@
                 android:gravity="center"
                 android:text="@string/product_text"
                 android:textColor="@color/color_00"
-                android:textSize="@dimen/fs_50"/>
+                android:textSize="@dimen/fs_45"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_30"
-            android:layout_marginTop="@dimen/ds_20"
             android:background="@color/color_cc"/>
 
         <LinearLayout
@@ -175,7 +188,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/issue_imagetext"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_40"/>
+                    android:textSize="@dimen/fs_45"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -183,7 +196,7 @@
                     android:gravity="center"
                     android:text="@string/issue_wifi"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_40"/>
+                    android:textSize="@dimen/fs_45"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -191,6 +204,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_3"
+            android:layout_marginLeft="@dimen/ds_30"
             android:background="@color/color_cc"/>
 
         <LinearLayout
@@ -217,7 +231,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:text="@string/issue_announce"
                     android:textColor="@color/color_00"
-                    android:textSize="@dimen/fs_40"/>
+                    android:textSize="@dimen/fs_45"/>
 
 
             </RelativeLayout>

@@ -12,6 +12,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.utils.LogUtils;
@@ -22,7 +26,7 @@ import com.qluxstory.qingshe.information.fragment.InformationFragment;
 import com.qluxstory.qingshe.issue.fragment.IssueFragment;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.fragment.MeFragment;
-import com.qluxstory.qingshe.unused.fragment.UnusedFragment;
+import com.qluxstory.qingshe.special.fragment.UnusedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +52,8 @@ public class MainActivity extends BaseTitleActivity {
     TextView mTvTabMine;
     @Bind(R.id.tv_tab_issue)
     TextView mTvTabIssue;
+
+    public LocationClient mLocationClient = null;
 
     private TextView[] mTabViews = new TextView[TAB_NUM];
     private FragmentManager fragmentManager;
@@ -77,6 +83,7 @@ public class MainActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        requestLocationInfo();//发请定位
         registerMessageReceiver();  // used for receive msg
         fragmentManager = getSupportFragmentManager();
         mTabViews[0] = mTvTabHome;
@@ -258,17 +265,76 @@ public class MainActivity extends BaseTitleActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == MeUiGoto.LOFIN_REQUEST&&resultCode==1001)
         {
+            LogUtils.e("LOFIN_REQUEST----","mPictruePath:"+AppContext.get("mPictruePath","")+"mUserName:"+AppContext.get("mUserName",""));
             FragmentManager fragmentManager = getSupportFragmentManager();
             MeFragment meFragment = (MeFragment)fragmentManager.findFragmentByTag("tag4");
             meFragment.initView(null);
         }
-        if(requestCode == MeUiGoto.USERINFORMATION_REQUEST&&resultCode==1002)
+        if(requestCode == MeUiGoto.USERINFORMATION_REQUEST)
         {
+            LogUtils.e("USERINFORMATION_REQUEST----","mPictruePath:"+AppContext.get("mPictruePath","")+"mUserName:"+AppContext.get("mUserName",""));
             FragmentManager fragmentManager = getSupportFragmentManager();
             MeFragment meFragment = (MeFragment)fragmentManager.findFragmentByTag("tag4");
             meFragment.initView(null);
         }
     }
+
+
+    /**
+     * 发起定位
+     */
+    public void requestLocationInfo(){
+        setLocationOption();
+        if (mLocationClient != null && !mLocationClient.isStarted()){
+            mLocationClient.start();
+        }
+        if (mLocationClient != null && mLocationClient.isStarted()){
+            mLocationClient.requestLocation();
+        }
+    }
+
+    /**
+     * 设置相关参数
+     */
+    private void setLocationOption(){
+        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);        //是否打开GPS
+        option.setCoorType("bd09ll");       //设置返回值的坐标类型。
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+        option.setProdName("LocationDemo"); //设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
+        mLocationClient.setLocOption(option);
+    }
+
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            if (location == null) {
+                LogUtils.e("location_failed----","location_failed");
+                return;
+            } else {
+                int locType = location.getLocType();
+                LogUtils.i("locType:",""+locType);
+                LogUtils.i("province:","" + location.getProvince());
+                LogUtils.i("city:" ,""+ location.getCity());
+                LogUtils.i("district:" ,""+ location.getDistrict());
+                LogUtils.i("AddrStr:" ,""+ location.getAddrStr());
+                String city = location.getCity();
+                if (TextUtils.isEmpty(city)) {
+                    LogUtils.e("locType----","定位失败");
+                    mLocationClient.start();
+                } else {
+                    AppContext.set("mCity",city);
+                    mLocationClient.stop();
+                }
+            }
+
+        }
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -286,7 +352,12 @@ public class MainActivity extends BaseTitleActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AppContext.set("mCity","");
         unregisterReceiver(mMessageReceiver);
+        if (mLocationClient != null && mLocationClient.isStarted()) {
+            mLocationClient.stop();
+            mLocationClient = null;
+        }
 //        AppContext.set("isLogin",false);
 //        LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
     }

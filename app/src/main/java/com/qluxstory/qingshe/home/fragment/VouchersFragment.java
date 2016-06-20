@@ -3,6 +3,7 @@ package com.qluxstory.qingshe.home.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -32,6 +33,7 @@ public class VouchersFragment extends BasePullFragment {
     BaseSimpleRecyclerAdapter mVouchersListAdapter;
     private  String mCode;
     private  String mPrice;
+    private TextView tv;
 
 
     @Override
@@ -51,10 +53,31 @@ public class VouchersFragment extends BasePullFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, VouchersEntity vouchersEntity, int position) {
-                holder.setText(R.id.vouchers_tv,vouchersEntity.getCouponMoneyEqual());
-                holder.setText(R.id.coupon_vouchers,vouchersEntity.getCouponRangeOfUse());
-                holder.setText(R.id.item_vouchers,vouchersEntity.getDiscountNumber());
-                holder.setText(R.id.vouchers_time,vouchersEntity.getCouponExpirationTime());
+                tv = holder.getView(R.id.novice_tv);
+                if(vouchersEntity.getCouponType().equals("1001")){
+                    tv.setText(vouchersEntity.getDiscountNumber()+"折");
+                }else if(vouchersEntity.getCouponType().equals("1002")){
+                    tv.setText("满"+vouchersEntity.getCouponmoney().replace(".00","")+"减"+vouchersEntity.getCouponMoneyEqual().replace(".00",""));
+                }
+                else if(vouchersEntity.getCouponType().equals("1003")){
+                    tv.setText("免费");
+                }
+                else if(vouchersEntity.getCouponType().equals("1004")){
+                    tv.setText("直减"+vouchersEntity.getCouponMoneyEqual().replace(".00",""));
+                }
+                else if(vouchersEntity.getCouponType().equals("1005")){
+                    tv.setText(vouchersEntity.getCouponMoneyEqual().replace(".00","")+"抵用"+vouchersEntity.getCouponmoney().replace(".00",""));
+                }
+                if(vouchersEntity.getCouponRangeOfUse().equals("2001")){
+                    holder.setText(R.id.coupon_vt,"优惠劵");
+                }else if(vouchersEntity.getCouponRangeOfUse().equals("2002")){
+                    holder.setText(R.id.coupon_vt,"服务劵");
+                }
+
+
+
+                holder.setText(R.id.item_tv,vouchersEntity.getCouponRedeemName());
+                holder.setText(R.id.tv_time,vouchersEntity.getCouponExpirationTime());
             }
 
 
@@ -64,7 +87,11 @@ public class VouchersFragment extends BasePullFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 VouchersEntity entity = (VouchersEntity) itemBean;
-                AppContext.set("vouchers",entity.getCouponMoneyEqual());
+                AppContext.set("Novice",tv.getText().toString());
+                AppContext.set("CouponType",entity.getCouponType());
+                AppContext.set("DiscountNumber",entity.getDiscountNumber());
+                AppContext.set("CouponMoneyEqual",entity.getCouponMoneyEqual());
+                AppContext.set("Couponmoney",entity.getCouponmoney());
                 getActivity().finish();
             }
         });
@@ -95,7 +122,7 @@ public class VouchersFragment extends BasePullFragment {
                     LogUtils.d("使用优惠劵成功");
                     mErrorLayout.setErrorMessage("暂无代金劵",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getCouponExpirationTime()==null){
+                    if(null==result.getData()){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         mVouchersListAdapter.removeAll();

@@ -29,8 +29,6 @@ import butterknife.OnClick;
  * 新增地址主页面
  */
 public class AddAddressActivity extends BaseTitleActivity {
-    @Bind(R.id.base_titlebar_back)
-    TextView mBaseTitlebarBack;
     @Bind(R.id.et_consignee)
     EditText mEtConsignee;
     @Bind(R.id.et_num)

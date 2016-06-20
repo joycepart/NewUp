@@ -16,7 +16,7 @@
             android:layout_marginBottom="@dimen/ds_30"
             android:text="@string/order_payment_method"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_60"/>
+            android:textSize="@dimen/fs_50"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -31,8 +31,8 @@
         <CheckBox
             android:clickable="false"
             android:id="@+id/place_cb_wx"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -41,8 +41,8 @@
             />
 
         <ImageView
-            android:layout_width="@dimen/ds_130"
-            android:layout_height="@dimen/ds_130"
+            android:layout_width="@dimen/ds_110"
+            android:layout_height="@dimen/ds_110"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/service_icon2"/>
@@ -53,7 +53,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_weixin"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
     </LinearLayout>
     <View
@@ -70,8 +70,8 @@
         <CheckBox
             android:clickable="false"
             android:id="@+id/place_cb_zhi"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -79,8 +79,8 @@
             android:checked="false"
             />
         <ImageView
-            android:layout_width="@dimen/ds_130"
-            android:layout_height="@dimen/ds_130"
+            android:layout_width="@dimen/ds_110"
+            android:layout_height="@dimen/ds_110"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/service_icon1"/>
@@ -91,7 +91,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_zhifubao"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
     </LinearLayout>
     <View
@@ -108,8 +108,8 @@
         <CheckBox
             android:id="@+id/place_cb_hui"
             android:clickable="false"
-            android:layout_width="@dimen/ds_80"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
             android:layout_marginLeft="@dimen/ds_40"
             android:background="@drawable/selector_checkbox"
             android:layout_centerVertical="true"
@@ -129,7 +129,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text="@string/order_member"
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
         <TextView
             android:id="@+id/tv_balance"
@@ -138,7 +138,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/ds_30"
             android:text=""
-            android:textSize="@dimen/fs_65"
+            android:textSize="@dimen/fs_50"
             android:textColor="@color/color_00"/>
     </LinearLayout>
 

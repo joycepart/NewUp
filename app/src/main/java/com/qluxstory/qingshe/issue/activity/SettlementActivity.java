@@ -1,6 +1,5 @@
 package com.qluxstory.qingshe.issue.activity;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -34,7 +33,6 @@ import com.qluxstory.qingshe.issue.dto.SettlementDTO;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.issue.entity.SettlementEntity;
 import com.qluxstory.qingshe.issue.entity.SettlementResult;
-import com.qluxstory.qingshe.me.entity.RecordsEntity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -89,10 +87,8 @@ public class SettlementActivity extends BaseTitleActivity {
     String mBatCode;
     String mSnaCode  ;
     IssueProduct issueProduct;
-    TextView mBaseEnsure;
     private static final int RQF_PAY = 1;
     private static final int RQF_LOGIN = 2;
-    RecordsEntity entity;
 
 
     @Override
@@ -103,55 +99,31 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("结算");
-//        Intent intent = getIntent();
-//        Bundle b = intent.getBundleExtra("bundle");
-//        entity = (RecordsEntity) b.getSerializable("entity");
-
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
-        mBaseEnsure.setVisibility(View.GONE);
-
         issueProduct = AppContext.getInstance().getIssueProduct();
-
-//        mCaTerm = entity.getRec_term();
-//        mCaTitle = entity.getSna_title();
-//        mPic = entity.getPic_url();
-//        mTotalVount = entity.getSna_total_count();
-//        mParticipate = entity.getRec_participate_count();
-//        mBatCode = entity.getBat_code();
-//        mSnaCode = entity.getSna_code();
-//        mBalance = entity.getRec_pay_balance();
-//        if(!TextUtils.isEmpty(issueProduct.getmRecCode())){
-//            mRecCode = entity.getRec_code();
-//        }else {
-//            mRecCode = "";
-//        }
-
-
         mCaTerm = issueProduct.getmSnaTerm();
         mCaTitle = issueProduct.getmSnaTitle();
         mPic = issueProduct.getmPicUrl();
+        LogUtils.e("mPic----",""+mPic);
         mTotalVount = issueProduct.getmTotalCount();
-        mParticipate = issueProduct.getmSnaOut();
+        LogUtils.e("mParticipate---",""+issueProduct.getmSnaOut());
+        if(!TextUtils.isEmpty(issueProduct.getmSnaOut())){
+            mParticipate = issueProduct.getmSnaOut();
+        }else {
+            mParticipate = "0";
+        }
         mBatCode = issueProduct.getmBatCode();
         mSnaCode = issueProduct.getmSnaCode();
+        mBalance = issueProduct.getmBalance();
         if(!TextUtils.isEmpty(issueProduct.getmRecCode())){
             mRecCode = issueProduct.getmRecCode();
         }else {
             mRecCode = "";
         }
-
+        LogUtils.e("mRecCode----",""+mRecCode);
         mTitle.setText(mCaTitle);
         mTerm.setText("第"+mCaTerm+"期");
         mPlaceNm.setText(mBalance);
-//        mBalance = intent.getBundleExtra("bundle").getString("mBalance");
-//        mPlaceNm.setText(mBalance);
         ImageLoaderUtils.displayImage(mPic,mImg);
-        Intent intent = getIntent();
-        if(intent!=null){
-            mBalance = intent.getBundleExtra("bundle").getString("mBalance");
-            mPlaceNm.setText(mBalance);
-        }
-
 
         mInBtn.setText(AppContext.get("mobileNum",""));
 
@@ -183,6 +155,9 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.base_titlebar_back:
+                baseGoBack();
+                break;
             case R.id.set_tv:
                 IssueUiGoto.special(this,AppConfig.Server_Html+"");
                 break;
@@ -207,6 +182,12 @@ public class SettlementActivity extends BaseTitleActivity {
 
         }
         super.onClick(v);
+    }
+
+    @Override
+    protected void baseGoBack() {
+        super.baseGoBack();
+        finish();
     }
 
     private void reqBalance() {
@@ -270,6 +251,7 @@ public class SettlementActivity extends BaseTitleActivity {
                     IssueUiGoto.payment(SettlementActivity.this);//支付结果页
                     mPayBtn.setEnabled(true);
                 }
+
 
             }
         });

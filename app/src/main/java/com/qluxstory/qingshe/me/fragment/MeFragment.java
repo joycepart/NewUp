@@ -54,8 +54,6 @@ public class MeFragment extends BaseFragment {
     LinearLayout mUserLlService;
     @Bind(R.id.user_ll_ipone)
     LinearLayout mUserLlIpone;
-    @Bind(R.id.user_ll_qq)
-    LinearLayout mUserLlQq;
     @Bind(R.id.user_ll_inf)
     LinearLayout mUserLlInf;
     @Bind(R.id.user_btn_close)
@@ -111,7 +109,7 @@ public class MeFragment extends BaseFragment {
     public void initData() {
     }
 
-    @OnClick({R.id.user_btn, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone, R.id.user_ll_qq,R.id.user_ll_inf, R.id.user_btn_close})
+    @OnClick({R.id.user_btn, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone,R.id.user_ll_inf, R.id.user_btn_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_btn:
@@ -121,34 +119,34 @@ public class MeFragment extends BaseFragment {
                 MeUiGoto.userInformation(getActivity());//用户信息
                 break;
             case R.id.user_ll_curing:
-                if(bool!=true){
-                    MeUiGoto.login(getActivity());//登录
-                }else {
+                if(bool){
                     MeUiGoto.maintenanceOrder(getActivity());//养护订单
+                }else {
+                    MeUiGoto.login(getActivity());//登录
                 }
 
                 break;
             case R.id.user_ll_indiana:
-                if(!bool){
-                    MeUiGoto.login(getActivity());//登录
-                }else {
+                if(bool){
                     UIHelper.showFragment(getActivity(), SimplePage.INDIANA_RECORDS);//夺宝记录
+                }else {
+                    MeUiGoto.login(getActivity());//登录
                 }
 
                 break;
             case R.id.user_ll_coupon:
-                if(!bool){
-                    MeUiGoto.login(getActivity());//登录
-                }else {
+                if(bool){
                     UIHelper.showFragment(getActivity(), SimplePage.MY_COUPON);//我的优惠劵
+                }else {
+                    MeUiGoto.login(getActivity());//登录
                 }
 
                 break;
             case R.id.user_ll_income:
-                if(!bool){
-                    MeUiGoto.login(getActivity());//登录
-                }else {
+                if(bool){
                     MeUiGoto.myIncome(getActivity());//我的收入
+                }else {
+                    MeUiGoto.login(getActivity());//登录
                 }
 
                 break;
@@ -171,12 +169,7 @@ public class MeFragment extends BaseFragment {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent); //电话客服
                 break;
-            case R.id.user_ll_qq:
 
-                mUrlQq = AppConfig.URL_QQ;
-                mQqTitle = "官方QQ群 - 倾奢";
-                MeUiGoto.qq(getActivity(), mUrlQq, mQqTitle);//官方QQ群
-                break;
             case R.id.user_ll_inf:
                 mUrlInformation = AppConfig.URL_INFORMATION;
                 mInformationTitle = "版本信息";

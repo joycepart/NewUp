@@ -185,6 +185,8 @@ public class MeUiGoto {
         intent.putExtra("title", mReturnTitle);
         context.startActivity(intent);
     }
+
+
     /**
      * 跳转到用户注册协议页（加载h5页面）
      *
