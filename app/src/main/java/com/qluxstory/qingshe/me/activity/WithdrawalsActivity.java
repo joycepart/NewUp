@@ -52,7 +52,7 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     TextView mWithdTv;
     @Bind(R.id.pay_Btn)
     Button mWBtn;
-    private String strPhoneNum,mMon,mUs,mNm,mIpone,mWTv,mBank;
+    private String strPhoneNum,mMon,mUs,mNm,mIpone,mWTv,mBank,mMoney;
     private ArrayList<String> sList;
 
     @Override
@@ -63,6 +63,8 @@ public class WithdrawalsActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitleText("提现");
+        Intent intent = getIntent();
+        mMoney = intent.getBundleExtra("b").getString("mCashaMountMoney");
         mWTv = mWithdTv.getText().toString();
         if(mWTv.equals("支付宝")){
             mLinBank.setVisibility(View.GONE);
@@ -70,6 +72,14 @@ public class WithdrawalsActivity extends BaseTitleActivity {
             mLinBank.setVisibility(View.VISIBLE);
         }
         strPhoneNum = AppContext.get("mobileNum","");
+        mWithdMon.setHint("可提现金额："+mMoney+"元");
+//        mWithdMon.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                EditText et=(EditText)v;
+//                et.setHint("可提现金额："+mMoney+"元");
+//            }
+//        });
 
     }
 
@@ -171,9 +181,10 @@ public class WithdrawalsActivity extends BaseTitleActivity {
 
     private void Withdrawals() {
         WithdrawalsDTO mDto = new WithdrawalsDTO();
+        String time = TimeUtils.getSignTime();
         mDto.setMembermob(strPhoneNum);
-        mDto.setSign(AppConfig.SIGN_1);
-        mDto.setTimestamp(TimeUtils.getSignTime());
+        mDto.setSign(time+AppConfig.SIGN_1);
+        mDto.setTimestamp(time);
         mDto.setAccounttype(mWTv);
         mDto.setAccountnumber(mUs);
         mDto.setPresentmoney(mMon);

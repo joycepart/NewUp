@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
@@ -95,8 +94,9 @@ public class AddAddressActivity extends BaseTitleActivity {
 
     private void reqAdd() {
         AddAddressDTO dto = new AddAddressDTO();
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        String time = TimeUtils.getSignTime();
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         dto.setMembermob(AppContext.get("mobileNum",""));
         dto.setProvincity(mEtCity.getText().toString());
         dto.setDelivmobile(mEtNum.getText().toString());

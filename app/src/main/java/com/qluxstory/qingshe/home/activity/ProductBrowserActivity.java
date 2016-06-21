@@ -64,6 +64,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
     UMImage image;
     String mTargetUrl;
+    boolean bool;
 
     @Override
     protected int getContentResId() {
@@ -94,6 +95,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
+        bool= AppContext.get("isLogin",false);
         LogUtils.e("initView---","initView");
         setTitleText("商品详情");
         mWebView = (ProgressWebView) findViewById(R.id.browser_product_webview);
@@ -122,7 +124,11 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pro_btn_kf:
-                service();
+                if(bool){
+                    service();
+                }else {
+                    MeUiGoto.login(this);//登录
+                }
                 break;
             case R.id.base_titlebar_ensure:
                 baseGoEnsure();
@@ -154,12 +160,11 @@ public class ProductBrowserActivity extends BaseTitleActivity {
                 break;
 
             case R.id.place_btn:
-                Boolean bool= AppContext.get("isLogin",false);
-                HomeUiGoto.placeOrder(this);//提交订单
-                if(!bool){
-                    MeUiGoto.login(this);//登录
-                }else {
+
+                if(bool){
                     HomeUiGoto.placeOrder(this);//提交订单
+                }else {
+                    MeUiGoto.login(this);//登录
                 }
                 break;
             default:

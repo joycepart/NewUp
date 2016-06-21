@@ -2,7 +2,6 @@ package com.qluxstory.qingshe.common.dto;
 
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
-import com.qluxstory.qingshe.common.utils.TimeUtils;
 
 import java.io.Serializable;
 
@@ -46,8 +45,8 @@ public class BaseDTO implements Serializable {
     }
 
     public void setSign(String sign) {
-        String time = TimeUtils.getSignTime();
-        this.sign = SecurityUtils.MD5(time + sign);
+//        String time = TimeUtils.getSignTime();
+        this.sign = SecurityUtils.md5(sign);
     }
 
     public int getPageIndex() {

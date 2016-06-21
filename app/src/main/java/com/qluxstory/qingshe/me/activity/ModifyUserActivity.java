@@ -52,10 +52,11 @@ public class ModifyUserActivity extends BaseTitleActivity {
     private void modify() {
         mNewName = mModifyEt.getText().toString();
         ModifyDTO mdto = new ModifyDTO();
+        String time = TimeUtils.getSignTime();
         mdto.setMembername(mNewName);
         mdto.setMembermob(AppContext.get("mobileNum",""));
-        mdto.setSign(AppConfig.SIGN_1);
-        mdto.setTimestamp(TimeUtils.getSignTime());
+        mdto.setSign(time+AppConfig.SIGN_1);
+        mdto.setTimestamp(time);
         CommonApiClient.modifyUser(this, mdto, new CallBack<ModifyResult>() {
             @Override
             public void onSuccess(ModifyResult result) {

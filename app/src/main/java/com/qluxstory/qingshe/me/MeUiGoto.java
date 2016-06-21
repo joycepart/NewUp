@@ -74,10 +74,12 @@ public class MeUiGoto {
     /**
      * 跳转到申请提现页
      * @param context
+     * @param b
      */
 
-    public static void withd(Context context){
+    public static void withd(Context context, Bundle b){
         Intent intent = new Intent(context,WithdrawalsActivity.class);
+        intent.putExtra("b",b);
         context.startActivity(intent);
     }
     /**

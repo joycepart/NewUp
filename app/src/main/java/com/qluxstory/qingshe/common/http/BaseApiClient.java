@@ -122,14 +122,16 @@ public class BaseApiClient {
 		Set<String> key = map.keySet();
 		for (Iterator<String> it = key.iterator(); it.hasNext();) {
 			String s =  it.next();
-			if(TextUtils.isEmpty(map.get(s).toString())){
-				LogUtils.e("Found Empty Params--> "+s + "=" + map.get(s));
-				continue;
-			}
+//			if(TextUtils.isEmpty(map.get(s).toString())){
+//				LogUtils.e("Found Empty Params--> "+s + "=" + map.get(s));
+//				continue;
+//			}
 			builder.add(s, map.get(s).toString());
 			LogUtils.e(s + " = " + map.get(s).toString());
 		}
 		LogUtils.e("post-------------reqParams    end-------------");
+
+		LogUtils.e("builder.build()--",""+builder.build());
 		Request request = new Request.Builder()
 				.tag(asyncCallBack.getTag())
 				.url(url)

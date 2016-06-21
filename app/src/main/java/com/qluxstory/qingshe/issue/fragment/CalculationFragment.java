@@ -79,7 +79,7 @@ public class CalculationFragment extends BasePullScrollViewFragment {
             public void onSuccess(CalculationResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("计算详情成功");
-                    mTotal.setText(result.getData().get(0).getSna_calc());
+                    mTotal.setText("数值A="+result.getData().get(0).getSna_calc());
                     mCalculationAdapter.removeAll();
                     mCalculationAdapter.append(result.getData());
                 }

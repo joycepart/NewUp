@@ -46,9 +46,10 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
     @Override
     protected void sendRequestData() {
         IndianaRecordsDTO gdto=new IndianaRecordsDTO();
+        String time = TimeUtils.getSignTime();
         gdto.setUserPhone(AppContext.get("mobileNum",""));
-        gdto.setTime(TimeUtils.getSignTime());
-        gdto.setSign(AppConfig.SIGN_1);
+        gdto.setTime(time);
+        gdto.setSign(time+AppConfig.SIGN_1);
         gdto.setPageSize(PAGE_SIZE);
         gdto.setPageIndex(mCurrentPage);
         CommonApiClient.records(this, gdto, new CallBack<RecordsResult>() {

@@ -9,6 +9,7 @@
         android:background="@color/color_cc"/>
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/color_ff"
         android:layout_height="@dimen/ds_140">
         <TextView
             android:layout_width="wrap_content"

@@ -18,6 +18,7 @@ import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeCountDown;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.MeUiGoto;
@@ -93,8 +94,9 @@ public class LoginActivity extends BaseActivity {
         mTcd.start();
         ObtainDTO bdto = new ObtainDTO();
         bdto.setMembermob(strPhoneNum);
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        String time = TimeUtils.getSignTime();
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         bdto.setRegisterFrom(AppConfig.RegisterFrom);
         CommonApiClient.getVerify(this, bdto, new CallBack<BaseEntity>() {
             @Override
@@ -111,7 +113,9 @@ public class LoginActivity extends BaseActivity {
         LoginDTO ldto = new LoginDTO();
         ldto.setMemberverifycode(strPwd);
         ldto.setMembermob(strPhoneNum);
-        ldto.setSign(AppConfig.SIGN_1);
+        String time = TimeUtils.getSignTime();
+        LogUtils.e("setSign----",""+time+AppConfig.SIGN_1);
+        ldto.setSign(time+AppConfig.SIGN_1);
         ldto.setRegisterFrom(AppConfig.RegisterFrom);
         ldto.setTimestamp(TimeUtils.getSignTime());
         CommonApiClient.login(this, ldto, new CallBack<LoginResult>() {
@@ -149,9 +153,15 @@ public class LoginActivity extends BaseActivity {
             case R.id.lg_imgbtn:
                 break;
             case R.id.login_codeBtn:
-                if(TextUtils.isEmpty(mLoginEtNum.getText().toString())&&mLoginEtNum.getText().toString().length()<11){
-                    DialogUtils.showPrompt(this,"提示","请输入正确的手机号");
+                if(TextUtils.isEmpty(mLoginEtNum.getText().toString())||mLoginEtNum.getText().toString().length()<11){
+                    DialogUtils.showPrompt(this,"请输入正确的手机号","知道了");
                 }else {
+                    String time = TimeUtils.getSignTime();
+                    String sing = time+AppConfig.SIGN_1;
+                    String str = SecurityUtils.md5(sing);
+                    LogUtils.e("setSign----",""+time);
+                    LogUtils.e("sing----",""+sing);
+                    LogUtils.e("str----",""+str);
                     ObtainCode();
                 }
 

@@ -149,8 +149,9 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     }
     private void reqParticipate() {
         LanderInDTO dto=new LanderInDTO();
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTime(TimeUtils.getSignTime());
+        String time = TimeUtils.getSignTime();
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTime(time);
         dto.setMembermob(AppContext.get("mobileNum",""));
         dto.setSna_code(mSnaCode);
         dto.setBat_code(mBatCode);

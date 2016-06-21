@@ -85,7 +85,10 @@ public class MeFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         bool = AppContext.get("isLogin",false);
-        LogUtils.e("bool----3",""+AppContext.get("isLogin",false));
+//        AppContext.set("isLogin",true);
+//        bool = AppContext.get("isLogin",false);
+//        AppContext.set("mobileNum","18810326847");
+        LogUtils.e("bool----3",""+bool);
         if(bool){
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
@@ -161,7 +164,12 @@ public class MeFragment extends BaseFragment {
                 MeUiGoto.rturn(getActivity(), mUrlReturn, mReturnTitle);//关于退货
                 break;
             case R.id.user_ll_service:
-                service();
+                if(bool){
+                    service();
+                }else {
+                    MeUiGoto.login(getActivity());//登录
+                }
+
                 break;
             case R.id.user_ll_ipone:
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"
@@ -170,11 +178,6 @@ public class MeFragment extends BaseFragment {
                 startActivity(intent); //电话客服
                 break;
 
-            case R.id.user_ll_inf:
-                mUrlInformation = AppConfig.URL_INFORMATION;
-                mInformationTitle = "版本信息";
-                MeUiGoto.sinformation(getActivity(), mUrlQq, mQqTitle);//版本信息
-                break;
             case R.id.user_btn_close:
                 mLoginLl.setVisibility(View.VISIBLE);
                 mLoingSuc.setVisibility(View.GONE);

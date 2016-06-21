@@ -30,6 +30,17 @@ public class PayDTO extends BaseDTO {
     private String ServerYJCode;
     private String OrderMoney;
     private String couponcode;
+    private String customernote;
+
+    public String getCustomernote() {
+        return customernote;
+    }
+
+    public void setCustomernote(String customernote) {
+        this.customernote = customernote;
+    }
+
+
 
     public String getCouponcode() {
         return couponcode;

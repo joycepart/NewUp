@@ -192,8 +192,9 @@ public class SettlementActivity extends BaseTitleActivity {
 
     private void reqBalance() {
         BaseDTO dto = new BaseDTO();
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        String time = TimeUtils.getSignTime();
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         dto.setMembermob(AppContext.get("mobileNum", ""));
         CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
             @Override
@@ -211,6 +212,7 @@ public class SettlementActivity extends BaseTitleActivity {
     private void settlement() {
         mPayBtn.setEnabled(false);
         SettlementDTO gdto=new SettlementDTO();
+        String time = TimeUtils.getSignTime();
         if(mSetWx.isChecked()){
             gdto.setType("2");
         }
@@ -231,8 +233,8 @@ public class SettlementActivity extends BaseTitleActivity {
         gdto.setSna_total_count(mTotalVount);
         gdto.setTerm(mCaTerm);
         gdto.setRec_code(mRecCode);
-        gdto.setSign(AppConfig.SIGN_1);
-        gdto.setTime(TimeUtils.getSignTime());
+        gdto.setSign(time+AppConfig.SIGN_1);
+        gdto.setTime(time);
         CommonApiClient.settlement(this, gdto, new CallBack<SettlementResult>() {
             @Override
             public void onSuccess(SettlementResult result) {

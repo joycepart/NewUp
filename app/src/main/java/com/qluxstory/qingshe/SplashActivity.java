@@ -77,11 +77,12 @@ public class SplashActivity extends BaseActivity {
 //        int screenWidth = getWindowManager().getDefaultDisplay().getWidth(); // 屏幕宽（像素，如：480px）
 //        int screenHeight = getWindowManager().getDefaultDisplay().getHeight(); // 屏幕高（像素，如：800p）
         SplashDTO dto = new SplashDTO();
+        String time = TimeUtils.getSignTime();
         dto.setDevicetype("2");
         dto.setPheight("1920");
         dto.setPwidth("1080");
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         CommonApiClient.getImgs(this, dto, new CallBack<SplashResult>() {
             @Override
             public void onSuccess(SplashResult result) {

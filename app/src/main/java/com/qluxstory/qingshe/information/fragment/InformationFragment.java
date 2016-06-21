@@ -37,6 +37,12 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
     public void initView(View view) {
         super.initView(view);
         LogUtils.e("initView-----","initView");
+        boolean bool= AppContext.get("isLogin",false);
+        if(!bool){
+            MeUiGoto.login(getActivity());//登录
+        }else {
+
+        }
 
     }
 
@@ -57,12 +63,7 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     protected void sendRequestData() {
-
-        boolean bool= AppContext.get("isLogin",false);
-        LogUtils.e("sendRequestData-----",""+bool);
-        if(bool!=true){
-            MeUiGoto.login(getActivity());//登录
-        }
+        LogUtils.e("sendRequestData-----","sendRequestData");
         InformationDTO gdto=new InformationDTO();
         gdto.setUserPhone(AppContext.get("mobileNum",""));
         gdto.setPageSize(PAGE_SIZE);
@@ -97,7 +98,7 @@ public class InformationFragment extends BaseListFragment<InformationEntity> {
 
     @Override
     public void initData() {
-
+        LogUtils.e("initData-----","initData");
     }
 
     @Override

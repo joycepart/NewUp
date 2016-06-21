@@ -107,9 +107,10 @@ public class VouchersFragment extends BasePullFragment {
 
     private void reqVouchers() {
         VouchersDTO bdto=new VouchersDTO();
+        String time = TimeUtils.getSignTime();
         bdto.setMembermob(AppContext.get("mobileNum",""));
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         bdto.setComallmoney(mPrice);
         bdto.setCombrand("");
         bdto.setComserviceonlycode(mCode);

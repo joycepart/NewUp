@@ -112,9 +112,10 @@ public class MyCouponFragment extends BasePullFragment {
 
     protected void reqCoupon() {
         BaseDTO bdto=new BaseDTO();
+        String time = TimeUtils.getSignTime();
         bdto.setMembermob(strPhoneNum);
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         CommonApiClient.getCoupon(this, bdto, new CallBack<MyCouponResult>() {
             @Override
             public void onSuccess(MyCouponResult result) {
@@ -136,10 +137,11 @@ public class MyCouponFragment extends BasePullFragment {
     }
     private void exchangeVoucher() {
         ExchangeVoucherDTO bdto=new ExchangeVoucherDTO();
+        String time = TimeUtils.getSignTime();
         bdto.setCouponredeemcode(mMoupom);
         bdto.setMembermob(strPhoneNum);
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         CommonApiClient.exchangeVoucher(this, bdto, new CallBack<ExchangeVoucherResult>() {
             @Override
             public void onSuccess(ExchangeVoucherResult result) {

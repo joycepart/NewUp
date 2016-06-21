@@ -404,8 +404,9 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     private void reqUpInfomation() {
         UpInformationDTO dto=new UpInformationDTO();
-        dto.setTime(TimeUtils.getSignTime());
-        dto.setSign(AppConfig.SIGN_1);
+        String time = TimeUtils.getSignTime();
+        dto.setTime(time);
+        dto.setSign(time+AppConfig.SIGN_1);
         dto.setRec_phone(AppContext.get("mobileNum",""));
         dto.setRec_code(mCode);
         dto.setCon_address(consignee.getAddressInDetail());
@@ -428,8 +429,9 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     private void reqConfirm() {
         ConfirmDTO dto=new ConfirmDTO();
-        dto.setTime(TimeUtils.getSignTime());
-        dto.setSign(AppConfig.SIGN_1);
+        String time = TimeUtils.getSignTime();
+        dto.setTime(time);
+        dto.setSign(time+AppConfig.SIGN_1);
         dto.setRec_phone(AppContext.get("mobileNum",""));
         dto.setRec_code(mCode);
         CommonApiClient.comfirm(this, dto, new CallBack<NumResult>() {
@@ -448,10 +450,11 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     private void reqNum() {
         NumDTO dto=new NumDTO();
+        String time = TimeUtils.getSignTime();
         dto.setUserPhone(AppContext.get("mobileNum",""));
         dto.setRec_code(mCode);
-        dto.setTime(TimeUtils.getSignTime());
-        dto.setSign(AppConfig.SIGN_1);
+        dto.setTime(time);
+        dto.setSign(time+AppConfig.SIGN_1);
         CommonApiClient.num(this, dto, new CallBack<NumResult>() {
             @Override
             public void onSuccess(NumResult result) {

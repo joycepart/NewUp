@@ -100,11 +100,12 @@ public class SelectFragment extends BasePullFragment {
 
     private void reqSelect() {
         SelectDTO dto=new SelectDTO();
+        String time = TimeUtils.getSignTime();
         dto.setConcode("");
-        dto.setSign(AppConfig.SIGN_1);
+        dto.setSign(time+AppConfig.SIGN_1);
         LogUtils.e("未加密前的----", TimeUtils.getSignTime()+AppConfig.SIGN_1);
         LogUtils.e("加密后的---",SecurityUtils.MD5(TimeUtils.getSignTime() + AppConfig.SIGN_1));
-        dto.setTimestamp(TimeUtils.getSignTime());
+        dto.setTimestamp(time);
         dto.setMembermob(AppContext.get("mobileNum",""));
         CommonApiClient.selcet(getActivity(), dto, new CallBack<SelectResult>() {
             @Override

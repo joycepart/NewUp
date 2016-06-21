@@ -72,6 +72,7 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
     @Override
     protected void sendRequestData() {
         CuringOrderListDTO cdto=new CuringOrderListDTO();
+        String time = TimeUtils.getSignTime();
         cdto.setMembermob(AppContext.get("mobileNum",""));
         if(type ==1){
             cdto.setAppreqtype("000");
@@ -82,8 +83,10 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
         }else if(type ==4){
             cdto.setAppreqtype("5");
         }
-        cdto.setSign(AppConfig.SIGN_1);
-        cdto.setTimestamp(TimeUtils.getSignTime());
+        cdto.setSign(time+AppConfig.SIGN_1);
+        cdto.setTimestamp(time);
+        cdto.setPageIndex(mCurrentPage);
+        cdto.setPageSize(PAGE_SIZE);
         CommonApiClient.CuringOrderList(this, cdto, new CallBack<CuringOrderListResult>() {
             @Override
             public void onSuccess(CuringOrderListResult result) {

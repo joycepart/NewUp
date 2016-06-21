@@ -111,10 +111,11 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
 
     private void reqCuringOrderDetails() {
         CuringOrderDetailsDTO cdto = new CuringOrderDetailsDTO();
+        String time = TimeUtils.getSignTime();
         cdto.setMembermob(AppContext.get("mobileNum", ""));
         cdto.setOrderNum(entity.getOrderNum());
-        cdto.setSign(AppConfig.SIGN_1);
-        cdto.setTimestamp(TimeUtils.getSignTime());
+        cdto.setSign(time+AppConfig.SIGN_1);
+        cdto.setTimestamp(time);
         CommonApiClient.curingOrderDetails(this, cdto, new CallBack<CuringOrderDetailsResult>() {
             @Override
             public void onSuccess(CuringOrderDetailsResult result) {

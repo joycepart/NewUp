@@ -1,5 +1,6 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,9 +74,10 @@ public class MyIncomeActivity extends BaseActivity {
 
     private void MyIncome() {
         BaseDTO bdto = new BaseDTO();
+        String time = TimeUtils.getSignTime();
         bdto.setMembermob(strPhoneNum);
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         CommonApiClient.myIncome(this, bdto, new CallBack<MyIncomeResult>() {
             @Override
             public void onSuccess(MyIncomeResult result) {
@@ -108,7 +110,9 @@ public class MyIncomeActivity extends BaseActivity {
                     if(cash==0){
                         DialogUtils.showPrompt(this,"暂无可提现余额","确定");
                     }else{
-                        MeUiGoto.withd(this);//申请提现
+                        Bundle b = new Bundle();
+                        b.putString("mCashaMountMoney",mCashaMountMoney);
+                        MeUiGoto.withd(this,b);//申请提现
                     }
                 }
                 break;

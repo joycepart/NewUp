@@ -114,7 +114,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 boolean bool= AppContext.get("isLogin",false);
-                if(bool=true){
+                if(bool){
                     Bundle b = new Bundle();
                     IndianaListEntity entity=(IndianaListEntity)itemBean;
                     issueProduct.setmPicUrl(entity.getPic_url());
@@ -239,7 +239,7 @@ public class IssueFragment extends BasePullScrollViewFragment {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.issue_top_img:
-                IssueUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_SnatchCommodity+code);
+                IssueUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_Special+code);
                 break;
 
         }

@@ -51,9 +51,10 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
     @Override
     protected void sendRequestData() {
         BaseDTO bdto=new BaseDTO();
+        String time = TimeUtils.getSignTime();
         bdto.setMembermob(AppContext.get("mobileNum",""));
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         CommonApiClient.getTransaction(getActivity(), bdto, new CallBack<TransactionResult>() {
             @Override
             public void onSuccess(TransactionResult result) {

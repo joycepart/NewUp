@@ -70,9 +70,10 @@ public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderLis
                             LogUtils.e("position---",""+position);
                             LogUtils.e("list---",""+list.get(position).getOrderNum());
                             CancelDTO cdto=new CancelDTO();
+                            String time = TimeUtils.getSignTime();
                             cdto.setMembermob(AppContext.get("mobileNum",""));
-                            cdto.setSign(AppConfig.SIGN_1);
-                            cdto.setTimestamp(TimeUtils.getSignTime());
+                            cdto.setSign(time+AppConfig.SIGN_1);
+                            cdto.setTimestamp(time);
                             cdto.setOrderNum(list.get(position).getOrderNum());
                             CommonApiClient.cancel(mContext, cdto, new CallBack<CuringOrderListResult>() {
                                 @Override

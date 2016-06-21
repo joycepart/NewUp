@@ -35,6 +35,7 @@
                 android:padding="@dimen/ds_20"
                 android:textColor="@color/color_00"
                 android:textColorHint="@color/color_00"
+                android:maxLength="10"
                 android:textSize="@dimen/fs_50" />
                 />
                 <ImageView

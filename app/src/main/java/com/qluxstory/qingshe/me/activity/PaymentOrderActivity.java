@@ -148,8 +148,9 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     }
     private void reqBalance() {
         BaseDTO dto = new BaseDTO();
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        String time = TimeUtils.getSignTime();
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         dto.setMembermob(AppContext.get("mobileNum", ""));
         CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
             @Override
@@ -165,10 +166,11 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     }
     private void reqCuringOrderDetails() {
         CuringOrderDetailsDTO cdto = new CuringOrderDetailsDTO();
+        String time = TimeUtils.getSignTime();
         cdto.setMembermob(AppContext.get("mobileNum", ""));
         cdto.setOrderNum(mOrdNum);
-        cdto.setSign(AppConfig.SIGN_1);
-        cdto.setTimestamp(TimeUtils.getSignTime());
+        cdto.setSign(time+AppConfig.SIGN_1);
+        cdto.setTimestamp(time);
         CommonApiClient.curingOrderPays(this, cdto, new CallBack<PaymentOrderResult>() {
             @Override
             public void onSuccess(PaymentOrderResult result) {
@@ -264,6 +266,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     private void reqPay() {
         mPayTvBtn.setEnabled(false);
         PayDTO dto = new PayDTO();
+        String time = TimeUtils.getSignTime();
         dto.setConsigneeType(paymentEntity.getConsigneeType());
         dto.setConsigneeCode(paymentEntity.getConsigneeCode());
         dto.setConsigneeName(paymentEntity.getConsigneeName());
@@ -294,8 +297,8 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         String base64 = paymentEntity.getServerKHImg();
         dto.setBase64string(ImageLoaderUtils.imgToBase64(base64,null,null));
         dto.setServerName(paymentEntity.getServerName());
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         CommonApiClient.pay(this, dto, new CallBack<PaypayResult>() {
             @Override
             public void onSuccess(PaypayResult result) {

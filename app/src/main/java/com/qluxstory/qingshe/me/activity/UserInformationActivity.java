@@ -3,7 +3,6 @@ package com.qluxstory.qingshe.me.activity;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,10 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
@@ -40,7 +40,11 @@ import com.qluxstory.qingshe.me.dto.UserPicDTO;
 import com.qluxstory.qingshe.me.entity.UserPicResult;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -75,7 +79,7 @@ public class UserInformationActivity extends BaseTitleActivity {
     private static final int CODE_CAMERA_REQUEST = 0xa1;
     private static final int CODE_PHOTO_REQUEST = 0xa2;
     PopupWindow popWindow;
-    private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/123.jpg";
+    private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/user.jpg";
 
     @Override
     protected int getContentResId() {
@@ -95,6 +99,7 @@ public class UserInformationActivity extends BaseTitleActivity {
         mUserName.setText(AppContext.get("mUserName",""));
         mTvName.setText(AppContext.get("mUserName",""));
         mTvNum.setText(AppContext.get("mobileNum",""));
+        LogUtils.e("initView---",""+AppContext.get("mPictruePath",""));
         ImageLoaderUtils.displayAvatarImage(AppContext.get("mPictruePath",""),
                 mUserImg);
         mUserInformation.setOnClickListener(this);
@@ -118,23 +123,9 @@ public class UserInformationActivity extends BaseTitleActivity {
                 MeUiGoto.modifyUser(this);//修改用户名
                 break;
             case R.id.btn_alter_pic_camera://拍照
-
-                Intent intentFromCapture = null;
-                intentFromCapture = new Intent();
-                // 指定开启系统相机的Action
-                intentFromCapture.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                intentFromCapture.addCategory(Intent.CATEGORY_DEFAULT);
-                // 根据文件地址创建文件
-                File file = new File(FILE_PATH);
-                if (file.exists())
-                {
-                    file.delete();
-                }
-                // 把文件地址转换成Uri格式
-                Uri uri = Uri.fromFile(file);
-                // 设置系统相机拍摄照片完成后图片文件的存放地址
-                intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+
                 break;
             case R.id.btn_alter_pic_photo://选择照片
                 try {
@@ -212,20 +203,25 @@ public class UserInformationActivity extends BaseTitleActivity {
 
 
     private void reqUserPic() {
+        LogUtils.e("reqUserPic---",""+AppContext.get("mPictruePath",""));
+        ImageLoaderUtils.displayAvatarImage(AppContext.get("mPictruePath",""),
+                mUserImg);
         UserPicDTO bdto=new UserPicDTO();
+        String time = TimeUtils.getSignTime();
         bdto.setMemberheadimg(mMemberheadimg);
         bdto.setMembermob(AppContext.get("mobileNum",""));
-        bdto.setSign(AppConfig.SIGN_1);
-        bdto.setTimestamp(TimeUtils.getSignTime());
+        bdto.setSign(time+AppConfig.SIGN_1);
+        bdto.setTimestamp(time);
         CommonApiClient.userPic(this, bdto, new CallBack<UserPicResult>() {
             @Override
             public void onSuccess(UserPicResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("修改用户图像成功");
-                    AppContext.set("mPictruePath",result.getData().get(0).getMemberHeadimg());
                     ImageLoaderUtils.displayAvatarImage(result.getData().get(0).getMemberHeadimg(),mUserImg);
                     popWindow.dismiss();
                     backgroundAlpha(1f);
+                    AppContext.set("mPictruePath",result.getData().get(0).getMemberHeadimg());
+
                 }
             }
         });
@@ -233,47 +229,58 @@ public class UserInformationActivity extends BaseTitleActivity {
     }
 
 
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ContentResolver resolver = getContentResolver();
         LogUtils.e("data--------",""+data);
         switch (requestCode) {
             case CODE_CAMERA_REQUEST:
-                File file = new File(FILE_PATH);
-                Uri uri = Uri.fromFile(file);
-                LogUtils.e("uri------------if", "" + uri);
-                String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
-                LogUtils.e("mImg------------if", "" + mImg);
-                try {
-                    myBitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-                    LogUtils.e("bitmap-----MediaStore",""+myBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Bitmap bit = PhotoSystemUtils.comp(myBitmap);
-                mMemberheadimg = ImageLoaderUtils.bitmaptoString(bit);
-                LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
-                reqUserPic();//修改用户图像
+                LogUtils.e("CODE_CAMERA_REQUEST----","CODE_CAMERA_REQUEST");
+                if(data==null){
+                    LogUtils.e("data----CODE_CAMERA_REQUEST",""+data);
+                    return;
+                }else {
+                    LogUtils.e("data----else","else");
+                    String sdStatus = Environment.getExternalStorageState();
+                    if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+                        LogUtils.e("TestFile", "SD card is not avaiable/writeable right now.");
+                        return;
+                    }
+                    String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                    LogUtils.e("name", "" + name);
+                    Bundle bundle = data.getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
+                    Bitmap bm = PhotoSystemUtils.comp(bitmap);
+                    LogUtils.e("bitmap", "" + bitmap);
 
-//                if (mImg != null) {
-//                    ImageLoader.getInstance().displayImage("file:///" + mImg,
-//                            mUserImg, ImageLoaderUtils.getDefaultOptions());
-//                    AppContext.set("mPictruePath","file:///" + mImg);
-//                    LogUtils.e("ImageLoader------------if", "file:///" + mImg);
-//                } else {
-//                }
+                    FileOutputStream b = null;
+                    File file = new File("/sdcard/myImage/");
+                    file.mkdirs();// 创建文件夹
+                    String fileName = "/sdcard/myImage/" + name;
+                    LogUtils.e("fileName", "" + fileName);
+                    try {
+                        b = new FileOutputStream(fileName);
+                        bm.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            b.flush();
+                            b.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(bm);
+                    LogUtils.e("mMemberheadimg------------", "" + mMemberheadimg);
+                    reqUserPic();//修改用户图像
+                }
                 break;
             case CODE_PHOTO_REQUEST:
                 if (data != null) {
-                    //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
+                    //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式
                     Uri mImageCaptureUri = data.getData();
                     LogUtils.e("mImageCaptureUri--------------", mImageCaptureUri + "");
-                    mImg = PhotoSystemUtils.getRealFilePath(this, mImageCaptureUri);
-                    LogUtils.e("mImg-------mImageCaptureUri", mImg + "");
                     //返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
                     if (mImageCaptureUri != null) {
                         try {
@@ -281,40 +288,16 @@ public class UserInformationActivity extends BaseTitleActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-//                        ImageLoader.getInstance().displayImage("file:///" + mImg,
-//                                mUserImg, ImageLoaderUtils.getAvatarOptions());
-//                        AppContext.set("mPictruePath","file:///" + mImg);
                     }
-
-                } else {
-                        if (PhotoSystemUtils.hasSdcard()) {
-                            File tempFile = new File(
-                                    Environment.getExternalStorageDirectory(),
-                                    IMAGE_FILE_NAME);
-                            Uri uriPhptp = Uri.fromFile(tempFile);
-                            LogUtils.e("uriPhptp--------------", uriPhptp + "");
-//                            mImg = PhotoSystemUtils.getRealFilePath(this,uriPhptp);
-//                            LogUtils.e("mImg--------------", mImg + "");
-//                            ImageLoader.getInstance().displayImage("file:///" + mImg,
-//                                    mUserImg, ImageLoaderUtils.getAvatarOptions());
-//                            AppContext.set("mPictruePath","file:///" + mImg);
-                            try {
-                                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriPhptp);
-                                LogUtils.e("image-----uriPhptp", image + "");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        } else {
-                            Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
-                                    .show();
-                        }
-
-                        }
-
                     Bitmap bitmap = PhotoSystemUtils.comp(image);
                     mMemberheadimg = ImageLoaderUtils.bitmaptoString(bitmap);
                     reqUserPic();//修改用户图像
+
+                } else {
+                    popWindow.dismiss();
+                    backgroundAlpha(1f);
+                    return;
+                        }
 
                 break;
             case MeUiGoto.MODIFYUSER_REQUEST:

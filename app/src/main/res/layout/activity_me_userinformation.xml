@@ -15,6 +15,7 @@
             android:layout_width="@dimen/ds_300"
             android:layout_height="@dimen/ds_300"
             android:layout_gravity="center"
+            android:background="@drawable/xitong"
            />
         <TextView
             android:id="@+id/user_name"

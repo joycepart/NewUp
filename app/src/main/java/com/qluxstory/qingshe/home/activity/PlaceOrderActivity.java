@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,7 +30,6 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.bigkoo.pickerview.OptionsPopupWindow;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
@@ -67,12 +67,16 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 
@@ -182,7 +186,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private String mConAddress;
     private static String mWxKey;
     TextView mBaseEnsure;
-    private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/1234.jpg";
+    private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/po.jpg";
     private String mCity;
     private String mCouponType,mDiscountNumber,mCouponMoneyEqual,mCouponmoney,mCoupon;
 
@@ -312,10 +316,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 mVbHui.setChecked(true);
                 break;
             case R.id.place_order_img:
-//                DialogPhotoChooseView mChooseView = new DialogPhotoChooseView(this)
-//                        .setCameraListener(new TakePictureListener(this))
-//                        .setAlbumListener(new SelectPictureListener(this));
-//                DropDownList.showDialog(this, mChooseView);
+                LogUtils.e("choseH---","choseH");
                 choseHeadImageFromCameraCapture();
                 break;
             default:
@@ -464,8 +465,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqBalance() {
         BaseDTO dto = new BaseDTO();
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        String time = TimeUtils.getSignTime();
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         dto.setMembermob(AppContext.get("mobileNum", ""));
         CommonApiClient.balance(this, dto, new CallBack<BalanceResult>() {
             @Override
@@ -512,6 +514,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private void reqPay() {
         mSetPayBtn.setEnabled(false);
         PayDTO dto = new PayDTO();
+        String time = TimeUtils.getSignTime();
         dto.setConsigneeType(mPlaTv.getText().toString());
         dto.setConsigneeCode(consignee.getConsigneeCode());
         dto.setConsigneeName(mConName);
@@ -534,12 +537,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         if (mPlaTv.getText().toString().equals("上门取送")) {
             dto.setTimeToAppointmen(mAddTime.getText().toString());
         } else {
-            dto.setTimeToAppointmen("null");
+            dto.setTimeToAppointmen("");
         }
         if (mPlaTv.getText().toString().equals("全国包回邮")) {
             dto.setServerYJCode(mSendAddress.getText().toString());
         } else {
-            dto.setServerYJCode("null");
+            dto.setServerYJCode("");
         }
         if (mCbWx.isChecked()) {
             dto.setApplyType("微信");
@@ -548,14 +551,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         } else {
             dto.setApplyType("会员");
         }
-        dto.setServiceMoney("");
+        dto.setCustomernote("");
+        dto.setServiceMoney("0");
         dto.setReqType("service");
-        dto.setOldOrderNum("");
+        dto.setOldOrderNum("0");
         dto.setShoudamoney(mPrice);
         dto.setBase64string(mMemberheadimg);
         dto.setServerName(mProductDetails.getSellSort());
-        dto.setSign(AppConfig.SIGN_1);
-        dto.setTimestamp(TimeUtils.getSignTime());
+        dto.setSign(time+AppConfig.SIGN_1);
+        dto.setTimestamp(time);
         CommonApiClient.pay(this, dto, new CallBack<PaypayResult>() {
             @Override
             public void onSuccess(PaypayResult result) {
@@ -767,23 +771,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     }
 
 
-    // 启动手机相机拍摄照片作为头像
+    // 启动手机相机拍摄照片
     private void choseHeadImageFromCameraCapture() {
-        Intent intent = null;
-        intent = new Intent();
-        // 指定开启系统相机的Action
-        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        // 根据文件地址创建文件
-        File file = new File(FILE_PATH);
-        if (file.exists())
-        {
-            file.delete();
-        }
-        // 把文件地址转换成Uri格式
-        Uri uri = Uri.fromFile(file);
-        // 设置系统相机拍摄照片完成后图片文件的存放地址
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        LogUtils.e("Intent-uri","Intent");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CODE_CAMERA_REQUEST);
     }
 
@@ -792,36 +783,19 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ContentResolver resolver = getContentResolver();
+        LogUtils.e("data---------", "" + data);
         // 用户没有进行有效的设置操作，返回
 //        if (resultCode == RESULT_CANCELED) {
+//            LogUtils.e("RESULT_CANCELED---------", "RESULT_CANCELED");
 //            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
 //            return;
 //        }
 
-//        switch (requestCode) {
-//            case CameraUtils.REQUEST_CODE_TAKE_PICTURE:
-//                startActivityForResult(CameraUtils.cropPicture(this,
-//                        Uri.fromFile(CameraUtils.mCurrentFile)),
-//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
-//                break;
-//            case CameraUtils.REQUEST_CODE_SELECT_PICTURE:
-//                startActivityForResult(CameraUtils.cropPicture(this,
-//                        data.getData()),
-//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
-//                break;
-//            case CameraUtils.REQUEST_CODE_CROP_PICTURE:
-//                // 上传头像
-////                uploadAvatar();
-//                break;
-//            default:
-//                break;
-//        }
-
         switch (requestCode) {
             case UIHelper.SEND_REQUEST:
-                mSendAddress.setText(AppContext.get("Dis_province_name","")+AppContext.get("Dis_province_phone",""));
-                mSendVity.setText(AppContext.get("Dis_province_city",""));
-                mSendAdd.setText(AppContext.get("Dis_province_area",""));
+                mSendAddress.setText(AppContext.get("Dis_province_name", "") + AppContext.get("Dis_province_phone", ""));
+                mSendVity.setText(AppContext.get("Dis_province_city", ""));
+                mSendAdd.setText(AppContext.get("Dis_province_area", ""));
                 AppContext.set("Dis_province_name", "");
                 AppContext.set("Dis_province_city", "");
                 AppContext.set("Dis_province_area", "");
@@ -829,31 +803,53 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 break;
 
             case CODE_CAMERA_REQUEST:
-                File file = new File(FILE_PATH);
-                Uri uri = Uri.fromFile(file);
-                LogUtils.e("uri------------if", "" + uri);
-                String mImg = PhotoSystemUtils.getRealFilePath(this, uri);
-                LogUtils.e("mImg------------if", "" + mImg);
-                if (mImg != null) {
-                    mLrderLin.setVisibility(View.GONE);
-                    mImgPon.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().displayImage("file:///" + mImg,
-                            mImgPon, ImageLoaderUtils.getDefaultOptions());
-                    LogUtils.e("ImageLoader------------if", "file:///" + mImg);
-                } else {
-                    mLrderLin.setVisibility(View.VISIBLE);
-                    mImgPon.setVisibility(View.GONE);
-                }
-                try {
-                    myBitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-                    LogUtils.e("bitmap-----MediaStore",""+myBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                LogUtils.e("CODE_CAMERA_REQUEST----","CODE_CAMERA_REQUEST");
+                if(data==null){
+                    LogUtils.e("data----CODE_CAMERA_REQUEST",""+data);
+                    return;
+                }else {
+                    LogUtils.e("data----else","else");
+                    String sdStatus = Environment.getExternalStorageState();
+                    if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+                        LogUtils.e("TestFile", "SD card is not avaiable/writeable right now.");
+                        return;
+                    }
+                    String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                    LogUtils.e("name", "" + name);
+                    Bundle bundle = data.getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
+                    Bitmap bm = PhotoSystemUtils.comp(bitmap);
+                    LogUtils.e("bitmap", "" + bitmap);
+                    if (bitmap != null) {
+                        mLrderLin.setVisibility(View.GONE);
+                        mImgPon.setVisibility(View.VISIBLE);
+                    } else {
+                        mLrderLin.setVisibility(View.VISIBLE);
+                        mImgPon.setVisibility(View.GONE);
+                    }
 
-                Bitmap bit = PhotoSystemUtils.comp(myBitmap);
-                mMemberheadimg = ImageLoaderUtils.bitmaptoString(PhotoSystemUtils.comp(bit));
-                LogUtils.e("mMemberheadimg------------",""+mMemberheadimg);
+                    FileOutputStream b = null;
+                    File file = new File("/sdcard/myImage/");
+                    file.mkdirs();// 创建文件夹
+                    String fileName = "/sdcard/myImage/" + name;
+                    LogUtils.e("fileName", "" + fileName);
+                    try {
+                        b = new FileOutputStream(fileName);
+                        bm.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            b.flush();
+                            b.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mImgPon.setImageBitmap(bitmap);// 将图片显示在ImageView里
+                    mMemberheadimg = ImageLoaderUtils.bitmaptoString(bm);
+                    LogUtils.e("mMemberheadimg------------", "" + mMemberheadimg);
+                }
                 break;
 
             case CODE_RESULT_REQUEST:
@@ -862,32 +858,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 }
                 break;
 
-//            case CameraUtils.REQUEST_CODE_TAKE_PICTURE:
-//                startActivityForResult(CameraUtils.cropPicture(this,
-//                        Uri.fromFile(CameraUtils.mCurrentFile)),
-//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
-//                break;
-//            case CameraUtils.REQUEST_CODE_SELECT_PICTURE:
-//                startActivityForResult(CameraUtils.cropPicture(this,
-//                        data.getData()),
-//                        CameraUtils.REQUEST_CODE_CROP_PICTURE);
-//                break;
-//            case CameraUtils.REQUEST_CODE_CROP_PICTURE:
-//                // 上传头像
-//                String content = "";
-//                try {
-//                    content = FileUtils.encodeBase64File(CameraUtils.mCurrentFile);
-//                    mMemberheadimg = content;
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-
-
-
-
             case UIHelper.SELECT_REQUEST:
-                if(!TextUtils.isEmpty(consignee.getDeliveredMobile())){
-                    LogUtils.e("consignee---if",consignee+"");
+                if (!TextUtils.isEmpty(consignee.getDeliveredMobile())) {
+                    LogUtils.e("consignee---if", consignee + "");
                     mConName = consignee.getConsigneeName();
                     mConMobile = consignee.getDeliveredMobile();
                     mConCity = consignee.getProvincialCity();
@@ -900,18 +873,19 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     consignee.setProvincialCity("");
                     consignee.setAddressInDetail("");
 
-                }else {
-                    LogUtils.e("consignee---else",consignee+"");
+                } else {
+                    LogUtils.e("consignee---else", consignee + "");
                     mAddressName.setText("");
                     mAddressCity.setText("");
                     mAddressAdd.setText("");
                 }
 
                 break;
-            case UIHelper.COUPON_REQUEST:
-                if(TextUtils.isEmpty(AppContext.get("CouponType",""))){
 
-                }else {
+            case UIHelper.COUPON_REQUEST:
+                if (TextUtils.isEmpty(AppContext.get("CouponType", ""))) {
+
+                } else {
                     mPlaceCoupon.setText(AppContext.get("Novice", ""));//代金劵
 
                     mCouponType = AppContext.get("CouponType", "");
@@ -920,30 +894,27 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mCouponmoney = AppContext.get("Couponmoney", "");
                     if (mCouponType.equals("1001")) {
                         DecimalFormat df = new DecimalFormat("######0.00");
-                        double pirce = Double.parseDouble(mPrice.replace(".00",""));
-                        double number = Double.parseDouble(mDiscountNumber.replace(".00",""));
+                        double pirce = Double.parseDouble(mPrice.replace(".00", ""));
+                        double number = Double.parseDouble(mDiscountNumber.replace(".00", ""));
                         double toal = (number / 10) * pirce;
                         String total = df.format(toal);
                         String cou = df.format(pirce - toal);
                         mPlaceTotal.setText(total);
                         mTvNm.setText(total);
                         mCoupon = cou;
-                    }
-                    else if (mCouponType.equals("1002")) {
-                        int price = Integer.valueOf(mPrice.replace(".00",""));
-                        int equal = Integer.valueOf(mCouponMoneyEqual.replace(".00",""));
+                    } else if (mCouponType.equals("1002")) {
+                        int price = Integer.valueOf(mPrice.replace(".00", ""));
+                        int equal = Integer.valueOf(mCouponMoneyEqual.replace(".00", ""));
                         int toa = price - equal;
-                        mPlaceTotal.setText(String.valueOf(toa)+".00");
-                        mTvNm.setText(String.valueOf(toa)+".00");
+                        mPlaceTotal.setText(String.valueOf(toa) + ".00");
+                        mTvNm.setText(String.valueOf(toa) + ".00");
                         mCoupon = mCouponMoneyEqual;
-                    }
-                    else if (mCouponType.equals("1003")) {
+                    } else if (mCouponType.equals("1003")) {
                         mPlaceTotal.setText("0");
                         mTvNm.setText("0");
                         mCoupon = mPrice;
-                    }
-                    else if (mCouponType.equals("1004")) {
-                        int price = Integer.valueOf(mPrice.replace(".00",""));
+                    } else if (mCouponType.equals("1004")) {
+                        int price = Integer.valueOf(mPrice.replace(".00", ""));
                         int equal = Integer.valueOf(mCouponMoneyEqual);
                         if (price < equal) {
                             mPlaceTotal.setText("0");
@@ -955,10 +926,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                             mTvNm.setText(String.valueOf(pri));
                         }
                         mCoupon = mCouponMoneyEqual;
-                    }
-                    else if (mCouponType.equals("1005")) {
-                        int money = Integer.valueOf(mCouponmoney.replace(".00",""));
-                        int equal = Integer.valueOf(mCouponMoneyEqual.replace(".00",""));
+                    } else if (mCouponType.equals("1005")) {
+                        int money = Integer.valueOf(mCouponmoney.replace(".00", ""));
+                        int equal = Integer.valueOf(mCouponMoneyEqual.replace(".00", ""));
                         int toal = money - equal;
                         mPlaceTotal.setText(mCouponMoneyEqual);
                         mTvNm.setText(mCouponMoneyEqual);
