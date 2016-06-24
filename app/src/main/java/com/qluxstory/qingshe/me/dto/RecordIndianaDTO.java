@@ -6,14 +6,26 @@ import com.qluxstory.qingshe.common.dto.BaseDTO;
  * Created by lenovo on 2016/5/26.
  */
 public class RecordIndianaDTO extends BaseDTO {
-    private String bat_code;
-    public String getBat_code() {
-        return bat_code;
+    private String rec_code;
+    private String userPhone ;
+    public String getRec_code() {
+        return rec_code;
     }
 
-    public void setBat_code(String bat_code) {
-        this.bat_code = bat_code;
+    public void setRec_code(String rec_code) {
+        this.rec_code = rec_code;
     }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+
+
 
 
 }

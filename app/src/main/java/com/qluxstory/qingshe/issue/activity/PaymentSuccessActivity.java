@@ -38,6 +38,15 @@ public class PaymentSuccessActivity extends BaseTitleActivity {
             case R.id.payment_tv:
                 IssueUiGoto.home(this);//首页
                 break;
+            case R.id.base_titlebar_back:
+                baseGoBack();
+                break;
         }
+    }
+
+    @Override
+    protected void baseGoBack() {
+        super.baseGoBack();
+        IssueUiGoto.home(this);//首页
     }
 }

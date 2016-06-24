@@ -238,7 +238,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         switch (v.getId()) {
             case R.id.pay_tv_btn:
                 if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
-                    DialogUtils.showPrompt(this, "请选择支付方式", "知道了");
+                    DialogUtils.showPrompt(this,"提示", "请选择支付方式", "知道了");
                 } else {
                     reqPay();//去支付
                 }

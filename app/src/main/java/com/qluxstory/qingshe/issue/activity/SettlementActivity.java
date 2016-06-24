@@ -23,6 +23,7 @@ import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
+import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
@@ -104,13 +105,9 @@ public class SettlementActivity extends BaseTitleActivity {
         mCaTitle = issueProduct.getmSnaTitle();
         mPic = issueProduct.getmPicUrl();
         LogUtils.e("mPic----",""+mPic);
+        ImageLoaderUtils.displayImage(mPic,mImg);
         mTotalVount = issueProduct.getmTotalCount();
-        LogUtils.e("mParticipate---",""+issueProduct.getmSnaOut());
-        if(!TextUtils.isEmpty(issueProduct.getmSnaOut())){
-            mParticipate = issueProduct.getmSnaOut();
-        }else {
-            mParticipate = "0";
-        }
+        LogUtils.e("mTotalVount----",""+mTotalVount);
         mBatCode = issueProduct.getmBatCode();
         mSnaCode = issueProduct.getmSnaCode();
         mBalance = issueProduct.getmBalance();
@@ -123,7 +120,7 @@ public class SettlementActivity extends BaseTitleActivity {
         mTitle.setText(mCaTitle);
         mTerm.setText("第"+mCaTerm+"期");
         mPlaceNm.setText(mBalance);
-        ImageLoaderUtils.displayImage(mPic,mImg);
+
 
         mInBtn.setText(AppContext.get("mobileNum",""));
 
@@ -162,7 +159,16 @@ public class SettlementActivity extends BaseTitleActivity {
                 IssueUiGoto.special(this,AppConfig.SERVICE_AGREEMENT);
                 break;
             case R.id.set_pay_Btn:
-                settlement();//下单并开奖
+                if(mInBtn.getText().toString().length()<11){
+                    DialogUtils.showPrompt(this,"提示","手机号错误","知道了");
+                }
+                else if(mSetHui.isChecked()&&mSetBalance.getText().toString().equals("0.00")){
+                    DialogUtils.showPrompt(SettlementActivity.this,"提示","账户余额不足","知道了");
+                }
+                else {
+                    settlement();//下单并开奖
+                }
+
                 break;
             case R.id.palce_pay_wx:
                 mSetWx.setChecked(true);
@@ -187,6 +193,7 @@ public class SettlementActivity extends BaseTitleActivity {
     @Override
     protected void baseGoBack() {
         super.baseGoBack();
+        issueProduct.setmRecCode("");
         finish();
     }
 
@@ -228,8 +235,8 @@ public class SettlementActivity extends BaseTitleActivity {
         gdto.setInfor_phone(AppContext.get("mobileNum",""));
         gdto.setBat_code(mBatCode);
         gdto.setSna_code(mSnaCode);
-        gdto.setRec_participate_count(mParticipate);
-        gdto.setBalance(mBalance);
+        gdto.setRec_participate_count(mBalance.replace(".00",""));
+        gdto.setBalance(mBalance.replace(".00",""));
         gdto.setSna_total_count(mTotalVount);
         gdto.setTerm(mCaTerm);
         gdto.setRec_code(mRecCode);
@@ -250,8 +257,18 @@ public class SettlementActivity extends BaseTitleActivity {
                     mPayBtn.setEnabled(true);
 
                 }else if(mSetHui.isChecked()){
+                    issueProduct.setmBalance("");
+                    issueProduct.setmRecCode("");
+                    issueProduct.setmBatCode("");
+                    issueProduct.setmSnaCode("");
+                    issueProduct.setmSnaTerm("");
+                    issueProduct.setmPicUrl("");
+                    issueProduct.setmTotalCount("");
+                    issueProduct.setmSnaTitle("");
                     IssueUiGoto.payment(SettlementActivity.this);//支付结果页
                     mPayBtn.setEnabled(true);
+
+
                 }
 
 
@@ -345,6 +362,13 @@ public class SettlementActivity extends BaseTitleActivity {
                 case RQF_PAY:
                     if (TextUtils.equals(resultStatus, "9000")) {
                         LogUtils.e("RQF_PAY----","9000");
+                        issueProduct.setmBalance("");
+                        issueProduct.setmRecCode("");
+                        issueProduct.setmBatCode("");
+                        issueProduct.setmSnaCode("");
+                        issueProduct.setmSnaTerm("");
+                        issueProduct.setmPicUrl("");
+                        issueProduct.setmTotalCount("");
                         IssueUiGoto.payment(SettlementActivity.this);//支付结果页
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败

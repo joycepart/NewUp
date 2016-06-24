@@ -2,7 +2,7 @@ package com.qluxstory.qingshe.home.fragment;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -35,7 +35,7 @@ public class SelectFragment extends BasePullFragment {
     RecyclerView mSelectList;
     @Bind(R.id.select_address)
     LinearLayout mSelectAddress;
-    CheckBox mSelect;
+    Button mSelect;
     BaseSimpleRecyclerAdapter mSelectListAdapter;
     Consignee consignee;
     @Override
@@ -59,7 +59,8 @@ public class SelectFragment extends BasePullFragment {
             public void bindData(BaseRecyclerViewHolder holder, SelectEntity selectEntity, int position) {
                 mSelect = holder.getView(R.id.select_ck);
                 if(consignee!=null&&consignee.getItem()==position){
-                    mSelect.setChecked(true);
+                    mSelect.setEnabled(true);
+                    consignee.setItem(-1);
                 }
                 holder.setText(R.id.send_province,selectEntity.getProvinCity());
                 holder.setText(R.id.select_detail,selectEntity.getAddreDetail());

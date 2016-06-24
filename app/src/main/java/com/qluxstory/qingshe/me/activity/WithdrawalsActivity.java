@@ -102,20 +102,20 @@ public class WithdrawalsActivity extends BaseTitleActivity {
                 mIpone = mWithdIpone.getText().toString();
                 mBank = mWithdBank.getText().toString();
                 if(TextUtils.isEmpty(mMon)||mMon.length()<3){
-                    DialogUtils.showPrompt(this,"请填写正确的提现金额!","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写正确的提现金额!","确定");
                 }
 
                 else if(TextUtils.isEmpty(mUs)){
-                    DialogUtils.showPrompt(this,"请填写账户！","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写账户！","确定");
                 }
                 else if(TextUtils.isEmpty(mNm)){
-                    DialogUtils.showPrompt(this,"请填写姓名！","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写姓名！","确定");
                 }
                 else if(TextUtils.isEmpty(mIpone)||mIpone.length()<11){
-                    DialogUtils.showPrompt(this,"请填写手机号！","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写手机号！","确定");
                 }
                 else if(mLinBank.getVisibility() == View.VISIBLE&&TextUtils.isEmpty(mBank)){
-                    DialogUtils.showPrompt(this,"请填写银行号！","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写银行号！","确定");
                 }
                else {
                     Withdrawals();
@@ -195,6 +195,7 @@ public class WithdrawalsActivity extends BaseTitleActivity {
             public void onSuccess(BaseEntity result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.d("提现请求成功");
+                    DialogUtils.showPrompt(WithdrawalsActivity.this,"申请成功","您的提现已经提交申请，请耐心等待！","确定");
                     Intent intent = new Intent(WithdrawalsActivity.this, MainActivity.class);
                     intent.putExtra("tag",4);
                     startActivity(intent);

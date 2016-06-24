@@ -15,6 +15,7 @@ import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
 import com.qluxstory.qingshe.issue.entity.IssueProduct;
@@ -92,6 +93,9 @@ public class HorizontalScrollViewAdapter
 					String sna = getItem(position).getSna_code();
 					b.putString("bat",bat);
 					b.putString("sna",sna);
+					LogUtils.e("mBat----",""+bat);
+					LogUtils.e("mSna----",""+sna);
+					LogUtils.e("Pic_url----",""+getItem(position).getPic_url());
 					issueProduct.setmPicUrl(getItem(position).getPic_url());
 					UIHelper.showFragment(mContext, SimplePage.PRODUCT_DETAILS,b);//夺宝商品详情
 				}else {

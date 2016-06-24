@@ -52,9 +52,14 @@
 
         <receiver android:name="io.rong.imlib.HeartbeatReceiver"
             android:process=":ipc"/>
+        <!--生产环境-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="25wehl3uwcuuw" />
+            android:value="qd46yzrf48fff" />
+        <!--开发环境-->
+        <!--<meta-data-->
+            <!--android:name="RONG_CLOUD_APP_KEY"-->
+            <!--android:value="25wehl3uwcuuw" />-->
         <!-- end -->
 
         <!--必选： SDK 核心功能-->

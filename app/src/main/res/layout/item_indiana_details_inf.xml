@@ -107,7 +107,7 @@
                 android:text="@string/indiana_num"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:gravity="center"
-                android:textSize="@dimen/fs_50"
+                android:textSize="@dimen/fs_45"
                 android:textColor="@color/color_00"/>
 
             <LinearLayout
@@ -140,7 +140,7 @@
             android:layout_height="@dimen/ds_150"
             android:background="@color/color_ff"
             android:gravity="center"
-            android:textSize="@dimen/fs_75"
+            android:textSize="@dimen/fs_65"
             android:textColor="@color/color_c0"
             android:text="@string/Winning"/>
     </LinearLayout>

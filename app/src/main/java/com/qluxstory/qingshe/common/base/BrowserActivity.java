@@ -21,6 +21,7 @@ public class BrowserActivity extends BaseTitleActivity {
     protected ProgressWebView mWebView;
     protected String strUrl;
     protected String title;
+    protected String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

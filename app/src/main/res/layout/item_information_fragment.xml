@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/information_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -29,13 +30,15 @@
             android:layout_height="wrap_content"
             android:text="@string/app_day"
             android:textColor="@color/color_00"
-            android:textSize="@dimen/fs_55"/>
+            android:textSize="@dimen/fs_50"/>
         <TextView
             android:id="@+id/information_tv2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ds_40"
             android:text="@string/app_day"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/color_33"
             android:textSize="@dimen/fs_45"/>
 

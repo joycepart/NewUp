@@ -8,11 +8,10 @@ import android.os.Bundle;
 import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.home.activity.AddAddressActivity;
+import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
 import com.qluxstory.qingshe.home.activity.CuringActivity;
 import com.qluxstory.qingshe.home.activity.PlaceOrderActivity;
 import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
-import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
-import com.qluxstory.qingshe.special.activity.SpecialBrowserActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -90,11 +89,10 @@ public class HomeUiGoto {
      * @param context
      * @param mSpecSrc
      * @param mTitle
-     * @param mId
      */
 
-    public static void special(Context context, String mSpecSrc, String mTitle, String mId){
-        Intent intent = new Intent(context, SpecialBrowserActivity.class);
+    public static void special(Context context, String mSpecSrc, String mTitle){
+        Intent intent = new Intent(context, BrowserActivity.class);
         intent.putExtra("url", mSpecSrc);
         intent.putExtra("title", mTitle);
         context.startActivity(intent);

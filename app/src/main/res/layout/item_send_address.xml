@@ -102,17 +102,17 @@
             </LinearLayout>
         </LinearLayout>
 
-        <CheckBox
+        <Button
             android:id="@+id/send_ck"
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/ds_40"
             android:layout_marginRight="@dimen/ds_30"
-            android:background="@drawable/selector_checkbox"
+            android:background="@drawable/selector_selcect"
             android:layout_centerVertical="true"
             android:button="@null"
-            android:checked="false"
+            android:enabled="false"
             />
 
     </LinearLayout>

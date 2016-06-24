@@ -8,12 +8,12 @@
     android:layout_marginRight="@dimen/ds_40"
     android:orientation="horizontal">
     <LinearLayout
+        android:id="@+id/securities_lin"
         android:layout_width="@dimen/ds_300"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/ds_30"
         android:layout_marginLeft="@dimen/ds_30"
         android:layout_marginBottom="@dimen/ds_30"
-
         android:orientation="vertical"
         android:background="@drawable/ticket_bj_n">
         <TextView

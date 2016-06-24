@@ -78,7 +78,7 @@
         android:layout_marginTop="@dimen/ds_30"
         android:orientation="horizontal">
         <Button
-            android:clickable="true"
+            android:enabled="true"
             android:id="@+id/five"
             android:layout_width="@dimen/ds_50"
             android:layout_height="match_parent"
@@ -99,11 +99,11 @@
             android:gravity="center"
             android:text="@string/ten"
             android:textColor="@color/color_00"
-            android:clickable="false"
+            android:enabled="true"
             android:textSize="@dimen/fs_45"/>
         <Button
             android:id="@+id/ttew"
-            android:clickable="false"
+            android:enabled="true"
             android:layout_width="@dimen/ds_50"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/ds_50"

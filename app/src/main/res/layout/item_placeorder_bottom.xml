@@ -36,8 +36,9 @@
         android:layout_marginTop="@dimen/ds_30"
         android:layout_marginBottom="@dimen/ds_30"
         android:layout_marginRight="@dimen/ds_50"
-        android:background="@drawable/btn_login_selected"
+        android:background="@drawable/btn_login_selector"
         android:text="@string/order_payment"
+        android:enabled="true"
         android:textColor="@color/color_ff"
         android:textSize="@dimen/fs_60" />
     </RelativeLayout>

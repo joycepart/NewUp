@@ -39,13 +39,10 @@ import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.me.adapter.GridDetailsAdapter;
 import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
-import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
 import com.qluxstory.qingshe.me.dto.UpDTO;
 import com.qluxstory.qingshe.me.dto.UpInformationDTO;
 import com.qluxstory.qingshe.me.entity.NumEntity;
 import com.qluxstory.qingshe.me.entity.NumResult;
-import com.qluxstory.qingshe.me.entity.RecordIndianaEntity;
-import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 import com.qluxstory.qingshe.me.entity.RecordsEntity;
 import com.qluxstory.qingshe.me.entity.UpDataEntity;
 import com.qluxstory.qingshe.me.entity.UpDataResult;
@@ -138,6 +135,9 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
         Intent mIntent = getIntent();
         if(mIntent!=null){
             RecordsEntity entity = (RecordsEntity) mIntent.getBundleExtra("itemBean").getSerializable("entity");
+            mDetInf.setText(entity.getRec_phone().substring(0,3)+"******"+entity.getRec_phone().substring(9,entity.getRec_phone().length()));
+            mDetNum.setText(entity.getRec_pay_balance().replace(".00","")+"次");
+            mDetData.setText(entity.getRec_participate_date());
             mCode = entity.getRec_code();
             mTitle = entity.getSna_title();
             mPic = entity.getPic_url();
@@ -145,10 +145,15 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             mBalance = entity.getRec_pay_balance();
             mSnaCode = entity.getSna_code();
             mBnt = entity.getBat_code();
+            LogUtils.e("mBnt---",""+mBnt);
             mRecCode = entity.getRec_code();
             mIndianaCode.setText(mCode);
             mRecordsTitle.setText(mTitle);
             mRecordsTerm.setText("第"+mTerm+"期");
+            mDetMoney.setText(mBalance);
+            mMoney.setText(mBalance);
+            mTvTime.setText(entity.getRec_participate_date());
+            ImageLoaderUtils.displayImage(mPic,mRecordsImg);
             LogUtils.e("entity.getRec_state()",""+entity.getRec_state());
 
             if(entity.getRec_state().equals("0")){
@@ -245,10 +250,8 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             }else {
                 mDetPay.setText("账户余额");
             }
-            mDetMoney.setText(mBalance);
-            mMoney.setText(mBalance);
-            mTvTime.setText(entity.getRec_participate_date());
-            ImageLoaderUtils.displayImage(mPic,mRecordsImg);
+
+
         }
 
         mLook.setOnClickListener(this);
@@ -292,7 +295,6 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-        reqIndianaDetails();//夺宝详情
 
     }
 
@@ -323,35 +325,12 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
         ToAnnounceEntity entity = data.get(0);
         mInfNum.setText(entity.getSna_lucky_num());
         mIumTime.setText(entity.getSna_begin_date());
-        mDataUser.setText(entity.getSna_lucky_people());
-        mDataNm.setText(entity.getSna_participate_count());
+        mDataUser.setText(entity.getSna_lucky_people().substring(0,3)+"******"+entity.getSna_lucky_people().substring(9,entity.getSna_lucky_people().length()));
+        mDataNm.setText(entity.getSna_participate_count()+"次");
     }
 
 
-    private void reqIndianaDetails() {
-        RecordIndianaDTO dto=new RecordIndianaDTO();
-        dto.setBat_code(mBnt);
-        dto.setPageSize(PAGE_SIZE);
-        dto.setPageIndex(mCurrentPage);
-        CommonApiClient.recordsDetails(this, dto, new CallBack<RecordIndianaResult>() {
-            @Override
-            public void onSuccess(RecordIndianaResult result) {
-                if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.e("夺宝详情成功");
-                    if(null == result.getData()){
-                        return;
-                    }else {
-                        RecordIndianaEntity record = result.getData().get(0);
-                        mDetInf.setText(record.getRec_phone());
-                        mDetNum.setText(record.getRec_participate_count()+"次");
-                        mDetData.setText(record.getRec_participate_date());
-                    }
 
-                }
-
-            }
-        });
-    }
 
     @Override
     public void onClick(View v) {
@@ -361,7 +340,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                 break;
             case R.id.win_btn:
                 if(TextUtils.isEmpty(mWinPloTv.getText().toString())||TextUtils.isEmpty(mWinNumTime.getText().toString())){
-                    DialogUtils.showPrompt(this, "请选择收货地址", "知道了");
+                    DialogUtils.showPrompt(this,"提示", "请选择收货地址", "知道了");
                 }else if(mRecordsStatu.getText().toString().equals("已中奖")){
                     reqUpInfomation();//更新中奖人信息
                 }
@@ -460,7 +439,12 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             public void onSuccess(NumResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("参与信息成功");
-                    showPopNm(result.getData());
+                    if(null==result.getData()){
+                        return;
+                    }else {
+                        showPopNm(result.getData());
+                    }
+
                 }
 
             }

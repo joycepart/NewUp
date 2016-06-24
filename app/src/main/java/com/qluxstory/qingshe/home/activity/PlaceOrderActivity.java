@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -112,10 +113,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mPlaceTotal;
     @Bind(R.id.place_img)
     ImageView mPlaceImg;
+    @Bind(R.id.place_img_sc)
+    ImageView mImgSc;
     @Bind(R.id.place_order_img_pon)
     ImageView mImgPon;
     @Bind(R.id.place_order_img)
     ImageView mPlaceOrderImg;
+    @Bind(R.id.place_frame)
+    FrameLayout mFrame;
     @Bind(R.id.placeorder_tv)
     TextView mTv;
     @Bind(R.id.tv_balance)
@@ -231,6 +236,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
         mTime.setOnClickListener(this);
+        mImgSc.setOnClickListener(this);
     }
 
     @Override
@@ -257,6 +263,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 reqTake();//取送方式
                 showTakePop();
                 break;
+            case R.id.place_img_sc:
+                mLrderLin.setVisibility(View.VISIBLE);
+                mFrame.setVisibility(View.GONE);
+                break;
             case R.id.place_address:
                 Bundle b = new Bundle();
                 b.putString("rturn", rturn);
@@ -276,28 +286,31 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 break;
             case R.id.set_pay_Btn:
                 if(TextUtils.isEmpty(mMemberheadimg)){
-                    DialogUtils.showPrompt(this, "请上传商品照片", "知道了");
+                    DialogUtils.showPrompt(this, "提示","请上传商品照片", "知道了");
                 }
                 else if (mPlaceAddress.getVisibility()== View.VISIBLE && mPlaTv.getText().toString().equals("全国包回邮")&&TextUtils.isEmpty(mAddressName.getText().toString())) {
-                    DialogUtils.showPrompt(this, "请选择收货地址", "知道了");
+                    DialogUtils.showPrompt(this, "提示","请选择收货地址", "知道了");
                 }
                 else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("上门取送")&&TextUtils.isEmpty(mAddressName.getText().toString())){
-                    DialogUtils.showPrompt(this, "请选择上门地址", "知道了");
+                    DialogUtils.showPrompt(this, "提示","请选择上门地址", "知道了");
                 }
                 else if(mPlaceAddress.getVisibility()== View.VISIBLE &&mPlaTv.getText().toString().equals("自送门店")&&TextUtils.isEmpty(mSendAddress.getText().toString())){
-                    DialogUtils.showPrompt(this, "请选择门店地址", "知道了");
+                    DialogUtils.showPrompt(this, "提示","请选择门店地址", "知道了");
                 }
                 else if (mPlaceSend.getVisibility()== View.VISIBLE&&TextUtils.isEmpty(mSendAddress.getText().toString())) {
-                    DialogUtils.showPrompt(this, "请选择寄送地址", "知道了");
+                    DialogUtils.showPrompt(this, "提示","请选择寄送地址", "知道了");
                 }
                 else if (mTime.getVisibility()== View.VISIBLE&& mPlaTv.getText().toString().equals("上门取送")&&TextUtils.isEmpty(mAddTime.getText().toString())) {
-                    DialogUtils.showPrompt(this, "请选择上门时间", "知道了");
+                    DialogUtils.showPrompt(this, "提示","请选择上门时间", "知道了");
                 }
                 else if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
-                    DialogUtils.showPrompt(this, "请选择支付方式", "知道了");
-                } else {
+                    DialogUtils.showPrompt(this, "提示","请选择支付方式", "知道了");
+                }
+                else if (mVbHui.isChecked() && mTvBalance.getText().toString().equals("0.00")) {
+                    DialogUtils.showPrompt(PlaceOrderActivity.this,"提示","账户余额不足","知道了");
+                }
+                else {
                     reqPay();//去支付
-
                 }
                 break;
             case R.id.palce_pay_wx:
@@ -334,7 +347,6 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     ArrayList<String>  tList ;
     private void showTakePop() {
-        tList = new ArrayList<>();
         for(int i = 0;i<takeEntity.size();i++){
             tList.add(takeEntity.get(i).getDis_type_name());
         }
@@ -487,7 +499,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         TakeDTO dto = new TakeDTO();
         String mCity = AppContext.get("mCity","");
         if(TextUtils.isEmpty(mCity)){
-            dto.setCity("北京");
+            dto.setCity("");
             LogUtils.e("dto.setCity---","定位失败");
         }else {
             dto.setCity(mCity);
@@ -514,6 +526,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private void reqPay() {
         mSetPayBtn.setEnabled(false);
         PayDTO dto = new PayDTO();
+        dto.setIntegralMoney("0");
+        dto.setIntegralNum("0");
         String time = TimeUtils.getSignTime();
         dto.setConsigneeType(mPlaTv.getText().toString());
         dto.setConsigneeCode(consignee.getConsigneeCode());
@@ -576,9 +590,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                         LogUtils.e("getApplyType---2","微信支付成功");
 
                     }else {
-                        LogUtils.e("getApplyType---3",result.getData().get(0).getApplyType());
                         IssueUiGoto.payment(PlaceOrderActivity.this);//支付结果页
                         mSetPayBtn.setEnabled(true);
+
+                        LogUtils.e("getApplyType---3",result.getData().get(0).getApplyType());
+
+
                     }
 
 
@@ -794,12 +811,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         switch (requestCode) {
             case UIHelper.SEND_REQUEST:
                 mSendAddress.setText(AppContext.get("Dis_province_name", "") + AppContext.get("Dis_province_phone", ""));
-                mSendVity.setText(AppContext.get("Dis_province_city", ""));
-                mSendAdd.setText(AppContext.get("Dis_province_area", ""));
+                mSendVity.setText(AppContext.get("Dis_province_city", "")+AppContext.get("Dis_province_province", ""));
+                mSendAdd.setText(AppContext.get("Dis_province_area", "")+AppContext.get("Dis_province_address", ""));
                 AppContext.set("Dis_province_name", "");
                 AppContext.set("Dis_province_city", "");
                 AppContext.set("Dis_province_area", "");
                 AppContext.set("Dis_province_phone", "");
+                AppContext.set("Dis_province_province", "");
+                AppContext.set("Dis_province_address", "");
                 break;
 
             case CODE_CAMERA_REQUEST:
@@ -822,10 +841,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     LogUtils.e("bitmap", "" + bitmap);
                     if (bitmap != null) {
                         mLrderLin.setVisibility(View.GONE);
-                        mImgPon.setVisibility(View.VISIBLE);
+                        mFrame.setVisibility(View.VISIBLE);
                     } else {
                         mLrderLin.setVisibility(View.VISIBLE);
-                        mImgPon.setVisibility(View.GONE);
+                        mFrame.setVisibility(View.GONE);
                     }
 
                     FileOutputStream b = null;
@@ -872,6 +891,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     consignee.setDeliveredMobile("");
                     consignee.setProvincialCity("");
                     consignee.setAddressInDetail("");
+                    consignee.setConsigneeCode("");
 
                 } else {
                     LogUtils.e("consignee---else", consignee + "");

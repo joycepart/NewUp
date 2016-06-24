@@ -104,6 +104,7 @@ public class RecordsAdapter extends BaseSimpleRecyclerAdapter<RecordsEntity> {
                     issueProduct.setmSnaCode(list.get(position).getSna_code());
                     issueProduct.setmBatCode(list.get(position).getBat_code());
                     issueProduct.setmRecCode(list.get(position).getRec_code());
+                    issueProduct.setmTotalCount(list.get(position).getSna_total_count());
                     issueProduct.setmBalance(list.get(position).getRec_pay_balance());
                     LogUtils.e("mBtn--------",""+position);
                     LogUtils.e("mBtn--mPic--------",""+list.get(position).getPic_url());

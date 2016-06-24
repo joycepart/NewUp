@@ -51,7 +51,7 @@ public class YncPullRefreshHeader extends FrameLayout implements PtrUIHandler {
         inflater = LayoutInflater.from(context);
         headView = (ViewGroup) inflater.inflate(R.layout.view_ync_pull_refresh_header, this, true);
         mImageView = (ImageView) findViewById(R.id.iv);
-        mImageView.setBackgroundResource(R.drawable.pic_0);
+        mImageView.setBackgroundResource(R.drawable.logo);
     }
 
     /**
@@ -61,7 +61,7 @@ public class YncPullRefreshHeader extends FrameLayout implements PtrUIHandler {
      */
     @Override
     public void onUIReset(PtrFrameLayout frame) {
-        mImageView.setBackgroundResource(R.drawable.pic_0);
+        mImageView.setBackgroundResource(R.drawable.logo);
         percent = 0.0f;
         startScale = 0.0f;
     }
@@ -102,7 +102,7 @@ public class YncPullRefreshHeader extends FrameLayout implements PtrUIHandler {
     public void onUIRefreshComplete(PtrFrameLayout frame) {
         if (mAnimation.isRunning()) {
             mAnimation.stop();
-            mImageView.setBackgroundResource(R.drawable.pic_6);
+            mImageView.setBackgroundResource(R.drawable.logo);
         }
     }
 

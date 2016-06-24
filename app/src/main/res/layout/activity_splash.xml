@@ -4,27 +4,14 @@
     android:layout_height="match_parent"
     android:background="#00000000"
     android:gravity="center" >
-    <android.support.v4.view.ViewPager
-        android:id="@+id/ad_viewpager"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+    <com.qluxstory.qingshe.common.widget.ViewFlowLayout
+        android:id="@+id/spl_vf_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      />
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/ad_viewgroup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </RelativeLayout>
-
-    <TextView
+    <Button
+        android:visibility="gone"
         android:id="@+id/ad_tv"
         style="@style/UserBtSendStyle"
         android:layout_width="@dimen/ds_290"
@@ -36,13 +23,10 @@
         android:textColor="@color/color_00"
         android:textSize="@dimen/fs_45" />
 
-    <LinearLayout
-        android:id="@+id/common_splash_img"
+    <ImageView
+        android:id="@+id/splash_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@drawable/up"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:background="@drawable/up"/>
 
 </FrameLayout>

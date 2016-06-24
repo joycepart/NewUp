@@ -66,16 +66,16 @@ public class AddAddressActivity extends BaseTitleActivity {
         switch (v.getId()) {
             case R.id.add_Btn:
                 if(TextUtils.isEmpty(mEtConsignee.getText().toString())){
-                    DialogUtils.showPrompt(this,"请填写收货人姓名","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写收货人姓名","确定");
                 }
                 else if(TextUtils.isEmpty(mEtNum.getText().toString())||mEtNum.getText().toString().length()<11){
-                    DialogUtils.showPrompt(this,"请填写正确手机号","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写正确手机号","确定");
                 }
                 else if(TextUtils.isEmpty(mEtCity.getText().toString())){
-                    DialogUtils.showPrompt(this,"请选择省，市","确定");
+                    DialogUtils.showPrompt(this,"提示","请选择省，市","确定");
                 }
                 else if(TextUtils.isEmpty(mEtAddress.getText().toString())){
-                    DialogUtils.showPrompt(this,"请填写详细地址","确定");
+                    DialogUtils.showPrompt(this,"提示","请填写详细地址","确定");
                 }else {
                     reqAdd();//添加收货地址
                 }

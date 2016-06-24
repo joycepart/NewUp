@@ -17,6 +17,7 @@ import com.qluxstory.qingshe.common.bean.ViewFlowBean;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.qluxstory.qingshe.common.utils.LogUtils;
 
 import java.util.ArrayList;
 
@@ -106,6 +107,7 @@ public class ViewFlowLayout extends RelativeLayout {
             imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setTag(bean);
+            LogUtils.e("bean----",""+bean);
             ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
 
                 @Override
@@ -117,6 +119,7 @@ public class ViewFlowLayout extends RelativeLayout {
                     ImageView dot = new ImageView(context_);
                     dot.setImageResource(R.drawable.discount_dot_unsel);
                     linear.addView(dot);
+                    LogUtils.e("count----",""+count);
                     if (count == size) {
                         flipper.setDisplayedChild(0);
                         ((ImageView) linear.getChildAt(0)).setImageResource(R.drawable.discount_dot_sel);

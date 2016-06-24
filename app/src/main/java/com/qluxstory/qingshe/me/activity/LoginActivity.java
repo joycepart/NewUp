@@ -22,6 +22,7 @@ import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeCountDown;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.MeUiGoto;
+import com.qluxstory.qingshe.me.dto.FristDTO;
 import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ObtainDTO;
 import com.qluxstory.qingshe.me.entity.LoginEntity;
@@ -58,6 +59,8 @@ public class LoginActivity extends BaseActivity {
     private String strPwd;
     private String mUrlAgreement;
     private String mAgreementTitle;
+    String mCity,mProvince,mDistrict;
+    boolean bool = false;
 
     @Override
     protected int getLayoutResId() {
@@ -66,6 +69,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mCity = AppContext.get("mCity","");
+        mProvince = AppContext.get("mProvince","");
+        mDistrict = AppContext.get("mDistrict","");
         mSetpwdCbAgreement.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
@@ -117,7 +123,7 @@ public class LoginActivity extends BaseActivity {
         LogUtils.e("setSign----",""+time+AppConfig.SIGN_1);
         ldto.setSign(time+AppConfig.SIGN_1);
         ldto.setRegisterFrom(AppConfig.RegisterFrom);
-        ldto.setTimestamp(TimeUtils.getSignTime());
+        ldto.setTimestamp(time);
         CommonApiClient.login(this, ldto, new CallBack<LoginResult>() {
             @Override
             public void onSuccess(LoginResult result) {
@@ -126,6 +132,7 @@ public class LoginActivity extends BaseActivity {
                     getLoginResult(result.getData());
                     setResult(1001);
                     finish();
+
                 }
 
             }
@@ -139,6 +146,39 @@ public class LoginActivity extends BaseActivity {
         AppContext.set("mUserName",entity.getMembername());
         AppContext.set("mPictruePath",entity.getMemberHeadimg());
         AppContext.set("mRongyunToken",entity.getToken());
+        bool = AppContext.get("frist",false);
+        if(bool){
+            return;
+        }else {
+            if(TextUtils.isEmpty(mCity)){
+                return;
+            }else {
+                reqFirst();//第一次定位
+            }
+
+        }
+    }
+
+    private void reqFirst() {
+        FristDTO ldto = new FristDTO();
+        ldto.setMembermob(strPhoneNum);
+        ldto.setFirstarea(mDistrict);
+        ldto.setFirstcity(mCity);
+        ldto.setFirstprovice(mProvince);
+        String time = TimeUtils.getSignTime();
+        ldto.setSign(time+AppConfig.SIGN_1);
+        ldto.setTimestamp(time);
+        CommonApiClient.frist(this, ldto, new CallBack<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult result) {
+                if (AppConfig.SUCCESS.equals(result.getStatus())) {
+                    LogUtils.e("第一次定位成功");
+                    AppContext.get("frist",true);
+
+                }
+
+            }
+        });
     }
 
 
@@ -154,7 +194,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_codeBtn:
                 if(TextUtils.isEmpty(mLoginEtNum.getText().toString())||mLoginEtNum.getText().toString().length()<11){
-                    DialogUtils.showPrompt(this,"请输入正确的手机号","知道了");
+                    DialogUtils.showPrompt(this,"提示","请输入正确的手机号","知道了");
                 }else {
                     String time = TimeUtils.getSignTime();
                     String sing = time+AppConfig.SIGN_1;

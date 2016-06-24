@@ -231,9 +231,13 @@ public class ProductBrowserActivity extends BaseTitleActivity {
                      *@param conversationType 开启会话类型。
                      *@param targetId 客服 Id。
                      *@param title 客服标题。*/
+//                    RongIM.getInstance().startConversation(ProductBrowserActivity.this,
+//                            io.rong.imlib.model.Conversation.ConversationType.APP_PUBLIC_SERVICE,
+//                            "KEFU146286268172386", "客服");//开发环境
+
                     RongIM.getInstance().startConversation(ProductBrowserActivity.this,
                             io.rong.imlib.model.Conversation.ConversationType.APP_PUBLIC_SERVICE,
-                            "KEFU146286268172386", "客服");
+                            "KEFU146578665455786", "客服");//生产环境
                 }
 
                 /*  *

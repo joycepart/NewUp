@@ -33,6 +33,7 @@ import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
 import com.qluxstory.qingshe.home.widget.MyHorizontalScrollView;
+import com.qluxstory.qingshe.special.UnusedUiGoto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -71,6 +72,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
     List<HomeRecommendEntity> entity;
     private String mId;
     private String mTitle;
+    private String mVfId;
+    List<HomeAdcerEntity> mAdDatas;
 
 
     @Override
@@ -80,7 +83,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                HomeUiGoto.special(getActivity(),AppConfig.URL_SPECIAL, mTitle, mId);
+                mVfId = mAdDatas.get(position).getId();
+                HomeUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_Special+mVfId, mTitle);
 
             }
         });
@@ -113,7 +117,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
         mSpecialListAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
-                HomeUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_Special+mId,mTitle,mId);
+                UnusedUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_Special+mId,mTitle,mId);
             }
         });
     }
@@ -126,7 +130,7 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 checkPullRefreshComplete();
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("首页广告成功");
-                    List<HomeAdcerEntity> mAdDatas = result.getData();
+                    mAdDatas = result.getData();
                     if (mAdDatas != null && mAdDatas.size() != 0) {
                         ArrayList<ViewFlowBean> list = new ArrayList<>();
                         for (int i = 0; i < mAdDatas.size(); i++) {

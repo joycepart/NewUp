@@ -217,9 +217,8 @@ public class UserInformationActivity extends BaseTitleActivity {
             public void onSuccess(UserPicResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.d("修改用户图像成功");
+
                     ImageLoaderUtils.displayAvatarImage(result.getData().get(0).getMemberHeadimg(),mUserImg);
-                    popWindow.dismiss();
-                    backgroundAlpha(1f);
                     AppContext.set("mPictruePath",result.getData().get(0).getMemberHeadimg());
 
                 }
@@ -236,6 +235,8 @@ public class UserInformationActivity extends BaseTitleActivity {
         switch (requestCode) {
             case CODE_CAMERA_REQUEST:
                 LogUtils.e("CODE_CAMERA_REQUEST----","CODE_CAMERA_REQUEST");
+                popWindow.dismiss();
+                backgroundAlpha(1f);
                 if(data==null){
                     LogUtils.e("data----CODE_CAMERA_REQUEST",""+data);
                     return;
@@ -277,6 +278,8 @@ public class UserInformationActivity extends BaseTitleActivity {
                 }
                 break;
             case CODE_PHOTO_REQUEST:
+                popWindow.dismiss();
+                backgroundAlpha(1f);
                 if (data != null) {
                     //取得返回的Uri,基本上选择照片的时候返回的是以Uri形式
                     Uri mImageCaptureUri = data.getData();
@@ -294,8 +297,6 @@ public class UserInformationActivity extends BaseTitleActivity {
                     reqUserPic();//修改用户图像
 
                 } else {
-                    popWindow.dismiss();
-                    backgroundAlpha(1f);
                     return;
                         }
 

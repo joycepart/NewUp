@@ -104,11 +104,11 @@ public class MyIncomeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.income_Btn:
                 if(mCashaMountMoney==null){
-                    DialogUtils.showPrompt(this,"暂无可提现余额","确定");
+                    DialogUtils.showPrompt(this,"提示","暂无可提现余额","确定");
                 }else{
                     double cash=Double.parseDouble(mCashaMountMoney);
                     if(cash==0){
-                        DialogUtils.showPrompt(this,"暂无可提现余额","确定");
+                        DialogUtils.showPrompt(this,"提示","暂无可提现余额","确定");
                     }else{
                         Bundle b = new Bundle();
                         b.putString("mCashaMountMoney",mCashaMountMoney);

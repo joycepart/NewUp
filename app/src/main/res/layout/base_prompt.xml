@@ -5,6 +5,7 @@
     android:background="@drawable/prompt_box_no"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/prompt_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ds_30"

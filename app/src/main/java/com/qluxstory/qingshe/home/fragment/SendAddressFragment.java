@@ -3,7 +3,7 @@ package com.qluxstory.qingshe.home.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.Button;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
@@ -16,6 +16,7 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.home.dto.SendDTO;
+import com.qluxstory.qingshe.home.entity.Consignee;
 import com.qluxstory.qingshe.home.entity.SendEntity;
 import com.qluxstory.qingshe.home.entity.SendResult;
 
@@ -30,8 +31,9 @@ public class SendAddressFragment extends BasePullFragment {
     @Bind(R.id.send_list)
     RecyclerView mSendList;
     BaseSimpleRecyclerAdapter mSendListAdapter;
-    CheckBox mSendCk;
+    Button mSendCk;
     private String rturn;
+    Consignee consignee;
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_send_address;
@@ -40,6 +42,7 @@ public class SendAddressFragment extends BasePullFragment {
     @Override
     public void initView(final View view) {
         super.initView(view);
+        consignee = AppContext.getInstance().getConsignee();
         Bundle b  = getArguments();
         if(b!=null){
             rturn=  b.getString("rturn");
@@ -56,6 +59,9 @@ public class SendAddressFragment extends BasePullFragment {
             @Override
             public void bindData(BaseRecyclerViewHolder holder, SendEntity sendEntity, int position) {
                 mSendCk = holder.getView(R.id.send_ck);
+                if(consignee!=null&&consignee.getItem()==position){
+                    mSendCk.setEnabled(true);
+                }
                 holder.setText(R.id.send_service,sendEntity.getSto_name());
                 holder.setText(R.id.send_ipone,sendEntity.getSto_phone());
                 holder.setText(R.id.send_province,sendEntity.getDis_province());
@@ -73,11 +79,20 @@ public class SendAddressFragment extends BasePullFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 SendEntity sendEntity = (SendEntity) itemBean;
-                mSendCk.setChecked(true);
                 AppContext.set("Dis_province_name",sendEntity.getSto_name());
                 AppContext.set("Dis_province_phone",sendEntity.getSto_phone());
+                AppContext.set("Dis_province_province",sendEntity.getDis_province());
                 AppContext.set("Dis_province_city",sendEntity.getDis_city());
                 AppContext.set("Dis_province_area",sendEntity.getDis_area());
+                AppContext.set("Dis_province_address",sendEntity.getDis_address());
+
+//                consignee.setConsigneeName(sendEntity.getSto_name());
+//                consignee.setAddressInDetail(sendEntity.getDis_address());
+//                consignee.setDeliveredMobile(sendEntity.getSto_phone());
+//                consignee.setProvincialCity(sendEntity.getDis_city());
+//                consignee.setArea(sendEntity.getDis_area());
+//                consignee.setProvince(sendEntity.getDis_province());
+                consignee.setItem(position);
                 getActivity().finish();
 
             }

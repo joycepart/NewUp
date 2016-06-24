@@ -13,6 +13,7 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.widget.EmptyLayout;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.adapter.RecordsAdapter;
 import com.qluxstory.qingshe.me.dto.IndianaRecordsDTO;
@@ -77,12 +78,20 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
 
     @Override
     public void initData() {
+        issueProduct = AppContext.getInstance().getIssueProduct();
     }
-
+    IssueProduct issueProduct;
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
         super.onItemClick(itemView, itemBean, position);
         RecordsEntity entity = (RecordsEntity) itemBean;
+        issueProduct.setmPicUrl(entity.getPic_url());
+        issueProduct.setmSnaTerm(entity.getRec_term());
+        issueProduct.setmSnaTitle(entity.getSna_title());
+        issueProduct.setmSnaCode(entity.getSna_code());
+        issueProduct.setmBatCode(entity.getBat_code());
+        issueProduct.setmRecCode(entity.getRec_code());
+        issueProduct.setmBalance(entity.getRec_pay_balance());
         Bundle b = new Bundle();
         b.putSerializable("entity",entity);
         MeUiGoto.indianaRecords(getActivity(),b);//夺宝详情

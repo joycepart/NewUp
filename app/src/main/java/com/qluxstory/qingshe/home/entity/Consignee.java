@@ -16,6 +16,26 @@ public class Consignee {
     private String AddressInDetail;
     /*item*/
     private int item;
+    private String province;
+    private String area;
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+
 
     public int getItem() {
         return item;

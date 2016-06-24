@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -55,24 +57,33 @@ public class MyCouponFragment extends BasePullFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, MyCouponEntity myCouponEntity, int position) {
+                LinearLayout lin = holder.getView(R.id.securities_lin);
+                ImageView img = holder.getView(R.id.coupon_img);
                 if(myCouponEntity.getCouponType().equals("1001")){
                     holder.setText(R.id.novice_tv,myCouponEntity.getDiscountNumber()+"折");
                 }else if(myCouponEntity.getCouponType().equals("1002")){
-                    holder.setText(R.id.novice_tv,"满"+myCouponEntity.getCouponmoney()+"减"+myCouponEntity.getCouponMoneyEqual());
+                    holder.setText(R.id.novice_tv,"满"+myCouponEntity.getCouponmoney().replace(".00","")+"减"+myCouponEntity.getCouponMoneyEqual().replace(".00",""));
                 }
                 else if(myCouponEntity.getCouponType().equals("1003")){
                     holder.setText(R.id.novice_tv,"免费");
                 }
                 else if(myCouponEntity.getCouponType().equals("1004")){
-                    holder.setText(R.id.novice_tv,"直减"+myCouponEntity.getCouponMoneyEqual());
+                    holder.setText(R.id.novice_tv,"直减"+myCouponEntity.getCouponMoneyEqual().replace(".00",""));
                 }
                 else if(myCouponEntity.getCouponType().equals("1005")){
-                    holder.setText(R.id.novice_tv,myCouponEntity.getCouponMoneyEqual()+"抵用"+myCouponEntity.getCouponmoney());
+                    holder.setText(R.id.novice_tv,myCouponEntity.getCouponMoneyEqual().replace(".00","")+"抵用"+myCouponEntity.getCouponmoney().replace(".00",""));
                 }
                 if(myCouponEntity.getCouponRangeOfUse().equals("2001")){
                     holder.setText(R.id.coupon_vt,"优惠劵");
                 }else if(myCouponEntity.getCouponRangeOfUse().equals("2002")){
                     holder.setText(R.id.coupon_vt,"服务劵");
+                }
+                if(myCouponEntity.getIstouse().equals("1")){
+                    lin.setBackgroundResource(R.drawable.ticket_bj_h);
+                    img.setBackgroundResource(R.drawable.ticket_h);
+                }else if(myCouponEntity.getIstouse().equals("0")){
+                    lin.setBackgroundResource(R.drawable.ticket_bj_n);
+                    img.setBackgroundResource(R.drawable.ticket_n);
                 }
 
 
@@ -101,7 +112,7 @@ public class MyCouponFragment extends BasePullFragment {
             case R.id.mycoupon_tv:
                 mMoupom = mMouponEt.getText().toString();
                 if(TextUtils.isEmpty(mMoupom)){
-                    DialogUtils.showPrompt(getActivity(),"优惠劵兑换码为空!","确定");
+                    DialogUtils.showPrompt(getActivity(),"提示","优惠劵兑换码为空!","确定");
                 }else {
                     exchangeVoucher();//兑换优惠劵
                 }
@@ -123,7 +134,7 @@ public class MyCouponFragment extends BasePullFragment {
                     LogUtils.d("兑换优惠劵成功");
                     mErrorLayout.setErrorMessage("暂无优惠劵",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getCouponExpirationTime()==null){
+                    if(null==result.getData()){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         mMycouponListAdapter.removeAll();
@@ -149,7 +160,7 @@ public class MyCouponFragment extends BasePullFragment {
                     LogUtils.d("优惠劵请求成功");
                     mErrorLayout.setErrorMessage("暂无优惠劵",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getCouponExpirationTime()==null){
+                    if(result.getData()==null){
 //                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         mMycouponListAdapter.removeAll();

@@ -101,7 +101,11 @@ public class ProductDetailsFragment extends BaseFragment {
                 break;
             case R.id.reduce:
                 int rnum = Integer.valueOf(mNum.getText().toString());
-                rnum--;
+                if(rnum>1){
+                    rnum--;
+                }else {
+                    rnum = 1;
+                }
                 mNum.setText(Integer.toString(rnum));
                 break;
             case R.id.plus:
@@ -111,31 +115,28 @@ public class ProductDetailsFragment extends BaseFragment {
                 break;
             case R.id.five:
                 mNum.setText("5");
-//                mFive.setEnabled(true);
-//                mTen.setEnabled(false);
-//                mTtew.setEnabled(false);
-//                mFive.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
+                mFive.setEnabled(false);
+                mTen.setEnabled(true);
+                mTtew.setEnabled(true);
                 break;
             case R.id.ten:
                 mNum.setText("10");
-//                mFive.setEnabled(false);
-//                mTen.setEnabled(true);
-//                mTtew.setEnabled(false);
-//                mTen.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
+                mFive.setEnabled(true);
+                mTen.setEnabled(false);
+                mTtew.setEnabled(true);
                 break;
             case R.id.ttew:
                 mNum.setText("20");
-//                mFive.setEnabled(false);
-//                mTen.setEnabled(false);
-//                mTtew.setEnabled(true);
-//                mTtew.setTextColor(getActivity().getResources().getColor(R.color.color_ff));
+                mFive.setEnabled(true);
+                mTen.setEnabled(true);
+                mTtew.setEnabled(false);
                 break;
             case R.id.fre_btn:
                 mNumber = mNum.getText().toString();
                 int nm = Integer.valueOf(mNumber);
                 int total = Integer.valueOf(issueProduct.getmTotalCount());
                 if(nm>total){
-                    DialogUtils.showPrompt(getActivity(),"参与人次不能大于揭晓所需人次","知道了");
+                    DialogUtils.showPrompt(getActivity(),"提示","参与人次不能大于揭晓所需人次","知道了");
                     backgroundAlpha(1f);
                     popWindow.dismiss();
                 }

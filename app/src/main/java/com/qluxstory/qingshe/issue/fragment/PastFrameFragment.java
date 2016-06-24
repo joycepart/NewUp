@@ -37,6 +37,7 @@ import com.qluxstory.qingshe.home.entity.TranResult;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.adapter.GridProductAdapter;
 import com.qluxstory.qingshe.issue.dto.AnnouncedDTO;
+import com.qluxstory.qingshe.issue.dto.IssueIndianaDTO;
 import com.qluxstory.qingshe.issue.dto.LanderInDTO;
 import com.qluxstory.qingshe.issue.dto.PicDTO;
 import com.qluxstory.qingshe.issue.entity.AnnouncedEntity;
@@ -45,7 +46,6 @@ import com.qluxstory.qingshe.issue.entity.LanderInEntity;
 import com.qluxstory.qingshe.issue.entity.LanderInResult;
 import com.qluxstory.qingshe.issue.entity.PicEntity;
 import com.qluxstory.qingshe.issue.entity.PicResult;
-import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
 import com.qluxstory.qingshe.me.entity.RecordIndianaEntity;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 
@@ -204,7 +204,7 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
     }
 
     private void reqQecord() {
-        RecordIndianaDTO dto=new RecordIndianaDTO();
+        IssueIndianaDTO dto=new IssueIndianaDTO();
         dto.setBat_code(mBatCode);
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(PAGE_INDEX);

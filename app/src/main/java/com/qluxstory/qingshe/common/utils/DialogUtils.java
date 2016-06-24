@@ -57,7 +57,7 @@ public class DialogUtils {
 	 * @param btn
 	 * @return
 	 */
-	public static Dialog showPrompt(Context context, String mes, String btn) {
+	public static Dialog showPrompt(Context context, String mes,String st,String btn) {
 		final Dialog dialog =  new Dialog(context, R.style.CommonLoadingShadeDialog);;
 		View mView = LayoutInflater.from(context).inflate(
 				R.layout.base_prompt, null);
@@ -65,6 +65,7 @@ public class DialogUtils {
 		mView.setVisibility(View.VISIBLE);
 		mView.setPadding(30, 30, 30, 30);
 		TextView tv = (TextView) mView.findViewById(R.id.prompt_tv);
+		TextView text = (TextView) mView.findViewById(R.id.prompt_text);
 		Button mTvYes = (Button) mView.findViewById(R.id.prompt_tv_yes);
 		mTvYes.setOnClickListener(new View.OnClickListener() {
 
@@ -74,8 +75,11 @@ public class DialogUtils {
 			}
 		});
 		tv.setTextColor(ContextCompat.getColor(context,R.color.color_00));
+		if (!TextUtils.isEmpty(st)) {
+			tv.setText(st);
+		}
 		if (!TextUtils.isEmpty(mes)) {
-			tv.setText(mes);
+			text.setText(mes);
 		}
 		if (!TextUtils.isEmpty(btn)) {
 			mTvYes.setText(btn);

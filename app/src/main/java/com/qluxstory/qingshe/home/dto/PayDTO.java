@@ -31,6 +31,26 @@ public class PayDTO extends BaseDTO {
     private String OrderMoney;
     private String couponcode;
     private String customernote;
+    private String IntegralNum;
+    private String IntegralMoney;
+
+    public String getIntegralNum() {
+        return IntegralNum;
+    }
+
+    public void setIntegralNum(String integralNum) {
+        IntegralNum = integralNum;
+    }
+
+    public String getIntegralMoney() {
+        return IntegralMoney;
+    }
+
+    public void setIntegralMoney(String integralMoney) {
+        IntegralMoney = integralMoney;
+    }
+
+
 
     public String getCustomernote() {
         return customernote;

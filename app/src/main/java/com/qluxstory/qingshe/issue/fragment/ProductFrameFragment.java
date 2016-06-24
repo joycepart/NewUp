@@ -33,6 +33,7 @@ import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
 import com.qluxstory.qingshe.issue.adapter.GridProductAdapter;
 import com.qluxstory.qingshe.issue.dto.DetailsDTO;
+import com.qluxstory.qingshe.issue.dto.IssueIndianaDTO;
 import com.qluxstory.qingshe.issue.dto.LanderInDTO;
 import com.qluxstory.qingshe.issue.dto.PicDTO;
 import com.qluxstory.qingshe.issue.entity.IndianaListEntity;
@@ -43,7 +44,6 @@ import com.qluxstory.qingshe.issue.entity.LanderInEntity;
 import com.qluxstory.qingshe.issue.entity.LanderInResult;
 import com.qluxstory.qingshe.issue.entity.PicEntity;
 import com.qluxstory.qingshe.issue.entity.PicResult;
-import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
 import com.qluxstory.qingshe.me.entity.RecordIndianaEntity;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 
@@ -113,6 +113,8 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         if(b!=null){
                 mBat=  b.getString("bat");
                 mSna=  b.getString("sna");
+            LogUtils.e("mBat----",""+mBat);
+            LogUtils.e("mSna----",""+mSna);
 //                mUrl = b.getString("mPic");
         }else{
                 return;
@@ -126,7 +128,6 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
 
     @Override
     public void initData() {
-
         reqPic();//夺宝商品图片
         reqDetails();//夺宝详情
         reqParticipate();//登陆者参与的次数
@@ -183,7 +184,7 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
     }
 
     private void reqQecord() {
-        RecordIndianaDTO dto=new RecordIndianaDTO();
+        IssueIndianaDTO dto=new IssueIndianaDTO();
         dto.setBat_code(mBat);
         dto.setPageSize(PAGE_SIZE);
         dto.setPageIndex(PAGE_INDEX);
@@ -224,20 +225,22 @@ public class ProductFrameFragment extends BasePullScrollViewFragment {
         mName.setText(mTitle);
         mRandom.setText(detailEntity.getSna_remark());
         mPeople.setText("总需"+detailEntity.getSna_total_count()+"人次");
-        int  mCount =Integer.parseInt(detailEntity.getSna_total_count());
+        int mCount = Integer.valueOf(detailEntity.getSna_total_count());
         LogUtils.e("setProgress----",""+mCount);
         if(TextUtils.isEmpty(detailEntity.getSna_sell_out())){
-            mSell = 0;
+            mSell = Integer.parseInt("0");
         }else {
             mSell = Integer.parseInt(detailEntity.getSna_sell_out());
         }
 
         LogUtils.e("setProgress----mSell",""+mSell);
-        mGrogress.setProgress(mSell*100/mCount);
-        LogUtils.e("setProgress----mGrogress",""+mSell*100/mCount);
+        int d= mSell*100/mCount;
+        LogUtils.e("setProgress----d",""+d);
+        mGrogress.setProgress(d);
         int value1 = mCount;
         int value2 = mSell;
-        int result = value1-value2;
+        int result = mCount-mSell;
+        LogUtils.e("setProgress----result",""+result);
         mPeo.setText("距离揭晓还需"+result+"人次");
         mProductData.setText(detailEntity.getSna_begin_date());
     }

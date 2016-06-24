@@ -322,11 +322,15 @@ public class MainActivity extends BaseTitleActivity {
                 LogUtils.i("district:" ,""+ location.getDistrict());
                 LogUtils.i("AddrStr:" ,""+ location.getAddrStr());
                 String city = location.getCity();
+                String province = location.getProvince();
+                String district = location.getDistrict();
                 if (TextUtils.isEmpty(city)) {
                     LogUtils.e("locType----","定位失败");
                     mLocationClient.start();
                 } else {
                     AppContext.set("mCity",city);
+                    AppContext.set("mProvince",province);
+                    AppContext.set("mDistrict",district);
                     mLocationClient.stop();
                 }
             }

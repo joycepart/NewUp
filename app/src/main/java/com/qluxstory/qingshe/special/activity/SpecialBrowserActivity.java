@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -114,11 +115,11 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
     protected void baseGoEnsure() {
         showPopShare();
     }
-
+    View vw;
     private void showPopShare() {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.from(this).inflate(R.layout.pop_share, null);
+        final View view = inflater.from(this).inflate(R.layout.pop_share_test, null);
         popWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
 
         // 需要设置一下此参数，点击外边可消失
@@ -129,7 +130,7 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
         popWindow.setFocusable(true);
         //防止虚拟软键盘被弹出菜单遮住
         popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        backgroundAlpha(0.7f);
+//        backgroundAlpha(0.7f);
 
         weixin = (ImageView) view
                 .findViewById(R.id.share_weixin);
@@ -139,6 +140,9 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
                 .findViewById(R.id.share_weibo);
         text = (TextView) view
                 .findViewById(R.id.pop_share_text);
+        vw = (View) view
+                .findViewById(R.id.view);
+        vw.setOnClickListener(this);
         weixin.setOnClickListener(this);
         friend.setOnClickListener(this);
         weibo.setOnClickListener(this);
@@ -155,11 +159,18 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
         @Override
         public void onDismiss() {
             LogUtils.e("List_noteTypeActivity:", "我是关闭事件1");
-            backgroundAlpha(1f);
-            LogUtils.e("List_noteTypeActivity:", "我是关闭事件2");
             popWindow.dismiss();
-            LogUtils.e("List_noteTypeActivity:", "我是关闭事件3");
+//            backgroundAlpha(1f);
+            popWindow.dismiss();
+            LogUtils.e("List_noteTypeActivity:", "我是关闭事件2");
         }
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        popWindow.dismiss();
+        return super.onTouchEvent(event);
 
     }
 
@@ -192,8 +203,18 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
                         .share();;
                 break;
             case R.id.pop_share_text:
-                backgroundAlpha(1f);
+                LogUtils.e("pop_share_text:", "我是关闭事件1");
                 popWindow.dismiss();
+                backgroundAlpha(1f);
+                LogUtils.e("pop_share_text:", "我是关闭事件2");
+
+                break;
+            case R.id.view:
+                LogUtils.e("pop_share_text:", "我是关闭事件1");
+                popWindow.dismiss();
+//                backgroundAlpha(1f);
+                LogUtils.e("pop_share_text:", "我是关闭事件2");
+
                 break;
 
         }

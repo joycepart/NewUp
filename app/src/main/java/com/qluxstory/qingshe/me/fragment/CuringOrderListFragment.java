@@ -112,6 +112,10 @@ public class CuringOrderListFragment extends BaseListFragment<CuringOrderListEnt
         return true;
     }
 
+//    public PtrRecyclerView.RecyclerMode setupMode() {
+//        return PtrRecyclerView.RecyclerMode.TOP;
+//    }
+
     @Override
     public void onItemClick(View itemView, Object itemBean, int position) {
         super.onItemClick(itemView, itemBean, position);

@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.issue.IssueUiGoto;
+import com.qluxstory.qingshe.issue.entity.IssueProduct;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -25,6 +27,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
 
     private IWXAPI api;
+    IssueProduct issueProduct;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         setContentView(R.layout.pay_result);
         api = WXAPIFactory.createWXAPI(this, AppConfig.Wx_App_Id);
         api.handleIntent(getIntent(), this);
+        issueProduct = AppContext.getInstance().getIssueProduct();
     }
 
     @Override
@@ -53,6 +57,13 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             if (resp.errCode == 0) {
                 LogUtils.e("支付失败---",""+resp.errCode);
                 message = "支付成功";
+                issueProduct.setmBalance("");
+                issueProduct.setmRecCode("");
+                issueProduct.setmBatCode("");
+                issueProduct.setmSnaCode("");
+                issueProduct.setmSnaTerm("");
+                issueProduct.setmPicUrl("");
+                issueProduct.setmTotalCount("");
                 IssueUiGoto.payment(WXPayEntryActivity.this);//支付结果页
             } else {
                 String error = resp.errStr;

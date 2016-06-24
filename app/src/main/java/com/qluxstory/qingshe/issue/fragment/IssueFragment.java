@@ -224,9 +224,14 @@ public class IssueFragment extends BasePullScrollViewFragment {
             public void onSuccess(IndianaListResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("夺宝列表成功");
-                    mIssueAdapter.removeAll();
-                    mIssueAdapter.append(result.getData());
-                    refreshComplete();
+                    if(null==result.getData()){
+                        return;
+                    }else {
+                        mIssueAdapter.removeAll();
+                        mIssueAdapter.append(result.getData());
+                        refreshComplete();
+                    }
+
 
                 }
             }

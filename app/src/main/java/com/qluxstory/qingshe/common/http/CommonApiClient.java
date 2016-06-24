@@ -28,11 +28,13 @@ import com.qluxstory.qingshe.home.entity.TakeResult;
 import com.qluxstory.qingshe.home.entity.TimeResult;
 import com.qluxstory.qingshe.home.entity.TranResult;
 import com.qluxstory.qingshe.home.entity.VouchersResult;
+import com.qluxstory.qingshe.information.dto.DeleteDTO;
 import com.qluxstory.qingshe.information.dto.InformationDTO;
 import com.qluxstory.qingshe.information.entity.InformationResult;
 import com.qluxstory.qingshe.issue.dto.AnnouncedDTO;
 import com.qluxstory.qingshe.issue.dto.CalcutionDTO;
 import com.qluxstory.qingshe.issue.dto.DetailsDTO;
+import com.qluxstory.qingshe.issue.dto.IssueIndianaDTO;
 import com.qluxstory.qingshe.issue.dto.LanderInDTO;
 import com.qluxstory.qingshe.issue.dto.PicDTO;
 import com.qluxstory.qingshe.issue.dto.SettlementDTO;
@@ -52,12 +54,12 @@ import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
 import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
+import com.qluxstory.qingshe.me.dto.FristDTO;
 import com.qluxstory.qingshe.me.dto.IndianaRecordsDTO;
 import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ModifyDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
 import com.qluxstory.qingshe.me.dto.ObtainDTO;
-import com.qluxstory.qingshe.me.dto.RecordIndianaDTO;
 import com.qluxstory.qingshe.me.dto.UpDTO;
 import com.qluxstory.qingshe.me.dto.UpInformationDTO;
 import com.qluxstory.qingshe.me.dto.UserPicDTO;
@@ -220,6 +222,32 @@ public class CommonApiClient extends BaseApiClient {
     }
 
     /**
+     * 删除新闻
+     * @param dto
+     * @param callback
+     */
+    public static void delete(Fragment fragment, DeleteDTO
+            dto, CallBack<InformationResult> callback) {
+        AsyncCallBack<InformationResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,InformationResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/DeleteAllNews"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 阅读新闻
+     * @param dto
+     * @param callback
+     */
+    public static void read(Fragment fragment, DeleteDTO
+            dto, CallBack<InformationResult> callback) {
+        AsyncCallBack<InformationResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,InformationResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/ReadAllNews"), dto,
+                asyncCallBack);
+    }
+
+    /**
      * 结算
      * @param dto
      * @param callback
@@ -353,13 +381,15 @@ public class CommonApiClient extends BaseApiClient {
      * @param dto
      * @param callback
      */
-    public static void recordsDetails(Activity act, RecordIndianaDTO
+    public static void recordsDetails(Activity act, IssueIndianaDTO
             dto, CallBack<RecordIndianaResult> callback) {
         AsyncCallBack<RecordIndianaResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,RecordIndianaResult.class);
         get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetSnaRecordByBatCode"), dto,
                 asyncCallBack);
     }
+
+
 
     /**
      * 参与信息
@@ -609,6 +639,21 @@ public class CommonApiClient extends BaseApiClient {
         post( getAbsoluteUrl("/API/WsMember.asmx/ResMemberLoginApi"), dto,
                 asyncCallBack);
     }
+
+    /**
+     * 首次定位城市位置
+     * @param dto
+     * @param callback
+     */
+    public static void frist(Activity act, FristDTO
+            dto, CallBack<LoginResult> callback) {
+        AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,LoginResult.class);
+        post( getAbsoluteUrl("/API/WsMember.asmx/ResEdtMemberFirstAddressApi"), dto,
+                asyncCallBack);
+    }
+
+
     /**
      * 我的收入
      * @param dto

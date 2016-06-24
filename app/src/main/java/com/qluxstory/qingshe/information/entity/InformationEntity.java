@@ -14,10 +14,20 @@ public class InformationEntity extends  BaseEntity{
     private String news_small_title;
     /*新闻图片地址*/
     private String news_pic_url;
-    /*新闻html地址*/
-    private String news_html_url;
-    /*添加时间*/
+    /*添加时间**/
     private String news_add_time;
+    /*是否阅读0/未读，1/已读*/
+    private String isread ;
+
+    public String getIsread() {
+        return isread;
+    }
+
+    public void setIsread(String isread) {
+        this.isread = isread;
+    }
+
+
 
     public String getNews_add_time() {
         return news_add_time;
@@ -43,13 +53,6 @@ public class InformationEntity extends  BaseEntity{
         this.news_code = news_code;
     }
 
-    public String getNews_html_url() {
-        return news_html_url;
-    }
-
-    public void setNews_html_url(String news_html_url) {
-        this.news_html_url = news_html_url;
-    }
 
     public String getNews_pic_url() {
         return news_pic_url;
