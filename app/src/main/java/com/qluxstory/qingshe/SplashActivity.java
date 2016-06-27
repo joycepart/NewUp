@@ -83,8 +83,15 @@ public class SplashActivity extends BaseActivity {
                             list.add(bean);
                         }
                         LogUtils.e("else----",""+result.getData().size());
+
+                        mVfLayout.setLoadCompleteListener(new ViewFlowLayout.LoadCompleteListener() {
+                            @Override
+                            public void loadComplete() {
+                                preparation();
+                            }
+                        });
                         mVfLayout.updateSplView(list);
-                        preparation();
+
                     }
 
                 }

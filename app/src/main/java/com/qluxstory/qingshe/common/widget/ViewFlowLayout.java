@@ -135,10 +135,30 @@ public class ViewFlowLayout extends RelativeLayout {
 
     }
 
+
+    public void setLoadCompleteListener(LoadCompleteListener loadCompleteListener) {
+        this.loadCompleteListener = loadCompleteListener;
+    }
+
+    LoadCompleteListener loadCompleteListener;
+    public interface  LoadCompleteListener{
+        void loadComplete();
+    }
+
+    int cc=0;
+    int ccsize=0;
+
+    public void checkSplView(){
+        if(cc==ccsize&&loadCompleteListener!=null){
+            loadCompleteListener.loadComplete();
+        }
+    }
+
     public void updateSplView(ArrayList<ViewFlowBean> beans) {
         flipper.removeAllViews();
         linear.removeAllViews();
         final int size = beans.size();
+        ccsize=size;
         for (int i = 0; i < size; i++) {
             final ViewFlowBean bean = beans.get(i);
             final ImageView imageView = new ImageView(context_);
@@ -152,10 +172,11 @@ public class ViewFlowLayout extends RelativeLayout {
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     imageView.setImageBitmap(loadedImage);
                     flipper.addView(imageView);
+                    cc++;
+                    checkSplView();
                 }
 
             });
-
         }
 
     }
