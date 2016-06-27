@@ -1,9 +1,10 @@
 package com.qluxstory.qingshe.common.adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.qluxstory.qingshe.me.activity.CuringOrderActivity;
 
 import java.util.List;
 
@@ -12,11 +13,11 @@ import java.util.List;
  */
 public class TabListAdapter extends FragmentStatePagerAdapter {
     private String[] titles;
-    private Context context;
+    private CuringOrderActivity context;
     private List<Fragment> fragmentList;
 
 
-    public TabListAdapter(FragmentManager fm, Context context, String[] titles,
+    public TabListAdapter(FragmentManager fm, CuringOrderActivity context, String[] titles,
                           List<Fragment> fragmentList) {
         super(fm);
         this.context = context;

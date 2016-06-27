@@ -26,8 +26,9 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/ds_42"
                 android:paddingRight="@dimen/ds_15"
+                android:text=""
                 android:textColor="@color/color_33"
-                android:textSize="@dimen/fs_55" />
+                android:textSize="@dimen/fs_45" />
 
             <TextView
                 android:id="@+id/base_titlebar_text"

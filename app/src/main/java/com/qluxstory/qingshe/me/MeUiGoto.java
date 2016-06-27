@@ -15,6 +15,7 @@ import com.qluxstory.qingshe.me.activity.IndianaDetailsActivity;
 import com.qluxstory.qingshe.me.activity.LoginActivity;
 import com.qluxstory.qingshe.me.activity.ModifyUserActivity;
 import com.qluxstory.qingshe.me.activity.MyIncomeActivity;
+import com.qluxstory.qingshe.me.activity.MyIntegralActivity;
 import com.qluxstory.qingshe.me.activity.PaymentOrderActivity;
 import com.qluxstory.qingshe.me.activity.UserInformationActivity;
 import com.qluxstory.qingshe.me.activity.WithdrawalsActivity;
@@ -49,12 +50,22 @@ public class MeUiGoto {
 
 
     /**
-     * 跳转到我的收入页
+     * 跳转到我的账户页
      * @param context
      */
 
     public static void myIncome(Context context){
         Intent intent = new Intent(context, MyIncomeActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到我的积分页
+     * @param context
+     */
+
+    public static void myIntegral(Context context){
+        Intent intent = new Intent(context, MyIntegralActivity.class);
         context.startActivity(intent);
     }
 

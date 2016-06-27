@@ -17,6 +17,7 @@ import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.dto.SplashDTO;
 import com.qluxstory.qingshe.home.entity.SplashResult;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -32,7 +33,8 @@ public class SplashActivity extends BaseActivity {
     Button mBtn;
     @Bind(R.id.splash_img)
     ImageView mImg;
-
+    int tm;
+    private File cache;
 
 
     @Override
@@ -72,21 +74,20 @@ public class SplashActivity extends BaseActivity {
                         HomeUiGoto.gotoMain(SplashActivity.this);
                     }
                     else {
+                        tm = result.getData().size();
                         ArrayList<ViewFlowBean> list = new ArrayList<>();
                         for (int i = 0; i < result.getData().size(); i++) {
+
                             ViewFlowBean bean = new ViewFlowBean();
                             bean.setImgUrl(AppConfig.BASE_URL + result.getData().get(i).getPicturesUrl());
                             list.add(bean);
                         }
                         LogUtils.e("else----",""+result.getData().size());
-                        mVfLayout.updateView(list);
+                        mVfLayout.updateSplView(list);
                         preparation();
                     }
 
                 }
-
-
-
 
             }
         });
@@ -107,7 +108,7 @@ public class SplashActivity extends BaseActivity {
     private void preparation() {
         mImg.setVisibility(View.GONE);
         mBtn.setVisibility(View.VISIBLE);
-        handler = new ReadyHandler(9, new ReadyListener() {
+        handler = new ReadyHandler(tm*3, new ReadyListener() {
 
             @Override
             public void onGoMain(int time) {

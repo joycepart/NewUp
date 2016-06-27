@@ -46,7 +46,7 @@ public class ViewFlowLayout extends RelativeLayout {
         LayoutInflater inflater = LayoutInflater.from(context_);
         View viewfolw = inflater.inflate(R.layout.view_viewflow_layout, null);
         addView(viewfolw, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        flipper = (ViewFlipper) viewfolw.findViewById(R.id.id_vf);
+        flipper = (ViewFlipper) viewfolw.findViewById(R.id.id_vf_flipper);
         linear = (LinearLayout) viewfolw.findViewById(R.id.id_linear);
 
     }
@@ -127,6 +127,31 @@ public class ViewFlowLayout extends RelativeLayout {
                         startListen();
 
                     }
+                }
+
+            });
+
+        }
+
+    }
+
+    public void updateSplView(ArrayList<ViewFlowBean> beans) {
+        flipper.removeAllViews();
+        linear.removeAllViews();
+        final int size = beans.size();
+        for (int i = 0; i < size; i++) {
+            final ViewFlowBean bean = beans.get(i);
+            final ImageView imageView = new ImageView(context_);
+            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setTag(bean);
+            LogUtils.e("bean----",""+bean);
+            ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    imageView.setImageBitmap(loadedImage);
+                    flipper.addView(imageView);
                 }
 
             });

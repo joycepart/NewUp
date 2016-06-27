@@ -1,6 +1,8 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,11 +29,15 @@ import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ObtainDTO;
 import com.qluxstory.qingshe.me.entity.LoginEntity;
 import com.qluxstory.qingshe.me.entity.LoginResult;
+import com.qluxstory.qingshe.receiver.ExampleUtil;
 
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 /**
  * 登录主页面
@@ -146,6 +152,7 @@ public class LoginActivity extends BaseActivity {
         AppContext.set("mUserName",entity.getMembername());
         AppContext.set("mPictruePath",entity.getMemberHeadimg());
         AppContext.set("mRongyunToken",entity.getToken());
+        setAlias();
         bool = AppContext.get("frist",false);
         if(bool){
             return;
@@ -216,4 +223,65 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    private static final int MSG_SET_ALIAS = 1001;
+    private static final String TAG = "JPush";
+
+    private void setAlias() {
+        String alias = "2016".concat(AppContext.get("mobileNum",""));
+        AppContext.set("alias",alias);
+        LogUtils.e("alias----",""+AppContext.get("alias",""));
+        //调用JPush API设置Alias
+        jHandler.sendMessage(jHandler.obtainMessage(MSG_SET_ALIAS, AppContext.get("alias","")));
+    }
+
+    private final Handler jHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_SET_ALIAS:
+                    LogUtils.e("MSG_SET_ALIAS", "Set alias in handler.");
+                    JPushInterface.setAliasAndTags(getApplicationContext(), (String) msg.obj, null, mAliasCallback);
+                    break;
+
+                default:
+                    Log.i("default", "Unhandled msg - " + msg.what);
+                    break;
+            }
+        }
+    };
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    LogUtils.e(TAG, logs);
+                    break;
+
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    LogUtils.e(TAG, logs);
+                    if (ExampleUtil.isConnected(getApplicationContext())) {
+                        jHandler.sendMessageDelayed(jHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    } else {
+                        LogUtils.e(TAG, "No network");
+                    }
+                    break;
+
+                default:
+                    logs = "Failed with errorCode = " + code;
+                    LogUtils.e(TAG, logs);
+                    break;
+            }
+
+        }
+
+    };
+
 }

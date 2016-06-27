@@ -24,7 +24,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     // 在WXEntryActivity中将接收到的intent及实现了IWXAPIEventHandler接口的对象传递给IWXAPI接口的handleIntent方法，示例如下图
     // 当微信发送请求到你的应用，将通过IWXAPIEventHandler接口的onReq方法进行回调，类似的，应用请求微信的响应结果将通过onResp回调
 
-    private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
+//    private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
 
     private IWXAPI api;
     IssueProduct issueProduct;
@@ -76,4 +76,5 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
         }
     }
+
 }

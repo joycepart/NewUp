@@ -33,12 +33,11 @@ public class JpushActivity extends Activity {
             Bundle bundle = getIntent().getExtras();
             String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
             String content = bundle.getString(JPushInterface.EXTRA_ALERT);
-            tv.setText("Title : " + title + "  " + "Content : " + content);
+            tv.setText(content);
         }
         addContentView(tv, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
-//    public static void setAlias(Context context, String alias, TagAliasCallback callback);
 
 
 }

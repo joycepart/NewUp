@@ -12,7 +12,7 @@ import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
 
 /**
- * 带有标题的的基类
+ * 带有标题的基类
  */
 public abstract class BaseTitleActivity extends BaseActivity {
     private TextView mBaseTitle, mBaseEnsure, mBaseBack;
@@ -58,10 +58,6 @@ public abstract class BaseTitleActivity extends BaseActivity {
                 R.dimen.common_titlebar_icon_width,
                 R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_LEFT);
 
-         //初始化分享按钮图片大小
-//        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.detaile_share,
-//                R.dimen.common_titlebar_icon_width,
-//                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_RIGHT);
 
     }
 

@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.home.fragment;
+package com.qluxstory.qingshe.curing.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,10 +11,8 @@ import com.qluxstory.qingshe.common.base.BaseListFragment;
 import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
-import com.qluxstory.qingshe.common.widget.EmptyLayout;
+import com.qluxstory.qingshe.curing.adapter.MajorCuringAdapter;
 import com.qluxstory.qingshe.home.HomeUiGoto;
-import com.qluxstory.qingshe.home.activity.CuringActivity;
-import com.qluxstory.qingshe.home.adapter.CuringAdapter;
 import com.qluxstory.qingshe.home.dto.CuringDTO;
 import com.qluxstory.qingshe.home.entity.CuringEntity;
 import com.qluxstory.qingshe.home.entity.CuringResult;
@@ -26,14 +24,15 @@ import java.util.List;
 /**
  * 专业养护的fragment
  */
-public class CuringFragment extends BaseListFragment<CuringEntity> {
+public class MajorCuringFragment extends BaseListFragment<CuringEntity> {
+
     private static final String TYPE = "type";
     private int type;
     private  String mUrl;
     ProductDetails mProductDetails;
 
-    public static CuringFragment newInstance(int type) {
-        CuringFragment fragment = new CuringFragment();
+    public static MajorCuringFragment newInstance(int type) {
+        MajorCuringFragment fragment = new MajorCuringFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE, type);//传递Type
         fragment.setArguments(bundle);
@@ -46,7 +45,7 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
         mProductDetails = AppContext.getInstance().getProductDetails();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            type = bundle.getInt(TYPE, CuringActivity.TAB_A);
+            type = bundle.getInt(TYPE, CuringFragment.TAB_A);
 
         }
     }
@@ -54,7 +53,7 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
 
     @Override
     public BaseRecyclerAdapter<CuringEntity> createAdapter() {
-        return new CuringAdapter();
+        return new MajorCuringAdapter();
     }
 
     @Override
@@ -82,7 +81,7 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
                     mErrorLayout.setErrorMessage("暂无订单记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
                     if(null==result.getData()){
-                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+                        return;
                     }else {
                         requestDataSuccess(result);
                         setDataResult(result.getData());
@@ -104,7 +103,7 @@ public class CuringFragment extends BaseListFragment<CuringEntity> {
         mProductDetails.setSellPrice(curingEntity.getSell_price());
         mProductDetails.setSellPic(curingEntity.getSell_pic());
         mProductDetails.setSellSort(curingEntity.getSell_sort());
-        HomeUiGoto.curingProductDetails(getActivity(),mUrl,curingEntity.getSell_pic(),curingEntity.getSell_only_code(),curingEntity.getSell_name());//专业养护之商品详情
+        HomeUiGoto.curingProductDetails(getActivity(),mUrl,curingEntity.getSell_pic(),curingEntity.getSell_only_code(),curingEntity.getSell_name(),curingEntity.getSell_price());//专业养护之商品详情
     }
 
     @Override

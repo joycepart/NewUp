@@ -60,7 +60,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     private ImageView weixin,friend,weibo;
     private TextView text;
     private View mView;
-    private String mUrl,mCode,mName,mPic,mTarget;
+    private String mUrl,mCode,mName,mPic,mPrice,mTarget;
     String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
     UMImage image;
     String mTargetUrl;
@@ -75,21 +75,25 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         LogUtils.e("onCreate---","onCreate");
         ActivityCompat.requestPermissions(ProductBrowserActivity.this,mPermissionList, 100);
+        mProductDetails = AppContext.getInstance().getProductDetails();
         Intent mIntent = getIntent();
         if (mIntent != null) {
             mPic = mIntent.getStringExtra("pic");
             mUrl = mIntent.getStringExtra("mUrl");
             mCode = mIntent.getStringExtra("code");
             mName = mIntent.getStringExtra("name");
+            mPrice = mIntent.getStringExtra("price");
+
             LogUtils.e("mUrl----",mUrl);
             LogUtils.e("mPic",""+mPic);
-            LogUtils.e("mName----",mName);
+            LogUtils.e("mPrice----",mPrice);
             image = new UMImage(ProductBrowserActivity.this, AppConfig.BASE_URL+mPic);
             mTargetUrl = AppConfig.BASE_URL+"/JTh5/fenxiang.html?action=001&type=0/1&serveroid="+mCode;
             LogUtils.e("mTargetUrl---",""+mTargetUrl);
 
         }
         super.onCreate(savedInstanceState);
+        mTv.setText(mPrice);
 
     }
 

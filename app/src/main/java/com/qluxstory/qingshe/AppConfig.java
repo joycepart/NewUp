@@ -33,9 +33,9 @@ public class AppConfig {
 	public static final String SERVICE_AGREEMENT="http://60.205.4.101:8099/JTh5/yiyuan.html";
 	public static final String SIGN_1="ForMyLifeIwillOverxs";
 
-//	public static final String BASE_URL="http://www.qluxstory.com";//正式环境
+	public static final String BASE_URL="http://www.qluxstory.com";//正式环境
 //    public static final String BASE_URL="http://60.205.4.101:8099";//正式环境
-	public static final String BASE_URL="http://103.10.84.186:8099";//测试环境
+//	public static final String BASE_URL="http://103.10.84.186:8099";//测试环境
 	public static final String News_Html="/SMSBase/ReturnApp/NewsHtml.aspx?id=";
 	public static final String Server_Html="/SMSBase/ReturnApp/ServerHtml.aspx?id=";
 	public static final String Server_SnatchCommodity="/SMSBase/ReturnApp/SnatchCommodityHtml.aspx?id=";

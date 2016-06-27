@@ -26,6 +26,7 @@ import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.DialogUtils;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
+import com.qluxstory.qingshe.common.utils.RandomUtils;
 import com.qluxstory.qingshe.common.utils.SecurityUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.home.entity.BalanceResult;
@@ -289,11 +290,12 @@ public class SettlementActivity extends BaseTitleActivity {
                 req.partnerId = data.get(0).getPartnerID();
                 req.prepayId = data.get(0).getPrepayid();
                 req.packageValue = "Sign=WXPay";
-                req.nonceStr = TimeUtils.getSignTime();
-                String time =  TimeUtils.getSignTime();
+                String time =  TimeUtils.genTimeStamp();
+                String nonceStr = RandomUtils.generateString(10);
+                req.nonceStr = nonceStr;;
                 req.timeStamp = time;
                 String str = "appid="+AppConfig.Wx_App_Id
-                        +"&noncestr="+TimeUtils.getSignTime()
+                        +"&noncestr="+nonceStr
                         +"&package="+"Sign=WXPay"
                         +"&partnerid="+data.get(0).getPartnerID()
                         +"&prepayid="+data.get(0).getPrepayid()
@@ -400,6 +402,9 @@ public class SettlementActivity extends BaseTitleActivity {
             }
         };
     };
+
+
+
     private String getSignType() {
         return "sign_type=\"RSA\"";
     }
@@ -424,9 +429,9 @@ public class SettlementActivity extends BaseTitleActivity {
         orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
 
         // 商品金额
-//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
+//        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
 
         // 服务器异步通知页面路径
         orderInfo += "&notify_url=" + "\"" + AppConfig.BASE_URL+"/dbnotify_url.aspx" + "\"";

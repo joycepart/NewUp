@@ -1,14 +1,14 @@
-package com.qluxstory.qingshe.home.activity;
+package com.qluxstory.qingshe.curing.fragment;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.adapter.TabListAdapter;
-import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.widget.SlidingTabLayout;
-import com.qluxstory.qingshe.home.fragment.CuringFragment;
+import com.qluxstory.qingshe.curing.adapter.CuringTabListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * 专业养护主页面
+ * 专业养护的fragment
  */
-public class CuringActivity extends BaseTitleActivity {
+public class CuringFragment extends BaseFragment {
     public static final int TAB_A = 1;
     public static final int TAB_B = 2;
     public static final int TAB_C = 3;
@@ -26,20 +26,28 @@ public class CuringActivity extends BaseTitleActivity {
     SlidingTabLayout mCurTab;
     @Bind(R.id.cur_content)
     ViewPager mCurContent;
-    private TabListAdapter mAdapter;
+    private CuringTabListAdapter mAdapter;
     private List<Fragment> fragmentList;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
 
     @Override
-    public void initView() {
-        setTitleText("专业养护");
-
+    public void initView(View view) {
         fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(CuringFragment.newInstance(TAB_A));
-        fragmentList.add(CuringFragment.newInstance(TAB_B));
-        fragmentList.add(CuringFragment.newInstance(TAB_C));
+//        fragmentList.add(MajorCuringFragment.newInstance(TAB_A));
+//        fragmentList.add(MajorCuringFragment.newInstance(TAB_B));
+//        fragmentList.add(MajorCuringFragment.newInstance(TAB_C));
+
+        fragmentList.add(MajorNewFragment.newInstance(TAB_A));
+        fragmentList.add(MajorNewFragment.newInstance(TAB_B));
+        fragmentList.add(MajorNewFragment.newInstance(TAB_C));
+
         String titles[] = getResources().getStringArray(R.array.curing_major_tab);
-        mAdapter = new TabListAdapter(getSupportFragmentManager(),this,titles, fragmentList);
+        mAdapter = new CuringTabListAdapter(getChildFragmentManager(), this, titles, fragmentList);
         mCurContent.setAdapter(mAdapter);
         mCurContent.setOffscreenPageLimit(fragmentList.size());
         mCurTab.setSelectedIndicatorColors(getResources().getColor(R.color.color_00));
@@ -53,20 +61,16 @@ public class CuringActivity extends BaseTitleActivity {
     public void initData() {
 
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.base_titlebar_back:
-//                baseGoBack();
-                break;
-            default:
-                break;
-        }
-        super.onClick(v);
-    }
 
     @Override
-    protected int getContentResId() {
+    protected void retry() {
+
+    }
+
+
+    @Override
+    protected int getLayoutResId() {
         return R.layout.activity_curing;
     }
+
 }

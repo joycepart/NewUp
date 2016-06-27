@@ -17,12 +17,11 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.qluxstory.qingshe.common.base.BaseFragment;
-import com.qluxstory.qingshe.common.base.BaseTitleActivity;
+import com.qluxstory.qingshe.common.base.BaseHomeTitleActivity;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
-import com.qluxstory.qingshe.home.HomeUiGoto;
+import com.qluxstory.qingshe.curing.fragment.CuringFragment;
 import com.qluxstory.qingshe.home.fragment.HomeFragment;
-import com.qluxstory.qingshe.information.fragment.InformationFragment;
 import com.qluxstory.qingshe.issue.fragment.IssueFragment;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.fragment.MeFragment;
@@ -37,7 +36,7 @@ import butterknife.Bind;
 整个程序的MainActivity，入口
 */
 
-public class MainActivity extends BaseTitleActivity {
+public class MainActivity extends BaseHomeTitleActivity {
 
     public static final int TAB_NUM = 5;
     private TextView mBaseEnsure, mBaseBack;
@@ -63,18 +62,18 @@ public class MainActivity extends BaseTitleActivity {
      */
     private int[] mTabIconNors = {
             R.mipmap.tab_home_n,
-            R.mipmap.tab_unused_n,
-            R.mipmap.tab_issue_n,
-            R.mipmap.tab_information_n,
+            R.mipmap.tab_qs_n,
+            R.mipmap.tab_yun_n,
+            R.mipmap.tab_zt_n,
             R.mipmap.tab_me_n};
     /**
      * Tab图片选中的状态资源ID
      */
     private int[] mTabIconSels = {
             R.mipmap.tab_home_h,
-            R.mipmap.tab_unused_h,
-            R.mipmap.tab_issue_icon,
-            R.mipmap.tab_information_h,
+            R.mipmap.tab_qs_h,
+            R.mipmap.tab_yun_h,
+            R.mipmap.tab_zt_h,
             R.mipmap.tab_me_h};
 
 
@@ -129,13 +128,13 @@ public class MainActivity extends BaseTitleActivity {
                 fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new UnusedFragment();
+                fragment = new CuringFragment();
                 break;
             case 2:
                 fragment = new IssueFragment();
                 break;
             case 3:
-                fragment = new InformationFragment();
+                fragment = new UnusedFragment();
                 break;
             case 4:
                 fragment = new MeFragment();
@@ -190,12 +189,12 @@ public class MainActivity extends BaseTitleActivity {
         showFragment(targetFragment);
         for (int i = 0; i < TAB_NUM; i++) {
             if (idx == i) {
-                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_c0));
+                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_3c));
                 TextViewUtils.setTextViewIcon(this, mTabViews[i],
                         mTabIconSels[i], R.dimen.bottom_tab_icon_width,
                         R.dimen.bottom_tab_icon_height, TextViewUtils.DRAWABLE_TOP);
             } else {
-                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_00));
+                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_f5));
                 TextViewUtils.setTextViewIcon(this, mTabViews[i],
                         mTabIconNors[i], R.dimen.bottom_tab_icon_width,
                         R.dimen.bottom_tab_icon_height, TextViewUtils.DRAWABLE_TOP);
@@ -209,38 +208,19 @@ public class MainActivity extends BaseTitleActivity {
         switch (currentTab){
             case 0:
                 setTitleText("首页");
-                setEnsureText("线下门店");
-                mBaseBack.setVisibility(View.GONE);
-                mBaseEnsure.setVisibility(View.VISIBLE);
-                TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.home_door,
-                        R.dimen.common_titlebar_icon_width,
-                        R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_TOP);
-                mBaseEnsure.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        HomeUiGoto.OfflineStore(getApplication(),AppConfig.URL_OFFLINE,"线下门店 - 倾奢");
-                    }
-                });
 
                 break;
             case 1:
-                setTitleText("热门专题");
-                mBaseBack.setVisibility(View.GONE);
-                mBaseEnsure.setVisibility(View.GONE);
+                setTitleText("专业养护");
                 break;
             case 2:
-                setTitleText("夺宝岛");
-                mBaseBack.setVisibility(View.GONE);
-                mBaseEnsure.setVisibility(View.GONE);
+                setTitleText("云购");
                 break;
             case 3:
-                setTitleText("系统通知");
-                mBaseBack.setVisibility(View.GONE);
-                mBaseEnsure.setVisibility(View.GONE);
+                setTitleText("热门专题");
                 break;
             case 4:
                 getTitleLayout().setVisibility(View.GONE);
-                mBaseEnsure.setVisibility(View.GONE);
                 break;
 
         }
@@ -248,7 +228,6 @@ public class MainActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-
     }
 
 
@@ -357,13 +336,13 @@ public class MainActivity extends BaseTitleActivity {
     protected void onDestroy() {
         super.onDestroy();
         AppContext.set("mCity","");
+        AppContext.set("mProvince","");
+        AppContext.set("mDistrict","");
         unregisterReceiver(mMessageReceiver);
         if (mLocationClient != null && mLocationClient.isStarted()) {
             mLocationClient.stop();
             mLocationClient = null;
         }
-//        AppContext.set("isLogin",false);
-//        LogUtils.e("AppContext------",""+AppContext.get("isLogin",false));
     }
 
     public static boolean isForeground = false;
@@ -405,4 +384,6 @@ public class MainActivity extends BaseTitleActivity {
 //            msgText.setVisibility(android.view.View.VISIBLE);
 //        }
 //    }
+
+
 }

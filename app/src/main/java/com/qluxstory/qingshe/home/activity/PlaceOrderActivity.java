@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +30,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.alipay.sdk.app.PayTask;
 import com.bigkoo.pickerview.OptionsPopupWindow;
@@ -161,6 +164,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     TextView mAddressCity;
     @Bind(R.id.place_tv_address_add)
     TextView mAddressAdd;
+    @Bind(R.id.tv_tog)
+    TextView mTvTog;
+    @Bind(R.id.edittext)
+    EditText mEditText;
+    @Bind(R.id.togglebutton)
+    ToggleButton mToggle;
     private String mPrice;
     private String mName;
     private String mPic;
@@ -194,6 +203,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private static final String FILE_PATH = Environment.getExternalStorageDirectory()+ "/po.jpg";
     private String mCity;
     private String mCouponType,mDiscountNumber,mCouponMoneyEqual,mCouponmoney,mCoupon;
+    private  int t;
+    private String mIntegralNum;
 
     @Override
     protected int getContentResId() {
@@ -225,6 +236,16 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         mTvNm.setText(mPrice);
         ImageLoaderUtils.displayImage(mPic, mPlaceImg);
         setTitleText("提交订单");
+        mIntegralNum = AppContext.get("mIntegral","");
+        if(TextUtils.isEmpty(mIntegralNum)){
+            mIntegralNum = "0";
+            t=0;
+        }else {
+            int i = Integer.parseInt(mIntegralNum);
+            t = i/10;
+        }
+
+        mTvTog.setText("可用"+mIntegralNum+"积分抵扣"+t+"元");
 
         mSetPayBtn.setOnClickListener(this);
         mPlaceOrderImg.setOnClickListener(this);
@@ -237,6 +258,24 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         mPayBalance.setOnClickListener(this);
         mTime.setOnClickListener(this);
         mImgSc.setOnClickListener(this);
+        mToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if(isChecked){
+                    //选中
+                    String str = mPlaceTotal.getText().toString().replace(".00","");
+                    int in = Integer.parseInt(str);
+                    mTvNm.setText(String.valueOf(in-t));
+
+                }else{
+                    //未选中
+                    String str = mPlaceTotal.getText().toString().replace(".00","");
+                    mTvNm.setText(str);
+                }
+            }
+        });// 添加监听事件
     }
 
     @Override
@@ -347,8 +386,10 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     ArrayList<String>  tList ;
     private void showTakePop() {
+        tList = new ArrayList<>();
         for(int i = 0;i<takeEntity.size();i++){
-            tList.add(takeEntity.get(i).getDis_type_name());
+            LogUtils.e("tList---",""+takeEntity.get(i).getDis_type_name());
+            tList.add(takeEntity.get(i).getDis_type_name().toString());
         }
         OptionsPopupWindow tipPopup = new OptionsPopupWindow(this);
         tipPopup.setPicker(tList);//设置里面list
@@ -511,12 +552,15 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onSuccess(TakeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("取送方式成功");
-                    takeEntity = result.getData();
-                    if(!TextUtils.isEmpty(takeEntity.get(0).getDis_type_name())){
-                        mPlaTv.setText(takeEntity.get(0).getDis_type_name());
-                        rturn = takeEntity.get(0).getDis_type_code();
+                    if(null==result.getData()){
+                        return;
+                    }else {
+                        takeEntity = result.getData();
+                        if (!TextUtils.isEmpty(takeEntity.get(0).getDis_type_name())) {
+                            mPlaTv.setText(takeEntity.get(0).getDis_type_name());
+                            rturn = takeEntity.get(0).getDis_type_code();
+                        }
                     }
-
                 }
             }
         });
@@ -526,8 +570,14 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private void reqPay() {
         mSetPayBtn.setEnabled(false);
         PayDTO dto = new PayDTO();
-        dto.setIntegralMoney("0");
-        dto.setIntegralNum("0");
+        if(mToggle.isChecked()){
+            dto.setIntegralMoney(String.valueOf(t));
+            dto.setIntegralNum(mIntegralNum);
+        }else {
+            dto.setIntegralMoney("0");
+            dto.setIntegralNum("0");
+        }
+
         String time = TimeUtils.getSignTime();
         dto.setConsigneeType(mPlaTv.getText().toString());
         dto.setConsigneeCode(consignee.getConsigneeCode());
@@ -565,7 +615,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         } else {
             dto.setApplyType("会员");
         }
-        dto.setCustomernote("");
+        dto.setCustomernote(mEditText.getText().toString());
         dto.setServiceMoney("0");
         dto.setReqType("service");
         dto.setOldOrderNum("0");
@@ -753,9 +803,9 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
 
 //        // 商品金额
-//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
+//        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
 
         // 服务器异步通知页面路径
         orderInfo += "&notify_url=" + "\"" + AppConfig.BASE_URL+"/notify_url.aspx" + "\"";
@@ -906,8 +956,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if (TextUtils.isEmpty(AppContext.get("CouponType", ""))) {
 
                 } else {
+                    LogUtils.e("mPlaceCoupon----",""+AppContext.get("Novice", ""));
                     mPlaceCoupon.setText(AppContext.get("Novice", ""));//代金劵
-
                     mCouponType = AppContext.get("CouponType", "");
                     mDiscountNumber = AppContext.get("DiscountNumber", "");
                     mCouponMoneyEqual = AppContext.get("CouponMoneyEqual", "");
@@ -953,6 +1003,11 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                         mPlaceTotal.setText(mCouponMoneyEqual);
                         mTvNm.setText(mCouponMoneyEqual);
                         mCoupon = String.valueOf(toal);
+                    }
+                    if(mToggle.isChecked()){
+                        String str = mPlaceTotal.getText().toString().replace(".00","");
+                        int in = Integer.parseInt(str);
+                        mTvNm.setText(String.valueOf(in-t));
                     }
 
                 }

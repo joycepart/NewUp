@@ -5,11 +5,13 @@ import com.qluxstory.qingshe.home.fragment.SelectFragment;
 import com.qluxstory.qingshe.home.fragment.SendAddressFragment;
 import com.qluxstory.qingshe.home.fragment.StoreFragment;
 import com.qluxstory.qingshe.home.fragment.VouchersFragment;
+import com.qluxstory.qingshe.information.fragment.InformationFragment;
 import com.qluxstory.qingshe.issue.fragment.CalculationFragment;
 import com.qluxstory.qingshe.issue.fragment.PastDetailsFragment;
 import com.qluxstory.qingshe.issue.fragment.ProductDetailsFragment;
 import com.qluxstory.qingshe.issue.fragment.ToAnnounceFragment;
 import com.qluxstory.qingshe.me.fragment.IndianaRecordsFragment;
+import com.qluxstory.qingshe.me.fragment.IntegralFragment;
 import com.qluxstory.qingshe.me.fragment.MyCouponFragment;
 import com.qluxstory.qingshe.me.fragment.TransactionDetailFragment;
 
@@ -28,6 +30,8 @@ public enum SimplePage{
     SEND_ADDRESS(10, R.string.order_receipt_choice, SendAddressFragment.class),
     SELECT_ADDRESS(11, R.string.order_receipt_choice, SelectFragment.class),
     STORE(12, R.string.order_receipt_store, StoreFragment.class),
+    INTERARAL(13, R.string.rule_details, IntegralFragment.class),
+    INFORMATION(14, R.string.home_xx, InformationFragment.class),
     ;
 
     private int title;

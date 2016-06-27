@@ -78,15 +78,18 @@
                 android:textSize="@dimen/fs_35"/>
         </LinearLayout>
     </LinearLayout>
-    <CheckBox
-        android:id="@+id/setpwd_cb_agreement"
+
+    <Button
+        android:id="@+id/vouchers_agreement"
         android:layout_width="20dip"
         android:layout_height="20dip"
         android:layout_gravity="center"
-        android:background="@drawable/selector_checkbox"
+        android:layout_marginRight="@dimen/ds_30"
+        android:background="@drawable/selector_selcect"
         android:layout_centerVertical="true"
         android:button="@null"
-        android:checked="false"
+        android:enabled="false"
         />
+
 
 </LinearLayout>

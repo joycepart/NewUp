@@ -2,16 +2,18 @@ package com.qluxstory.qingshe.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
+import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
@@ -60,19 +62,37 @@ public class HorizontalScrollViewAdapter
 	public View getView(final int position, View convertView, ViewGroup parent)
 	{
 		ViewHolder viewHolder = null;
+		viewHolder = new ViewHolder();
+		if(getCount()==(position+1)){
+			convertView = mInflater.inflate(
+					R.layout.item_lin_horizontal, parent, false);
+			viewHolder.mItemLin = (LinearLayout) convertView
+					.findViewById(R.id.item_lin);
+			viewHolder.mItemLin.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, MainActivity.class);
+					intent.putExtra("tag",2);
+					mContext.startActivity(intent);
+				}
+			});
+			return convertView;
+
+		}
 		if (convertView == null)
 		{
-			viewHolder = new ViewHolder();
 			convertView = mInflater.inflate(
 					R.layout.activity_index_gallery_item, parent, false);
-			viewHolder.mItemRel = (RelativeLayout) convertView
+			viewHolder.mItemRel = (LinearLayout) convertView
 					.findViewById(R.id.gallery_item_rel);
 			viewHolder.mImg = (ImageView) convertView
 					.findViewById(R.id.id_img);
 			viewHolder.mTitle = (TextView) convertView
 					.findViewById(R.id.id_title);
-			viewHolder.mQishu = (TextView) convertView
-					.findViewById(R.id.id_qishu);
+			viewHolder.mNum = (TextView) convertView
+					.findViewById(R.id.id_num);
+			viewHolder.mTerm = (TextView) convertView
+					.findViewById(R.id.id_tirm);
 
 
 			convertView.setTag(viewHolder);
@@ -80,9 +100,11 @@ public class HorizontalScrollViewAdapter
 		{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
+
 		ImageLoaderUtils.displayImage(AppConfig.BASE_URL+getItem(position).getPic_url(),viewHolder.mImg);
 		viewHolder.mTitle.setText(getItem(position).getSna_title());
-		viewHolder.mQishu.setText("第"+getItem(position).getSna_term()+"期");
+		viewHolder.mNum.setText("¥ "+getItem(position).getSna_total_count());
+		viewHolder.mTerm.setText("第"+getItem(position).getSna_term()+"期");
 		viewHolder.mItemRel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -111,8 +133,9 @@ public class HorizontalScrollViewAdapter
 	{
 		ImageView mImg;
 		TextView mTitle;
-		TextView mQishu;
-		RelativeLayout mItemRel;
+		TextView mTerm;
+		TextView mNum;
+		LinearLayout mItemRel,mItemLin;
 	}
 
 }

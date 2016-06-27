@@ -3,6 +3,7 @@ package com.qluxstory.qingshe.home.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
@@ -19,6 +20,7 @@ import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.common.widget.EmptyLayout;
 import com.qluxstory.qingshe.common.widget.FullyLinearLayoutManager;
 import com.qluxstory.qingshe.home.dto.VouchersDTO;
+import com.qluxstory.qingshe.home.entity.Consignee;
 import com.qluxstory.qingshe.home.entity.VouchersEntity;
 import com.qluxstory.qingshe.home.entity.VouchersResult;
 
@@ -34,11 +36,14 @@ public class VouchersFragment extends BasePullFragment {
     private  String mCode;
     private  String mPrice;
     private TextView tv;
+    Button mVouchers;
+    Consignee consignee;
 
 
     @Override
     public void initView(View view) {
         super.initView(view);
+        consignee = AppContext.getInstance().getConsignee();
         Bundle b  = getArguments();
         if(b!=null){
             mCode = b.getString("mCode");
@@ -53,6 +58,10 @@ public class VouchersFragment extends BasePullFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, VouchersEntity vouchersEntity, int position) {
+                mVouchers = holder.getView(R.id.vouchers_agreement);
+                if(consignee!=null&&consignee.getItem()==position){
+                    mVouchers.setEnabled(true);
+                }
                 tv = holder.getView(R.id.novice_tv);
                 if(vouchersEntity.getCouponType().equals("1001")){
                     tv.setText(vouchersEntity.getDiscountNumber()+"折");
@@ -87,11 +96,13 @@ public class VouchersFragment extends BasePullFragment {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
                 VouchersEntity entity = (VouchersEntity) itemBean;
-                AppContext.set("Novice",tv.getText().toString());
+                TextView text = (TextView) itemView.findViewById(R.id.novice_tv);
+                AppContext.set("Novice",text.getText().toString());
                 AppContext.set("CouponType",entity.getCouponType());
                 AppContext.set("DiscountNumber",entity.getDiscountNumber());
                 AppContext.set("CouponMoneyEqual",entity.getCouponMoneyEqual());
                 AppContext.set("Couponmoney",entity.getCouponmoney());
+                consignee.setItem(position);
                 getActivity().finish();
             }
         });

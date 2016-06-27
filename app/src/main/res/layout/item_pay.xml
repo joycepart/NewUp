@@ -60,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_3"
         android:layout_marginTop="@dimen/ds_20"
+        android:layout_marginLeft="@dimen/ds_160"
         android:background="@color/color_cc" />
     <LinearLayout
         android:id="@+id/palce_pay_alipay"
@@ -98,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_3"
         android:layout_marginTop="@dimen/ds_20"
+        android:layout_marginLeft="@dimen/ds_160"
         android:background="@color/color_cc" />
     <LinearLayout
         android:id="@+id/palce_pay_balance"

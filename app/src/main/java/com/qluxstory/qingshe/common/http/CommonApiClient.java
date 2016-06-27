@@ -60,6 +60,7 @@ import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ModifyDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
 import com.qluxstory.qingshe.me.dto.ObtainDTO;
+import com.qluxstory.qingshe.me.dto.ObtainIntegralDTO;
 import com.qluxstory.qingshe.me.dto.UpDTO;
 import com.qluxstory.qingshe.me.dto.UpInformationDTO;
 import com.qluxstory.qingshe.me.dto.UserPicDTO;
@@ -67,14 +68,18 @@ import com.qluxstory.qingshe.me.dto.WithdrawalsDTO;
 import com.qluxstory.qingshe.me.entity.CuringOrderDetailsResult;
 import com.qluxstory.qingshe.me.entity.CuringOrderListResult;
 import com.qluxstory.qingshe.me.entity.ExchangeVoucherResult;
+import com.qluxstory.qingshe.me.entity.IntegralDetailResult;
+import com.qluxstory.qingshe.me.entity.IntegralResult;
 import com.qluxstory.qingshe.me.entity.LoginResult;
 import com.qluxstory.qingshe.me.entity.ModifyResult;
 import com.qluxstory.qingshe.me.entity.MyCouponResult;
 import com.qluxstory.qingshe.me.entity.MyIncomeResult;
 import com.qluxstory.qingshe.me.entity.NumResult;
+import com.qluxstory.qingshe.me.entity.ObtainIntegralResult;
 import com.qluxstory.qingshe.me.entity.PaymentOrderResult;
 import com.qluxstory.qingshe.me.entity.RecordIndianaResult;
 import com.qluxstory.qingshe.me.entity.RecordsResult;
+import com.qluxstory.qingshe.me.entity.SignResult;
 import com.qluxstory.qingshe.me.entity.TransactionResult;
 import com.qluxstory.qingshe.me.entity.UpDataResult;
 import com.qluxstory.qingshe.me.entity.UserPicResult;
@@ -180,6 +185,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<TransactionResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback, TransactionResult.class);
         post(getAbsoluteUrl("/API/WsMember.asmx/ResTransactionDetailApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 积分列表
+     * @param dto
+     * @param callback
+     */
+    public static void integralList(Activity act, BaseDTO
+            dto, CallBack<IntegralDetailResult> callback) {
+        AsyncCallBack<IntegralDetailResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback, IntegralDetailResult.class);
+        post(getAbsoluteUrl("/API/WsMember.asmx/ResPointsIntegralListApi"), dto,
                 asyncCallBack);
     }
 
@@ -666,6 +684,47 @@ public class CommonApiClient extends BaseApiClient {
         post( getAbsoluteUrl("/API/WsMember.asmx/ResMemberMoneyNotCashAmountApi"), dto,
                 asyncCallBack);
     }
+
+    /**
+     * 个人积分
+     * @param dto
+     * @param callback
+     */
+    public static void personal(Activity act, BaseDTO
+            dto, CallBack<IntegralResult> callback) {
+        AsyncCallBack<IntegralResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,IntegralResult.class);
+        post( getAbsoluteUrl("/API/WsMember.asmx/ResBrwPointsIntegralApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 签到天数
+     * @param dto
+     * @param callback
+     */
+    public static void sign(Activity act, BaseDTO
+            dto, CallBack<SignResult> callback) {
+        AsyncCallBack<SignResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,SignResult.class);
+        post( getAbsoluteUrl("/API/WsMember.asmx/ResBrwIntegralByShowApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 签到获取积分
+     * @param dto
+     * @param callback
+     */
+    public static void obtainIntegral(Activity act, ObtainIntegralDTO
+            dto, CallBack<ObtainIntegralResult> callback) {
+        AsyncCallBack<ObtainIntegralResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,ObtainIntegralResult.class);
+        post( getAbsoluteUrl("/API/WsMember.asmx/ResAddPointsIntegralApi"), dto,
+                asyncCallBack);
+    }
+
+
     /**
      * 养护订单
      * @param dto

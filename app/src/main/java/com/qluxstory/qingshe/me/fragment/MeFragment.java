@@ -60,6 +60,8 @@ public class MeFragment extends BaseFragment {
     Button mUserBtnClose;
     @Bind(R.id.me_ll_close)
     LinearLayout mMeLlClose;
+    @Bind(R.id.user_ll_integral)
+    LinearLayout mIntegral;
     private String mUrlUs;
     private String mUsTitle;
     private String mUrlReturn;
@@ -112,7 +114,7 @@ public class MeFragment extends BaseFragment {
     public void initData() {
     }
 
-    @OnClick({R.id.user_btn, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone,R.id.user_ll_inf, R.id.user_btn_close})
+    @OnClick({R.id.user_btn,R.id.user_ll_integral, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone,R.id.user_ll_inf, R.id.user_btn_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_btn:
@@ -153,6 +155,14 @@ public class MeFragment extends BaseFragment {
                 }
 
                 break;
+
+            case R.id.user_ll_integral:
+                if(bool){
+                    MeUiGoto.myIntegral(getActivity());//我的积分
+                }else {
+                    MeUiGoto.login(getActivity());//登录
+                }
+                break;
             case R.id.user_ll_about:
                 mUrlUs = AppConfig.URL_ABOUT_US;
                 mUsTitle = "关于我们 - 倾奢介绍";
@@ -182,7 +192,9 @@ public class MeFragment extends BaseFragment {
                 mLoginLl.setVisibility(View.VISIBLE);
                 mLoingSuc.setVisibility(View.GONE);
                 mMeLlClose.setVisibility(View.GONE);
+                AppContext.set("mobileNum","");
                 AppContext.set("isLogin",false);
+                AppContext.set("alias","");
                 break;
         }
     }

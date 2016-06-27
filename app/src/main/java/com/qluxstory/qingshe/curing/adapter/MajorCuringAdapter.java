@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.home.adapter;
+package com.qluxstory.qingshe.curing.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +13,7 @@ import com.qluxstory.qingshe.home.entity.CuringEntity;
 /**
  * Created by lenovo on 2016/5/18.
  */
-public class CuringAdapter extends BaseSimpleRecyclerAdapter<CuringEntity> {
+public class MajorCuringAdapter extends BaseSimpleRecyclerAdapter<CuringEntity> {
 
     @Override
     public int getItemViewLayoutId() {

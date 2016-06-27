@@ -9,7 +9,6 @@ import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.home.activity.AddAddressActivity;
 import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
-import com.qluxstory.qingshe.home.activity.CuringActivity;
 import com.qluxstory.qingshe.home.activity.PlaceOrderActivity;
 import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
 
@@ -17,15 +16,7 @@ import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
  * Created by lenovo on 2016/5/17.
  */
 public class HomeUiGoto {
-    /**
-     * 跳转到专业养护页
-     * @param context
-     */
 
-    public static void curing(Context context){
-        Intent intent = new Intent(context, CuringActivity.class);
-        context.startActivity(intent);
-    }
 
     /**
      * 跳转到main
@@ -105,14 +96,16 @@ public class HomeUiGoto {
      * @param sell_pic
      * @param code
      * @param sell_name
+     * @param sell_price
      */
 
-    public static void curingProductDetails(Context context, String url, String sell_pic, String code, String sell_name){
+    public static void curingProductDetails(Context context, String url, String sell_pic, String code, String sell_name, String sell_price){
         Intent intent = new Intent(context, ProductBrowserActivity.class);
         intent.putExtra("mUrl", url);
         intent.putExtra("pic", sell_pic);
         intent.putExtra("code", code);
         intent.putExtra("name", sell_name);
+        intent.putExtra("price", sell_price);
         context.startActivity(intent);
     }
     /**

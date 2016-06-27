@@ -190,6 +190,9 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                 mWin.setVisibility(View.VISIBLE);
                 mInBtn.setVisibility(View.GONE);
                 reqAnn();
+                if(mWinBtn.getText().toString().equals("等待发货")){
+                    reqUpdate();
+                }
             }
             else if(entity.getRec_state().equals("3")){
                 LogUtils.e("entity.getRec_state()3",""+entity.getRec_state());
@@ -324,7 +327,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
     private void bindResult(List<ToAnnounceEntity> data) {
         ToAnnounceEntity entity = data.get(0);
         mInfNum.setText(entity.getSna_lucky_num());
-        mIumTime.setText(entity.getSna_begin_date());
+        mIumTime.setText(entity.getSna_end_date());
         mDataUser.setText(entity.getSna_lucky_people().substring(0,3)+"******"+entity.getSna_lucky_people().substring(9,entity.getSna_lucky_people().length()));
         mDataNm.setText(entity.getSna_participate_count()+"次");
     }

@@ -3,13 +3,12 @@ package com.qluxstory.qingshe.me.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.base.BaseActivity;
+import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.dto.BaseDTO;
 import com.qluxstory.qingshe.common.http.CallBack;
@@ -30,17 +29,14 @@ import butterknife.OnClick;
 /**
  * 我的收入主页面
  */
-public class MyIncomeActivity extends BaseActivity {
+public class MyIncomeActivity extends BaseTitleActivity {
     @Bind(R.id.myincome_withdrawals)
     TextView mWithdrawals;
     @Bind(R.id.myincome_accumulate)
     TextView mAccumulate;
     @Bind(R.id.income_Btn)
     Button mIncomeBtn;
-    @Bind(R.id.top_myincome_img)
-    ImageView mMyincomeImg;
-    @Bind(R.id.top_myincome_tv_detailed)
-    TextView mMyincomeTv;
+
 
     private String strPhoneNum;
     /**
@@ -54,15 +50,12 @@ public class MyIncomeActivity extends BaseActivity {
 
 
 
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_me_myincome;
-    }
+
 
     @Override
     public void initView() {
-        mMyincomeImg.setOnClickListener(this);
-        mMyincomeTv.setOnClickListener(this);
+        setTitleText("我的账户");
+        setEnsureText("交易明细");
         strPhoneNum = AppContext.get("mobileNum","");
 
     }
@@ -116,14 +109,19 @@ public class MyIncomeActivity extends BaseActivity {
                     }
                 }
                 break;
-
-            case R.id.top_myincome_tv_detailed:
+            case R.id.base_titlebar_back:
+                baseGoBack();
+                break;
+            case R.id.base_titlebar_ensure:
                 UIHelper.showFragment(this, SimplePage.TRANSACTION_DETAIL);//交易明细
                 break;
-            case R.id.top_myincome_img:
-                finish();
-                break;
+
         }
+    }
+
+    @Override
+    protected int getContentResId() {
+        return R.layout.activity_me_myincome;
     }
 
 

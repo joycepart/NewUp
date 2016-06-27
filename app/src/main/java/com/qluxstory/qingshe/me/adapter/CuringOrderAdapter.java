@@ -56,6 +56,8 @@ public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderLis
             holder.setText(R.id.list_curing_tv1,curingOrderListEntity.getComName());
             holder.setText(R.id.list_curing_tv4,curingOrderListEntity.getOrderMoney());
             holder.setText(R.id.curing_vp_tv,curingOrderListEntity.getComCount());
+            LogUtils.e("getOrderState---",""+curingOrderListEntity.getOrderState());
+            LogUtils.e("getIsovertime---",""+curingOrderListEntity.getIsovertime());
             if(curingOrderListEntity.getOrderState().equals("0")){
                 if(curingOrderListEntity.getIsovertime().equals("0")){
                     mTv.setText("未付款");
@@ -101,11 +103,16 @@ public class CuringOrderAdapter extends BaseSimpleRecyclerAdapter<CuringOrderLis
                         }
                     });
                 }
-                if(curingOrderListEntity.getIsovertime().equals("1")){
+                else if(curingOrderListEntity.getIsovertime().equals("1")){
                     mTv.setText("已取消");
                     lin.setVisibility(View.INVISIBLE);
                 }
-            }else if(curingOrderListEntity.getOrderState().equals("2")){
+            }else if(curingOrderListEntity.getOrderState().equals("1")){
+                mTv.setText("已取消");
+                lin.setVisibility(View.INVISIBLE);
+            }
+
+            else if(curingOrderListEntity.getOrderState().equals("2")){
                 mTv.setText("停用");
                 lin.setVisibility(View.INVISIBLE);
             }

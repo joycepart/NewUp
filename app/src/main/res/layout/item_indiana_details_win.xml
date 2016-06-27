@@ -63,9 +63,11 @@
             </LinearLayout>
         </RelativeLayout>
 <LinearLayout
+    android:visibility="gone"
     android:id="@+id/win_lin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/color_ff"
     android:orientation="horizontal">
     <LinearLayout
 
@@ -93,7 +95,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/ds_30"
-                android:text="111"
+                android:text=""
                 android:gravity="center"
                 android:textSize="@dimen/fs_45"
                 android:textColor="@color/color_00"/>
@@ -122,7 +124,7 @@
                 android:layout_marginLeft="@dimen/ds_30"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:text="222"
+                android:text=""
                 android:gravity="center"
                 android:textSize="@dimen/fs_45"
                 android:textColor="@color/color_00"/>

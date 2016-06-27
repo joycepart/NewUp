@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
@@ -51,16 +50,12 @@ public class HomeFragment extends BasePullScrollViewFragment {
     MyHorizontalScrollView mHsv;
     @Bind(R.id.special_list)
     RecyclerView mSpecialList;
-    @Bind(R.id.id_gallery)
-    LinearLayout mIdGallery;
+//    @Bind(R.id.id_gallery)
+//    LinearLayout mIdGallery;
 
     HorizontalScrollViewAdapter mHsvAdapter;
     BaseSimpleRecyclerAdapter mSpecialListAdapter;
     int reqCount;
-    @Bind(R.id.img_lf)
-    ImageView mImgLf;
-    @Bind(R.id.img_rg)
-    ImageView mImgRg;
     @Bind(R.id.home_img1)
     ImageView mImgOrder;
     @Bind(R.id.home_img2)
@@ -88,13 +83,11 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
             }
         });
-        mIdGallery.setOnClickListener(this);
+//        mIdGallery.setOnClickListener(this);
         mHsvAdapter = new HorizontalScrollViewAdapter(getActivity());
         mImgOrder.setOnClickListener(this);
         mImgNew.setOnClickListener(this);
         mImgHelp.setOnClickListener(this);
-        mImgLf.setOnClickListener(this);
-        mImgRg.setOnClickListener(this);
 
         mSpecialList.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         mSpecialListAdapter=new BaseSimpleRecyclerAdapter<HomeSpecialEntity>() {
@@ -201,33 +194,37 @@ public class HomeFragment extends BasePullScrollViewFragment {
     }
 
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_lf:
-                mHsv.smoothScrollBy(-mHsv.getScroolw(),0);
-                break;
-            case R.id.img_rg:
-                mHsv.smoothScrollBy(mHsv.getScroolw(),0);
-                break;
             case R.id.home_img1:
-                HomeUiGoto.curing(getActivity());//专业养护
+                Intent it = new Intent(getActivity(), MainActivity.class);
+                it.putExtra("tag",1);
+                getActivity().startActivity(it);
                 break;
             case R.id.home_img2:
-                HomeUiGoto.OfflineStore(getActivity(),AppConfig.URL_OFFLINE,"线下门店 - 倾奢");
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("tag",2);
+                getActivity().startActivity(intent);
                 break;
             case R.id.home_img3:
                 HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
                 break;
-            case R.id.id_gallery:
+            case R.id.hsv:
                 Bundle b = new Bundle();
                 b.putSerializable("entity", (Serializable) entity);
                 UIHelper.showFragment(getActivity(), SimplePage.PRODUCT_DETAILS,b);
                 break;
+//            case R.id.id_gallery:
+//                Intent intent1 = new Intent(getActivity(), MainActivity.class);
+//                intent1.putExtra("tag",2);
+//                getActivity().startActivity(intent1);
+//                break;
             case R.id.home_img_dian:
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("tag",1);
-                getActivity().startActivity(intent);
+                Intent intent2 = new Intent(getActivity(), MainActivity.class);
+                intent2.putExtra("tag",3);
+                getActivity().startActivity(intent2);
                 break;
         }
         super.onClick(v);
@@ -257,6 +254,4 @@ public class HomeFragment extends BasePullScrollViewFragment {
     public boolean pulltoRefresh() {
         return true;
     }
-
-
 }
