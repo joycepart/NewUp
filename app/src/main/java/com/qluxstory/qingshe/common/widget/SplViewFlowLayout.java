@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.bean.ViewFlowBean;
 import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -24,19 +24,19 @@ import java.util.ArrayList;
 /**
  * 轮播图
  */
-public class ViewFlowLayout extends RelativeLayout {
+public class SplViewFlowLayout extends RelativeLayout {
     private Context context_;
     private ViewFlipper flipper;
     private LinearLayout linear;
     private float startX;
 
-    public ViewFlowLayout(Context context) {
+    public SplViewFlowLayout(Context context) {
         super(context);
         this.context_ = context;
         initLayout();
     }
 
-    public ViewFlowLayout(Context context, AttributeSet attrs) {
+    public SplViewFlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context_ = context;
         initLayout();
@@ -44,10 +44,10 @@ public class ViewFlowLayout extends RelativeLayout {
 
     private void initLayout() {
         LayoutInflater inflater = LayoutInflater.from(context_);
-        View viewfolw = inflater.inflate(R.layout.view_viewflow_layout, null);
+        View viewfolw = inflater.inflate(R.layout.view_viewflow_spl_layout, null);
         addView(viewfolw, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        flipper = (ViewFlipper) viewfolw.findViewById(R.id.id_vfow_flipper);
-        linear = (LinearLayout) viewfolw.findViewById(R.id.id_vfow_linear);
+        flipper = (ViewFlipper) viewfolw.findViewById(R.id.spl_vf_flipper);
+        linear = (LinearLayout) viewfolw.findViewById(R.id.spl_linear);
 
     }
 
@@ -97,44 +97,6 @@ public class ViewFlowLayout extends RelativeLayout {
 
     int count;
 
-    public void updateView(ArrayList<ViewFlowBean> beans) {
-        flipper.removeAllViews();
-        linear.removeAllViews();
-        final int size = beans.size();
-        for (int i = 0; i < size; i++) {
-            final ViewFlowBean bean = beans.get(i);
-            final ImageView imageView = new ImageView(context_);
-            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setTag(bean);
-            LogUtils.e("bean----",""+bean);
-            ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    count++;
-                    imageView.setImageBitmap(loadedImage);
-                    flipper.addView(imageView);
-
-                    ImageView dot = new ImageView(context_);
-                    dot.setImageResource(R.drawable.discount_dot_unsel);
-                    linear.addView(dot);
-                    LogUtils.e("count----",""+count);
-                    if (count == size) {
-                        flipper.setDisplayedChild(0);
-                        ((ImageView) linear.getChildAt(0)).setImageResource(R.drawable.discount_dot_sel);
-                        //图片全部加载完毕
-                        startListen();
-
-                    }
-                }
-
-            });
-
-        }
-
-    }
-
 
     public void setLoadCompleteListener(LoadCompleteListener loadCompleteListener) {
         this.loadCompleteListener = loadCompleteListener;
@@ -151,10 +113,36 @@ public class ViewFlowLayout extends RelativeLayout {
     public void checkSplView(){
         if(cc==ccsize&&loadCompleteListener!=null){
             loadCompleteListener.loadComplete();
-            startListen();
         }
     }
 
+    public void updateSplView(ArrayList<ViewFlowBean> beans) {
+        flipper.removeAllViews();
+        linear.removeAllViews();
+        final int size = beans.size();
+        ccsize=size;
+        for (int i = 0; i < size; i++) {
+            final ViewFlowBean bean = beans.get(i);
+            final ImageView imageView = new ImageView(context_);
+            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setTag(bean);
+            LogUtils.e("bean----",""+bean);
+            ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    imageView.setImageBitmap(loadedImage);
+                    flipper.addView(imageView);
+                    startListen();
+                    cc++;
+                    checkSplView();
+                }
+
+            });
+        }
+
+    }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -162,30 +150,6 @@ public class ViewFlowLayout extends RelativeLayout {
         return true;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_UP:
-                    if (event.getX() - startX > 100) {
-                        myShowPrevious();
-                    } else if (startX - event.getX() > 100) {
-                        myShowNext();
-                    } else if (Math.abs(startX - event.getX()) <= 10) {
-                        if (onItemClickListener != null) {
-                            int position = flipper.getDisplayedChild();
-                            View itemView = flipper.getChildAt(position);
-                            if (itemView != null) {
-                                onItemClickListener.onItemClick(position);
-                            }
-                        }
-                    }
-                    break;
-                case MotionEvent.ACTION_DOWN:
-                    startX = event.getX();
-                    break;
-            }
-            return true;
-    }
 
     public OnItemClickListener getOnItemClickListener() {
         return onItemClickListener;

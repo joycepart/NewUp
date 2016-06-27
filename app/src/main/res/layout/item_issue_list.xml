@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/ds_40"
             android:scaleType="centerCrop"
             android:layout_marginLeft="@dimen/ds_30"
-            android:background="@drawable/qiang"/>
+            android:background="@drawable/img_qiang_back"/>
             <ProgressBar
                 android:id="@+id/issue_progress"
                 android:layout_marginTop="@dimen/ds_80"

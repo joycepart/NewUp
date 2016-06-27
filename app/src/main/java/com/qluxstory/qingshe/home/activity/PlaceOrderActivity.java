@@ -615,6 +615,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         } else {
             dto.setApplyType("会员");
         }
+        LogUtils.e("setCustomernote---",mEditText.getText().toString());
         dto.setCustomernote(mEditText.getText().toString());
         dto.setServiceMoney("0");
         dto.setReqType("service");

@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:background="#00000000"
     android:gravity="center" >
-    <com.qluxstory.qingshe.common.widget.ViewFlowLayout
+    <com.qluxstory.qingshe.common.widget.SplViewFlowLayout
         android:id="@+id/spl_vf_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/up"
       />
 
     <Button

@@ -12,7 +12,7 @@ import com.qluxstory.qingshe.common.http.CallBack;
 import com.qluxstory.qingshe.common.http.CommonApiClient;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
-import com.qluxstory.qingshe.common.widget.ViewFlowLayout;
+import com.qluxstory.qingshe.common.widget.SplViewFlowLayout;
 import com.qluxstory.qingshe.home.HomeUiGoto;
 import com.qluxstory.qingshe.home.dto.SplashDTO;
 import com.qluxstory.qingshe.home.entity.SplashResult;
@@ -28,7 +28,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class SplashActivity extends BaseActivity {
     @Bind(R.id.spl_vf_layout)
-    ViewFlowLayout mVfLayout;
+    SplViewFlowLayout mVfLayout;
     @Bind(R.id.ad_tv)
     Button mBtn;
     @Bind(R.id.splash_img)
@@ -49,8 +49,33 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        reqImgs();//启动页图片
+        new Thread(new ThreadShow()).start();
 
+
+    }
+    // handler类接收数据
+    Handler tHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                reqImgs();
+            }
+        };
+    };
+    // 线程类
+    class ThreadShow implements Runnable {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                    Message msg = new Message();
+                    msg.what = 1;
+                    tHandler.sendMessage(msg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void reqImgs() {
@@ -84,7 +109,7 @@ public class SplashActivity extends BaseActivity {
                         }
                         LogUtils.e("else----",""+result.getData().size());
 
-                        mVfLayout.setLoadCompleteListener(new ViewFlowLayout.LoadCompleteListener() {
+                        mVfLayout.setLoadCompleteListener(new SplViewFlowLayout.LoadCompleteListener() {
                             @Override
                             public void loadComplete() {
                                 preparation();

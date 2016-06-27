@@ -1,6 +1,5 @@
 package com.qluxstory.qingshe.me.activity;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -50,6 +49,7 @@ public class MyIntegralActivity extends BaseTitleActivity {
     @Bind(R.id.tv_rule)
     TextView mTule;
     private String mNum,mRule,mDtatNum,mIsSign,mObtian;
+    int obtian;
 
 
     @Override
@@ -77,82 +77,75 @@ public class MyIntegralActivity extends BaseTitleActivity {
         switch (view.getId()) {
             case R.id.tv_one:
                 reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)){
+                    LogUtils.e("mObtian---",""+mObtian);
                     mOne.setBackgroundResource(R.drawable.red);
                     mOne.setEnabled(false);
                     mOne.setText("已签到");
                     mOne.setTextColor(getResources().getColor(R.color.color_f0));
-                }
 
                 break;
             case R.id.tv_two:
-                reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)) {
-                    mTwo.setBackgroundResource(R.drawable.red);
-                    mTwo.setEnabled(false);
-                    mTwo.setText("已签到");
-                    mTwo.setTextColor(getResources().getColor(R.color.color_f0));
-                }
-                if(TextUtils.isEmpty(mDtatNum)){
+                if(mDtatNum.equals("2")){
+                    reqObtainIntegral();//签到获取积分
+                        mTwo.setBackgroundResource(R.drawable.red);
+                        mTwo.setEnabled(false);
+                        mTwo.setText("已签到");
+                        mTwo.setTextColor(getResources().getColor(R.color.color_f0));
+
+                }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_three:
-                reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)) {
-                    mThree.setBackgroundResource(R.drawable.red);
-                    mThree.setEnabled(false);
-                    mThree.setText("已签到");
-                    mThree.setTextColor(getResources().getColor(R.color.color_f0));
-                }
-                if(TextUtils.isEmpty(mDtatNum)){
+                if(mDtatNum.equals("3")) {
+                    reqObtainIntegral();//签到获取积分
+                        mThree.setBackgroundResource(R.drawable.red);
+                        mThree.setEnabled(false);
+                        mThree.setText("已签到");
+                        mThree.setTextColor(getResources().getColor(R.color.color_f0));
+                }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                     break;
             case R.id.tv_four:
+                if(mDtatNum.equals("4")) {
                 reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)) {
                         mFour.setBackgroundResource(R.drawable.red);
                         mFour.setEnabled(false);
                         mFour.setText("已签到");
                         mFour.setTextColor(getResources().getColor(R.color.color_f0));
-                }
-                if(TextUtils.isEmpty(mDtatNum)){
+                }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_five:
+                if(mDtatNum.equals("5")) {
                 reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)) {
                     mFive.setBackgroundResource(R.drawable.red);
                     mFive.setEnabled(false);
                     mFive.setText("已签到");
                     mFive.setTextColor(getResources().getColor(R.color.color_f0));
-                }
-                if(TextUtils.isEmpty(mDtatNum)){
+                }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_six:
+                if(mDtatNum.equals("6")) {
                 reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)) {
                     mSix.setBackgroundResource(R.drawable.red);
                     mSix.setEnabled(false);
                     mSix.setText("已签到");
                     mSix.setTextColor(getResources().getColor(R.color.color_f0));
-                }
-                if(TextUtils.isEmpty(mDtatNum)){
+                }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_server:
                 reqObtainIntegral();//签到获取积分
-                if(!TextUtils.isEmpty(mObtian)) {
                     mServer.setBackgroundResource(R.drawable.red);
                     mServer.setEnabled(false);
                     mServer.setText("已签到");
                     mServer.setTextColor(getResources().getColor(R.color.color_f0));
-                }
                 break;
             case R.id.tv_rule:
                 DialogUtils.showPrompt(this,"积分规则",mRule,"知道了");
@@ -170,6 +163,27 @@ public class MyIntegralActivity extends BaseTitleActivity {
     private void reqObtainIntegral() {
         ObtainIntegralDTO bdto = new ObtainIntegralDTO();
         String time = TimeUtils.getSignTime();
+        if(mOne.isEnabled()){
+            mDtatNum = "1";
+        }
+        else if(mTwo.isEnabled()){
+            mDtatNum = "2";
+        }
+        else if(mThree.isEnabled()){
+            mDtatNum = "3";
+        }
+        else if(mFour.isEnabled()){
+            mDtatNum = "4";
+        }
+        else if(mFive.isEnabled()){
+            mDtatNum = "5";
+        }
+        else if(mSix.isEnabled()){
+            mDtatNum = "6";
+        }
+        else if(mServer.isEnabled()){
+            mDtatNum = "7";
+        }
         bdto.setDatanum(mDtatNum);
         bdto.setMembermob(AppContext.get("mobileNum",""));
         bdto.setSign(time+ AppConfig.SIGN_1);
@@ -183,11 +197,12 @@ public class MyIntegralActivity extends BaseTitleActivity {
                         return;
                     }else {
                         mObtian = result.getData().get(0).getIntegralNum();
+                        obtian = Integer.parseInt(mObtian);
                         String mInt = mIntegral.getText().toString();
-                        int obtian = Integer.parseInt(mObtian);
-                        int mi = Integer.valueOf(mInt);
+                        int mi = Integer.parseInt(mInt);
                         String num = String.valueOf(obtian+mi);
                         AppContext.set("mIntegral",num);
+                        LogUtils.e("num------",""+num);
                         mIntegral.setText(num);
                     }
 
@@ -232,6 +247,27 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mFive.setEnabled(false);
             mSix.setEnabled(false);
             mServer.setEnabled(false);
+            mOne.setText("第一天");
+            mOne.setTextColor(getResources().getColor(R.color.color_ff));
+            mOne.setBackgroundResource(R.drawable.gray);
+            mTwo.setText("第二天");
+            mTwo.setTextColor(getResources().getColor(R.color.color_ff));
+            mTwo.setBackgroundResource(R.drawable.gray);
+            mThree.setText("第三天");
+            mThree.setTextColor(getResources().getColor(R.color.color_ff));
+            mThree.setBackgroundResource(R.drawable.gray);
+            mFour.setText("第四天");
+            mFour.setTextColor(getResources().getColor(R.color.color_ff));
+            mFour.setBackgroundResource(R.drawable.gray);
+            mFive.setText("第五天");
+            mFive.setTextColor(getResources().getColor(R.color.color_ff));
+            mFive.setBackgroundResource(R.drawable.gray);
+            mSix.setText("第六天");
+            mSix.setTextColor(getResources().getColor(R.color.color_ff));
+            mSix.setBackgroundResource(R.drawable.gray);
+            mServer.setText("第七天");
+            mServer.setTextColor(getResources().getColor(R.color.color_ff));
+            mServer.setBackgroundResource(R.drawable.gray);
         }
         else if(mDtatNum.equals("1")){
             mOne.setEnabled(false);
@@ -283,10 +319,10 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mServer.setTextColor(getResources().getColor(R.color.color_ff));
         }
         else if(mDtatNum.equals("3")){
-            mOne.setEnabled(true);
+            mOne.setEnabled(false);
             mTwo.setEnabled(false);
             mThree.setEnabled(false);
-            mFour.setEnabled(false);
+            mFour.setEnabled(true);
             mFive.setEnabled(false);
             mSix.setEnabled(false);
             mServer.setEnabled(false);
@@ -309,11 +345,11 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mServer.setTextColor(getResources().getColor(R.color.color_ff));
         }
         else if(mDtatNum.equals("4")){
-            mOne.setEnabled(true);
+            mOne.setEnabled(false);
             mTwo.setEnabled(false);
             mThree.setEnabled(false);
             mFour.setEnabled(false);
-            mFive.setEnabled(false);
+            mFive.setEnabled(true);
             mSix.setEnabled(false);
             mServer.setEnabled(false);
             mOne.setBackgroundResource(R.drawable.red);
@@ -336,12 +372,12 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mServer.setTextColor(getResources().getColor(R.color.color_ff));
         }
         else if(mDtatNum.equals("5")){
-            mOne.setEnabled(true);
+            mOne.setEnabled(false);
             mTwo.setEnabled(false);
             mThree.setEnabled(false);
             mFour.setEnabled(false);
             mFive.setEnabled(false);
-            mSix.setEnabled(false);
+            mSix.setEnabled(true);
             mServer.setEnabled(false);
             mOne.setBackgroundResource(R.drawable.red);
             mTwo.setBackgroundResource(R.drawable.red);
@@ -364,13 +400,13 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mServer.setTextColor(getResources().getColor(R.color.color_ff));
         }
         else if(mDtatNum.equals("6")){
-            mOne.setEnabled(true);
+            mOne.setEnabled(false);
             mTwo.setEnabled(false);
             mThree.setEnabled(false);
             mFour.setEnabled(false);
             mFive.setEnabled(false);
             mSix.setEnabled(false);
-            mServer.setEnabled(false);
+            mServer.setEnabled(true);
             mOne.setBackgroundResource(R.drawable.red);
             mTwo.setBackgroundResource(R.drawable.red);
             mThree.setBackgroundResource(R.drawable.red);
@@ -392,29 +428,7 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mServer.setText("第七天");
             mServer.setTextColor(getResources().getColor(R.color.color_ff));
         }
-        else if(mDtatNum.equals("7")){
-            mOne.setEnabled(true);
-            mTwo.setEnabled(false);
-            mThree.setEnabled(false);
-            mFour.setEnabled(false);
-            mFive.setEnabled(false);
-            mSix.setEnabled(false);
-            mServer.setEnabled(false);
-            mOne.setText("第一天");
-            mOne.setTextColor(getResources().getColor(R.color.color_ff));
-            mTwo.setText("第二天");
-            mTwo.setTextColor(getResources().getColor(R.color.color_ff));
-            mThree.setText("第三天");
-            mThree.setTextColor(getResources().getColor(R.color.color_ff));
-            mFour.setText("第四天");
-            mFour.setTextColor(getResources().getColor(R.color.color_ff));
-            mFive.setText("第五天");
-            mFive.setTextColor(getResources().getColor(R.color.color_ff));
-            mSix.setText("第六天");
-            mSix.setTextColor(getResources().getColor(R.color.color_ff));
-            mServer.setText("第七天");
-            mServer.setTextColor(getResources().getColor(R.color.color_ff));
-        }
+
     }
 
 

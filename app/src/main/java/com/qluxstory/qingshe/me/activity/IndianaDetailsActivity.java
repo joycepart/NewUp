@@ -181,7 +181,6 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             else if(entity.getRec_state().equals("2")){
                 LogUtils.e("entity.getRec_state()2",""+entity.getRec_state());
                 mRecordsStatu.setText("已中奖");
-                mInBtn.setText("继续夺宝");
                 mIndianaText.setVisibility(View.GONE);
                 mLinDetInf.setVisibility(View.VISIBLE);
                 mIndianaAnn.setVisibility(View.VISIBLE);
@@ -193,6 +192,8 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
                 if(mWinBtn.getText().toString().equals("等待发货")){
                     reqUpdate();
                 }
+
+
             }
             else if(entity.getRec_state().equals("3")){
                 LogUtils.e("entity.getRec_state()3",""+entity.getRec_state());
@@ -264,6 +265,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
 
     }
 
+
     private void reqUpdate() {
         UpDTO gdto=new UpDTO();
         gdto.setRec_code(mRecCode);
@@ -272,7 +274,7 @@ public class IndianaDetailsActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(UpDataResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
-                    LogUtils.e("更新收货人信息成功");
+                    LogUtils.e("获取中奖人的配送信息成功");
                     if(null == result.getData()){
                         return;
                     }else {
