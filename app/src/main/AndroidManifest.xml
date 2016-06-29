@@ -257,7 +257,8 @@
 
         <activity
             android:name="com.qluxstory.qingshe.common.base.SimpleActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.qluxstory.qingshe.me.activity.CuringOrderActivity"
             android:screenOrientation="portrait" />
@@ -269,15 +270,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qluxstory.qingshe.home.activity.PlaceOrderActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name="com.qluxstory.qingshe.home.activity.ProductBrowserActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qluxstory.qingshe.special.activity.SpecialBrowserActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qluxstory.qingshe.curing.activity.CuringActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -285,7 +284,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qluxstory.qingshe.me.activity.PaymentOrderActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            />
         <activity
             android:name="com.qluxstory.qingshe.common.base.BrowserActivity"
             android:screenOrientation="portrait" />
@@ -323,49 +324,6 @@
         <activity
             android:name=".home.activity.ChoiceCityActivity"
             android:screenOrientation="portrait"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <activity
-            android:name="com.qluxstory.qingshe.jpushdemo.TestActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qluxstory.qingshe.jpushdemo.TestNewActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qluxstory.qingshe.jpushdemo.SettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.qluxstory.qingshe.jpushdemo.PushSetActivity"
-            android:screenOrientation="portrait" />
-
-
-
-
-
-
-
-
-
-
 
         <activity
             android:name="com.qluxstory.qingshe.common.widget.SelectPicPopup"

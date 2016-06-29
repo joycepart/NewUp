@@ -6,10 +6,7 @@ import com.qluxstory.qingshe.common.entity.BaseEntity;
  * Created by lenovo on 2016/6/7.
  */
 public class PaymentOrderEntity extends BaseEntity {
-    /*
-             订单编号
-               */
-    private String OrderManCode;
+
     /*
               手机号码
                 */
@@ -147,6 +144,48 @@ public class PaymentOrderEntity extends BaseEntity {
             客服中心地址编号
                                  */
     private String ServerYJCode;
+    private String CustomerNote;
+    private String IntegralNum;
+    private String IntegralMoney;
+    /*
+                   订单编号
+                     */
+    private String OldOrderNum;
+    public String getOldOrderNum() {
+        return OldOrderNum;
+    }
+
+    public void setOldOrderNum(String oldOrderNum) {
+        OldOrderNum = oldOrderNum;
+    }
+
+
+
+    public String getCustomerNote() {
+        return CustomerNote;
+    }
+
+    public void setCustomerNote(String customerNote) {
+        CustomerNote = customerNote;
+    }
+
+    public String getIntegralNum() {
+        return IntegralNum;
+    }
+
+    public void setIntegralNum(String integralNum) {
+        IntegralNum = integralNum;
+    }
+
+    public String getIntegralMoney() {
+        return IntegralMoney;
+    }
+
+    public void setIntegralMoney(String integralMoney) {
+        IntegralMoney = integralMoney;
+    }
+
+
 
     public String getAddressInDetail() {
         return AddressInDetail;
@@ -308,13 +347,6 @@ public class PaymentOrderEntity extends BaseEntity {
         MemberIDCoupon = memberIDCoupon;
     }
 
-    public String getOrderManCode() {
-        return OrderManCode;
-    }
-
-    public void setOrderManCode(String orderManCode) {
-        OrderManCode = orderManCode;
-    }
 
     public String getOrderManName() {
         return OrderManName;

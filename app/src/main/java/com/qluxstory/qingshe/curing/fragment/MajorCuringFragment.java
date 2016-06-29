@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 专业养护的fragment
+ * 专业养护中添加的fragment，实现上来加载，暂不使用
  */
 public class MajorCuringFragment extends BaseListFragment<CuringEntity> {
 
@@ -103,7 +103,7 @@ public class MajorCuringFragment extends BaseListFragment<CuringEntity> {
         mProductDetails.setSellPrice(curingEntity.getSell_price());
         mProductDetails.setSellPic(curingEntity.getSell_pic());
         mProductDetails.setSellSort(curingEntity.getSell_sort());
-        HomeUiGoto.curingProductDetails(getActivity(),mUrl,curingEntity.getSell_pic(),curingEntity.getSell_only_code(),curingEntity.getSell_name(),curingEntity.getSell_price());//专业养护之商品详情
+        HomeUiGoto.curingProductDetails(getActivity(),mUrl,curingEntity.getSell_pic(),curingEntity.getSell_only_code(),curingEntity.getSell_name(),curingEntity.getSell_price(),curingEntity.getSell_description());//专业养护之商品详情
     }
 
     @Override

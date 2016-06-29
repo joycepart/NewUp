@@ -53,19 +53,33 @@ public class SplashActivity extends BaseActivity {
 
 
     }
+
+//    Handler tHandler = new Handler();
+//    Runnable runnable = new Runnable(){
+//        @Override
+//        public void run() {
+//            // 在此处添加执行的代码
+//            handler.postDelayed(runnable, 50);// 50是延时时长
+//        }
+//    };
+//    tHandler.removeCallbacks(runnable);// 关闭定时器处理
+
+
     // handler类接收数据
     Handler tHandler = new Handler() {
         public void handleMessage(Message msg) {
-            if (msg.what == 1) {
-                reqImgs();
+            switch (msg.what) {
+                case 1:
+                    reqImgs();
+                    break;
             }
         };
     };
+
     // 线程类
     class ThreadShow implements Runnable {
         @Override
         public void run() {
-            while (true) {
                 try {
                     Thread.sleep(2000);
                     Message msg = new Message();
@@ -74,7 +88,6 @@ public class SplashActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
         }
     }
 
@@ -112,10 +125,13 @@ public class SplashActivity extends BaseActivity {
                         mVfLayout.setLoadCompleteListener(new SplViewFlowLayout.LoadCompleteListener() {
                             @Override
                             public void loadComplete() {
+//                                mVfLayout.startListen();
                                 preparation();
                             }
                         });
+
                         mVfLayout.updateSplView(list);
+//                        preparation();
 
                     }
 

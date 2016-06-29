@@ -210,9 +210,8 @@ public class MeUiGoto {
 
     public static void registration(Context context, String mUrlAgreement, String mAgreementTitle){
         Intent intent = new Intent(context,BrowserActivity.class);
-        Bundle sb = new Bundle();
-        sb.putString("url", mUrlAgreement);
-        sb.putString("title", mAgreementTitle);
+        intent.putExtra("url", mUrlAgreement);
+        intent.putExtra("title", mAgreementTitle);
         context.startActivity(intent);
     }
 

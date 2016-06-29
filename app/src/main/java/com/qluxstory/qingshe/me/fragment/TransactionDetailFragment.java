@@ -62,7 +62,7 @@ public class TransactionDetailFragment extends BaseListFragment<TransactionEntit
                     LogUtils.d("交易明细成功");
                     mErrorLayout.setErrorMessage("暂无明细记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless2,mErrorLayout.FLAG_NODATA);
-                    if(result.getData().get(0).getComTradingTime()==null){
+                    if(result.getData()==null){
                         mErrorLayout.setErrorType(EmptyLayout.NODATA);
                     }else {
                         requestDataSuccess(result);

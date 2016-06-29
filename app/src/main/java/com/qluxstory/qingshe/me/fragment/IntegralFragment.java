@@ -18,7 +18,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by lenovo on 2016/6/25.
+ *积分明细的fragment
  */
 public class IntegralFragment extends BaseListFragment<IntegralDetailEntity> {
 

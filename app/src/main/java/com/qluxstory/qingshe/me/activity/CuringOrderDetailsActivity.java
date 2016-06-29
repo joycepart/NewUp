@@ -3,7 +3,9 @@ package com.qluxstory.qingshe.me.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TimeUtils;
 import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
+import com.qluxstory.qingshe.me.dto.KdDTO;
 import com.qluxstory.qingshe.me.entity.CuringOrderDetailsEntity;
 import com.qluxstory.qingshe.me.entity.CuringOrderDetailsResult;
 import com.qluxstory.qingshe.me.entity.CuringOrderListEntity;
@@ -74,12 +77,28 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
     TextView mOrderMode;
     @Bind(R.id.order_details_send)
     TextView mOrderSend;
+    @Bind(R.id.details_tv_integral)
+    TextView mIntegral;
     @Bind(R.id.ipone_kf)
     LinearLayout mDetailsIpone;
     @Bind(R.id.ipone_zx)
     LinearLayout mDetailsOn;
     @Bind(R.id.order_lin)
     LinearLayout mOrderLin;
+    @Bind(R.id.item_kd)
+    LinearLayout mKd;
+    @Bind(R.id.kd_lin1)
+    LinearLayout mLin1;
+    @Bind(R.id.kd_lin2)
+    LinearLayout mLin2;
+    @Bind(R.id.kd_et1)
+    EditText mEt1;
+    @Bind(R.id.kd_et2)
+    EditText mEt2;
+    @Bind(R.id.kd_tv1)
+    TextView mKdTv1;
+    @Bind(R.id.kd_tv2)
+    TextView mKdTv2;
     CuringOrderListEntity entity;
     CuringOrderDetailsEntity curingOrderDetails;
     private String mOrdNum;
@@ -138,6 +157,11 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
         mDetailsTvCoupon.setText(curingOrderDetails.getCouponPrice());
         mDetailsTvFor.setText(curingOrderDetails.getTrueMoney());
         mDetailsTvGet.setText(curingOrderDetails.getConsigneeType());
+        if(TextUtils.isEmpty(curingOrderDetails.getIntegralNum())){
+            mIntegral.setText("0");
+        }else {
+            mIntegral.setText(curingOrderDetails.getIntegralNum());
+        }
 
         if(curingOrderDetails.getConsigneeType().equals("全国包回邮")){
             mOrderSend.setText("收货地址");
@@ -214,6 +238,25 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
             mDetailsTvStatu.setText("处理中");
             mDetailsTv.setVisibility(View.GONE);
         }
+
+        if(TextUtils.isEmpty(curingOrderDetails.getExpressDeliverCode())){
+            if(curingOrderDetails.getOrderState().equals("10")&&curingOrderDetails.getConsigneeType().equals("全国包回邮")){
+                mKd.setVisibility(View.VISIBLE);
+                mLin1.setVisibility(View.VISIBLE);
+                mLin2.setVisibility(View.GONE);
+                mDetailsTv.setText("上传快递信息");
+                mDetailsTv.setVisibility(View.VISIBLE);
+            }else {
+                mKd.setVisibility(View.GONE);
+                mDetailsTv.setVisibility(View.GONE);
+            }
+        }else {
+            mKd.setVisibility(View.VISIBLE);
+            mLin1.setVisibility(View.GONE);
+            mLin2.setVisibility(View.VISIBLE);
+            mKdTv1.setText("快递公司："+curingOrderDetails.getExpressDeliverName());
+            mKdTv2.setText("快递单号："+curingOrderDetails.getExpressDeliverCode());
+        }
         LogUtils.e("curingOrderListEntity.getServerKHImg()----",curingOrderDetails.getServerKHImg());
         LogUtils.e("curingOrderListEntity.getApp_show_pic()()----",curingOrderDetails.getApp_show_pic());
         ImageLoaderUtils.displayImage(curingOrderDetails.getApp_show_pic(),mDetailsCuringImg);
@@ -231,15 +274,41 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
                 startActivity(intent); //电话客服
                 break;
             case R.id.order_details_tv:
-                Bundle b = new Bundle();
-                b.putString("mOrdNum",mOrdNum);
-                MeUiGoto.payment(mContext,b);//支付订单详情
+                if(curingOrderDetails.getOrderState().equals("10")&&curingOrderDetails.getConsigneeType().equals("全国包回邮")){
+                    reqKd();
+
+                }else {
+                    Bundle b = new Bundle();
+                    b.putString("mOrdNum",mOrdNum);
+                    MeUiGoto.payment(mContext,b);//支付订单详情
+                }
+
                 break;
             case R.id.ipone_zx:
                 service();//在线客服
                 break;
 
         }
+    }
+
+    private void reqKd() {
+        KdDTO cdto = new KdDTO();
+        String time = TimeUtils.getSignTime();
+        cdto.setExpdelicode(mEt2.getText().toString());
+        cdto.setExpdeliname(mEt1.getText().toString());
+        cdto.setOrderNum(entity.getOrderNum());
+        cdto.setSign(time+AppConfig.SIGN_1);
+        cdto.setTimestamp(time);
+        CommonApiClient.kd(this, cdto, new CallBack<CuringOrderDetailsResult>() {
+            @Override
+            public void onSuccess(CuringOrderDetailsResult result) {
+                if (AppConfig.SUCCESS.equals(result.getStatus())) {
+                    LogUtils.d("快递信息成功");
+                    mDetailsTv.setVisibility(View.GONE);
+                }
+
+            }
+        });
     }
 
     private void service() {

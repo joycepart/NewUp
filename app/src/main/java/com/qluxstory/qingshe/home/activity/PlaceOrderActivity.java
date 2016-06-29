@@ -222,6 +222,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                         123);
             }
         }
+        mEditText.clearFocus();
         mProductDetails = AppContext.getInstance().getProductDetails();
         consignee = AppContext.getInstance().getConsignee();
         mPrice = mProductDetails.getSellPrice();
@@ -540,7 +541,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         TakeDTO dto = new TakeDTO();
         String mCity = AppContext.get("mCity","");
         if(TextUtils.isEmpty(mCity)){
-            dto.setCity("");
+            dto.setCity("北京市");
             LogUtils.e("dto.setCity---","定位失败");
         }else {
             dto.setCity(mCity);
@@ -553,9 +554,11 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("取送方式成功");
                     if(null==result.getData()){
+                        LogUtils.e("null------","null");
                         return;
                     }else {
                         takeEntity = result.getData();
+                        LogUtils.e("getDis_type_name------",""+takeEntity.get(0).getDis_type_name());
                         if (!TextUtils.isEmpty(takeEntity.get(0).getDis_type_name())) {
                             mPlaTv.setText(takeEntity.get(0).getDis_type_name());
                             rturn = takeEntity.get(0).getDis_type_code();
@@ -604,7 +607,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             dto.setTimeToAppointmen("");
         }
         if (mPlaTv.getText().toString().equals("全国包回邮")) {
-            dto.setServerYJCode(mSendAddress.getText().toString());
+            dto.setServerYJCode(AppContext.get("Dis_only_code",""));
         } else {
             dto.setServerYJCode("");
         }

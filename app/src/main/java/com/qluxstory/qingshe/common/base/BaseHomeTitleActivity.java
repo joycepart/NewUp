@@ -9,23 +9,22 @@ import android.widget.TextView;
 import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.utils.LogUtils;
-import com.qluxstory.qingshe.common.utils.TextViewUtils;
-import com.qluxstory.qingshe.common.utils.UIHelper;
-import com.qluxstory.qingshe.me.MeUiGoto;
 
 /**
  * home带有标题的基类
  */
 public abstract class BaseHomeTitleActivity extends BaseActivity {
-    private TextView mBaseTitle, mBaseEnsure, mBaseBack;
+    private TextView mBaseTitle;
     private View mTitleLayout;
+    private LinearLayout mBaseEnsure,mBaseBack;
     protected int mCurrentPage = 1;
     protected final static int PAGE_SIZE = 6;
     boolean bool;
 
 
     protected void onAfterSetContentLayout() {
-        LinearLayout llContent = (LinearLayout) findViewById(R.id.base_titlebar_content);
+//        LinearLayout llContent = (LinearLayout) findViewById(R.id.base_titlebar_content);
+        LinearLayout llContent = (LinearLayout) findViewById(R.id.base_home_titlebar_content);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(getContentResId(), null);
         llContent.addView(v, new LinearLayout.LayoutParams(
@@ -36,7 +35,7 @@ public abstract class BaseHomeTitleActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.base_titlebar_activity;
+        return R.layout.base_home_titlebar_activity;
     }
 
     public View getTitleLayout() {
@@ -45,44 +44,29 @@ public abstract class BaseHomeTitleActivity extends BaseActivity {
 
     private void baseInitView() {
         bool = AppContext.get("isLogin",false);
-        LogUtils.e("bool----",""+bool);
-        mTitleLayout = findViewById(R.id.base_titlebar_layout);
-        mBaseTitle = (TextView) findViewById(R.id.base_titlebar_text);
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
-        mBaseEnsure.setText("系统消息");
-        mBaseEnsure.setTextSize(12);
+        LogUtils.e("baseInitView--bool----",""+bool);
+//        mTitleLayout = findViewById(R.id.base_titlebar_layout);
+//        mBaseTitle = (TextView) findViewById(R.id.base_titlebar_text);
+//        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+//        mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
+
+        mTitleLayout = findViewById(R.id.base_home_titlebar_layout);
+        mBaseTitle = (TextView) findViewById(R.id.base_home_titlebar_text);
+        mBaseEnsure = (LinearLayout) findViewById(R.id.base_home_titlebar_back);
         mBaseEnsure.setOnClickListener(this);
-        mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
-        mBaseBack.setText("七日签到");
-        mBaseBack.setTextSize(12);
+        mBaseBack = (LinearLayout) findViewById(R.id.base_home_titlebar_ensure);
         mBaseBack.setOnClickListener(this);
-
         // 初始化返回按钮图片大小
-        TextViewUtils.setTextViewIcon(this, mBaseBack, R.drawable.qiandao,
-                R.dimen.common_titlebar_icon_width,
-                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_TOP);
-
-         //初始化分享按钮图片大小
-        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.xiaoxu,
-                R.dimen.common_titlebar_icon_width,
-                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_TOP);
+//        TextViewUtils.setTextViewIcon(this, mBaseBack, R.drawable.back,
+//                R.dimen.common_titlebar_icon_width,
+//                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_LEFT);
+//        // 初始化右边按钮图片大小
+//        TextViewUtils.setTextViewIcon(this, mBaseEnsure, R.drawable.qiandao,
+//                R.dimen.common_titlebar_icon_width,
+//                R.dimen.common_titlebar_icon_height, TextViewUtils.DRAWABLE_LEFT);
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.base_titlebar_back:
-                baseGoBack();
-                break;
-            case R.id.base_titlebar_ensure:
-                baseGoEnsure();
-                break;
-            default:
-                break;
-        }
-        super.onClick(v);
-    }
 
 
     /**
@@ -118,7 +102,7 @@ public abstract class BaseHomeTitleActivity extends BaseActivity {
      * @param text
      */
     public void setEnsureText(String text) {
-        mBaseEnsure.setText(text);
+
     }
 
     /**
@@ -127,18 +111,12 @@ public abstract class BaseHomeTitleActivity extends BaseActivity {
      * @param resId
      */
     public void setEnsureDrawable(int resId, int where) {
-        TextViewUtils.setTextViewIcon(this, mBaseEnsure, resId,
-                R.dimen.common_titlebar_right_icon_width,
-                R.dimen.common_titlebar_right_icon_height, where);
+//        TextViewUtils.setTextViewIcon(this, mBaseEnsure, resId,
+//                R.dimen.common_titlebar_right_icon_width,
+//                R.dimen.common_titlebar_right_icon_height, where);
     }
 
-    public void setEnsureText(int resid) {
-        mBaseEnsure.setText(resid);
-    }
 
-    public TextView getEnsureView() {
-        return mBaseEnsure;
-    }
 
     public void setEnsureEnable(boolean flag) {
         mBaseEnsure.setClickable(flag);
@@ -146,37 +124,17 @@ public abstract class BaseHomeTitleActivity extends BaseActivity {
     }
 
     /**
-     * 设置右侧文字
-     *
-     * @param text
-     */
-    public void setBaseGoBackText(String text) {
-        mBaseBack.setText(text);
-    }
-
-    /**
      * 左侧的按钮事件
      */
     protected void baseGoBack() {
-        if(bool){
-            MeUiGoto.myIntegral(this);//我的积分
-        }else {
-            MeUiGoto.login(this);//登录
-        }
+        finish();
     }
 
     /**
      * 右侧的按钮事件
      */
     protected void baseGoEnsure() {
-        if(bool){
-            UIHelper.showFragment(this, SimplePage.INFORMATION);
-        }else {
-            MeUiGoto.login(this);//登录
-        }
-
     }
-
 
     /**
      * 布局文件

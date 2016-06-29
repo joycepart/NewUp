@@ -94,7 +94,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_curing"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -104,8 +104,8 @@
 
                     <ImageView
                         android:id="@+id/curing_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon1" />
 
@@ -120,8 +120,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_70"
+                        android:layout_height="@dimen/ds_70"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -138,7 +138,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_indiana"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -148,8 +148,8 @@
 
                     <ImageView
                         android:id="@+id/indiana_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon2" />
 
@@ -165,8 +165,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -182,7 +182,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_coupon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -192,8 +192,8 @@
 
                     <ImageView
                         android:id="@+id/coupon_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon3" />
 
@@ -209,8 +209,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -227,7 +227,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_income"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -237,8 +237,8 @@
 
                     <ImageView
                         android:id="@+id/income_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon4" />
 
@@ -254,8 +254,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -273,7 +273,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_integral"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -283,8 +283,8 @@
 
                     <ImageView
                         android:id="@+id/integral_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/jifen" />
 
@@ -300,8 +300,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -321,7 +321,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_about"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -331,8 +331,8 @@
 
                     <ImageView
                         android:id="@+id/about_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon5" />
 
@@ -348,8 +348,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -362,54 +362,11 @@
                 android:layout_height="@dimen/ds_3"
                 android:layout_marginLeft="@dimen/ds_180"
                 android:background="@color/color_cc" />
-            <LinearLayout
-                android:id="@+id/user_ll_return"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" >
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" >
-
-                    <ImageView
-                        android:id="@+id/return_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
-                        android:paddingLeft="@dimen/ds_50"
-                        android:src="@drawable/me_icon6" />
-
-                    <TextView
-                        android:id="@+id/user_tv7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/return_iv"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/ds_40"
-                        android:text="@string/tab_me_i"
-                        android:textSize="@dimen/fs_48" />
-
-                    <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/ds_10"
-                        android:src="@drawable/me_icon0" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_3"
-                android:layout_marginLeft="@dimen/ds_180"
-                android:background="@color/color_cc" />
             <LinearLayout
                 android:id="@+id/user_ll_service"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -419,8 +376,8 @@
 
                     <ImageView
                         android:id="@+id/service_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon7" />
 
@@ -436,8 +393,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -453,7 +410,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_ipone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -463,8 +420,8 @@
 
                     <ImageView
                         android:id="@+id/ipone_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon8" />
 
@@ -480,8 +437,8 @@
                         android:textSize="@dimen/fs_48" />
 
                     <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
+                        android:layout_width="@dimen/ds_60"
+                        android:layout_height="@dimen/ds_60"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/ds_10"
@@ -498,7 +455,7 @@
             <LinearLayout
                 android:id="@+id/user_ll_inf"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/ds_150"
                 android:gravity="center" >
 
                 <RelativeLayout
@@ -508,8 +465,8 @@
 
                     <ImageView
                         android:id="@+id/inf_iv"
-                        android:layout_width="@dimen/ds_130"
-                        android:layout_height="@dimen/ds_130"
+                        android:layout_width="@dimen/ds_110"
+                        android:layout_height="@dimen/ds_110"
                         android:paddingLeft="@dimen/ds_50"
                         android:src="@drawable/me_icon10" />
 
@@ -524,13 +481,7 @@
                         android:text="@string/tab_me_m"
                         android:textSize="@dimen/fs_48" />
 
-                    <ImageView
-                        android:layout_width="@dimen/ds_80"
-                        android:layout_height="@dimen/ds_80"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/ds_10"
-                        android:src="@drawable/me_icon0" />
+
                 </RelativeLayout>
             </LinearLayout>
 

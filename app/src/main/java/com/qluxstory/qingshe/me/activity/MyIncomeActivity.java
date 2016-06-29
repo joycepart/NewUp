@@ -76,7 +76,12 @@ public class MyIncomeActivity extends BaseTitleActivity {
             public void onSuccess(MyIncomeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.d("我的收入请求成功");
-                    myIncomeResult(result.getData());
+                    if(null == result.getData()){
+                        return;
+                    }else {
+                        myIncomeResult(result.getData());
+                    }
+
                 }
 
             }
@@ -98,15 +103,13 @@ public class MyIncomeActivity extends BaseTitleActivity {
             case R.id.income_Btn:
                 if(mCashaMountMoney==null){
                     DialogUtils.showPrompt(this,"提示","暂无可提现余额","确定");
-                }else{
-                    double cash=Double.parseDouble(mCashaMountMoney);
-                    if(cash==0){
+                }else if(mCashaMountMoney.replace(".00","0").equals("")||mCashaMountMoney.equals("0")){
                         DialogUtils.showPrompt(this,"提示","暂无可提现余额","确定");
-                    }else{
-                        Bundle b = new Bundle();
-                        b.putString("mCashaMountMoney",mCashaMountMoney);
-                        MeUiGoto.withd(this,b);//申请提现
-                    }
+                }
+                else{
+                    Bundle b = new Bundle();
+                    b.putString("mCashaMountMoney",mCashaMountMoney);
+                    MeUiGoto.withd(this,b);//申请提现
                 }
                 break;
             case R.id.base_titlebar_back:

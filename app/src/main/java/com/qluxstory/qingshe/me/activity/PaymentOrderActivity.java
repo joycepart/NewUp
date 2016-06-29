@@ -6,11 +6,14 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.alipay.sdk.app.PayTask;
 import com.qluxstory.qingshe.AppConfig;
@@ -117,9 +120,16 @@ public class PaymentOrderActivity extends BaseTitleActivity {
     TextView mCoupon;
     @Bind(R.id.pay_tv_btn)
     TextView mPayTvBtn;
+    @Bind(R.id.pay_tv_tog)
+    TextView mTog;
+    @Bind(R.id.pay_edittext)
+    EditText mEdittext;
+    @Bind(R.id.pay_togglebutton)
+    ToggleButton mToggle;
     PaymentOrderEntity paymentEntity;
     private String mOrdNum;
     private static final int RQF_PAY = 1;
+    int t;
     @Override
     protected int getContentResId() {
         return R.layout.activity_paymentorder;
@@ -137,6 +147,28 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         mPayAlipay.setOnClickListener(this);
         mPayBalance.setOnClickListener(this);
         mPayTvBtn.setOnClickListener(this);
+        mToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if(isChecked){
+                    //选中
+                    String str = paymentEntity.getIntegralMoney().replace(".00","");
+                    int i = Integer.parseInt(str);
+                    LogUtils.e("i-----",""+i);
+                    String str1 = paymentEntity.getOrderMoney().replace(".00","");
+                    int in = Integer.parseInt(str1);
+                    LogUtils.e("in-----",""+in);
+                    mPayTv.setText("¥"+String.valueOf(in-i));
+
+                }else{
+                    //未选中
+                    String str = paymentEntity.getOrderMoney().replace(".00","");
+                    mPayTv.setText("¥"+str);
+                }
+            }
+        });// 添加监听事件
 
     }
 
@@ -230,6 +262,14 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         LogUtils.e("curingOrderListEntity.getApp_show_pic()()----", paymentEntity.getApp_show_pic());
         ImageLoaderUtils.displayImage(paymentEntity.getServerKHImg(),mPayImg);
         ImageLoaderUtils.displayImage(paymentEntity.getApp_show_pic(),mImg);
+        mEdittext.setText(paymentEntity.getCustomerNote());
+        if(paymentEntity.getIntegralNum().equals("0")){
+            mTog.setText("该商品暂无积分可用");
+            mToggle.setEnabled(false);
+        }else {
+            mToggle.setChecked(true);
+            mTog.setText("可用"+paymentEntity.getIntegralNum()+"积分抵扣"+paymentEntity.getIntegralMoney()+"元");
+        }
     }
 
     @Override
@@ -281,6 +321,12 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         dto.setCouponcode(paymentEntity.getUserCouponCode());
         dto.setMemMobile(AppContext.get("mobileNum", ""));
         dto.setOrderType("养护");
+        LogUtils.e("setIntegralNum---",""+paymentEntity.getIntegralNum());
+        LogUtils.e("setIntegralMoney---",""+paymentEntity.getIntegralMoney());
+        LogUtils.e("setCustomerNote---",""+paymentEntity.getCustomerNote());
+        dto.setIntegralNum(paymentEntity.getIntegralNum());
+        dto.setIntegralMoney(paymentEntity.getIntegralMoney());
+        dto.setCustomernote(mEdittext.getText().toString());
         dto.setTimeToAppointmen(paymentEntity.getTimeToAppointmen());
         dto.setServerYJCode(paymentEntity.getServerYJCode());
         if (mCbWx.isChecked()) {
@@ -292,7 +338,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         }
         dto.setServiceMoney(paymentEntity.getServiceMoney());
         dto.setReqType("service");
-        dto.setOldOrderNum(paymentEntity.getOrderManCode());
+        dto.setOldOrderNum(paymentEntity.getOldOrderNum());
         dto.setShoudamoney(paymentEntity.getShoudanMoney());
         String base64 = paymentEntity.getServerKHImg();
         dto.setBase64string(ImageLoaderUtils.imgToBase64(base64,null,null));
@@ -461,9 +507,9 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         orderInfo += "&body=" + "\"" + data.get(0).getProductName() + "\"";
 
         // 商品金额
-//        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
+        orderInfo += "&total_fee=" + "\"" + data.get(0).getAmount() + "\"";
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
+//        orderInfo += "&total_fee=" + "\"" + "0.01" + "\"";
 
         // 服务器异步通知页面路径
         orderInfo += "&notify_url=" + "\"" + AppConfig.BASE_URL+"/notify_url.aspx" + "\"";

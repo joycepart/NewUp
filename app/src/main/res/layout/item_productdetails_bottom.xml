@@ -36,7 +36,7 @@
 
         <LinearLayout
             android:id="@+id/pro_btn_kf"
-            android:layout_width="@dimen/ds_400"
+            android:layout_width="@dimen/ds_500"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal">
@@ -54,7 +54,7 @@
             android:layout_marginLeft="@dimen/ds_10"
             android:layout_marginRight="@dimen/ds_50"
             android:text="@string/order_contact"
-            android:textSize="@dimen/fs_40"
+            android:textSize="@dimen/fs_35"
             android:textColor="@color/color_00"/>
         </LinearLayout>
         <Button

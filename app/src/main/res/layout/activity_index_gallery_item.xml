@@ -7,7 +7,7 @@
     android:background="@color/color_cc"
     >
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
@@ -15,11 +15,12 @@
         android:id="@+id/id_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_30"
         android:layout_gravity="center_vertical"
         android:scaleType="centerCrop" />
 <LinearLayout
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/ds_40"
     android:layout_marginRight="@dimen/ds_30"
     android:orientation="vertical">
@@ -32,14 +33,14 @@
         android:maxEms="7"
         android:singleLine="true"
         android:ellipsize="end"
-        android:layout_marginTop="@dimen/ds_150"
+        android:layout_marginTop="@dimen/ds_70"
         android:textSize="@dimen/ds_50" />
     <TextView
         android:id="@+id/id_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="123"
-        android:layout_marginTop="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_20"
         android:textSize="@dimen/ds_45"
         android:textColor="@color/color_c0"/>
     <TextView

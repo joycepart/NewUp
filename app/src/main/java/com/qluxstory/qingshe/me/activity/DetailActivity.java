@@ -1,6 +1,7 @@
 package com.qluxstory.qingshe.me.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class DetailActivity extends BaseTitleActivity {
     TextView mData;
     @Bind(R.id.details_name)
     TextView mName;
+    @Bind(R.id.details_integral)
+    TextView mIntegral;
     @Bind(R.id.details_rel_name)
     RelativeLayout mRelName;
     @Bind(R.id.details_rel_coupon)
@@ -40,6 +43,8 @@ public class DetailActivity extends BaseTitleActivity {
     @Bind(R.id.details_rel_money)
     RelativeLayout mRelMoney;
     TransactionEntity entity;
+    @Bind(R.id.details_rel_integral)
+    RelativeLayout mRelIntegral;
 
     @Override
     protected int getContentResId() {
@@ -56,6 +61,7 @@ public class DetailActivity extends BaseTitleActivity {
                 mRelName.setVisibility(View.GONE);
                 mRelCoupon.setVisibility(View.GONE);
                 mRelMoney.setVisibility(View.GONE);
+                mRelIntegral.setVisibility(View.GONE);
                 mTit.setText("转出金额");
                 mBuy.setText("提现");
 
@@ -63,6 +69,7 @@ public class DetailActivity extends BaseTitleActivity {
                 mRelName.setVisibility(View.VISIBLE);
                 mRelCoupon.setVisibility(View.VISIBLE);
                 mRelMoney.setVisibility(View.VISIBLE);
+                mRelIntegral.setVisibility(View.VISIBLE);
                 mTit.setText("消费金额");
                 mBuy.setText("购买消费");
                 mName.setText(entity.getComName());
@@ -73,6 +80,12 @@ public class DetailActivity extends BaseTitleActivity {
             mDe.setText(entity.getComDetailProParty());
             mNum.setText(entity.getComDataSources());
             mData.setText(entity.getComTradingData()+" "+entity.getComTradingTime());
+            if(TextUtils.isEmpty(entity.getIntegralNum())){
+                mIntegral.setText("0");
+            }else {
+                mIntegral.setText(entity.getIntegralNum());
+            }
+
         }
 
     }

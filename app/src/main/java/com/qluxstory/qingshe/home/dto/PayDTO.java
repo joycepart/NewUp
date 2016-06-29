@@ -34,6 +34,20 @@ public class PayDTO extends BaseDTO {
     private String IntegralNum;
     private String IntegralMoney;
 
+
+    public String getCustomernote() {
+        return customernote;
+    }
+
+    public void setCustomernote(String customernote) {
+        this.customernote = customernote;
+    }
+
+
+
+
+
+
     public String getIntegralNum() {
         return IntegralNum;
     }
@@ -52,13 +66,6 @@ public class PayDTO extends BaseDTO {
 
 
 
-    public String getCustomernote() {
-        return customernote;
-    }
-
-    public void setCustomernote(String customernote) {
-        this.customernote = customernote;
-    }
 
 
 

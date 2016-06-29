@@ -62,6 +62,20 @@ public class TransactionEntity extends BaseEntity{
                    提交状态，1002为申请中，1004为成功
                     */
     private String TranState;
+    /*
+              积分
+               */
+    private String IntegralNum;
+
+    public String getIntegralNum() {
+        return IntegralNum;
+    }
+
+    public void setIntegralNum(String integralNum) {
+        IntegralNum = integralNum;
+    }
+
+
 
     public String getTranState() {
         return TranState;

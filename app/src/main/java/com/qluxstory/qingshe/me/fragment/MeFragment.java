@@ -48,8 +48,6 @@ public class MeFragment extends BaseFragment {
     LinearLayout mUserLlIncome;
     @Bind(R.id.user_ll_about)
     LinearLayout mUserLlAbout;
-    @Bind(R.id.user_ll_return)
-    LinearLayout mUserLlReturn;
     @Bind(R.id.user_ll_service)
     LinearLayout mUserLlService;
     @Bind(R.id.user_ll_ipone)
@@ -64,8 +62,6 @@ public class MeFragment extends BaseFragment {
     LinearLayout mIntegral;
     private String mUrlUs;
     private String mUsTitle;
-    private String mUrlReturn;
-    private String mReturnTitle;
     private String mUrlQq;
     private String mQqTitle;
     private String mUrlInformation;
@@ -87,10 +83,6 @@ public class MeFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         bool = AppContext.get("isLogin",false);
-//        AppContext.set("isLogin",true);
-//        bool = AppContext.get("isLogin",false);
-//        AppContext.set("mobileNum","18810326847");
-        LogUtils.e("bool----3",""+bool);
         if(bool){
             mLoginLl.setVisibility(View.GONE);
             mLoingSuc.setVisibility(View.VISIBLE);
@@ -114,7 +106,7 @@ public class MeFragment extends BaseFragment {
     public void initData() {
     }
 
-    @OnClick({R.id.user_btn,R.id.user_ll_integral, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_return, R.id.user_ll_service, R.id.user_ll_ipone,R.id.user_ll_inf, R.id.user_btn_close})
+    @OnClick({R.id.user_btn,R.id.user_ll_integral, R.id.loing_suc, R.id.user_ll_curing, R.id.user_ll_indiana, R.id.user_ll_coupon, R.id.user_ll_income, R.id.user_ll_about, R.id.user_ll_service, R.id.user_ll_ipone,R.id.user_ll_inf, R.id.user_btn_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_btn:
@@ -165,13 +157,8 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.user_ll_about:
                 mUrlUs = AppConfig.URL_ABOUT_US;
-                mUsTitle = "关于我们 - 倾奢介绍";
+                mUsTitle = "关于我们";
                 MeUiGoto.aboutUs(getActivity(), mUrlUs, mUsTitle);//关于我们
-                break;
-            case R.id.user_ll_return:
-                mUrlReturn = AppConfig.URL_ABOUT_RETURN;
-                mReturnTitle = "关于退货 - 倾奢";
-                MeUiGoto.rturn(getActivity(), mUrlReturn, mReturnTitle);//关于退货
                 break;
             case R.id.user_ll_service:
                 if(bool){
@@ -195,6 +182,7 @@ public class MeFragment extends BaseFragment {
                 AppContext.set("mobileNum","");
                 AppContext.set("isLogin",false);
                 AppContext.set("alias","");
+                AppContext.set("mRongyunToken", "");
                 break;
         }
     }

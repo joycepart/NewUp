@@ -107,6 +107,46 @@ public class CuringOrderDetailsEntity  extends BaseEntity {
 
                                */
     private String ServerKHImg;
+    /*
+
+                                   */
+    private String IntegralNum;
+    /*
+
+                                  */
+    private String ExpressDeliverName;
+    /*
+
+                                     */
+    private String ExpressDeliverCode;
+
+    public String getExpressDeliverName() {
+        return ExpressDeliverName;
+    }
+
+    public void setExpressDeliverName(String expressDeliverName) {
+        ExpressDeliverName = expressDeliverName;
+    }
+
+    public String getExpressDeliverCode() {
+        return ExpressDeliverCode;
+    }
+
+    public void setExpressDeliverCode(String expressDeliverCode) {
+        ExpressDeliverCode = expressDeliverCode;
+    }
+
+
+
+    public String getIntegralNum() {
+        return IntegralNum;
+    }
+
+    public void setIntegralNum(String integralNum) {
+        IntegralNum = integralNum;
+    }
+
+
 
     public String getApp_show_pic() {
         return app_show_pic;

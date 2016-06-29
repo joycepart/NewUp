@@ -375,10 +375,10 @@
 
                 <ToggleButton
                     android:id="@+id/togglebutton"
-                    android:layout_width="@dimen/ds_100"
-                    android:layout_height="@dimen/ds_80"
+                    android:layout_width="@dimen/ds_250"
+                    android:layout_height="@dimen/ds_100"
                     android:layout_marginRight="@dimen/ds_30"
-                    android:layout_marginTop="@dimen/ds_30"
+                    android:layout_marginTop="@dimen/ds_15"
                     android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:background="@android:color/transparent"

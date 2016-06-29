@@ -28,6 +28,7 @@ public class HomeUiGoto {
         context.startActivity(intent);
     }
 
+
     /**
      * 跳转到选择省，市页
      * @param act
@@ -97,15 +98,17 @@ public class HomeUiGoto {
      * @param code
      * @param sell_name
      * @param sell_price
+     * @param sell_description
      */
 
-    public static void curingProductDetails(Context context, String url, String sell_pic, String code, String sell_name, String sell_price){
+    public static void curingProductDetails(Context context, String url, String sell_pic, String code, String sell_name, String sell_price, String sell_description){
         Intent intent = new Intent(context, ProductBrowserActivity.class);
         intent.putExtra("mUrl", url);
         intent.putExtra("pic", sell_pic);
         intent.putExtra("code", code);
         intent.putExtra("name", sell_name);
         intent.putExtra("price", sell_price);
+        intent.putExtra("description", sell_description);
         context.startActivity(intent);
     }
     /**

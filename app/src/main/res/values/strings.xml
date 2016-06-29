@@ -31,12 +31,12 @@
     <string name="tab_me_integral">我的积分</string>
     <string name="tab_me_close">退出登录</string>
     <string name="tab_me_h">关于我们</string>
-    <string name="tab_me_i">关于退货</string>
-    <string name="tab_me_j">超级客服在线（9:00—18:00）</string>
+    <string name="tab_me_i">关于售后</string>
+    <string name="tab_me_j">客服在线 周一至周五（9:30---18:30）</string>
     <string name="tab_me_n">夺宝记录</string>
-    <string name="common_service_phone">010-57102750</string>
+    <string name="common_service_phone">010-52487790</string>
 
-    <string name="tab_me_kefu">客服电话010-57102750(9:00-18:00)</string>
+    <string name="tab_me_kefu">客服电话 周一至周五（9:30---18:30）</string>
     <string name="tab_me_l">官方QQ群：498262127</string>
     <string name="tab_me_m">版本信息： 1.0.0</string>
     <string name="issue_a">人品大爆发：</string>
@@ -180,6 +180,7 @@
     <string name="details_type">交易类型</string>
     <string name="details_name">商品名称</string>
     <string name="details_coupon">代金劵</string>
+    <string name="details_integral">积分</string>
     <string name="details_money">总金额</string>
     <string name="details_sources">数据来源</string>
     <string name="details_side">明细处理方</string>
@@ -274,6 +275,11 @@
     <string name="show_all">SHOW ALL</string>
     <string name="remarks">备注</string>
     <string name="most">最多输入80个字</string>
+    <string name="kd">请填写快递信息</string>
+    <string name="kd_name">请填写快递公司名称</string>
+    <string name="kd_code">请填写快递单号</string>
+    <string name="kd_inf">快递信息</string>
+
 
 
 </resources>

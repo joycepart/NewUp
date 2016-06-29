@@ -1,6 +1,11 @@
 package com.qluxstory.qingshe.me.activity;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qluxstory.qingshe.AppConfig;
@@ -48,8 +53,15 @@ public class MyIntegralActivity extends BaseTitleActivity {
     TextView mServer;
     @Bind(R.id.tv_rule)
     TextView mTule;
+    @Bind(R.id.animationIV)
+    ImageView animationIV;
+//    @Bind(R.id.buttonA)
+//    Button buttonA;
     private String mNum,mRule,mDtatNum,mIsSign,mObtian;
     int obtian;
+    private AnimationDrawable animationDrawable;
+    //Alpha动画 - 渐变透明度
+    private Animation alphaAnimation = null;
 
 
     @Override
@@ -61,8 +73,49 @@ public class MyIntegralActivity extends BaseTitleActivity {
     public void initView() {
         setTitleText("我的积分");
         setEnsureText("积分明细");
+//        mIntegral.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v) {
+//                animationIV.setVisibility(View.VISIBLE);
+//                animationIV.setImageResource(R.drawable.gold);
+//                animationDrawable = (AnimationDrawable) animationIV.getDrawable();
+//
+//                TranslateAnimation animation = new TranslateAnimation(0,0,-10,-500);
+//
+//                //初始化 Alpha动画
+////                alphaAnimation = AnimationUtils.loadAnimation(MyIntegralActivity.this, R.anim.gold_in);
+//                animation.setDuration(8000);//设置动画持续时间,
+//                animation.setInterpolator(new AccelerateInterpolator(50f));
+//                //动画集
+////                AnimationSet set = new AnimationSet(true);
+//////                set.addAnimation(alphaAnimation);
+////                set.addAnimation(animation);
+//
+//                animationDrawable.start();
+//                animationIV.startAnimation(animation);
+//                animation.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        animationIV.setVisibility(View.GONE);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
+//            }
+//
+//        });
 
     }
+
 
     @Override
     public void initData() {
@@ -78,6 +131,7 @@ public class MyIntegralActivity extends BaseTitleActivity {
             case R.id.tv_one:
                 reqObtainIntegral();//签到获取积分
                     LogUtils.e("mObtian---",""+mObtian);
+                    anim();
                     mOne.setBackgroundResource(R.drawable.red);
                     mOne.setEnabled(false);
                     mOne.setText("已签到");
@@ -85,63 +139,77 @@ public class MyIntegralActivity extends BaseTitleActivity {
 
                 break;
             case R.id.tv_two:
-                if(mDtatNum.equals("2")){
+                if(mIsSign.equals("0")){
                     reqObtainIntegral();//签到获取积分
-                        mTwo.setBackgroundResource(R.drawable.red);
-                        mTwo.setEnabled(false);
-                        mTwo.setText("已签到");
-                        mTwo.setTextColor(getResources().getColor(R.color.color_f0));
+                    anim();
+                    mTwo.setBackgroundResource(R.drawable.red);
+                    mTwo.setEnabled(false);
+                    mTwo.setText("已签到");
+                    mTwo.setTextColor(getResources().getColor(R.color.color_f0));
 
                 }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_three:
-                if(mDtatNum.equals("3")) {
+                if(mIsSign.equals("0")) {
                     reqObtainIntegral();//签到获取积分
-                        mThree.setBackgroundResource(R.drawable.red);
-                        mThree.setEnabled(false);
-                        mThree.setText("已签到");
-                        mThree.setTextColor(getResources().getColor(R.color.color_f0));
+                    anim();
+                    mThree.setBackgroundResource(R.drawable.red);
+                    mThree.setEnabled(false);
+                    mThree.setText("已签到");
+                    mThree.setTextColor(getResources().getColor(R.color.color_f0));
+
+
                 }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                     break;
             case R.id.tv_four:
-                if(mDtatNum.equals("4")) {
-                reqObtainIntegral();//签到获取积分
-                        mFour.setBackgroundResource(R.drawable.red);
-                        mFour.setEnabled(false);
-                        mFour.setText("已签到");
-                        mFour.setTextColor(getResources().getColor(R.color.color_f0));
+                if(mIsSign.equals("0")) {
+                    reqObtainIntegral();//签到获取积分
+                    anim();
+                    mFour.setBackgroundResource(R.drawable.red);
+                    mFour.setEnabled(false);
+                    mFour.setText("已签到");
+                    mFour.setTextColor(getResources().getColor(R.color.color_f0));
+
+
                 }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_five:
-                if(mDtatNum.equals("5")) {
-                reqObtainIntegral();//签到获取积分
+                if(mIsSign.equals("0")) {
+                    reqObtainIntegral();//签到获取积分
+                    anim();
                     mFive.setBackgroundResource(R.drawable.red);
                     mFive.setEnabled(false);
                     mFive.setText("已签到");
                     mFive.setTextColor(getResources().getColor(R.color.color_f0));
+
+
                 }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_six:
-                if(mDtatNum.equals("6")) {
-                reqObtainIntegral();//签到获取积分
+                if(mIsSign.equals("0")) {
+                    reqObtainIntegral();//签到获取积分
+                    anim();
                     mSix.setBackgroundResource(R.drawable.red);
                     mSix.setEnabled(false);
                     mSix.setText("已签到");
                     mSix.setTextColor(getResources().getColor(R.color.color_f0));
+
+
                 }else {
                     DialogUtils.showPrompt(this,"提示","您今天已经签到了，明天再来吧!","知道了");
                 }
                 break;
             case R.id.tv_server:
                 reqObtainIntegral();//签到获取积分
+                anim();
                     mServer.setBackgroundResource(R.drawable.red);
                     mServer.setEnabled(false);
                     mServer.setText("已签到");
@@ -158,6 +226,43 @@ public class MyIntegralActivity extends BaseTitleActivity {
                 break;
 
         }
+    }
+
+    private void anim() {
+        animationIV.setVisibility(View.VISIBLE);
+        animationIV.setImageResource(R.drawable.gold);
+        animationDrawable = (AnimationDrawable) animationIV.getDrawable();
+
+        TranslateAnimation animation = new TranslateAnimation(0,0,-10,-400);
+
+        //初始化 Alpha动画
+//                alphaAnimation = AnimationUtils.loadAnimation(MyIntegralActivity.this, R.anim.gold_in);
+        animation.setDuration(7000);//设置动画持续时间,
+        animation.setInterpolator(new AccelerateInterpolator(8f));
+        //动画集
+//                AnimationSet set = new AnimationSet(true);
+////                set.addAnimation(alphaAnimation);
+//                set.addAnimation(animation);
+
+        animationDrawable.start();
+        animationDrawable.setOneShot(true);
+        animationIV.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animationIV.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     private void reqObtainIntegral() {
@@ -428,6 +533,37 @@ public class MyIntegralActivity extends BaseTitleActivity {
             mServer.setText("第七天");
             mServer.setTextColor(getResources().getColor(R.color.color_ff));
         }
+        else if(mDtatNum.equals("7")){
+            mOne.setEnabled(false);
+            mTwo.setEnabled(false);
+            mThree.setEnabled(false);
+            mFour.setEnabled(false);
+            mFive.setEnabled(false);
+            mSix.setEnabled(false);
+            mServer.setEnabled(false);
+            mOne.setBackgroundResource(R.drawable.red);
+            mTwo.setBackgroundResource(R.drawable.red);
+            mThree.setBackgroundResource(R.drawable.red);
+            mFour.setBackgroundResource(R.drawable.red);
+            mFive.setBackgroundResource(R.drawable.red);
+            mSix.setBackgroundResource(R.drawable.red);
+            mServer.setBackgroundResource(R.drawable.red);
+            mOne.setText("已签到");
+            mOne.setTextColor(getResources().getColor(R.color.color_f0));
+            mTwo.setText("已签到");
+            mTwo.setTextColor(getResources().getColor(R.color.color_f0));
+            mThree.setText("已签到");
+            mThree.setTextColor(getResources().getColor(R.color.color_f0));
+            mFour.setText("已签到");
+            mFour.setTextColor(getResources().getColor(R.color.color_f0));
+            mFive.setText("已签到");
+            mFive.setTextColor(getResources().getColor(R.color.color_f0));
+            mSix.setText("已签到");
+            mSix.setTextColor(getResources().getColor(R.color.color_f0));
+            mServer.setText("已签到");
+            mServer.setTextColor(getResources().getColor(R.color.color_f0));
+        }
+
 
     }
 

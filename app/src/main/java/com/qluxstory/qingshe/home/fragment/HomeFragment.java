@@ -32,6 +32,7 @@ import com.qluxstory.qingshe.home.entity.HomeRecommendEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialEntity;
 import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
 import com.qluxstory.qingshe.home.widget.MyHorizontalScrollView;
+import com.qluxstory.qingshe.me.MeUiGoto;
 import com.qluxstory.qingshe.special.UnusedUiGoto;
 
 import java.io.Serializable;
@@ -69,6 +70,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
     private String mTitle;
     private String mVfId;
     List<HomeAdcerEntity> mAdDatas;
+    private String mUrlReturn;
+    private String mReturnTitle;
 
 
     @Override
@@ -209,7 +212,10 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 getActivity().startActivity(intent);
                 break;
             case R.id.home_img3:
-                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
+                mUrlReturn = AppConfig.URL_ABOUT_RETURN;
+                mReturnTitle = "关于售后";
+                MeUiGoto.rturn(getActivity(), mUrlReturn, mReturnTitle);//关于售后
+//                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
                 break;
             case R.id.hsv:
                 Bundle b = new Bundle();

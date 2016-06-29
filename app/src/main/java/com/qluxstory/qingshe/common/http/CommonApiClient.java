@@ -56,6 +56,7 @@ import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
 import com.qluxstory.qingshe.me.dto.ExchangeVoucherDTO;
 import com.qluxstory.qingshe.me.dto.FristDTO;
 import com.qluxstory.qingshe.me.dto.IndianaRecordsDTO;
+import com.qluxstory.qingshe.me.dto.KdDTO;
 import com.qluxstory.qingshe.me.dto.LoginDTO;
 import com.qluxstory.qingshe.me.dto.ModifyDTO;
 import com.qluxstory.qingshe.me.dto.NumDTO;
@@ -762,6 +763,19 @@ public class CommonApiClient extends BaseApiClient {
         AsyncCallBack<CuringOrderDetailsResult> asyncCallBack = new AsyncCallBack<>(
                 act, callback,CuringOrderDetailsResult.class);
         post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResDtByJsonOrderCuringShowOneApi"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 快递信息
+     * @param dto
+     * @param callback
+     */
+    public static void kd(Activity act, KdDTO
+            dto, CallBack<CuringOrderDetailsResult> callback) {
+        AsyncCallBack<CuringOrderDetailsResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,CuringOrderDetailsResult.class);
+        post( getAbsoluteUrl("/API/WsPlaceOrder.asmx/ResAddExpressDeliverOrderJsonApi"), dto,
                 asyncCallBack);
     }
 

@@ -120,6 +120,34 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/details_rel_integral"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_110"
+        android:background="@color/color_ff"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/details_integral"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center"
+            android:textSize="@dimen/fs_50"
+            android:textColor="@color/color_00"/>
+
+
+        <TextView
+            android:id="@+id/details_integral"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/ds_50"
+            android:layout_alignParentRight="true"
+            android:text="@string/indiana_balance"
+            android:gravity="center"
+            android:textSize="@dimen/fs_50"
+            android:textColor="@color/color_00"/>
+
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/details_rel_money"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_110"

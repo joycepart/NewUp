@@ -51,7 +51,7 @@ public class SplViewFlowLayout extends RelativeLayout {
 
     }
 
-    private void startListen() {
+    public void startListen() {
         autoScrollHandler.removeCallbacks(runnable);
         autoScrollHandler.postDelayed(runnable, 3000);
     }
@@ -117,6 +117,7 @@ public class SplViewFlowLayout extends RelativeLayout {
     }
 
     public void updateSplView(ArrayList<ViewFlowBean> beans) {
+        initLayout();
         flipper.removeAllViews();
         linear.removeAllViews();
         final int size = beans.size();

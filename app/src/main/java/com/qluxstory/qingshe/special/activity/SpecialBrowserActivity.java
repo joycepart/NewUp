@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -53,7 +52,7 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LogUtils.e("onCreate---1","onCreate1");
-        ActivityCompat.requestPermissions(SpecialBrowserActivity.this,mPermissionList, 100);
+//        ActivityCompat.requestPermissions(SpecialBrowserActivity.this,mPermissionList, 100);
 
         image = new UMImage(SpecialBrowserActivity.this, R.drawable.logo);
         Intent mIntent = getIntent();
@@ -181,6 +180,7 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
             case R.id.share_weixin:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                         .withText(title)
+                        .withTitle(title)
                         .withMedia(image)
                         .withTargetUrl(mTargetUrl)
                         .share();
@@ -188,6 +188,7 @@ public class SpecialBrowserActivity extends BaseTitleActivity {
             case R.id.share_friend:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withText(title)
+                        .withTitle(title)
                         .withMedia(image)
                         .withTargetUrl(mTargetUrl)
                         .share();

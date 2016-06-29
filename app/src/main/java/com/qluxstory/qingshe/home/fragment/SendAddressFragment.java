@@ -85,6 +85,7 @@ public class SendAddressFragment extends BasePullFragment {
                 AppContext.set("Dis_province_city",sendEntity.getDis_city());
                 AppContext.set("Dis_province_area",sendEntity.getDis_area());
                 AppContext.set("Dis_province_address",sendEntity.getDis_address());
+                AppContext.set("Dis_only_code",sendEntity.getDis_only_code());
 
 //                consignee.setConsigneeName(sendEntity.getSto_name());
 //                consignee.setAddressInDetail(sendEntity.getDis_address());

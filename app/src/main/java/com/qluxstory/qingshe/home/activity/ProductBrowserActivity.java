@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -60,7 +59,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     private ImageView weixin,friend,weibo;
     private TextView text;
     private View mView;
-    private String mUrl,mCode,mName,mPic,mPrice,mTarget;
+    private String mUrl,mCode,mName,mPic,mPrice,mTarget,mDescription;
     String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
     UMImage image;
     String mTargetUrl;
@@ -74,7 +73,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LogUtils.e("onCreate---","onCreate");
-        ActivityCompat.requestPermissions(ProductBrowserActivity.this,mPermissionList, 100);
+        //ActivityCompat.requestPermissions(ProductBrowserActivity.this,mPermissionList, 100);
         mProductDetails = AppContext.getInstance().getProductDetails();
         Intent mIntent = getIntent();
         if (mIntent != null) {
@@ -83,6 +82,7 @@ public class ProductBrowserActivity extends BaseTitleActivity {
             mCode = mIntent.getStringExtra("code");
             mName = mIntent.getStringExtra("name");
             mPrice = mIntent.getStringExtra("price");
+            mDescription =  mIntent.getStringExtra("description");
 
             LogUtils.e("mUrl----",mUrl);
             LogUtils.e("mPic",""+mPic);
@@ -139,14 +139,16 @@ public class ProductBrowserActivity extends BaseTitleActivity {
                 break;
             case R.id.share_weixin:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-                        .withText(mName)
+                        .withText(mDescription)
+                        .withTitle(mName)
                         .withMedia(image)
                         .withTargetUrl(mTargetUrl)
                         .share();
                 break;
             case R.id.share_friend:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-                        .withText(mName)
+                        .withText(mDescription)
+                        .withTitle(mName)
                         .withMedia(image)
                         .withTargetUrl(mTargetUrl)
                         .share();

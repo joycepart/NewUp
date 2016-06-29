@@ -27,7 +27,7 @@ import com.qluxstory.qingshe.home.entity.ProductDetails;
 import butterknife.Bind;
 
 /**
- * Created by lenovo on 2016/6/26.
+ * 专业养护中添加的fragment，继承BasePullScrollViewFragment，不刷新加载，现在使用
  */
 public class MajorNewFragment extends BasePullScrollViewFragment {
     @Bind(R.id.majornew_list)
@@ -111,7 +111,7 @@ public class MajorNewFragment extends BasePullScrollViewFragment {
                 mProductDetails.setSellPrice(curingEntity.getSell_price());
                 mProductDetails.setSellPic(curingEntity.getSell_pic());
                 mProductDetails.setSellSort(curingEntity.getSell_sort());
-                HomeUiGoto.curingProductDetails(getActivity(),mUrl,curingEntity.getSell_pic(),curingEntity.getSell_only_code(),curingEntity.getSell_name(),curingEntity.getSell_price());//专业养护之商品详情
+                HomeUiGoto.curingProductDetails(getActivity(),mUrl,curingEntity.getSell_pic(),curingEntity.getSell_only_code(),curingEntity.getSell_name(),curingEntity.getSell_price(), curingEntity.getSell_description());//专业养护之商品详情
 
             }
         });

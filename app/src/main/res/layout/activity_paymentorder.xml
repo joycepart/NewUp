@@ -87,6 +87,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_30"
                 android:background="@color/color_cc"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ds_200"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:textSize="@dimen/fs_50"
+                    android:textColor="@color/color_00"
+                    android:text="@string/remarks"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ds_1"
+                    android:background="@color/color_cc"
+                    android:layout_marginLeft="@dimen/ds_30"/>
+                <EditText
+                    android:id="@+id/pay_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ds_300"
+                    android:hint="@string/most"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:paddingLeft="@dimen/ds_30"
+                    android:paddingTop="@dimen/ds_30"
+                    android:paddingBottom="@dimen/ds_30"
+                    android:text=""
+                    android:maxLength="80"
+                    android:textColor="@color/color_00"
+                    android:textSize="@dimen/fs_45"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_30"
+                android:background="@color/color_cc" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -235,6 +273,36 @@
         android:layout_marginTop="@dimen/ds_20"
         android:background="@color/color_cc" />
     <include layout="@layout/item_pay"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/pay_tv_tog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ds_140"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/ds_30"
+                    android:textSize="@dimen/fs_45"
+                    android:textColor="@color/color_00"
+                    android:text="1111"/>
+
+                <ToggleButton
+                    android:id="@+id/pay_togglebutton"
+                    android:layout_width="@dimen/ds_250"
+                    android:layout_height="@dimen/ds_100"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_marginTop="@dimen/ds_15"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:button="@drawable/ios7_btn"
+                    android:checked="false"
+                    android:text=""
+                    android:textOff=""
+                    android:textOn="" />
+
+            </RelativeLayout>
 
 </LinearLayout>
 

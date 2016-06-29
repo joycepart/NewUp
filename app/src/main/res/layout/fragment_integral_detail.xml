@@ -35,7 +35,7 @@
                     android:id="@+id/tran_detail_data"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/detail_suc"
+                    android:text=""
                     android:textSize="@dimen/fs_50"
                     android:textColor="@color/color_00"/>
 
@@ -44,27 +44,17 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detail_jia"
-                android:textSize="@dimen/fs_55"
-                android:textColor="@color/color_3c"/>
+
             <TextView
                 android:id="@+id/tran_detail_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/ds_40"
                 android:text="@string/detail_money"
                 android:textSize="@dimen/fs_55"
                 android:textColor="@color/color_3c"/>
-        </LinearLayout>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

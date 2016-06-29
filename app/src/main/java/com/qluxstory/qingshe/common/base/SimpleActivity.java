@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -60,7 +59,7 @@ public class SimpleActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        ActivityCompat.requestPermissions(SimpleActivity.this,mPermissionList, 100);
+//        ActivityCompat.requestPermissions(SimpleActivity.this,mPermissionList, 100);
 
         if (mPageValue == -1) {
             mPageValue = getIntent().getIntExtra(BUNDLE_KEY_PAGE, 0);
@@ -132,6 +131,7 @@ public class SimpleActivity extends BaseTitleActivity {
             case R.id.share_weixin:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                         .withText("夺宝岛")
+                        .withTitle("夺宝岛")
                         .withMedia(image)
                         .withTargetUrl(mUrl)
                         .share();
@@ -139,6 +139,7 @@ public class SimpleActivity extends BaseTitleActivity {
             case R.id.share_friend:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withText("夺宝岛")
+                        .withTitle("夺宝岛")
                         .withMedia(image)
                         .withTargetUrl(mUrl)
                         .share();

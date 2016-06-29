@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -18,8 +19,10 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.qluxstory.qingshe.common.base.BaseFragment;
 import com.qluxstory.qingshe.common.base.BaseHomeTitleActivity;
+import com.qluxstory.qingshe.common.base.SimplePage;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 import com.qluxstory.qingshe.common.utils.TextViewUtils;
+import com.qluxstory.qingshe.common.utils.UIHelper;
 import com.qluxstory.qingshe.curing.fragment.CuringFragment;
 import com.qluxstory.qingshe.home.fragment.HomeFragment;
 import com.qluxstory.qingshe.issue.fragment.IssueFragment;
@@ -39,7 +42,7 @@ import butterknife.Bind;
 public class MainActivity extends BaseHomeTitleActivity {
 
     public static final int TAB_NUM = 5;
-    private TextView mBaseEnsure, mBaseBack;
+//    private TextView mBaseEnsure, mBaseBack;
 
     @Bind(R.id.tv_tab_home)
     TextView mTvTabHome;
@@ -51,6 +54,7 @@ public class MainActivity extends BaseHomeTitleActivity {
     TextView mTvTabMine;
     @Bind(R.id.tv_tab_issue)
     TextView mTvTabIssue;
+    boolean bool;
 
     public LocationClient mLocationClient = null;
 
@@ -79,9 +83,19 @@ public class MainActivity extends BaseHomeTitleActivity {
 
     private int currentTab=-1; // 当前Tab页面索引
 
+    private LinearLayout mBaseEnsure,mBaseBack;
+
 
     @Override
     public void initView() {
+
+        mBaseEnsure = (LinearLayout) findViewById(R.id.base_home_titlebar_back);
+        mBaseEnsure.setOnClickListener(this);
+        mBaseBack = (LinearLayout) findViewById(R.id.base_home_titlebar_ensure);
+        mBaseBack.setOnClickListener(this);
+
+        bool = AppContext.get("isLogin",false);
+        LogUtils.e("bool---",""+bool);
         requestLocationInfo();//发请定位
         registerMessageReceiver();  // used for receive msg
         fragmentManager = getSupportFragmentManager();
@@ -202,8 +216,8 @@ public class MainActivity extends BaseHomeTitleActivity {
         }
         currentTab = idx; // 更新目标tab为当前tab
         getTitleLayout().setVisibility(View.VISIBLE);
-        mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
-        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+//        mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
+//        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         getTitleLayout().setVisibility(View.VISIBLE);
         switch (currentTab){
             case 0:
@@ -318,6 +332,52 @@ public class MainActivity extends BaseHomeTitleActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+//            case R.id.base_titlebar_back:
+//                baseGoBack();
+//                break;
+//            case R.id.base_titlebar_ensure:
+//                baseGoEnsure();
+//                break;
+            case R.id.base_home_titlebar_back:
+                baseGoBack();
+                break;
+            case R.id.base_home_titlebar_ensure:
+                baseGoEnsure();
+                break;
+            default:
+                break;
+        }
+    }
+    /**
+     * 左侧的事件
+     */
+    protected void baseGoBack() {
+        LogUtils.e("baseGoBack---","baseGoBack");
+        bool = AppContext.get("isLogin",false);
+        if(bool){
+            MeUiGoto.myIntegral(this);//我的积分
+        }else {
+            MeUiGoto.login(this);//登录
+        }
+    }
+
+    /**
+     * 右侧的事件
+     */
+    protected void baseGoEnsure() {
+        LogUtils.e("baseGoEnsure---","baseGoEnsure");
+        bool = AppContext.get("isLogin",false);
+        if(bool){
+            UIHelper.showFragment(this, SimplePage.INFORMATION);
+        }else {
+            MeUiGoto.login(this);//登录
+        }
+
+    }
 
     @Override
     protected void onResume() {
