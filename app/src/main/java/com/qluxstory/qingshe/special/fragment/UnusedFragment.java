@@ -34,6 +34,7 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
 
     @Override
     public BaseRecyclerAdapter<HotTopEntity> createAdapter() {
+
         return new UnusedAdapter();
     }
 

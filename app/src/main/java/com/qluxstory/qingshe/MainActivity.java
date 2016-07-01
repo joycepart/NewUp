@@ -203,7 +203,7 @@ public class MainActivity extends BaseHomeTitleActivity {
         showFragment(targetFragment);
         for (int i = 0; i < TAB_NUM; i++) {
             if (idx == i) {
-                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_3c));
+                mTabViews[i].setTextColor(ContextCompat.getColor(this, R.color.color_29));
                 TextViewUtils.setTextViewIcon(this, mTabViews[i],
                         mTabIconSels[i], R.dimen.bottom_tab_icon_width,
                         R.dimen.bottom_tab_icon_height, TextViewUtils.DRAWABLE_TOP);

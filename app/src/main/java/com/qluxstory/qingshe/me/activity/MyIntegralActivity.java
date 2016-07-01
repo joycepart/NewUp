@@ -1,6 +1,7 @@
 package com.qluxstory.qingshe.me.activity;
 
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -62,6 +63,7 @@ public class MyIntegralActivity extends BaseTitleActivity {
     private AnimationDrawable animationDrawable;
     //Alpha动画 - 渐变透明度
     private Animation alphaAnimation = null;
+    TranslateAnimation animation;
 
 
     @Override
@@ -73,46 +75,15 @@ public class MyIntegralActivity extends BaseTitleActivity {
     public void initView() {
         setTitleText("我的积分");
         setEnsureText("积分明细");
-//        mIntegral.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v) {
-//                animationIV.setVisibility(View.VISIBLE);
-//                animationIV.setImageResource(R.drawable.gold);
-//                animationDrawable = (AnimationDrawable) animationIV.getDrawable();
-//
-//                TranslateAnimation animation = new TranslateAnimation(0,0,-10,-500);
-//
-//                //初始化 Alpha动画
-////                alphaAnimation = AnimationUtils.loadAnimation(MyIntegralActivity.this, R.anim.gold_in);
-//                animation.setDuration(8000);//设置动画持续时间,
-//                animation.setInterpolator(new AccelerateInterpolator(50f));
-//                //动画集
-////                AnimationSet set = new AnimationSet(true);
-//////                set.addAnimation(alphaAnimation);
-////                set.addAnimation(animation);
-//
-//                animationDrawable.start();
-//                animationIV.startAnimation(animation);
-//                animation.setAnimationListener(new Animation.AnimationListener() {
-//                    @Override
-//                    public void onAnimationStart(Animation animation) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onAnimationEnd(Animation animation) {
-//                        animationIV.setVisibility(View.GONE);
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animation animation) {
-//
-//                    }
-//                });
-//            }
-//
-//        });
+        mIntegral.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                anim();
+
+            }
+
+        });
 
     }
 
@@ -233,20 +204,26 @@ public class MyIntegralActivity extends BaseTitleActivity {
         animationIV.setImageResource(R.drawable.gold);
         animationDrawable = (AnimationDrawable) animationIV.getDrawable();
 
-        TranslateAnimation animation = new TranslateAnimation(0,0,-10,-400);
+        animation = new TranslateAnimation(0,0,-10,-450);
 
         //初始化 Alpha动画
 //                alphaAnimation = AnimationUtils.loadAnimation(MyIntegralActivity.this, R.anim.gold_in);
-        animation.setDuration(7000);//设置动画持续时间,
+        animation.setDuration(6000);//设置动画持续时间,
         animation.setInterpolator(new AccelerateInterpolator(8f));
         //动画集
 //                AnimationSet set = new AnimationSet(true);
-////                set.addAnimation(alphaAnimation);
+//                set.addAnimation(alphaAnimation);
 //                set.addAnimation(animation);
 
         animationDrawable.start();
-        animationDrawable.setOneShot(true);
         animationIV.startAnimation(animation);
+       /* new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 1600);*/
+        //animationDrawable.setOneShot(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

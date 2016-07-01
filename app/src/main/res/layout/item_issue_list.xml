@@ -48,16 +48,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="@dimen/ds_400"
+            android:layout_width="@dimen/ds_350"
             android:layout_height="@dimen/ds_100"
             android:layout_marginTop="@dimen/ds_40"
-            android:scaleType="centerCrop"
             android:layout_marginLeft="@dimen/ds_30"
             android:background="@drawable/img_qiang_back"/>
             <ProgressBar
                 android:id="@+id/issue_progress"
                 android:layout_marginTop="@dimen/ds_80"
-                android:layout_width="@dimen/ds_260"
+                android:layout_width="@dimen/ds_230"
                 android:layout_height="@dimen/ds_25"
                 style="@style/ProgressBar_Mini"
                 android:layout_marginRight="@dimen/ds_30"

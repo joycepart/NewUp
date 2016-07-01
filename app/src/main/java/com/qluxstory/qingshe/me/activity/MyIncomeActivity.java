@@ -103,7 +103,7 @@ public class MyIncomeActivity extends BaseTitleActivity {
             case R.id.income_Btn:
                 if(mCashaMountMoney==null){
                     DialogUtils.showPrompt(this,"提示","暂无可提现余额","确定");
-                }else if(mCashaMountMoney.replace(".00","0").equals("")||mCashaMountMoney.equals("0")){
+                }else if(mCashaMountMoney.equals("0.00")||mCashaMountMoney.equals("0")){
                         DialogUtils.showPrompt(this,"提示","暂无可提现余额","确定");
                 }
                 else{

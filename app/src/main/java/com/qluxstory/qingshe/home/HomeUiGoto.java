@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.qluxstory.qingshe.MainActivity;
+import com.qluxstory.qingshe.SplashActivity;
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.home.activity.AddAddressActivity;
 import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
@@ -25,6 +26,16 @@ public class HomeUiGoto {
 
     public static void gotoMain(Context context){
         Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到启动页
+     * @param context
+     */
+
+    public static void gotoSplash(Context context){
+        Intent intent = new Intent(context, SplashActivity.class);
         context.startActivity(intent);
     }
 

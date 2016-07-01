@@ -172,26 +172,28 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
             mTvCity.setText(curingOrderDetails.getDis_cityAddress());
             mOrderLin.setVisibility(View.VISIBLE);
         }
-        else if(curingOrderDetails.getConsigneeType().equals("上门取送")){
+        else if(curingOrderDetails.getConsigneeType().contains("上门取送")){
             mOrderSend.setText("上门地址");
             mDetailsTvAddress.setText(curingOrderDetails.getConsigneeName()+curingOrderDetails.getDeliveredMobile());
             mTtvPri.setText(curingOrderDetails.getProvincialCity());
             mTvDetails.setText(curingOrderDetails.getAddressInDetail());
             mOrderLin.setVisibility(View.GONE);
         }
-        else if(curingOrderDetails.getConsigneeType().equals("自送门店")){
-            mOrderSend.setText("门店地址");
-            mDetailsTvAddress.setText(curingOrderDetails.getConsigneeName()+curingOrderDetails.getDeliveredMobile());
-            mTtvPri.setText(curingOrderDetails.getProvincialCity());
-            mTvDetails.setText(curingOrderDetails.getAddressInDetail());
-            mOrderLin.setVisibility(View.GONE);
-        }
+//        else if(curingOrderDetails.getConsigneeType().equals("自送门店")){
+//            mOrderSend.setText("门店地址");
+//            mDetailsTvAddress.setText(curingOrderDetails.getConsigneeName()+curingOrderDetails.getDeliveredMobile());
+//            mTtvPri.setText(curingOrderDetails.getProvincialCity());
+//            mTvDetails.setText(curingOrderDetails.getAddressInDetail());
+//            mOrderLin.setVisibility(View.GONE);
+//        }
 
 
 
         mDetailsCuringTv1.setText(curingOrderDetails.getComName());
         mDetailsCuringTv2.setText(curingOrderDetails.getOrderMoney());
         mDetailsCuringTv3.setText(curingOrderDetails.getComCount());
+        LogUtils.e("curingOrderDetails.getOrderState()----", curingOrderDetails.getOrderState());
+        LogUtils.e("curingOrderDetails.getIsovertime()----", curingOrderDetails.getIsovertime());
         if(curingOrderDetails.getOrderState().equals("0")){
             if(curingOrderDetails.getIsovertime().equals("0")){
                 mDetailsTvStatu.setText("未付款");
@@ -225,6 +227,26 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
         else if(curingOrderDetails.getOrderState().equals("10")){
             mDetailsTvStatu.setText("已付款");
             mDetailsTv.setVisibility(View.GONE);
+            if(TextUtils.isEmpty(curingOrderDetails.getExpressDeliverCode())){
+                if(curingOrderDetails.getOrderState().equals("10")&&curingOrderDetails.getConsigneeType().equals("全国包回邮")){
+                    mKd.setVisibility(View.VISIBLE);
+                    mLin1.setVisibility(View.VISIBLE);
+                    mLin2.setVisibility(View.GONE);
+                    mDetailsTv.setText("上传快递信息");
+                    mDetailsTv.setVisibility(View.VISIBLE);
+                }else {
+                    mKd.setVisibility(View.GONE);
+                    mDetailsTv.setVisibility(View.GONE);
+                }
+            }else {
+                mKd.setVisibility(View.VISIBLE);
+                mLin1.setVisibility(View.GONE);
+                mLin2.setVisibility(View.VISIBLE);
+                mKdTv1.setText("快递公司："+curingOrderDetails.getExpressDeliverName());
+                mKdTv2.setText("快递单号："+curingOrderDetails.getExpressDeliverCode());
+            }
+
+
         }
         else if(curingOrderDetails.getOrderState().equals("Y001")){
             mDetailsTvStatu.setText("取件中");
@@ -239,26 +261,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
             mDetailsTv.setVisibility(View.GONE);
         }
 
-        if(TextUtils.isEmpty(curingOrderDetails.getExpressDeliverCode())){
-            if(curingOrderDetails.getOrderState().equals("10")&&curingOrderDetails.getConsigneeType().equals("全国包回邮")){
-                mKd.setVisibility(View.VISIBLE);
-                mLin1.setVisibility(View.VISIBLE);
-                mLin2.setVisibility(View.GONE);
-                mDetailsTv.setText("上传快递信息");
-                mDetailsTv.setVisibility(View.VISIBLE);
-            }else {
-                mKd.setVisibility(View.GONE);
-                mDetailsTv.setVisibility(View.GONE);
-            }
-        }else {
-            mKd.setVisibility(View.VISIBLE);
-            mLin1.setVisibility(View.GONE);
-            mLin2.setVisibility(View.VISIBLE);
-            mKdTv1.setText("快递公司："+curingOrderDetails.getExpressDeliverName());
-            mKdTv2.setText("快递单号："+curingOrderDetails.getExpressDeliverCode());
-        }
-        LogUtils.e("curingOrderListEntity.getServerKHImg()----",curingOrderDetails.getServerKHImg());
-        LogUtils.e("curingOrderListEntity.getApp_show_pic()()----",curingOrderDetails.getApp_show_pic());
+
         ImageLoaderUtils.displayImage(curingOrderDetails.getApp_show_pic(),mDetailsCuringImg);
         ImageLoaderUtils.displayImage(curingOrderDetails.getServerKHImg(),mDetailsTitImg);
     }

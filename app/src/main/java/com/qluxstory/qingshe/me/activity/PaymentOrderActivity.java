@@ -229,7 +229,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
             mSendAddress.setText(paymentEntity.getSto_name()+ paymentEntity.getSto_phone());
             mSendVity.setText(paymentEntity.getDis_cityAddress());
 
-        }else if(paymentEntity.getConsigneeType().equals("上门取送")){
+        }else if(paymentEntity.getConsigneeType().contains("上门取送")){
             mPlaceAddress.setVisibility(View.VISIBLE);
             mPlaceSend.setVisibility(View.GONE);
             mTime.setVisibility(View.VISIBLE);

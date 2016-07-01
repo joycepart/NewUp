@@ -397,7 +397,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         tipPopup.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {//确定的点击监听
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                if ("全国包回邮".equals(tList.get(options1))) {
+                String str = tList.get(options1);
+                if ("全国包回邮".equals(str)) {
                     mPlaTv.setText("全国包回邮");
                     mTime.setVisibility(View.GONE);
                     mPlaceAddress.setVisibility(View.VISIBLE);
@@ -412,8 +413,8 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     mSendAdd.setText("");
                     rturn = takeEntity.get(0).getDis_type_code();
 
-                } else if("上门取送".equals(tList.get(options1))){
-                    mPlaTv.setText("上门取送");
+                } else if(str.contains("上门取送")){
+                    mPlaTv.setText(str);
                     mPlaceAddress.setVisibility(View.VISIBLE);
                     mPlaceSend.setVisibility(View.GONE);
                     mTime.setVisibility(View.VISIBLE);
@@ -426,20 +427,20 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                     rturn = takeEntity.get(1).getDis_type_code();
 
                 }
-                else if("自送门店".equals(tList.get(options1))){
-                    mPlaTv.setText("自送门店");
-                    mPlaceAddress.setVisibility(View.GONE);
-                    mPlaceSend.setVisibility(View.VISIBLE);
-                    mTime.setVisibility(View.VISIBLE);
-                    mSendTv.setText("选择门店：");
-                    mTvTime.setText("门店工作时间：");
-                    mAddTime.setText("10:00 - 18:00");
-                    mSendAddress.setText("");
-                    mSendVity.setText("");
-                    mSendAdd.setText("");
-                    rturn = takeEntity.get(2).getDis_type_code();
-
-                }
+//                else if("自送门店".equals(tList.get(options1))){
+//                    mPlaTv.setText("自送门店");
+//                    mPlaceAddress.setVisibility(View.GONE);
+//                    mPlaceSend.setVisibility(View.VISIBLE);
+//                    mTime.setVisibility(View.VISIBLE);
+//                    mSendTv.setText("选择门店：");
+//                    mTvTime.setText("门店工作时间：");
+//                    mAddTime.setText("10:00 - 18:00");
+//                    mSendAddress.setText("");
+//                    mSendVity.setText("");
+//                    mSendAdd.setText("");
+//                    rturn = takeEntity.get(2).getDis_type_code();
+//
+//                }
 
             }
         });

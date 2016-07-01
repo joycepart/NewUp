@@ -3,13 +3,18 @@ package com.qluxstory.qingshe.home.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.qluxstory.ptrrecyclerview.BaseRecyclerAdapter;
 import com.qluxstory.ptrrecyclerview.BaseRecyclerViewHolder;
 import com.qluxstory.ptrrecyclerview.BaseSimpleRecyclerAdapter;
 import com.qluxstory.qingshe.AppConfig;
+import com.qluxstory.qingshe.AppContext;
 import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.R;
 import com.qluxstory.qingshe.common.base.BasePullScrollViewFragment;
@@ -77,6 +82,8 @@ public class HomeFragment extends BasePullScrollViewFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
+
+
         mHomeImgDian.setOnClickListener(this);
         mVfLayout.setOnItemClickListener(new ViewFlowLayout.OnItemClickListener() {
             @Override
@@ -101,9 +108,12 @@ public class HomeFragment extends BasePullScrollViewFragment {
 
             @Override
             public void bindData(BaseRecyclerViewHolder holder, HomeSpecialEntity homeSpecialEntity, int position) {
-                mId = homeSpecialEntity.getID();
-                mTitle = homeSpecialEntity.getSpec_name();
+                int screenWidth = AppContext.get("screenWidth", 0);
                 ImageView iv=holder.getView(R.id.iv);
+                ViewGroup.LayoutParams layoutParam = iv.getLayoutParams();
+                layoutParam.height = screenWidth/2;
+                layoutParam.width = screenWidth;
+                iv.setLayoutParams(layoutParam);
                 ImageLoaderUtils.displayImage(homeSpecialEntity.getSpec_pic(),iv);
             }
 
@@ -113,6 +123,9 @@ public class HomeFragment extends BasePullScrollViewFragment {
         mSpecialListAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View itemView, Object itemBean, int position) {
+                HomeSpecialEntity homeSpecialEntity = (HomeSpecialEntity) itemBean;
+                mId = homeSpecialEntity.getID();
+                mTitle = homeSpecialEntity.getSpec_name();
                 UnusedUiGoto.special(getActivity(),AppConfig.BASE_URL+AppConfig.Server_Special+mId,mTitle,mId);
             }
         });
@@ -131,6 +144,9 @@ public class HomeFragment extends BasePullScrollViewFragment {
                         ArrayList<ViewFlowBean> list = new ArrayList<>();
                         for (int i = 0; i < mAdDatas.size(); i++) {
                             ViewFlowBean bean = new ViewFlowBean();
+                            LogUtils.e("0----",""+mAdDatas.get(0).getSpecPic());
+                            LogUtils.e("1----",""+mAdDatas.get(1).getSpecPic());
+                            LogUtils.e("2----",""+mAdDatas.get(2).getSpecPic());
                             bean.setImgUrl(AppConfig.BASE_URL + mAdDatas.get(i).getSpecPic());
                             list.add(bean);
                         }

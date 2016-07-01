@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -26,7 +27,7 @@ public class BrowserActivity extends BaseTitleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        LogUtils.e("onCreate---","onCreate");
+        LogUtils.e("onCreate---", "onCreate");
         Intent mIntent = getIntent();
         if (mIntent != null) {
             strUrl = mIntent.getStringExtra("url");
@@ -35,9 +36,7 @@ public class BrowserActivity extends BaseTitleActivity {
 
         }
         super.onCreate(savedInstanceState);
-        if (!TextUtils.isEmpty(title)) {
-            setTitleText(title);
-        }
+
     }
 
     @Override
@@ -45,6 +44,19 @@ public class BrowserActivity extends BaseTitleActivity {
         LogUtils.e("initView---","initView");
         mWebView = (ProgressWebView) findViewById(R.id.browser_webview);
         mWebView.setWebViewClient(new MyWebViewClient());
+        if (!TextUtils.isEmpty(title)) {
+            setTitleText(title);
+        }else {
+
+            mWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    setTitleText(view.getTitle());
+//                    BrowserActivity.this.setTitle(view.getTitle());
+                }
+            });
+        }
+
 
 
     }
