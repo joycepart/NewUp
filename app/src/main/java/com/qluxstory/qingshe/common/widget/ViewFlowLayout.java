@@ -110,11 +110,11 @@ public class ViewFlowLayout extends RelativeLayout {
         linear.removeAllViews();
         map = new HashMap();
         final int size = beans.size();
-        final ImageView imageView = new ImageView(context_);
+
 
         for (int i = 0; i < size; i++) {
             final ViewFlowBean bean = beans.get(i);
-            imageView.setTag(bean);
+
             imgUrl = bean.getImgUrl();
             ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
 
@@ -122,6 +122,7 @@ public class ViewFlowLayout extends RelativeLayout {
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     count++;
                     int screenWidth = AppContext.get("screenWidth", 0);
+                    LogUtils.e("isfirst----", "" + isfirst);
 
                     if (isfirst) {
                         isfirst = false;
@@ -135,11 +136,13 @@ public class ViewFlowLayout extends RelativeLayout {
                                 TDevice.px2dip(getContext(), loadedImage.getWidth()));
                     }
 
-                    imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+//                    imageView.setImageBitmap(loadedImage);
+//                    flipper.addView(imageView);
 
                     imgUrl = imageUri;
-
                     map.put(imgUrl, loadedImage);
+                    LogUtils.e("map----",""+map);
 
                     ImageView dot = new ImageView(context_);
                     MarginLayoutParams lp = new LinearLayout.LayoutParams(18, 18);
@@ -147,17 +150,34 @@ public class ViewFlowLayout extends RelativeLayout {
                     dot.setLayoutParams(lp);
                     dot.setImageResource(R.drawable.discount_dot_unsel);
                     linear.addView(dot);
+
+
                     if (count == size) {
                         for (int i = 0; i < size; i++) {
+                            ImageView imageView = new ImageView(context_);
+                            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                             imageView.setImageBitmap((Bitmap) map.get(beans.get(i).getImgUrl()));
                             flipper.addView(imageView);
                         }
-                        flipper.setDisplayedChild(0);
-                        ((ImageView) linear.getChildAt(0)).setImageResource(R.drawable.discount_dot_sel);
-                        //图片全部加载完毕
-                        startListen();
+
+
+                        if(size ==1){
+                            linear.setVisibility(View.GONE);
+                        }else {
+                            linear.setVisibility(View.VISIBLE);
+                            flipper.setDisplayedChild(0);
+                            ((ImageView) linear.getChildAt(0)).setImageResource(R.drawable.discount_dot_sel);
+                            //图片全部加载完毕
+                            startListen();
+                        }
+
+
 
                     }
+
+
+
+
                 }
 
             });

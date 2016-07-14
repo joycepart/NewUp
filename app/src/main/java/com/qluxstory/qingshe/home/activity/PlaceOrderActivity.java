@@ -205,6 +205,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
     private String mCouponType,mDiscountNumber,mCouponMoneyEqual,mCouponmoney,mCoupon;
     private  int t;
     private String mIntegralNum;
+    private String mOlderNum;
 
     @Override
     protected int getContentResId() {
@@ -222,6 +223,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
                         123);
             }
         }
+        mOlderNum = "";
         mEditText.clearFocus();
         mProductDetails = AppContext.getInstance().getProductDetails();
         consignee = AppContext.getInstance().getConsignee();
@@ -540,7 +542,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
 
     private void reqTake() {
         TakeDTO dto = new TakeDTO();
-        String mCity = AppContext.get("mCity","");
+        String mCity = AppContext.get("mCity", "");
         if(TextUtils.isEmpty(mCity)){
             dto.setCity("北京市");
             LogUtils.e("dto.setCity---","定位失败");
@@ -554,12 +556,12 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onSuccess(TakeResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("取送方式成功");
-                    if(null==result.getData()){
-                        LogUtils.e("null------","null");
+                    if (null == result.getData()) {
+                        LogUtils.e("null------", "null");
                         return;
-                    }else {
+                    } else {
                         takeEntity = result.getData();
-                        LogUtils.e("getDis_type_name------",""+takeEntity.get(0).getDis_type_name());
+                        LogUtils.e("getDis_type_name------", "" + takeEntity.get(0).getDis_type_name());
                         if (!TextUtils.isEmpty(takeEntity.get(0).getDis_type_name())) {
                             mPlaTv.setText(takeEntity.get(0).getDis_type_name());
                             rturn = takeEntity.get(0).getDis_type_code();
@@ -623,7 +625,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
         dto.setCustomernote(mEditText.getText().toString());
         dto.setServiceMoney("0");
         dto.setReqType("service");
-        dto.setOldOrderNum("0");
+        dto.setOldOrderNum(mOlderNum);
         dto.setShoudamoney(mPrice);
         dto.setBase64string(mMemberheadimg);
         dto.setServerName(mProductDetails.getSellSort());
@@ -634,6 +636,7 @@ public class PlaceOrderActivity extends BaseTitleActivity {
             public void onSuccess(PaypayResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("去支付成功");
+                    mOlderNum = result.getData().get(0).getOrderNum();
                     if(result.getData().get(0).getApplyType().equals("支付宝")){
                         reqAlipayPay(result.getData());
                         mSetPayBtn.setEnabled(true);

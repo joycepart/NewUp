@@ -20,6 +20,7 @@ import com.qluxstory.qingshe.common.utils.ImageLoaderUtils;
 import com.qluxstory.qingshe.common.utils.LogUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 轮播图
@@ -116,26 +117,38 @@ public class SplViewFlowLayout extends RelativeLayout {
         }
     }
 
-    public void updateSplView(ArrayList<ViewFlowBean> beans) {
+    HashMap map ;
+    private  String imgUrl;
+
+    public void updateSplView(final ArrayList<ViewFlowBean> beans) {
         initLayout();
         flipper.removeAllViews();
         linear.removeAllViews();
+        map = new HashMap();
         final int size = beans.size();
         ccsize=size;
         for (int i = 0; i < size; i++) {
             final ViewFlowBean bean = beans.get(i);
-            final ImageView imageView = new ImageView(context_);
-            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setTag(bean);
             LogUtils.e("bean----",""+bean);
             ImageLoader.getInstance().loadImage(bean.getImgUrl(), ImageLoaderUtils.getDefaultOptions(), new SimpleImageLoadingListener() {
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    imageView.setImageBitmap(loadedImage);
-                    flipper.addView(imageView);
-                    startListen();
+                    imgUrl = imageUri;
+                    map.put(imgUrl, loadedImage);
+
+                    if (count == size) {
+                        for (int i = 0; i < size; i++) {
+                            ImageView imageView = new ImageView(context_);
+                            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                            imageView.setImageBitmap((Bitmap) map.get(beans.get(i).getImgUrl()));
+                            flipper.addView(imageView);
+                        }
+                        //图片全部加载完毕
+//                        startListen();
+
+                    }
+
                     cc++;
                     checkSplView();
                 }

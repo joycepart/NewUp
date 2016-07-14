@@ -129,6 +129,8 @@ public abstract class BaseFragment extends Fragment implements
 
     }
 
+
+
     /**
      * 布局资源文件
      *

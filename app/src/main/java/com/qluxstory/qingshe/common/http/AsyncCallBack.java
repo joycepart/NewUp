@@ -63,7 +63,7 @@ public class AsyncCallBack<T> implements Callback {
 			//LogUtils.e("原始数据："+reader);
 			int startIndex=reader.indexOf("{",reader.indexOf("{")+1);
 			int endIndex=reader.lastIndexOf("]");
-			reader=reader.substring(startIndex,endIndex);
+			reader=reader.substring(startIndex, endIndex);
 			LogUtils.e("response success json-->" + reader);
 			if(reader.contains("[{}]")){
 				reader=reader.replace("[{}]","null");

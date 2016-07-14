@@ -5,10 +5,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.qluxstory.qingshe.R;
-import com.qluxstory.qingshe.common.adapter.TabListAdapter;
+import com.qluxstory.qingshe.me.adapter.CuringOrderTabListAdapter;
 import com.qluxstory.qingshe.common.base.BaseTitleActivity;
 import com.qluxstory.qingshe.common.widget.SlidingTabLayout;
-import com.qluxstory.qingshe.me.fragment.CuringOrderListFragment;
+import com.qluxstory.qingshe.me.fragment.CuringOrderNewListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +27,24 @@ public class CuringOrderActivity extends BaseTitleActivity {
     SlidingTabLayout mCuringTab;
     @Bind(R.id.curing_content)
     ViewPager mCuringContent;
-    private TabListAdapter mAdapter;
+    private CuringOrderTabListAdapter mAdapter;
     private List<Fragment> fragmentList;
 
     @Override
     public void initView() {
         setTitleText("养护订单列表");
         fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(CuringOrderListFragment.newInstance(TAB_A));
-        fragmentList.add(CuringOrderListFragment.newInstance(TAB_B));
-        fragmentList.add(CuringOrderListFragment.newInstance(TAB_C));
-        fragmentList.add(CuringOrderListFragment.newInstance(TAB_D));
+//        fragmentList.add(CuringOrderListFragment.newInstance(TAB_A));
+//        fragmentList.add(CuringOrderListFragment.newInstance(TAB_B));
+//        fragmentList.add(CuringOrderListFragment.newInstance(TAB_C));
+//        fragmentList.add(CuringOrderListFragment.newInstance(TAB_D));
+
+        fragmentList.add(CuringOrderNewListFragment.newInstance(TAB_A));
+        fragmentList.add(CuringOrderNewListFragment.newInstance(TAB_B));
+        fragmentList.add(CuringOrderNewListFragment.newInstance(TAB_C));
+        fragmentList.add(CuringOrderNewListFragment.newInstance(TAB_D));
         String titles[] = getResources().getStringArray(R.array.curing_order_tab);
-        mAdapter = new TabListAdapter(getSupportFragmentManager(),this,titles,fragmentList);
+        mAdapter = new CuringOrderTabListAdapter(getSupportFragmentManager(),this,titles,fragmentList);
         mCuringContent.setAdapter(mAdapter);
         mCuringContent.setOffscreenPageLimit(fragmentList.size());
         mCuringTab.setSelectedIndicatorColors(getResources().getColor(R.color.color_33));

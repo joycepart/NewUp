@@ -16,6 +16,8 @@ import com.qluxstory.qingshe.home.HomeUiGoto;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * 引导页
  */
@@ -41,11 +43,17 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 获取屏幕宽高（方法1）
+        int screenWidth = getWindowManager().getDefaultDisplay().getWidth(); // 屏幕宽（像素，如：480px）
+        int screenHeight = getWindowManager().getDefaultDisplay().getHeight(); // 屏幕高（像素，如：800p）
+        AppContext.set("screenWidth",screenWidth);
+        AppContext.set("screenHeight", screenHeight);
 
         guide = AppContext.get("guide",false);
         LogUtils.e("guide----",""+guide);
         if(guide){
             HomeUiGoto.gotoSplash(GuideActivity.this);
+            finish();
 
         }else {
             guide = true;
@@ -233,4 +241,36 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+    @Override
+    protected void onResume() {
+        LogUtils.e("onResume----guide","onResume");
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        LogUtils.e("onPause----guide","onPause");
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onStop() {
+        LogUtils.e("onStop----guide", "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LogUtils.e("onDestroy----guide","onDestroy");
+        finish();
+        super.onDestroy();
+    }
+
     }

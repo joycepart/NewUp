@@ -37,11 +37,11 @@
     android:visibility="gone"
     android:id="@+id/place_frame"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="320dp">
                 <ImageView
                     android:id="@+id/place_order_img_pon"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ds_600"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
                     android:background="@drawable/tianjia"/>

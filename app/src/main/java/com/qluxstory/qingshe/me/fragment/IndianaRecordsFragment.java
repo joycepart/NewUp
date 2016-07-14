@@ -60,12 +60,12 @@ public class IndianaRecordsFragment extends BaseListFragment<RecordsEntity> {
                     LogUtils.e("个人夺宝记录成功");
                     mErrorLayout.setErrorMessage("暂无夺宝记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(null==result.getData()){
-                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
-                    }else {
+//                    if(null==result.getData()){
+//                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+//                    }else {
                         requestDataSuccess(result);
                         setDataResult(result.getData());
-                    }
+//                    }
                 }
 
             }

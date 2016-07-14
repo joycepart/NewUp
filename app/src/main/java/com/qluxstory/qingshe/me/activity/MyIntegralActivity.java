@@ -4,8 +4,12 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,19 +43,19 @@ public class MyIntegralActivity extends BaseTitleActivity {
     @Bind(R.id.integral_tv)
     TextView mIntegral;
     @Bind(R.id.tv_one)
-    TextView mOne;
+    Button mOne;
     @Bind(R.id.tv_two)
-    TextView mTwo;
+    Button mTwo;
     @Bind(R.id.tv_three)
-    TextView mThree;
+    Button mThree;
     @Bind(R.id.tv_four)
-    TextView mFour;
+    Button mFour;
     @Bind(R.id.tv_five)
-    TextView mFive;
+    Button mFive;
     @Bind(R.id.tv_six)
-    TextView mSix;
+    Button mSix;
     @Bind(R.id.tv_server)
-    TextView mServer;
+    Button mServer;
     @Bind(R.id.tv_rule)
     TextView mTule;
     @Bind(R.id.animationIV)
@@ -79,7 +83,7 @@ public class MyIntegralActivity extends BaseTitleActivity {
         {
             @Override
             public void onClick(View v) {
-                anim();
+//                anim();
 
             }
 
@@ -201,29 +205,25 @@ public class MyIntegralActivity extends BaseTitleActivity {
 
     private void anim() {
         animationIV.setVisibility(View.VISIBLE);
+
+        AnimationSet set = new AnimationSet(false);
+
+        // 渐变动画
+        AlphaAnimation aa = new AlphaAnimation(1, 0.3f);// 由完全透明到不透明
+        //帧动画
         animationIV.setImageResource(R.drawable.gold);
         animationDrawable = (AnimationDrawable) animationIV.getDrawable();
-
+        //位移动画
         animation = new TranslateAnimation(0,0,-10,-450);
-
-        //初始化 Alpha动画
-//                alphaAnimation = AnimationUtils.loadAnimation(MyIntegralActivity.this, R.anim.gold_in);
-        animation.setDuration(6000);//设置动画持续时间,
-        animation.setInterpolator(new AccelerateInterpolator(8f));
-        //动画集
-//                AnimationSet set = new AnimationSet(true);
-//                set.addAnimation(alphaAnimation);
-//                set.addAnimation(animation);
-
+        animation.setDuration(1600);//设置动画持续时间
+        animation.setFillAfter(true);// 动画播放完之后，停留在当前状态
+        animation.setInterpolator(new LinearInterpolator());
+        // 添加到动画集
+        set.addAnimation(aa);
+        set.addAnimation(animation);
         animationDrawable.start();
-        animationIV.startAnimation(animation);
-       /* new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        animationIV.startAnimation(set);
 
-            }
-        }, 1600);*/
-        //animationDrawable.setOneShot(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

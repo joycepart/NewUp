@@ -248,29 +248,31 @@ public class SettlementActivity extends BaseTitleActivity {
             public void onSuccess(SettlementResult result) {
                 if(AppConfig.SUCCESS.equals(result.getStatus())){
                     LogUtils.e("结算成功");
+                    mRecCode = result.getData().get(0).getOrderNum();
+                    if(mSetZhi.isChecked()){
+                        reqAlipayPay(result.getData());
+                        mPayBtn.setEnabled(true);
+                    }else if(mSetWx.isChecked()){
+                        reqWx(result.getData());
+                        mPayBtn.setEnabled(true);
+
+                    }else if(mSetHui.isChecked()){
+                        issueProduct.setmBalance("");
+                        issueProduct.setmRecCode("");
+                        issueProduct.setmBatCode("");
+                        issueProduct.setmSnaCode("");
+                        issueProduct.setmSnaTerm("");
+                        issueProduct.setmPicUrl("");
+                        issueProduct.setmTotalCount("");
+                        issueProduct.setmSnaTitle("");
+                        IssueUiGoto.payment(SettlementActivity.this);//支付结果页
+                        mPayBtn.setEnabled(true);
+
+
+                    }
+
                 }
 
-                if(mSetZhi.isChecked()){
-                    reqAlipayPay(result.getData());
-                    mPayBtn.setEnabled(true);
-                }else if(mSetWx.isChecked()){
-                    reqWx(result.getData());
-                    mPayBtn.setEnabled(true);
-
-                }else if(mSetHui.isChecked()){
-                    issueProduct.setmBalance("");
-                    issueProduct.setmRecCode("");
-                    issueProduct.setmBatCode("");
-                    issueProduct.setmSnaCode("");
-                    issueProduct.setmSnaTerm("");
-                    issueProduct.setmPicUrl("");
-                    issueProduct.setmTotalCount("");
-                    issueProduct.setmSnaTitle("");
-                    IssueUiGoto.payment(SettlementActivity.this);//支付结果页
-                    mPayBtn.setEnabled(true);
-
-
-                }
 
 
             }

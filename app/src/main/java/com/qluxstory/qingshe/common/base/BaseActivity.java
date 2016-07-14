@@ -101,6 +101,17 @@ public abstract class BaseActivity  extends FragmentActivity implements
     }
 
     /**
+     * 提交中效果
+     */
+    public void showDialogMit() {
+        if(mLoadingDialog!=null&&mLoadingDialog.isShowing()){
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+        mLoadingDialog = DialogUtils.showMit(this);
+    }
+
+    /**
      * 加载中效果
      *
      * @param msg 提示信息

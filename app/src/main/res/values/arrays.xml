@@ -11,4 +11,8 @@
         <item>补色修复</item>
         <item>专业维修</item>
     </string-array>
+    <string-array name="product_order_tab">
+        <item>商品详情</item>
+        <item>商品评论</item>
+    </string-array>
 </resources>

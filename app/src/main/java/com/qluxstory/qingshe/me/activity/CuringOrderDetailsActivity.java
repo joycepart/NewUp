@@ -101,7 +101,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
     TextView mKdTv2;
     CuringOrderListEntity entity;
     CuringOrderDetailsEntity curingOrderDetails;
-    private String mOrdNum;
+    private String mOrdNum,mCode,mPic;
 
     @Override
     protected int getContentResId() {
@@ -150,6 +150,7 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
     private void bindResult(List<CuringOrderDetailsEntity> data) {
         curingOrderDetails = data.get(0);
         mOrdNum = curingOrderDetails.getOrderNum();
+        mCode = curingOrderDetails.getComOnlyCode();
         LogUtils.e("bindResult----",mOrdNum);
         mDetailsTvNum.setText(curingOrderDetails.getOrderNum());
         mDetailsTvData.setText(curingOrderDetails.getOrderSingleTime());
@@ -222,7 +223,8 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
         }
         else if(curingOrderDetails.getOrderState().equals("5")){
             mDetailsTvStatu.setText("已收货");
-            mDetailsTv.setVisibility(View.GONE);
+            mDetailsTv.setVisibility(View.VISIBLE);
+            mDetailsTv.setText("发表评论");
         }
         else if(curingOrderDetails.getOrderState().equals("10")){
             mDetailsTvStatu.setText("已付款");
@@ -256,13 +258,19 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
             mDetailsTvStatu.setText("已接收");
             mDetailsTv.setVisibility(View.GONE);
         }
+        else if(curingOrderDetails.getOrderState().equals("11")){
+            mDetailsTvStatu.setText("已评论");
+            mDetailsTv.setVisibility(View.GONE);
+        }
         else {
             mDetailsTvStatu.setText("处理中");
             mDetailsTv.setVisibility(View.GONE);
         }
 
+        mPic = curingOrderDetails.getApp_show_pic();
 
-        ImageLoaderUtils.displayImage(curingOrderDetails.getApp_show_pic(),mDetailsCuringImg);
+
+        ImageLoaderUtils.displayImage(mPic,mDetailsCuringImg);
         ImageLoaderUtils.displayImage(curingOrderDetails.getServerKHImg(),mDetailsTitImg);
     }
 
@@ -277,10 +285,19 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
                 startActivity(intent); //电话客服
                 break;
             case R.id.order_details_tv:
+
                 if(curingOrderDetails.getOrderState().equals("10")&&curingOrderDetails.getConsigneeType().equals("全国包回邮")){
                     reqKd();
 
-                }else {
+                }
+                else if(curingOrderDetails.getOrderState().equals("5")){
+                    Bundle b = new Bundle();
+                    b.putString("pic",mPic);
+                    b.putString("mOrdNum",mOrdNum);
+                    b.putString("mCode",mCode);
+                    MeUiGoto.comment(this,b);//发表评论
+                }
+                else {
                     Bundle b = new Bundle();
                     b.putString("mOrdNum",mOrdNum);
                     MeUiGoto.payment(mContext,b);//支付订单详情
@@ -307,7 +324,14 @@ public class CuringOrderDetailsActivity extends BaseTitleActivity {
             public void onSuccess(CuringOrderDetailsResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.d("快递信息成功");
+                    String str1 = mEt1.getText().toString();
+                    String str2 = mEt2.getText().toString();
                     mDetailsTv.setVisibility(View.GONE);
+                    mKd.setVisibility(View.VISIBLE);
+                    mLin1.setVisibility(View.GONE);
+                    mLin2.setVisibility(View.VISIBLE);
+                    mKdTv1.setText(str1);
+                    mKdTv2.setText(str2);
                 }
 
             }

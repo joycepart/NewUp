@@ -56,12 +56,12 @@ public class IntegralFragment extends BaseListFragment<IntegralDetailEntity> {
                     LogUtils.d("积分获取列表成功");
                     mErrorLayout.setErrorMessage("暂无积分记录",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless2,mErrorLayout.FLAG_NODATA);
-                    if(result.getData()==null){
-                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
-                    }else {
+//                    if(result.getData()==null){
+//                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+//                    }else {
                         requestDataSuccess(result);
                         setDataResult(result.getData());
-                    }
+//                    }
 
 
                 }

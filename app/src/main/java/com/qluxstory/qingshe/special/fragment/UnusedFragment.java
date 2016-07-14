@@ -61,12 +61,12 @@ public class UnusedFragment extends BaseListFragment<HotTopEntity> {
                     mTopData = result.getData();
                     mErrorLayout.setErrorMessage("暂无专题",mErrorLayout.FLAG_NODATA);
                     mErrorLayout.setErrorImag(R.drawable.siaieless1,mErrorLayout.FLAG_NODATA);
-                    if(null==mTopData){
-                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
-                    }else {
+//                    if(null==mTopData){
+//                        mErrorLayout.setErrorType(EmptyLayout.NODATA);
+//                    }else {
                         requestDataSuccess(result);//获取到数据后调用该语句，进行数据缓存
                         setDataResult(mTopData);//设置数据
-                    }
+//                    }
                 }
 
             }

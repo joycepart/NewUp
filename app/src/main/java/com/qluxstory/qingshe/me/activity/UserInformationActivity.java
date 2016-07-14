@@ -252,7 +252,9 @@ public class UserInformationActivity extends BaseTitleActivity {
                     Bundle bundle = data.getExtras();
                     Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
                     Bitmap bm = PhotoSystemUtils.comp(bitmap);
-                    LogUtils.e("bitmap", "" + bitmap);
+
+                    mUserImg.setImageBitmap(bitmap);
+                    LogUtils.e("bm----", "" + bitmap);
 
                     FileOutputStream b = null;
                     File file = new File("/sdcard/myImage/");

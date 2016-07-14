@@ -38,7 +38,7 @@ public class CuringOrderListEntity  extends BaseEntity {
             */
     private String ComCount;
     /*
-          状态
+          状态    已收货(5),已评价(11) 未评价(5)
             */
     private String OrderState;
     /*

@@ -8,6 +8,9 @@ import com.qluxstory.qingshe.common.entity.BaseEntity;
 import com.qluxstory.qingshe.home.dto.AddAddressDTO;
 import com.qluxstory.qingshe.home.dto.CuringDTO;
 import com.qluxstory.qingshe.home.dto.PayDTO;
+import com.qluxstory.qingshe.home.dto.ProductCommentDTO;
+import com.qluxstory.qingshe.home.dto.PurchaseGoodsDTO;
+import com.qluxstory.qingshe.home.dto.SKProduct;
 import com.qluxstory.qingshe.home.dto.SelectDTO;
 import com.qluxstory.qingshe.home.dto.SendDTO;
 import com.qluxstory.qingshe.home.dto.TakeDTO;
@@ -20,6 +23,10 @@ import com.qluxstory.qingshe.home.entity.HomeAdcerResult;
 import com.qluxstory.qingshe.home.entity.HomeRecomendResult;
 import com.qluxstory.qingshe.home.entity.HomeSpecialResult;
 import com.qluxstory.qingshe.home.entity.PaypayResult;
+import com.qluxstory.qingshe.home.entity.ProductCommentResult;
+import com.qluxstory.qingshe.home.entity.PurchaseGoodsResult;
+import com.qluxstory.qingshe.home.entity.PurchaseResult;
+import com.qluxstory.qingshe.home.entity.SKResult;
 import com.qluxstory.qingshe.home.entity.SelectResult;
 import com.qluxstory.qingshe.home.entity.SendResult;
 import com.qluxstory.qingshe.home.entity.SplashResult;
@@ -50,6 +57,7 @@ import com.qluxstory.qingshe.issue.entity.SettlementResult;
 import com.qluxstory.qingshe.issue.entity.ToAnnounceResult;
 import com.qluxstory.qingshe.issue.entity.WinningResult;
 import com.qluxstory.qingshe.me.dto.CancelDTO;
+import com.qluxstory.qingshe.me.dto.CommentDTO;
 import com.qluxstory.qingshe.me.dto.ConfirmDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderDetailsDTO;
 import com.qluxstory.qingshe.me.dto.CuringOrderListDTO;
@@ -292,6 +300,19 @@ public class CommonApiClient extends BaseApiClient {
                 asyncCallBack);
     }
 
+    /**
+     * 养护之商品详情之评论
+     * @param dto
+     * @param callback
+     */
+    public static void productComment(Fragment fragment, ProductCommentDTO
+            dto, CallBack<ProductCommentResult> callback) {
+        AsyncCallBack<ProductCommentResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,ProductCommentResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/GetAllReview"), dto,
+                asyncCallBack);
+    }
+
 
     /**
      * 往期揭晓
@@ -526,7 +547,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<CuringResult> callback) {
         AsyncCallBack<CuringResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback,CuringResult.class);
-        post( getAbsoluteUrl("/webservice/Parts.asmx/GetSellServer"), dto,
+        post(getAbsoluteUrl("/webservice/Parts.asmx/GetSellServer"), dto,
                 asyncCallBack);
     }
 
@@ -551,7 +572,7 @@ public class CommonApiClient extends BaseApiClient {
             dto, CallBack<IndianaListResult> callback) {
         AsyncCallBack<IndianaListResult> asyncCallBack = new AsyncCallBack<>(
                 fragment, callback,IndianaListResult.class);
-        get( getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetAllSnatchComm"), dto,
+        get(getAbsoluteUrl("/webservice/Snatch_WebService.asmx/GetAllSnatchComm"), dto,
                 asyncCallBack);
     }
     /**
@@ -594,6 +615,22 @@ public class CommonApiClient extends BaseApiClient {
         post(getAbsoluteUrl("/API/WsMember.asmx/ResMemberCashAmountMoneyApi"), dto,
                 asyncCallBack);
     }
+
+    /**
+     * 发表评论
+     * @param act
+     * @param dto
+     * @param callback
+     */
+    public static void comment(Activity act, CommentDTO
+            dto, CallBack<BalanceResult> callback) {
+        AsyncCallBack<BalanceResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,BalanceResult.class);
+        post(getAbsoluteUrl("/webservice/Parts.asmx/InsertReview"), dto,
+                asyncCallBack);
+    }
+
+
 
     /**
      * 获取后十五天
@@ -646,6 +683,50 @@ public class CommonApiClient extends BaseApiClient {
         post(getAbsoluteUrl("/webservice/Parts.asmx/GetAd"), dto,
                 asyncCallBack);
     }
+
+    /**
+     * 闪购广告图片
+     * @param dto
+     * @param callback
+     */
+    public static void purchase(Fragment fragment, BaseDTO
+            dto, CallBack<PurchaseResult> callback) {
+        AsyncCallBack<PurchaseResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,PurchaseResult.class);
+        post(getAbsoluteUrl("/webservice/Parts.asmx/GetSalesPic"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 闪购商品详情
+     * @param fragment
+     * @param framgent
+     * @param act
+     * @param dto
+     * @param callback
+     */
+    public static void purProduct(Activity act, SKProduct
+            dto, CallBack<SKResult> callback) {
+        AsyncCallBack<SKResult> asyncCallBack = new AsyncCallBack<>(
+                act, callback,SKResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/GetDetailSales"), dto,
+                asyncCallBack);
+    }
+
+    /**
+     * 闪购商品
+     * @param dto
+     * @param callback
+     */
+    public static void purchaseGoods(Fragment fragment, PurchaseGoodsDTO
+            dto, CallBack<PurchaseGoodsResult> callback) {
+        AsyncCallBack<PurchaseGoodsResult> asyncCallBack = new AsyncCallBack<>(
+                fragment, callback,PurchaseGoodsResult.class);
+        get(getAbsoluteUrl("/webservice/Parts.asmx/GetSalesByJoin"), dto,
+                asyncCallBack);
+    }
+
+
     /**
      * 登录
      * @param dto

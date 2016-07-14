@@ -174,7 +174,7 @@ public class PaymentOrderActivity extends BaseTitleActivity {
 
     @Override
     public void initData() {
-        reqCuringOrderDetails();//养护订单详情
+        reqCuringOrderDetails();//支付订单详情
         reqBalance();//会员余额
 
     }
@@ -201,13 +201,13 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         String time = TimeUtils.getSignTime();
         cdto.setMembermob(AppContext.get("mobileNum", ""));
         cdto.setOrderNum(mOrdNum);
-        cdto.setSign(time+AppConfig.SIGN_1);
+        cdto.setSign(time + AppConfig.SIGN_1);
         cdto.setTimestamp(time);
         CommonApiClient.curingOrderPays(this, cdto, new CallBack<PaymentOrderResult>() {
             @Override
             public void onSuccess(PaymentOrderResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
-                    LogUtils.d("支付订单成功");
+                    LogUtils.d("支付订单详情成功");
                     bindResult(result.getData());
                 }
 
@@ -260,8 +260,8 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         mPayTv.setText("¥"+ paymentEntity.getOrderMoney());
         LogUtils.e("curingOrderListEntity.getServerKHImg()----", paymentEntity.getServerKHImg());
         LogUtils.e("curingOrderListEntity.getApp_show_pic()()----", paymentEntity.getApp_show_pic());
-        ImageLoaderUtils.displayImage(paymentEntity.getServerKHImg(),mPayImg);
-        ImageLoaderUtils.displayImage(paymentEntity.getApp_show_pic(),mImg);
+        ImageLoaderUtils.displayImage(paymentEntity.getServerKHImg(), mPayImg);
+        ImageLoaderUtils.displayImage(paymentEntity.getApp_show_pic(), mImg);
         mEdittext.setText(paymentEntity.getCustomerNote());
         if(paymentEntity.getIntegralNum().equals("0")){
             mTog.setText("该商品暂无积分可用");
@@ -279,7 +279,11 @@ public class PaymentOrderActivity extends BaseTitleActivity {
             case R.id.pay_tv_btn:
                 if (!mCbWx.isChecked() && !mCbZhi.isChecked() && !mVbHui.isChecked()) {
                     DialogUtils.showPrompt(this,"提示", "请选择支付方式", "知道了");
-                } else {
+                }
+                else if (mVbHui.isChecked() && mTvBalance.getText().toString().equals("0.00")) {
+                    DialogUtils.showPrompt(PaymentOrderActivity.this,"提示","账户余额不足","知道了");
+                }
+                else {
                     reqPay();//去支付
                 }
                 break;
@@ -317,7 +321,8 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         dto.setOrderMoney(paymentEntity.getOrderMoney());
         dto.setComCount(paymentEntity.getComCount());
         dto.setCouponPrice(paymentEntity.getCouponPrice());
-        dto.setMemberIDCoupon(paymentEntity.getMemberIDCoupon());
+//        dto.setMemberIDCoupon(paymentEntity.getMemberIDCoupon());
+        dto.setMemberIDCoupon("0");
         dto.setCouponcode(paymentEntity.getUserCouponCode());
         dto.setMemMobile(AppContext.get("mobileNum", ""));
         dto.setOrderType("养护");
@@ -336,12 +341,19 @@ public class PaymentOrderActivity extends BaseTitleActivity {
         } else if(mVbHui.isChecked()){
             dto.setApplyType("会员");
         }
-        dto.setServiceMoney(paymentEntity.getServiceMoney());
+//        dto.setServiceMoney(paymentEntity.getServiceMoney());
+        dto.setServiceMoney("0");
         dto.setReqType("service");
-        dto.setOldOrderNum(paymentEntity.getOldOrderNum());
+        dto.setOldOrderNum(mOrdNum);
         dto.setShoudamoney(paymentEntity.getShoudanMoney());
         String base64 = paymentEntity.getServerKHImg();
-        dto.setBase64string(ImageLoaderUtils.imgToBase64(base64,null,null));
+        if(TextUtils.isEmpty(base64)) {
+            dto.setBase64string("");
+        }else {
+            dto.setBase64string(ImageLoaderUtils.imgToBase64(base64,null,null));
+        }
+
+
         dto.setServerName(paymentEntity.getServerName());
         dto.setSign(time+AppConfig.SIGN_1);
         dto.setTimestamp(time);
@@ -350,19 +362,20 @@ public class PaymentOrderActivity extends BaseTitleActivity {
             public void onSuccess(PaypayResult result) {
                 if (AppConfig.SUCCESS.equals(result.getStatus())) {
                     LogUtils.e("去支付成功");
+                    if(mCbZhi.isChecked()){
+                        reqAlipayPay(result.getData());
+                        mPayTvBtn.setEnabled(true);
+                    }else if(mCbWx.isChecked()){
+                        reqWx(result.getData());
+                        mPayTvBtn.setEnabled(true);
+
+                    }else if(mVbHui.isChecked()){
+                        IssueUiGoto.payment(PaymentOrderActivity.this);//支付结果页
+                        mPayTvBtn.setEnabled(true);
+                    }
                 }
 
-                if(mCbZhi.isChecked()){
-                    reqAlipayPay(result.getData());
-                    mPayTvBtn.setEnabled(true);
-                }else if(mCbWx.isChecked()){
-                    reqWx(result.getData());
-                    mPayTvBtn.setEnabled(true);
 
-                }else if(mVbHui.isChecked()){
-                    IssueUiGoto.payment(PaymentOrderActivity.this);//支付结果页
-                    mPayTvBtn.setEnabled(true);
-                }
 
             }
         });

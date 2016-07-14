@@ -266,6 +266,13 @@
             android:name="com.qluxstory.qingshe.home.activity.AddAddressActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".me.activity.CommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".pick.CustomGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".me.activity.CuringOrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -288,6 +295,14 @@
             android:windowSoftInputMode="stateHidden"
             />
         <activity
+            android:name="com.lidong.photopicker.PhotoPickerActivity"
+            android:theme="@style/PhotoPickerTheme"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name="com.lidong.photopicker.PhotoPreviewActivity"
+            android:theme="@style/PhotoPickerTheme"
+                  />
+        <activity
             android:name="com.qluxstory.qingshe.common.base.BrowserActivity"
             android:screenOrientation="portrait" />
 
@@ -301,6 +316,12 @@
             />
         <activity
             android:name="com.qluxstory.qingshe.me.activity.UserInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qluxstory.qingshe.home.activity.SeckillActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.qluxstory.qingshe.home.activity.SeckillProductActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.qluxstory.qingshe.me.activity.WithdrawalsActivity"

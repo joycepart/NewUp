@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.qluxstory.qingshe.common.base.BrowserActivity;
 import com.qluxstory.qingshe.common.widget.SelectPicPopup;
+import com.qluxstory.qingshe.me.activity.CommentActivity;
 import com.qluxstory.qingshe.me.activity.ConversationActivity;
 import com.qluxstory.qingshe.me.activity.CuringOrderActivity;
 import com.qluxstory.qingshe.me.activity.CuringOrderDetailsActivity;
@@ -34,6 +35,18 @@ public class MeUiGoto {
     public static void login(Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivityForResult(intent, LOFIN_REQUEST);
+    }
+
+    /**
+     * 跳转到发表评论页
+     * @param context
+     * @param b
+     */
+
+    public static void comment(Context context, Bundle b) {
+        Intent intent = new Intent(context, CommentActivity.class);
+        intent.putExtra("bundle",b);
+        context.startActivity(intent);
     }
 
 

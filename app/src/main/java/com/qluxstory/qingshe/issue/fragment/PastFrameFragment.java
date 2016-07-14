@@ -310,7 +310,8 @@ public class PastFrameFragment extends BasePullScrollViewFragment {
                 getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.from(getActivity()).inflate(R.layout.activity_grid_num, null);
         popGridWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
-
+        int width = AppContext.get("screenWidth", 0);
+        popGridWindow.setWidth(width* 7 / 10);
         backgroundAlpha(0.7f);
         // 需要设置一下此参数，点击外边可消失
         popGridWindow.setBackgroundDrawable(new BitmapDrawable());

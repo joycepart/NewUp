@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/details_tit_img"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_600"
+                android:layout_height="320dp"
                 android:scaleType="centerCrop" />
 
             <LinearLayout

@@ -96,13 +96,13 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        mTcd = new TimeCountDown(mLoginCodeBtn, 60000, 1000, "重新获取", "s");
 
     }
 
 
     //获取验证码
     private void ObtainCode() {
+        mTcd = new TimeCountDown(mLoginCodeBtn, 60000, 1000, "重新获取", "s");
         mTcd.start();
         ObtainDTO bdto = new ObtainDTO();
         bdto.setMembermob(strPhoneNum);

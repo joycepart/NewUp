@@ -1,1 +1,1 @@
-include ':app', ':PtrRecyclerView', ':lib_pickerview', ':IMKitNew'
+include ':app', ':PtrRecyclerView', ':lib_pickerview', ':IMKitNew',':photopicker'

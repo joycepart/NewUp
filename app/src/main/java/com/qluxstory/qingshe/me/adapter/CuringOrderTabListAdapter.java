@@ -1,4 +1,4 @@
-package com.qluxstory.qingshe.common.adapter;
+package com.qluxstory.qingshe.me.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +11,14 @@ import java.util.List;
 /**
  * Created by lenovo on 2016/5/17.
  */
-public class TabListAdapter extends FragmentStatePagerAdapter {
+public class CuringOrderTabListAdapter extends FragmentStatePagerAdapter {
     private String[] titles;
     private CuringOrderActivity context;
     private List<Fragment> fragmentList;
 
 
-    public TabListAdapter(FragmentManager fm, CuringOrderActivity context, String[] titles,
-                          List<Fragment> fragmentList) {
+    public CuringOrderTabListAdapter(FragmentManager fm, CuringOrderActivity context, String[] titles,
+                                     List<Fragment> fragmentList) {
         super(fm);
         this.context = context;
         this.fragmentList = fragmentList;

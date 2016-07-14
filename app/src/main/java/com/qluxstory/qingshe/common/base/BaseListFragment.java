@@ -275,8 +275,6 @@ public abstract class BaseListFragment<T> extends BaseFragment implements BaseRe
         @Override
         protected Void doInBackground(Void... params) {
             if (mContext == null) return null;
-            LogUtils.e("seri---",""+seri);
-            LogUtils.e("key---",""+key);
             CacheManager.saveObject(seri, key);
             return null;
         }

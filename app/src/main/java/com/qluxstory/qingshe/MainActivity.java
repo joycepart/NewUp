@@ -107,10 +107,12 @@ public class MainActivity extends BaseHomeTitleActivity {
 
         for (int i = 0; i < mTabViews.length; i++) {
             fragmentList.add(null);
+//            addFragment(i);
             final int j = i;
             mTabViews[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUtils.e("j----",""+j);
                     showTab(j);
                 }
             });
@@ -125,6 +127,7 @@ public class MainActivity extends BaseHomeTitleActivity {
     private void hideAllFragments(BaseFragment fragment) {
         for (int i = 0; i < TAB_NUM; i++) {
             Fragment f = fragmentManager.findFragmentByTag("tag" + i);
+            LogUtils.e("f----","i--"+i+"---"+f);
             if (f != null&&f.isAdded()&&f!=fragment) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.hide(f);
@@ -154,6 +157,8 @@ public class MainActivity extends BaseHomeTitleActivity {
                 fragment = new MeFragment();
                 break;
         }
+        LogUtils.e("index----", "" + index);
+        LogUtils.e("fragment----", "" + fragment);
         fragmentList.add(index,fragment);
         transaction.add(R.id.realtabcontent, fragment, "tag" + index);
         transaction.commitAllowingStateLoss();
@@ -163,6 +168,7 @@ public class MainActivity extends BaseHomeTitleActivity {
 
 
     private void showFragment(BaseFragment fragment) {
+        LogUtils.e("fragment----showFragment", "" + fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.show(fragment);
         transaction.commitAllowingStateLoss();
@@ -192,13 +198,22 @@ public class MainActivity extends BaseHomeTitleActivity {
         if(currentTab==idx){return;}
         BaseFragment targetFragment = (BaseFragment) fragmentManager
                 .findFragmentByTag("tag" + idx);
+        LogUtils.e("showTab---idx----",""+idx);
+        LogUtils.e("targetFragment----", "" + targetFragment);
+//        targetFragment = fragmentList.get(idx);
+
         if (targetFragment == null || !targetFragment.isAdded()) {
+            LogUtils.e("size----", "" + fragmentList.size());
             if(idx<fragmentList.size()&&fragmentList.get(idx)!=null) {
                 targetFragment = fragmentList.get(idx);
+                LogUtils.e("targetFragment----idx---if", "" + idx+"---"+targetFragment);
             }else{
                 targetFragment=addFragment(idx);
+                LogUtils.e("targetFragment----idx---else", "" +idx+"---"+ targetFragment);
             }
         }
+
+
         hideAllFragments(targetFragment);
         showFragment(targetFragment);
         for (int i = 0; i < TAB_NUM; i++) {
@@ -215,14 +230,11 @@ public class MainActivity extends BaseHomeTitleActivity {
             }
         }
         currentTab = idx; // 更新目标tab为当前tab
-        getTitleLayout().setVisibility(View.VISIBLE);
-//        mBaseBack = (TextView) findViewById(R.id.base_titlebar_back);
-//        mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
+        LogUtils.e("currentTab----", "" + currentTab);
         getTitleLayout().setVisibility(View.VISIBLE);
         switch (currentTab){
             case 0:
                 setTitleText("首页");
-
                 break;
             case 1:
                 setTitleText("专业养护");
@@ -356,7 +368,7 @@ public class MainActivity extends BaseHomeTitleActivity {
      * 左侧的事件
      */
     protected void baseGoBack() {
-        LogUtils.e("baseGoBack---","baseGoBack");
+        LogUtils.e("baseGoBack---", "baseGoBack");
         bool = AppContext.get("isLogin",false);
         if(bool){
             MeUiGoto.myIntegral(this);//我的积分
@@ -391,6 +403,15 @@ public class MainActivity extends BaseHomeTitleActivity {
         isForeground = false;
         super.onPause();
     }
+
+    @Override
+    public void onBackPressed() {
+        LogUtils.e("onBackPressed----main","onBackPressed");
+        finish();
+        super.onBackPressed();
+    }
+
+
 
     @Override
     protected void onDestroy() {

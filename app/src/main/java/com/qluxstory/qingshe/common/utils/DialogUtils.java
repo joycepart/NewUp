@@ -74,7 +74,7 @@ public class DialogUtils {
 				dialog.dismiss();
 			}
 		});
-		tv.setTextColor(ContextCompat.getColor(context,R.color.color_00));
+		tv.setTextColor(ContextCompat.getColor(context, R.color.color_00));
 		if (!TextUtils.isEmpty(st)) {
 			tv.setText(st);
 		}
@@ -91,6 +91,10 @@ public class DialogUtils {
 
 	public static Dialog showLoading(Context context) {
 		return showLoading(context, "加载中...");
+	}
+
+	public static Dialog showMit(Context context) {
+		return showLoading(context, "提交中...");
 	}
 
 	/**

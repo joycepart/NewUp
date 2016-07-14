@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 
 
@@ -96,15 +97,18 @@ public class ImageLoaderUtils {
     }
 
     /**
-     * 把图片转换成Base64字符串
+     * 把图片转换成Base64字符串,其中要进行压缩图片
      * @param imgPath
      * @param bitmap
      * @param imgFormat 图片格式
      * @return
      */
     public static String imgToBase64(String imgPath, Bitmap bitmap,String imgFormat) {
+        Bitmap bm = null;
         if (imgPath !=null && imgPath.length() > 0) {
             bitmap = readBitmap(imgPath);
+            bm = PhotoSystemUtils.comp(bitmap);
+            LogUtils.e("bitmap",""+bitmap);
         }
         if(bitmap == null){
             //bitmap not found!!
@@ -112,7 +116,7 @@ public class ImageLoaderUtils {
         ByteArrayOutputStream out = null;
         try {
             out = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
             out.flush();
             out.close();
@@ -131,7 +135,7 @@ public class ImageLoaderUtils {
         }
     }
 
-    private static Bitmap readBitmap(String imgPath) {
+    public static Bitmap readBitmap(String imgPath) {
         try {
             return BitmapFactory.decodeFile(imgPath);
         } catch (Exception e) {
@@ -207,6 +211,30 @@ public class ImageLoaderUtils {
         while ((read = in.read(b)) != -1) {
             out.write(b, 0, read);
         }
+    }
+
+
+  //读取sd卡下图片，由图片路径转换为bitmap
+    public Bitmap convertToBitmap(String path, int w, int h) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        // 设置为ture只获取图片大小
+        opts.inJustDecodeBounds = true;
+        opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        // 返回为空
+        BitmapFactory.decodeFile(path, opts);
+        int width = opts.outWidth;
+        int height = opts.outHeight;
+        float scaleWidth = 0.f, scaleHeight = 0.f;
+        if (width > w || height > h) {
+            // 缩放
+            scaleWidth = ((float) width) / w;
+            scaleHeight = ((float) height) / h;
+        }
+        opts.inJustDecodeBounds = false;
+        float scale = Math.max(scaleWidth, scaleHeight);
+        opts.inSampleSize = (int)scale;
+        WeakReference<Bitmap> weak = new WeakReference<Bitmap>(BitmapFactory.decodeFile(path, opts));
+        return Bitmap.createScaledBitmap(weak.get(), w, h, true);
     }
 
 

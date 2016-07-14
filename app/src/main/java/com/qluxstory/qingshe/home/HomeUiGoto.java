@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.qluxstory.qingshe.MainActivity;
 import com.qluxstory.qingshe.SplashActivity;
@@ -12,6 +13,8 @@ import com.qluxstory.qingshe.home.activity.AddAddressActivity;
 import com.qluxstory.qingshe.home.activity.ChoiceCityActivity;
 import com.qluxstory.qingshe.home.activity.PlaceOrderActivity;
 import com.qluxstory.qingshe.home.activity.ProductBrowserActivity;
+import com.qluxstory.qingshe.home.activity.SeckillActivity;
+import com.qluxstory.qingshe.home.activity.SeckillProductActivity;
 
 /**
  * Created by lenovo on 2016/5/17.
@@ -47,7 +50,7 @@ public class HomeUiGoto {
     public static final int CITY_REQUEST = 0201;
     public static void city(Activity act){
         Intent intent = new Intent(act, ChoiceCityActivity.class);
-        act.startActivityForResult(intent,CITY_REQUEST);
+        act.startActivityForResult(intent, CITY_REQUEST);
     }
 
 
@@ -84,7 +87,7 @@ public class HomeUiGoto {
     public static final int NEWADD_REQUEST = 0001;
     public static void addAddress(Activity act){
         Intent intent = new Intent(act, AddAddressActivity.class);
-        act.startActivityForResult(intent,NEWADD_REQUEST);
+        act.startActivityForResult(intent, NEWADD_REQUEST);
     }
 
     /**
@@ -165,4 +168,29 @@ public class HomeUiGoto {
         intent.putExtra("title", mHelpTitle);
         context.startActivity(intent);
     }
+
+
+    /**
+     * 跳转到秒杀商品详情页
+     *  @param context
+     * @param bundle
+     */
+
+    public static void skProduct(Context context, Bundle bundle){
+        Intent intent = new Intent(context, SeckillProductActivity.class);
+        intent.putExtra("bundle", bundle);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到秒杀页
+     *  @param context
+     */
+
+    public static void sk(Context context){
+        Intent intent = new Intent(context, SeckillActivity.class);
+        context.startActivity(intent);
+    }
+
+
 }

@@ -24,15 +24,16 @@
     android:orientation="vertical">
 
     <ImageView
+        android:clickable="false"
                 android:layout_width="@dimen/ds_60"
                 android:layout_height="@dimen/ds_60"
         android:layout_marginLeft="@dimen/ds_60"
                 android:background="@drawable/qiandao" />
     <TextView
+        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:clickable="true"
         android:drawablePadding="@dimen/ds_6"
         android:gravity="center_horizontal"
         android:text="@string/home_qd"
@@ -60,16 +61,16 @@
     android:layout_marginRight="@dimen/ds_20"
     android:orientation="vertical">
     <ImageView
+        android:clickable="false"
         android:layout_width="@dimen/ds_60"
         android:layout_height="@dimen/ds_60"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/ds_60"
         android:background="@drawable/xiaoxu" />
             <TextView
-
+                android:clickable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:clickable="true"
                 android:layout_marginLeft="@dimen/ds_120"
                 android:gravity="center_horizontal"
                 android:text="@string/home_xx"

@@ -223,15 +223,15 @@ public class HomeFragment extends BasePullScrollViewFragment {
                 getActivity().startActivity(it);
                 break;
             case R.id.home_img2:
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("tag",2);
-                getActivity().startActivity(intent);
+                HomeUiGoto.sk(getActivity());//秒杀
+                //                UIHelper.showFragment(getActivity(), SimplePage.SECKILL);
                 break;
             case R.id.home_img3:
+
                 mUrlReturn = AppConfig.URL_ABOUT_RETURN;
                 mReturnTitle = "关于售后";
                 MeUiGoto.rturn(getActivity(), mUrlReturn, mReturnTitle);//关于售后
-//                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
+                HomeUiGoto.help(getActivity(),AppConfig.URL_TRANSACTION,"交易帮助 - 倾奢");
                 break;
             case R.id.hsv:
                 Bundle b = new Bundle();

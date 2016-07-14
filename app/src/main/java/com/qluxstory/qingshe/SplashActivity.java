@@ -39,11 +39,13 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
+        LogUtils.e("getLayoutResId----","spl");
         return R.layout.activity_splash;
     }
 
     @Override
     public void initView() {
+        LogUtils.e("initView----","spl");
         mBtn.setOnClickListener(this);
     }
 
@@ -92,11 +94,6 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void reqImgs() {
-        // 获取屏幕宽高（方法1）
-        int screenWidth = getWindowManager().getDefaultDisplay().getWidth(); // 屏幕宽（像素，如：480px）
-        int screenHeight = getWindowManager().getDefaultDisplay().getHeight(); // 屏幕高（像素，如：800p）
-        AppContext.set("screenWidth",screenWidth);
-        AppContext.set("screenHeight",screenHeight);
         SplashDTO dto = new SplashDTO();
         String time = TimeUtils.getSignTime();
         dto.setDevicetype("2");
@@ -127,10 +124,13 @@ public class SplashActivity extends BaseActivity {
                         mVfLayout.setLoadCompleteListener(new SplViewFlowLayout.LoadCompleteListener() {
                             @Override
                             public void loadComplete() {
-//                                mVfLayout.startListen();
+                                //           mVfLayout.startListen();
+                                LogUtils.e("loadComplete----", "loadComplete");
                                 preparation();
                             }
                         });
+
+                        LogUtils.e("updateSplView----", "updateSplView");
 
                         mVfLayout.updateSplView(list);
 //                        preparation();
@@ -156,6 +156,8 @@ public class SplashActivity extends BaseActivity {
      * 准备
      */
     private void preparation() {
+
+        LogUtils.e("preparation----","preparation");
         mImg.setVisibility(View.GONE);
         mBtn.setVisibility(View.VISIBLE);
         handler = new ReadyHandler(tm*3, new ReadyListener() {
@@ -164,7 +166,7 @@ public class SplashActivity extends BaseActivity {
             public void onGoMain(int time) {
                 if (time > 0) {
                     Button btn = (Button) findViewById(R.id.ad_tv);
-                    LogUtils.e("time----","> 0");
+                    LogUtils.e("time----",""+time);
                     btn.setText("跳过" + String.valueOf(time));
                 } else {
                     gotoMain();
@@ -208,25 +210,39 @@ public class SplashActivity extends BaseActivity {
             LogUtils.e("gotoMain----","true");
             HomeUiGoto.gotoMain(SplashActivity.this);
             overridePendingTransition(0, 0);
-            finish();
+            SplashActivity.this.finish();
 
     }
 
     @Override
     public void onBackPressed() {
+        LogUtils.e("onBackPressed----spl","onBackPressed");
         finish();
         super.onBackPressed();
     }
 
     @Override
     protected void onResume() {
+        LogUtils.e("onResume----spl","onResume");
         super.onResume();
-        JPushInterface.onResume(this);
     }
 
     @Override
     protected void onPause() {
+        LogUtils.e("onPause----spl","onPause");
         super.onPause();
-        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onStop() {
+        LogUtils.e("onStop----spl","onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LogUtils.e("onDestroy----spl","onDestroy");
+        finish();
+        super.onDestroy();
     }
 }

@@ -13,10 +13,6 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_30"
-            android:background="@color/color_cc" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -104,6 +100,7 @@
         android:id="@+id/issue_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:descendantFocusability="afterDescendants"
         android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>

@@ -32,6 +32,8 @@ public enum SimplePage{
     STORE(12, R.string.order_receipt_store, StoreFragment.class),
     INTERARAL(13, R.string.rule_details, IntegralFragment.class),
     INFORMATION(14, R.string.home_xx, InformationFragment.class),
+//    SECKILL(15, R.string.Seckill, SeckillFragment.class),
+//    SECKILL_PRODUCT(16, R.string.product_details, SeckillProductFragment.class),
     ;
 
     private int title;
